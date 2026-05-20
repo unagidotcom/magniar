@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-dark: #0a0a0a;
+  --color-brand-blue: #3b82f6;
+  --color-brand-pink: #60a5fa; /* Replaced pink with slate-blue to keep color scheme unified and simple */
+  
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Base resets & styles matching high-end agency vibe */
+html {
+  scroll-behavior: smooth;
+  background-color: #050505;
+  color: #f3f4f6;
+  overflow-x: hidden;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+body {
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar fitting the futuristic aesthetics */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #111827;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1f2937;
+}
+
+/* Custom keyframes for slow premium animations */
+@keyframes orb-float-1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+    filter: blur(100px) brightness(1);
+  }
+  33% {
+    transform: translate(40px, -60px) scale(1.15);
+    filter: blur(120px) brightness(1.2);
+  }
+  66% {
+    transform: translate(-30px, 30px) scale(0.9);
+    filter: blur(110px) brightness(0.9);
+  }
+}
+
+@keyframes orb-float-2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1.05);
+    filter: blur(120px) brightness(1);
+  }
+  50% {
+    transform: translate(-50px, 50px) scale(0.85);
+    filter: blur(140px) brightness(1.1);
+  }
+}
+
+@keyframes mesh-drift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-orb-1 {
+  animation: orb-float-1 16s infinite ease-in-out;
+}
+
+.animate-orb-2 {
+  animation: orb-float-2 22s infinite ease-in-out;
+}
+
+.animate-gradient-text {
+  background: linear-gradient(to right, #ffffff, #93c5fd, #3b82f6, #ffffff);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: mesh-drift 8s ease infinite;
+}
+
+/* Card gradients & custom shadows */
+.glass-panel {
+  background: rgba(10, 10, 10, 0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel-hover {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 15px 50px rgba(59, 130, 246, 0.08), 0 0 30px rgba(96, 165, 250, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-glow {
+  filter: drop-shadow(0 0 16px rgba(59, 130, 246, 0.45));
+}
+
+.glow-glow-pink {
+  filter: drop-shadow(0 0 16px rgba(236, 72, 153, 0.45));
+}
+
+/* Layout container styling */
+.container-premium {
+  width: 100%;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Magniar & Co",
+  "description": "Futuristic, premium marketing and growth agency that scales modern brands with high-performance paid ads, marketplace optimization, and bespoke web experiences.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
