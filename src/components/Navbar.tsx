@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, ArrowRight, Sparkles } from "lucide-react";
+import { Menu, X, ArrowRight, Sparkles, Sun, Moon } from "lucide-react";
 import { useCurrency, CURRENCIES } from "../CurrencyContext";
 
 export default function Navbar() {
@@ -7,13 +7,32 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const { currentCurrency, setCurrencyByCode } = useCurrency();
+  
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("theme");
+      if (stored === "dark" || stored === "light") return stored;
+      return "light"; // Premium light mode as standard default
+    }
+    return "light";
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === "light") {
+      root.classList.add("light");
+    } else {
+      root.classList.remove("light");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
       // Track active section for indicator line
-      const sections = ["hero", "about", "services", "process", "showcase", "testimonials"];
+      const sections = ["hero", "about", "services", "process"];
       const scrollPos = window.scrollY + 200;
 
       for (const section of sections) {
@@ -48,15 +67,13 @@ export default function Navbar() {
     { label: "About", id: "about" },
     { label: "Services", id: "services" },
     { label: "Our Process", id: "process" },
-    { label: "Web Show", id: "showcase" },
-    { label: "Testimonials", id: "testimonials" },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "border-b border-white/5 bg-brand-dark/80 py-4 backdrop-blur-md"
+          ? "border-b border-border-primary bg-bg-secondary/85 py-4 backdrop-blur-md"
           : "bg-transparent py-6"
       }`}
       id="main-nav-header"
@@ -68,12 +85,12 @@ export default function Navbar() {
           className="group flex items-center gap-2 cursor-pointer"
           id="nav-logo-btn"
         >
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-linear-to-tr from-brand-blue to-brand-pink p-[1px]">
-            <div className="flex h-full w-full items-center justify-center rounded-[7px] bg-brand-dark transition-all duration-300 group-hover:bg-brand-dark/20">
-              <Sparkles className="h-4 w-4 text-brand-pink transition-transform duration-300 group-hover:rotate-12" />
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-tr from-brand-blue to-brand-pink p-[1px]">
+            <div className="flex h-full w-full items-center justify-center rounded-[7px] bg-bg-secondary transition-all duration-300 group-hover:bg-bg-secondary/20">
+              <Sparkles className="h-5 w-5 text-brand-pink transition-transform duration-300 group-hover:rotate-12" />
             </div>
           </div>
-          <span className="font-display text-xl font-extrabold tracking-tighter text-white transition-opacity duration-300 group-hover:opacity-80">
+          <span className="font-display text-xl md:text-2xl font-extrabold tracking-tighter text-text-primary transition-opacity duration-300 group-hover:opacity-80">
             MAGNIAR <span className="text-gradient">& CO.</span>
           </span>
         </button>
@@ -84,7 +101,7 @@ export default function Navbar() {
             <button
               key={link.id}
               onClick={() => scrollToSection(link.id)}
-              className="relative py-1 font-sans text-xs font-bold tracking-widest text-gray-400 uppercase transition-colors duration-200 hover:text-white cursor-pointer"
+              className="relative py-1 font-sans text-sm font-bold tracking-widest text-text-tertiary uppercase transition-colors duration-200 hover:text-text-primary cursor-pointer"
               id={`nav-link-${link.id}`}
             >
               {link.label}
@@ -95,22 +112,36 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Dynamic Currency Selector & CTA Button */}
+        {/* Dynamic Currency Selector, Theme Switcher & CTA Button */}
         <div className="hidden items-center gap-4 md:flex">
+          {/* Theme Switcher Desktop */}
+          <button
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-card-bg border border-border-primary text-text-secondary hover:text-text-primary hover:border-brand-blue/50 transition-all cursor-pointer shadow-sm"
+            aria-label="Toggle Theme"
+            id="theme-switcher-desktop"
+          >
+            {theme === "light" ? (
+              <Moon className="h-4.5 w-4.5 text-text-secondary" />
+            ) : (
+              <Sun className="h-4.5 w-4.5 text-brand-pink" />
+            )}
+          </button>
+
           <div className="relative inline-block">
             <select
               value={currentCurrency.code}
               onChange={(e) => setCurrencyByCode(e.target.value)}
-              className="appearance-none bg-white/5 border border-white/10 hover:border-brand-pink/50 rounded-full px-4 py-2 text-[10px] font-bold text-gray-300 hover:text-white transition-all outline-none cursor-pointer pr-8 uppercase tracking-wider"
+              className="appearance-none bg-card-bg border border-border-primary hover:border-brand-pink/50 rounded-full px-4 py-2 text-xs font-bold text-text-secondary hover:text-text-primary transition-all outline-none cursor-pointer pr-8 uppercase tracking-wider"
               style={{
-                backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23f3f4f6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>")`,
+                backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>")`,
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "right 10px center",
               }}
               id="currency-selector"
             >
               {Object.keys(CURRENCIES).map((code) => (
-                <option key={code} value={code} className="bg-brand-dark text-white font-mono text-xs">
+                <option key={code} value={code} className="bg-bg-secondary text-text-primary font-mono text-xs">
                   {CURRENCIES[code].label}
                 </option>
               ))}
@@ -119,34 +150,51 @@ export default function Navbar() {
 
           <button
             onClick={() => scrollToSection("contact")}
-            className="group relative inline-flex items-center gap-1.5 overflow-hidden rounded-full bg-white text-black px-6 py-2.5 text-xs font-bold tracking-wider uppercase transition-all duration-300 hover:bg-brand-blue hover:text-white cursor-pointer shadow-[0_4px_20px_rgba(255,255,255,0.05)] hover:shadow-[0_4px_25px_rgba(59,130,246,0.3)]"
+            className="group relative inline-flex items-center gap-1.5 overflow-hidden rounded-full bg-text-primary text-bg-primary px-6 py-2.5 text-sm font-bold tracking-wider uppercase transition-all duration-300 hover:bg-brand-blue hover:text-white cursor-pointer shadow-[0_4px_20px_var(--border-primary)] hover:shadow-[0_4px_25px_rgba(59,130,246,0.3)]"
             id="nav-cta-desktop"
           >
             <span>Start a Project</span>
-            <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
           </button>
         </div>
 
-        {/* Mobile Menu Icon */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white md:hidden hover:bg-white/10 cursor-pointer"
-          aria-label="Toggle Menu"
-          id="nav-mobile-hamburger"
-        >
-          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        {/* Mobile Header Buttons */}
+        <div className="flex items-center gap-3 md:hidden">
+          {/* Theme Switcher Mobile Header */}
+          <button
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-card-bg border border-border-primary text-text-secondary hover:text-text-primary transition-all cursor-pointer shadow-sm"
+            aria-label="Toggle Theme"
+            id="theme-switcher-mobile-header"
+          >
+            {theme === "light" ? (
+              <Moon className="h-4.5 w-4.5 text-text-secondary" />
+            ) : (
+              <Sun className="h-4.5 w-4.5 text-brand-pink" />
+            )}
+          </button>
+
+          {/* Mobile Menu Icon */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex h-9 w-9 items-center justify-center rounded-lg bg-card-bg border border-border-primary text-text-primary hover:bg-bg-secondary cursor-pointer"
+            aria-label="Toggle Menu"
+            id="nav-mobile-hamburger"
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 top-[69px] z-40 flex flex-col bg-brand-dark/95 px-6 py-12 backdrop-blur-lg md:hidden border-t border-white/5 animate-fade-in">
+        <div className="fixed inset-0 top-[69px] z-40 flex flex-col bg-bg-secondary/95 px-6 py-12 backdrop-blur-lg md:hidden border-t border-border-primary animate-fade-in">
           <div className="flex flex-col gap-6 text-center">
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="font-display text-2xl font-semibold tracking-tight text-gray-300 hover:text-white"
+                className="font-display text-2xl font-bold tracking-tight text-text-secondary hover:text-text-primary"
                 id={`mobile-nav-link-${link.id}`}
               >
                 {link.label}
@@ -154,16 +202,16 @@ export default function Navbar() {
             ))}
 
             {/* Mobile Currency Selector */}
-            <div className="mt-4 flex flex-col items-center justify-center gap-2 border-t border-white/5 pt-6">
-              <span className="font-mono text-[9px] uppercase tracking-widest text-gray-500">SELECT CURRENCY</span>
+            <div className="mt-4 flex flex-col items-center justify-center gap-2 border-t border-border-primary pt-6">
+              <span className="font-mono text-xs uppercase tracking-widest text-text-tertiary">SELECT CURRENCY</span>
               <select
                 value={currentCurrency.code}
                 onChange={(e) => setCurrencyByCode(e.target.value)}
-                className="bg-white/5 border border-white/10 text-white text-xs font-bold rounded-full py-2 px-4 outline-none cursor-pointer text-center w-full max-w-xs"
+                className="bg-card-bg border border-border-primary text-text-primary text-sm font-bold rounded-full py-2 px-4 outline-none cursor-pointer text-center w-full max-w-xs"
                 id="currency-selector-mobile"
               >
                 {Object.keys(CURRENCIES).map((code) => (
-                  <option key={code} value={code} className="bg-brand-dark text-white font-mono">
+                  <option key={code} value={code} className="bg-bg-secondary text-text-primary font-mono">
                     {CURRENCIES[code].label}
                   </option>
                 ))}

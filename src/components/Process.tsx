@@ -4,20 +4,20 @@ import { PROCESS_STEPS } from "../data";
 
 export default function Process() {
   return (
-    <section className="relative overflow-hidden bg-[#070707] py-24 border-t border-white/5" id="process">
+    <section className="relative overflow-hidden bg-bg-primary py-24 border-t border-border-primary" id="process">
       {/* Background radial atmosphere */}
       <div className="absolute top-[50%] left-[50%] h-[350px] w-[350px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-blue/5 blur-[120px]" />
 
       <div className="mx-auto max-w-7xl px-6 md:px-12">
         {/* Section Title */}
         <div className="mb-20 text-center">
-          <span className="font-mono text-xs font-bold uppercase tracking-widest text-brand-blue">
+          <span className="font-mono text-sm font-bold uppercase tracking-widest text-brand-blue">
             HOW WE CONVERT
           </span>
-          <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+          <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
             Our Scale <span className="text-gradient">Framework.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl font-sans text-base leading-relaxed text-gray-300">
+          <p className="mx-auto mt-4 max-w-2xl font-sans text-lg leading-relaxed text-text-secondary">
             A structured workflow starting with thorough unit margin audits, progressing to asset development and landing page optimization, leading to scalable multi-channel results.
           </p>
         </div>
@@ -41,8 +41,8 @@ export default function Process() {
                   id={`process-step-${step.number}`}
                 >
                   {/* Glowing Numeric Node Anchor */}
-                  <div className="absolute top-2 left-4 z-10 flex h-7.5 w-7.5 -translate-x-1/2 items-center justify-center rounded-full bg-brand-dark border-2 border-brand-blue text-white md:left-1/2">
-                    <span className="font-mono text-[10px] font-bold">{step.number}</span>
+                  <div className="absolute top-2 left-4 z-10 flex h-7.5 w-7.5 -translate-x-1/2 items-center justify-center rounded-full bg-bg-secondary border-2 border-brand-blue text-text-primary md:left-1/2">
+                    <span className="font-mono text-xs font-bold">{step.number}</span>
                   </div>
 
                   {/* Left spacer block for desktop symmetry */}
@@ -55,43 +55,43 @@ export default function Process() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, margin: "-100px" }}
                       transition={{ duration: 0.6 }}
-                      className="group relative rounded-2xl border border-white/5 bg-brand-dark/40 p-6 backdrop-blur-md transition-all duration-300 hover:border-brand-blue/30 hover:bg-white/[0.01]"
+                      className="group relative rounded-2xl border border-border-primary bg-card-bg p-6 backdrop-blur-md transition-all duration-300 hover:border-brand-blue/30 hover:bg-card-hover-bg shadow-xs"
                     >
                       {/* Top ribbon containing duration clocks */}
-                      <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                        <span className="font-display text-xs font-bold uppercase tracking-wider text-white">
+                      <div className="flex items-center justify-between border-b border-border-primary pb-3">
+                        <span className="font-display text-sm font-bold uppercase tracking-wider text-text-primary">
                           0{step.number} {step.title}
                         </span>
                         
-                        <div className="flex items-center gap-1 font-mono text-[10px] text-brand-blue uppercase font-bold">
+                        <div className="flex items-center gap-1 font-mono text-xs text-brand-blue uppercase font-bold">
                           <Clock className="h-3 w-3" />
                           <span>{step.duration}</span>
                         </div>
                       </div>
 
                       {/* Tagline */}
-                      <h3 className="mt-4 font-display text-sm font-semibold tracking-wide text-brand-blue">
+                      <h3 className="mt-4 font-display text-base font-semibold tracking-wide text-brand-blue">
                         {step.tagline}
                       </h3>
 
                       {/* Detail description */}
-                      <p className="mt-2 font-sans text-base leading-relaxed text-gray-300">
+                      <p className="mt-2 font-sans text-base md:text-lg leading-relaxed text-text-secondary">
                         {step.description}
                       </p>
 
                       {/* Deliverables checklist capsules */}
                       <div className="mt-5">
-                        <span className="font-mono text-[9px] uppercase tracking-wider text-gray-500 block mb-2.5">
+                        <span className="font-mono text-[10px] uppercase tracking-wider text-text-tertiary block mb-2.5">
                           KEY DELIVERABLE ARTIFACTS
                         </span>
                         <div className="flex flex-wrap gap-2">
                           {step.deliverables.map((deliv, dIdx) => (
                             <div
                               key={dIdx}
-                              className="flex items-center gap-1.5 rounded-md bg-white/5 px-2.5 py-1 border border-white/5"
+                              className="flex items-center gap-1.5 rounded-md bg-bg-secondary px-2.5 py-1 border border-border-primary"
                             >
                               <Check className="h-3 w-3 text-emerald-400" />
-                              <span className="font-sans text-xs text-gray-300">
+                              <span className="font-sans text-sm text-text-secondary">
                                 {deliv}
                               </span>
                             </div>
@@ -113,7 +113,7 @@ export default function Process() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/[0.02] px-4 py-2 text-sm md:text-base text-gray-300"
+            className="inline-flex items-center gap-2 rounded-full border border-border-primary bg-card-bg px-4 py-2 text-base md:text-lg text-text-secondary shadow-xs"
           >
             <ShieldCheck className="h-4.5 w-4.5 text-emerald-400" />
             <span>Guaranteed transparency. All milestones tracked strictly inside customized shared dashboards.</span>

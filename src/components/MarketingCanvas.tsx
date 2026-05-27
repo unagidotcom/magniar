@@ -251,9 +251,12 @@ export default function MarketingCanvas() {
         if (p.label) {
           // Label texts
           ctx.save();
-          ctx.fillStyle = `rgba(243, 244, 246, ${p.alpha * 1.2})`;
+          const isLight = document.documentElement.classList.contains("light");
+          ctx.fillStyle = isLight 
+            ? `rgba(15, 23, 42, ${p.alpha * 1.2})` 
+            : `rgba(243, 244, 246, ${p.alpha * 1.2})`;
           ctx.font = `600 10px var(--font-mono, "JetBrains Mono", monospace)`;
-          ctx.shadowColor = `rgba(59, 130, 246, 0.4)`;
+          ctx.shadowColor = isLight ? `rgba(59, 130, 246, 0.15)` : `rgba(59, 130, 246, 0.4)`;
           ctx.shadowBlur = 4;
           ctx.fillText(p.label, p.x + 8, p.y + 3);
           

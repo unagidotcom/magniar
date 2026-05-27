@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    {
+      "source": "/wp-json/:path*",
+      "destination": "https://app.magniar.com/wp-json/:path*"
+    },
+    {
+      "source": "/((?!assets/|api/|wp-json/|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+

@@ -37,7 +37,7 @@ export default function Testimonials() {
   const activeReview = TESTIMONIALS[currentIndex];
 
   return (
-    <section className="relative overflow-hidden bg-brand-dark py-24 border-t border-white/5" id="testimonials">
+    <section className="relative overflow-hidden bg-bg-primary py-24 border-t border-border-primary" id="testimonials">
       {/* Background visual lighting */}
       <div className="absolute top-[30%] left-10 h-[280px] w-[280px] rounded-full bg-brand-blue/5 blur-[90px]" />
       <div className="absolute top-[60%] right-[-10%] h-[320px] w-[320px] rounded-full bg-brand-pink/5 blur-[120px]" />
@@ -46,13 +46,13 @@ export default function Testimonials() {
         
         {/* Title Heading */}
         <div className="mb-16 text-center">
-          <span className="font-mono text-xs font-bold uppercase tracking-widest text-brand-blue">
+          <span className="font-mono text-sm font-bold uppercase tracking-widest text-brand-blue">
             PARTNER TESTIMONIALS
           </span>
-          <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+          <h2 className="mt-3 font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl md:text-6xl">
             Trusted by Modern <span className="text-gradient">Founders.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl font-sans text-base leading-relaxed text-gray-300">
+          <p className="mx-auto mt-4 max-w-2xl font-sans text-lg leading-relaxed text-text-secondary">
             What digital executives say about our direct performance and bespoke growth execution channels. 
           </p>
         </div>
@@ -71,10 +71,10 @@ export default function Testimonials() {
               animate={{ opacity: 1, scale: 1, x: 0 }}
               exit={{ opacity: 0, scale: 0.98, x: -25 }}
               transition={{ duration: 0.5 }}
-              className="relative rounded-3xl border border-white/5 bg-black/40 p-8 md:p-12 backdrop-blur-md"
+              className="relative rounded-3xl border border-border-primary bg-card-bg p-8 md:p-12 backdrop-blur-md"
             >
               {/* Giant quote decorator */}
-              <Quote className="absolute top-6 right-8 h-12 w-12 text-white/[0.02]" />
+              <Quote className="absolute top-6 right-8 h-12 w-12 text-text-primary/[0.02]" />
 
               <div className="flex flex-col gap-6" id={`testimonial-slide-${activeReview.id}`}>
                 {/* Review ratings */}
@@ -85,28 +85,28 @@ export default function Testimonials() {
                 </div>
 
                 {/* Review Message Text */}
-                <p className="font-sans text-base md:text-lg lg:text-xl leading-relaxed text-gray-200 md:leading-loose">
+                <p className="font-sans text-lg md:text-xl lg:text-2xl leading-relaxed text-text-primary md:leading-loose">
                   “{activeReview.review}”
                 </p>
 
                 {/* Divider */}
-                <span className="h-[1px] w-full bg-white/5" />
+                <span className="h-[1px] w-full bg-border-primary" />
 
                 {/* User author profile */}
                 <span className="flex items-center gap-4">
                   
                   {/* Neon Initials Avatar Shield */}
                   <span className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-tr from-brand-blue to-brand-pink p-[1px]">
-                    <span className="flex h-full w-full items-center justify-center rounded-[11px] bg-brand-dark font-display text-sm font-bold text-white">
+                    <span className="flex h-full w-full items-center justify-center rounded-[11px] bg-bg-secondary font-display text-sm font-bold text-text-primary">
                       {activeReview.name.split(" ").map((n) => n[0]).join("")}
                     </span>
                   </span>
 
                   <div>
-                    <span className="block font-display text-sm font-bold text-white uppercase tracking-wider">
+                    <span className="block font-display text-sm font-bold text-text-primary uppercase tracking-wider">
                       {activeReview.name}
                     </span>
-                    <span className="block font-sans text-xs text-gray-500">
+                    <span className="block font-sans text-sm text-text-tertiary">
                       {activeReview.role} • <span className="text-brand-blue font-semibold">{activeReview.company}</span>
                     </span>
                   </div>
@@ -126,7 +126,7 @@ export default function Testimonials() {
                   key={dotIdx}
                   onClick={() => setCurrentIndex(dotIdx)}
                   className={`h-2 transition-all duration-300 rounded-full cursor-pointer ${
-                    currentIndex === dotIdx ? "w-8 bg-brand-blue" : "w-2 bg-white/10"
+                    currentIndex === dotIdx ? "w-8 bg-brand-blue" : "w-2 bg-text-tertiary/20"
                   }`}
                   aria-label={`Go to slide ${dotIdx + 1}`}
                 />
@@ -137,7 +137,7 @@ export default function Testimonials() {
             <div className="flex gap-2" id="testimonial-nav-arrows">
               <button
                 onClick={handlePrev}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/5 bg-white/5 text-gray-400 transition-colors hover:bg-white/10 hover:text-white cursor-pointer"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-primary bg-bg-secondary text-text-tertiary transition-colors hover:bg-card-hover-bg hover:text-text-primary cursor-pointer"
                 id="testimonial-prev-btn"
                 aria-label="Previous Testimonial"
               >
@@ -146,7 +146,7 @@ export default function Testimonials() {
               
               <button
                 onClick={handleNext}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/5 bg-white/5 text-gray-400 transition-colors hover:bg-white/10 hover:text-white cursor-pointer"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-primary bg-bg-secondary text-text-tertiary transition-colors hover:bg-card-hover-bg hover:text-text-primary cursor-pointer"
                 id="testimonial-next-btn"
                 aria-label="Next Testimonial"
               >

@@ -26,19 +26,19 @@ export default function Hero({ onCtaclick }: HeroProps) {
 
   return (
     <section
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-brand-dark pt-24 pb-16"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-bg-primary pt-24 pb-16"
       id="hero"
     >
       {/* Background Decorative Mesh Grids */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border-primary)_1px,transparent_1px),linear-gradient(to_bottom,var(--border-primary)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
 
       {/* Interactive Floating Marketing Analytics HUD Canvas Background */}
       <MarketingCanvas />
 
       {/* Floating Glowing Orbs (Premium CSS Animations) */}
-      <div className="absolute top-[20%] left-[10%] h-[300px] w-[300px] rounded-full bg-brand-blue/10 blur-[100px] animate-orb-1" />
+      <div className="absolute top-[20%] left-[10%] h-[300px] w-[300px] rounded-full bg-brand-blue/5 blur-[100px] animate-orb-1" />
       <div className="absolute bottom-[20%] right-[10%] h-[350px] w-[350px] rounded-full bg-brand-blue/5 blur-[120px] animate-orb-2" />
-      <div className="absolute top-[50%] left-[50%] h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/5 blur-[80px]" />
+      <div className="absolute top-[50%] left-[50%] h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-pink/5 blur-[80px]" />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 text-center md:px-12">
         {/* Top Tagline */}
@@ -46,7 +46,7 @@ export default function Hero({ onCtaclick }: HeroProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mx-auto mb-6 flex max-w-fit items-center gap-2 rounded-full border border-brand-blue/30 bg-brand-blue/10 px-4 py-1.5 text-xs font-bold tracking-widest text-brand-blue uppercase"
+          className="mx-auto mb-6 flex max-w-fit items-center gap-2 rounded-full border border-brand-blue/30 bg-brand-blue/10 px-4 py-1.5 text-sm font-bold tracking-widest text-brand-blue uppercase"
         >
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-blue opacity-75"></span>
@@ -61,7 +61,7 @@ export default function Hero({ onCtaclick }: HeroProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           onMouseMove={handleWordMouseMove}
-          className="mx-auto max-w-5xl font-display text-4xl font-extrabold tracking-tighter text-white sm:text-6xl md:text-7xl lg:text-8xl leading-tight select-none cursor-default py-4"
+          className="mx-auto max-w-5xl font-display text-4xl font-extrabold tracking-tighter text-text-primary sm:text-6xl md:text-7xl lg:text-8xl leading-tight select-none cursor-default py-4"
         >
           <div className="flex flex-wrap justify-center mb-1 sm:mb-2 gap-y-2">
             {["We", "Build", "Brands"].map((word) => (
@@ -72,7 +72,7 @@ export default function Hero({ onCtaclick }: HeroProps) {
                   return (
                     <motion.span
                       key={index}
-                      className="inline-block origin-bottom text-white"
+                      className="inline-block origin-bottom text-text-primary"
                       whileHover={{
                         y: -16,
                         scale: 1.22,
@@ -131,7 +131,7 @@ export default function Hero({ onCtaclick }: HeroProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mx-auto mt-8 max-w-3xl font-sans text-base md:text-lg leading-relaxed text-gray-300"
+          className="mx-auto mt-8 max-w-3xl font-sans text-lg md:text-xl leading-relaxed text-text-secondary"
         >
           Performance marketing, marketplaces, and high-performance web experiences engineered to capture high-intent buyers and unlock radical growth.
         </motion.p>
@@ -148,7 +148,7 @@ export default function Hero({ onCtaclick }: HeroProps) {
             className="group relative flex items-center gap-2 overflow-hidden rounded-full bg-linear-to-r from-brand-blue to-brand-pink p-[1px] shadow-[0_4px_25px_rgba(59,130,246,0.15)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_4px_30px_rgba(59,130,246,0.3)] cursor-pointer"
             id="hero-book-btn"
           >
-            <span className="flex items-center gap-2 rounded-full bg-brand-dark px-8 py-4 text-xs font-bold tracking-widest text-white uppercase transition-all group-hover:bg-transparent">
+            <span className="flex items-center gap-2 rounded-full bg-bg-primary px-8 py-4 text-sm font-bold tracking-widest text-text-primary uppercase transition-all group-hover:bg-transparent">
               <span>Book Consultation</span>
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
@@ -156,7 +156,7 @@ export default function Hero({ onCtaclick }: HeroProps) {
 
           <button
             onClick={() => onCtaclick("services")}
-            className="group flex items-center gap-2 rounded-full bg-white/5 px-8 py-4 text-xs font-bold tracking-widest text-white uppercase border border-white/10 transition-all duration-300 hover:bg-white/10 hover:border-brand-blue cursor-pointer"
+            className="group flex items-center gap-2 rounded-full bg-card-bg px-8 py-4 text-sm font-bold tracking-widest text-text-primary uppercase border border-border-primary transition-all duration-300 hover:bg-bg-secondary hover:border-brand-blue cursor-pointer"
             id="hero-services-btn"
           >
             <Play className="h-3.5 w-3.5 text-brand-blue transition-transform duration-300 group-hover:scale-110" />
@@ -169,25 +169,25 @@ export default function Hero({ onCtaclick }: HeroProps) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="mx-auto mt-16 max-w-4xl rounded-2xl border border-white/5 bg-brand-dark/40 p-1.5 backdrop-blur-xs"
+          className="mx-auto mt-16 max-w-4xl rounded-2xl border border-border-primary bg-card-bg p-1.5 backdrop-blur-xs shadow-sm"
         >
-          <div className="flex flex-col items-center justify-between gap-3 rounded-xl bg-black/60 px-6 py-4 sm:flex-row md:gap-6 border border-white/5">
+          <div className="flex flex-col items-center justify-between gap-3 rounded-xl bg-bg-secondary px-6 py-4 sm:flex-row md:gap-6 border border-border-primary">
             <div className="flex items-center gap-3">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
               </span>
-              <span className="font-mono text-xs uppercase tracking-wider text-gray-500">
+              <span className="font-mono text-xs uppercase tracking-wider text-text-tertiary">
                 LIVE ORCHESTRATION STREAM:
               </span>
             </div>
             <div className="flex flex-1 items-center gap-2 text-left overflow-hidden">
               <TrendingUp className="h-4 w-4 shrink-0 text-brand-blue" />
-              <div className="animate-pulse font-sans text-sm font-semibold text-gray-300">
+              <div className="animate-pulse font-sans text-sm font-semibold text-text-secondary">
                 Scaling Aethera Apparel PMax Ads to <span className="text-brand-blue font-bold">5.4x ROAS</span> • Optimized TikTok Shop sync for Lumina Sleep (+190% YoY)
               </div>
             </div>
-            <div className="rounded-md bg-white/5 px-3 py-1 font-mono text-[10px] uppercase text-gray-400 border border-white/5">
+            <div className="rounded-md bg-card-bg px-3 py-1 font-mono text-xs uppercase text-text-tertiary border border-border-primary">
               GMT 22:17
             </div>
           </div>

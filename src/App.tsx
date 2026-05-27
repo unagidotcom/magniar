@@ -10,9 +10,7 @@ import TrustLogos from "./components/TrustLogos";
 import About from "./components/About";
 import Services from "./components/Services";
 import Process from "./components/Process";
-import Showcase from "./components/Showcase";
 import HandledClients from "./components/HandledClients";
-import Testimonials from "./components/Testimonials";
 import Blog from "./components/Blog";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
@@ -56,14 +54,9 @@ export default function App() {
           {/* 5-stage scale framework vertical timeline */}
           <Process />
 
-          {/* Developer preview showing interactive mock website viewport */}
-          <Showcase />
 
           {/* Real Handled Clients & Spend Dashboard */}
           <HandledClients />
-
-          {/* Client testimonial auto-slides with initial credentials */}
-          <Testimonials />
 
           {/* Connected Blog System */}
           <Blog />

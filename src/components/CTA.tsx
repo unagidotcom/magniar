@@ -189,10 +189,10 @@ export default function CTA() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-brand-dark py-28 border-t border-white/5" id="contact">
+    <section className="relative overflow-hidden bg-bg-primary py-28 border-t border-border-primary" id="contact">
       
       {/* Dynamic Mesh Grid Background overlay */}
-      <div className="absolute inset-0 bg-[#080808] opacity-90" />
+      <div className="absolute inset-0 bg-bg-primary/95" />
       
       {/* Drifting gradient visual spots */}
       <div className="absolute top-[-10%] left-[20%] h-[400px] w-[400px] rounded-full bg-linear-to-tr from-brand-blue/15 to-brand-pink/15 blur-[120px] animate-orb-1" />
@@ -210,14 +210,14 @@ export default function CTA() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="font-mono text-xs font-bold uppercase tracking-widest text-brand-blue">
+              <span className="font-mono text-sm font-bold uppercase tracking-widest text-brand-blue">
                 UNLOCK SYSTEM
               </span>
-              <h2 className="mt-3 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">
+              <h2 className="mt-3 font-display text-5xl font-bold tracking-tight text-text-primary sm:text-6xl">
                 Ready to Scale <br />
                 <span className="text-gradient">Your Brand?</span>
               </h2>
-              <p className="mt-6 font-sans text-base leading-relaxed text-gray-300">
+              <p className="mt-6 font-sans text-lg leading-relaxed text-text-secondary">
                 Book a structured growth assessment. Our lead diagnostic engineers will audit your current Google/Meta performance and outline concrete execution milestones, linked securely with your custom channels.
               </p>
 
@@ -227,19 +227,19 @@ export default function CTA() {
                   <div className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue">
                     <CheckCircle className="h-3 w-3" />
                   </div>
-                  <span className="font-sans text-base font-semibold text-gray-300">Detailed Paid Advertising Audit included</span>
+                  <span className="font-sans text-lg font-semibold text-text-secondary">Detailed Paid Advertising Audit included</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue">
                     <CheckCircle className="h-3 w-3" />
                   </div>
-                  <span className="font-sans text-base font-semibold text-gray-300">Website load speed diagnostics report</span>
+                  <span className="font-sans text-lg font-semibold text-text-secondary">Website load speed diagnostics report</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue">
                     <CheckCircle className="h-3 w-3" />
                   </div>
-                  <span className="font-sans text-base font-semibold text-gray-300">No retainer locked under test periods</span>
+                  <span className="font-sans text-lg font-semibold text-text-secondary">No retainer locked under test periods</span>
                 </div>
               </div>
             </motion.div>
@@ -252,18 +252,18 @@ export default function CTA() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="relative overflow-hidden rounded-3xl border border-white/5 bg-black/60 p-6 md:p-8 backdrop-blur-md shadow-2xl"
+              className="relative overflow-hidden rounded-3xl border border-border-primary bg-card-bg p-6 md:p-8 backdrop-blur-md shadow-2xl"
             >
               {/* Google Authorized status capsule */}
-              <div className="mb-6 flex items-center justify-between rounded-2xl bg-white/[0.02] border border-white/5 p-4 text-xs">
+              <div className="mb-6 flex items-center justify-between rounded-2xl bg-bg-secondary border border-border-primary p-4 text-xs">
                 <div className="flex items-center gap-2.5">
                   <span className="relative flex h-2 w-2">
                     <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${user ? "bg-emerald-400" : "bg-zinc-600"}`}></span>
                     <span className={`relative inline-flex h-2 w-2 rounded-full ${user ? "bg-emerald-500" : "bg-zinc-500"}`}></span>
                   </span>
-                  <span className="font-sans text-gray-400 text-xs text-left">
+                  <span className="font-sans text-text-tertiary text-xs text-left">
                     {user ? (
-                      <span>Authenticated: <strong className="text-white font-semibold">{user.email}</strong></span>
+                      <span>Authenticated: <strong className="text-text-primary font-semibold">{user.email}</strong></span>
                     ) : (
                       <span>Secure Google Integration disconnected</span>
                     )}
@@ -272,7 +272,7 @@ export default function CTA() {
                 {user ? (
                   <button
                     onClick={handleSignOut}
-                    className="flex items-center gap-1 font-mono text-[9px] text-brand-blue hover:text-white uppercase tracking-widest font-bold border border-white/10 rounded-full px-3 py-1 cursor-pointer transition-colors"
+                    className="flex items-center gap-1 font-mono text-[9px] text-brand-blue hover:text-text-primary uppercase tracking-widest font-bold border border-border-primary rounded-full px-3 py-1 cursor-pointer transition-colors hover:bg-card-hover-bg"
                   >
                     <LogOut className="h-2.5 w-2.5" />
                     <span>Disconnect</span>
@@ -298,12 +298,12 @@ export default function CTA() {
                     className="space-y-6"
                   >
                     {/* Toggles between Contact form and Calendar */}
-                    <div className="flex rounded-xl bg-white/5 p-1 border border-white/5 uppercase" id="cta-selector-headers">
+                    <div className="flex rounded-xl bg-bg-secondary p-1 border border-border-primary uppercase" id="cta-selector-headers">
                       <button
                         type="button"
                         onClick={() => setActiveTab("form")}
                         className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 font-display text-xs font-bold transition-all duration-300 cursor-pointer ${
-                          activeTab === "form" ? "bg-brand-blue text-white shadow-md" : "text-gray-400 hover:text-white"
+                          activeTab === "form" ? "bg-brand-blue text-white shadow-md" : "text-text-tertiary hover:text-text-primary"
                         }`}
                       >
                         <MessageSquareCode className="h-3.5 w-3.5" />
@@ -314,7 +314,7 @@ export default function CTA() {
                         type="button"
                         onClick={() => setActiveTab("calendar")}
                         className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 font-display text-xs font-bold transition-all duration-300 cursor-pointer ${
-                          activeTab === "calendar" ? "bg-brand-blue text-white shadow-md" : "text-gray-400 hover:text-white"
+                          activeTab === "calendar" ? "bg-brand-blue text-white shadow-md" : "text-text-tertiary hover:text-text-primary"
                         }`}
                       >
                         <Calendar className="h-3.5 w-3.5" />
@@ -325,7 +325,7 @@ export default function CTA() {
                     {/* Shared Info Fields */}
                     <div className="grid gap-4 sm:grid-cols-2" id="cta-contact-basics">
                       <div>
-                        <label className="block font-mono text-xs uppercase tracking-widest text-gray-400 mb-1.5" htmlFor="field-name">NAME / REPRESENTATIVE *</label>
+                        <label className="block font-mono text-xs uppercase tracking-widest text-text-tertiary mb-1.5" htmlFor="field-name">NAME / REPRESENTATIVE *</label>
                         <input
                           type="text"
                           id="field-name"
@@ -333,11 +333,11 @@ export default function CTA() {
                           placeholder="e.g. Liam Cross"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="w-full rounded-xl border border-white/5 bg-white/5 px-4 py-3 font-sans text-base text-white placeholder-gray-500 outline-none transition-all focus:border-brand-blue focus:bg-white/[0.08]"
+                          className="w-full rounded-xl border border-border-primary bg-bg-secondary px-4 py-3 font-sans text-base text-text-primary placeholder-text-tertiary outline-none transition-all focus:border-brand-blue focus:bg-card-hover-bg"
                         />
                       </div>
                       <div>
-                        <label className="block font-mono text-xs uppercase tracking-widest text-gray-400 mb-1.5" htmlFor="field-email">CONTACT EMAIL *</label>
+                        <label className="block font-mono text-xs uppercase tracking-widest text-text-tertiary mb-1.5" htmlFor="field-email">CONTACT EMAIL *</label>
                         <input
                           type="email"
                           id="field-email"
@@ -345,7 +345,7 @@ export default function CTA() {
                           placeholder="e.g. liam@lumina.com"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full rounded-xl border border-white/5 bg-white/5 px-4 py-3 font-sans text-base text-white placeholder-gray-500 outline-none transition-all focus:border-brand-blue focus:bg-white/[0.08]"
+                          className="w-full rounded-xl border border-border-primary bg-bg-secondary px-4 py-3 font-sans text-base text-text-primary placeholder-text-tertiary outline-none transition-all focus:border-brand-blue focus:bg-card-hover-bg"
                         />
                       </div>
                     </div>
@@ -364,7 +364,7 @@ export default function CTA() {
                         
                         {/* Company Website */}
                         <div>
-                          <label className="block font-mono text-xs uppercase tracking-widest text-gray-400 mb-1.5" htmlFor="field-web">BRAND WEBSITE URL</label>
+                          <label className="block font-mono text-xs uppercase tracking-widest text-text-tertiary mb-1.5" htmlFor="field-web">BRAND WEBSITE URL</label>
                           <div className="relative">
                             <input
                               type="url"
@@ -372,15 +372,15 @@ export default function CTA() {
                               placeholder="e.g. https://lumina.com"
                               value={formData.website}
                               onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                              className="w-full rounded-xl border border-white/5 bg-white/5 px-4 py-3 font-sans text-base text-white placeholder-gray-500 outline-none transition-all focus:border-brand-blue focus:bg-white/[0.08]"
+                              className="w-full rounded-xl border border-border-primary bg-bg-secondary px-4 py-3 font-sans text-base text-text-primary placeholder-text-tertiary outline-none transition-all focus:border-brand-blue focus:bg-card-hover-bg"
                             />
-                            <Globe className="absolute right-4 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gray-400" />
+                            <Globe className="absolute right-4 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-text-tertiary" />
                           </div>
                         </div>
 
                         {/* Monthly ad spend tiers */}
                         <div>
-                          <label className="block font-mono text-xs uppercase tracking-widest text-gray-400 mb-2">MONTHLY MARKETING SPEND</label>
+                          <label className="block font-mono text-xs uppercase tracking-widest text-text-tertiary mb-2">MONTHLY MARKETING SPEND</label>
                           <div className="grid grid-cols-2 gap-2" id="spend-pills-selection">
                             {adSpendTiers.map((tier) => (
                               <button
@@ -389,8 +389,8 @@ export default function CTA() {
                                 onClick={() => setFormData({ ...formData, spend: tier })}
                                 className={`rounded-xl border py-3 text-center font-sans text-sm font-semibold cursor-pointer transition-all duration-300 ${
                                   formData.spend === tier
-                                    ? "border-brand-blue bg-brand-blue/10 text-white"
-                                    : "border-white/5 bg-white/5 text-gray-400 hover:border-white/10 hover:text-white"
+                                    ? "border-brand-blue bg-brand-blue/10 text-brand-blue font-bold"
+                                    : "border-border-primary bg-bg-secondary text-text-tertiary hover:border-border-primary hover:bg-card-hover-bg hover:text-text-primary"
                                 }`}
                               >
                                 {tier}
@@ -401,14 +401,14 @@ export default function CTA() {
 
                         {/* Custom project descriptors */}
                         <div>
-                          <label className="block font-mono text-xs uppercase tracking-widest text-gray-400 mb-1.5" htmlFor="field-desc">Briefly describe your bottlenecks</label>
+                          <label className="block font-mono text-xs uppercase tracking-widest text-text-tertiary mb-1.5" htmlFor="field-desc">Briefly describe your bottlenecks</label>
                           <textarea
                             id="field-desc"
                             rows={3}
                             placeholder="Tell us about your meta limits, Amazon listing penalties, or conversion goals..."
                             value={formData.details}
                             onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                            className="w-full rounded-xl border border-white/5 bg-white/5 px-4 py-3 font-sans text-base text-white placeholder-gray-500 outline-none transition-all focus:border-brand-blue focus:bg-white/[0.08]"
+                            className="w-full rounded-xl border border-border-primary bg-bg-secondary px-4 py-3 font-sans text-base text-text-primary placeholder-text-tertiary outline-none transition-all focus:border-brand-blue focus:bg-card-hover-bg"
                           />
                         </div>
 
@@ -436,9 +436,9 @@ export default function CTA() {
 
                     {activeTab === "calendar" && (
                       <div className="space-y-6 animate-fade-in" id="calendar-booking-pnl">
-                        <div className="text-center rounded-xl bg-brand-pink/5 border border-brand-pink/10 p-4">
+                        <div className="text-center rounded-xl bg-brand-pink/5 border border-brand-pink/20 p-4">
                           <span className="font-mono text-[10px] text-brand-pink font-bold uppercase">AVAILABLE SLOTS METRICS</span>
-                          <p className="mt-1 font-sans text-xs text-gray-400">
+                          <p className="mt-1 font-sans text-xs text-text-tertiary">
                             Select an interactive slot below to link on the Google Calendar.
                           </p>
                         </div>
@@ -450,10 +450,10 @@ export default function CTA() {
                               type="button"
                               disabled={submitStatus === "submitting"}
                               onClick={() => handleBookSpot(spot.day, spot.time)}
-                              className="group flex flex-col items-center justify-center rounded-2xl border border-white/5 bg-white/5 p-4 text-center cursor-pointer transition-all duration-300 hover:border-brand-pink hover:bg-brand-pink/10 disabled:opacity-50"
+                              className="group flex flex-col items-center justify-center rounded-2xl border border-border-primary bg-bg-secondary p-4 text-center cursor-pointer transition-all duration-300 hover:border-brand-pink hover:bg-brand-pink/10 disabled:opacity-50"
                             >
-                              <span className="font-sans text-[11px] text-gray-400 group-hover:text-gray-300">{spot.day}</span>
-                              <span className="mt-1 font-display text-lg font-extrabold text-white">{spot.time}</span>
+                              <span className="font-sans text-[11px] text-text-tertiary group-hover:text-text-secondary">{spot.day}</span>
+                              <span className="mt-1 font-display text-lg font-extrabold text-text-primary">{spot.time}</span>
                               <span className="mt-1 font-mono text-[8px] tracking-widest uppercase text-brand-blue group-hover:text-brand-pink font-semibold">
                                 {submitStatus === "submitting" && selectedSpot?.includes(spot.time) ? "BOOKING..." : "CLICK TO BOOK"}
                               </span>
@@ -461,7 +461,7 @@ export default function CTA() {
                           ))}
                         </div>
 
-                        <p className="text-center font-mono text-[9px] text-gray-500">
+                        <p className="text-center font-mono text-[9px] text-text-tertiary">
                           UTC timezone selected matching standard server.
                         </p>
                       </div>
@@ -481,18 +481,18 @@ export default function CTA() {
                       <CheckCircle className="h-8 w-8" />
                     </div>
                     
-                    <h3 className="mt-6 font-display text-2xl font-bold text-white">
+                    <h3 className="mt-6 font-display text-2xl font-bold text-text-primary">
                       Diagnostic Allocated!
                     </h3>
 
                     {activeTab === "form" ? (
-                      <p className="mx-auto mt-4 max-w-sm font-sans text-base leading-relaxed text-gray-300">
+                      <p className="mx-auto mt-4 max-w-sm font-sans text-base leading-relaxed text-text-secondary">
                         Awesome <span className="text-brand-blue font-bold">{formData.name || "partner"}</span>, our lead growth diagnostics engineer has received your custom brand analysis. A secure email containing the details has been successfully dispatched to <span className="text-brand-blue font-bold">magniarventures@gmail.com</span> using your authorized Gmail API session!
                       </p>
                     ) : (
                       <div className="mx-auto mt-4 max-w-sm space-y-4">
-                        <p className="font-sans text-base leading-relaxed text-gray-300">
-                          Successfully reserved spot: <span className="text-brand-blue font-bold">{selectedSpot}</span>. Your Google Calendar event has been injected into your primary node, inviting <span className="text-white font-bold">magniarventures@gmail.com</span>.
+                        <p className="font-sans text-base leading-relaxed text-text-secondary">
+                          Successfully reserved spot: <span className="text-brand-blue font-bold">{selectedSpot}</span>. Your Google Calendar event has been injected into your primary node, inviting <span className="text-text-primary font-bold">magniarventures@gmail.com</span>.
                         </p>
                         {calendarLink && (
                           <div className="pt-2">
@@ -500,7 +500,7 @@ export default function CTA() {
                               href={calendarLink}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex items-center gap-1 text-sm font-mono text-brand-blue hover:text-white underline uppercase tracking-widest"
+                              className="inline-flex items-center gap-1 text-sm font-mono text-brand-blue hover:text-text-primary underline uppercase tracking-widest"
                             >
                               <span>Inspect Calendar Event</span>
                               <ArrowRight className="h-3 w-3" />
@@ -518,7 +518,7 @@ export default function CTA() {
                           setSubmitStatus("idle");
                           setCalendarLink("");
                         }}
-                        className="rounded-xl border border-white/5 bg-white/5 px-6 py-3 font-display text-xs font-bold tracking-wider text-white uppercase hover:bg-white/10"
+                        className="rounded-xl border border-border-primary bg-bg-secondary px-6 py-3 font-display text-xs font-bold tracking-wider text-text-primary uppercase hover:bg-card-hover-bg"
                         id="cta-reset-btn"
                       >
                         Book another spot

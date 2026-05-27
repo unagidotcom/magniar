@@ -55,9 +55,9 @@ export default function About() {
   const { currentCurrency, convertValue } = useCurrency();
 
   return (
-    <section className="relative overflow-hidden bg-brand-dark py-24" id="about">
+    <section className="relative overflow-hidden bg-bg-primary py-24" id="about">
       {/* Decorative vertical coordinates overlay */}
-      <div className="absolute top-0 right-10 h-full w-[1px] bg-gradient-to-b from-transparent via-white/5 to-transparent" />
+      <div className="absolute top-0 right-10 h-full w-[1px] bg-gradient-to-b from-transparent via-border-primary to-transparent" />
 
       <div className="mx-auto max-w-7xl px-6 md:px-12">
         <div className="grid gap-16 lg:grid-cols-12 lg:items-center">
@@ -70,20 +70,20 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-brand-blue/10 border border-brand-blue/30 px-3.5 py-1 text-xs font-semibold tracking-widest text-brand-blue uppercase">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-brand-blue/10 border border-brand-blue/30 px-3.5 py-1 text-sm font-semibold tracking-widest text-brand-blue uppercase">
                 <span>OUR CORE POSITIONING</span>
               </div>
               
-              <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+              <h2 className="font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
                 Growth Meets <br />
                 <span className="text-gradient">Creative Execution.</span>
               </h2>
 
-              <p className="mt-6 font-sans text-base md:text-lg leading-relaxed text-gray-300">
+              <p className="mt-6 font-sans text-lg md:text-xl leading-relaxed text-text-secondary">
                 Magniar & Co is a modern digital marketing and creative engineering growth agency built for the speed of modern digital commerce. We deploy performance paid advertising, design high-converting visual creative streams, and launch custom sub-second website nodes. 
               </p>
 
-              <p className="mt-4 font-sans text-base md:text-lg leading-relaxed text-gray-300">
+              <p className="mt-4 font-sans text-lg md:text-xl leading-relaxed text-text-secondary">
                 Instead of isolated activities, we combine advertising scripts and code, ensuring your campaigns benefit from immediate, error-free checkout pages, and your marketing budgets are guided directly by accurate attribution analytics.
               </p>
 
@@ -92,13 +92,13 @@ export default function About() {
                 {iconGroup.map((item, id) => {
                   const Icon = item.icon;
                   return (
-                    <div key={id} className="flex gap-3 rounded-xl border border-white/5 bg-white/[0.02] p-4">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-blue/10 text-white/80">
+                    <div key={id} className="flex gap-3 rounded-xl border border-border-primary bg-card-bg p-4 shadow-xs">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-blue/10 text-text-primary">
                         <Icon className="h-5 w-5 text-brand-blue" />
                       </div>
                       <div>
-                        <h4 className="font-display text-sm font-semibold text-white">{item.title}</h4>
-                        <p className="mt-1 font-sans text-sm text-gray-400">{item.text}</p>
+                        <h4 className="font-display text-base font-semibold text-text-primary">{item.title}</h4>
+                        <p className="mt-1 font-sans text-sm md:text-base text-text-tertiary">{item.text}</p>
                       </div>
                     </div>
                   );
@@ -122,22 +122,22 @@ export default function About() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: idx * 0.1 }}
-                    className="group relative rounded-2xl border border-white/5 bg-black/40 p-6 backdrop-blur-md transition-all duration-300 hover:border-brand-blue/35 hover:bg-white/[0.01]"
+                    className="group relative rounded-2xl border border-border-primary bg-card-bg p-6 backdrop-blur-md transition-all duration-300 hover:border-brand-blue/35 hover:bg-card-hover-bg shadow-xs"
                   >
                     {/* Subtle top horizontal indicator ray */}
                     <span className="absolute top-0 left-6 h-[1.5px] w-12 bg-linear-to-r from-brand-blue to-brand-pink opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                     
                     <div className="flex flex-col">
-                      <span className="font-display text-3xl font-extrabold text-white md:text-4xl">
+                      <span className="font-display text-3xl font-extrabold text-text-primary md:text-4xl">
                         <AnimatedCounter value={displayVal} prefix={displayPrefix} suffix={stat.suffix} />
                       </span>
-                      <span className="mt-2 font-sans text-sm font-semibold tracking-wide text-gray-300">
+                      <span className="mt-2 font-sans text-sm md:text-base font-semibold tracking-wide text-text-secondary">
                         {stat.label}
                       </span>
                     </div>
 
                     {/* Corner aesthetic visual grid widget */}
-                    <div className="absolute bottom-3 right-3 flex h-6 w-6 items-center justify-center text-[8px] font-mono text-gray-700 select-none group-hover:text-brand-blue/30">
+                    <div className="absolute bottom-3 right-3 flex h-6 w-6 items-center justify-center text-[8px] font-mono text-text-tertiary/20 select-none group-hover:text-brand-blue/30">
                       //0{idx + 1}
                     </div>
                   </motion.div>
@@ -151,7 +151,7 @@ export default function About() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-6 flex items-center gap-4 rounded-xl border border-brand-blue/15 bg-brand-blue/5 p-4"
+              className="mt-6 flex items-center gap-4 rounded-xl border border-brand-blue/20 bg-brand-blue/5 p-4"
             >
               <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-blue/10">
                 <span className="relative flex h-2 w-2">
@@ -159,8 +159,8 @@ export default function About() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-blue"></span>
                 </span>
               </div>
-              <div className="font-sans text-sm md:text-base text-gray-300 leading-relaxed">
-                <span className="font-bold text-white">Full Agency Integration:</span> Managed spend represents live Google and Meta Enterprise direct API integrations.
+              <div className="font-sans text-base md:text-lg text-text-secondary leading-relaxed">
+                <span className="font-bold text-text-primary">Full Agency Integration:</span> Managed spend represents live Google and Meta Enterprise direct API integrations.
               </div>
             </motion.div>
           </div>
