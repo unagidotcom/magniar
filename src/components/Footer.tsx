@@ -144,9 +144,36 @@ export default function Footer() {
 
         {/* Bottom credits */}
         <div className="mt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <span className="font-mono text-xs text-text-tertiary">
-            © {new Date().getFullYear()} Magniar & Co. All rights retained. Engineered with premium parameters.
-          </span>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 font-mono text-xs text-text-tertiary">
+            <span>
+              © {new Date().getFullYear()} Magniar & Co. All rights retained.
+            </span>
+            <span className="hidden sm:inline text-border-primary">|</span>
+            <div className="flex gap-4">
+              <a
+                href="/privacy-policy"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.history.pushState({}, "", "/privacy-policy");
+                  window.dispatchEvent(new Event("navigate"));
+                }}
+                className="hover:text-brand-pink transition-colors cursor-pointer"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="/terms-and-conditions"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.history.pushState({}, "", "/terms-and-conditions");
+                  window.dispatchEvent(new Event("navigate"));
+                }}
+                className="hover:text-brand-pink transition-colors cursor-pointer"
+              >
+                Terms & Conditions
+              </a>
+            </div>
+          </div>
 
           <button
             onClick={handleScrollTop}

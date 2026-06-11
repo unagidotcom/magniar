@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Sparkles, ArrowRight, CheckCircle, Mail, Globe, Calendar, MessageSquareCode, LogOut, Loader2, AlertCircle } from "lucide-react";
 import { useCurrency } from "../CurrencyContext";
-import { googleSignIn, sendGmailNotification, createCalendarEvent, logout, initAuth } from "../lib/googleAuth";
+import { googleSignIn, createCalendarEvent, logout, initAuth } from "../lib/googleAuth";
+import { submitContactForm } from "../lib/contact";
 import { User } from "firebase/auth";
 
 export default function CTA() {
@@ -106,34 +107,24 @@ export default function CTA() {
     setSubmitError(null);
 
     try {
-      let activeToken = userToken;
-      
-      // If not authenticated, request one-time signup to deliver Gmail directly from their secure session
-      if (!activeToken) {
-        const loginVal = await googleSignIn();
-        if (loginVal) {
-          setUser(loginVal.user);
-          setUserToken(loginVal.accessToken);
-          activeToken = loginVal.accessToken;
-        } else {
-          throw new Error("Google Authentication required to deliver Gmail notification.");
-        }
-      }
-
-      await sendGmailNotification({
+      await submitContactForm({
         name: formData.name,
+        email: formData.email,
         website: formData.website,
         spend: formData.spend,
         details: formData.details,
-        senderEmail: formData.email,
-      }, activeToken!);
+      });
 
       setSubmitStatus("success");
       setInquired(true);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
       setSubmitStatus("error");
-      setSubmitError(err.message || "Failed to send Gmail confirmation. Verify your permissions.");
+      setSubmitError(
+        err instanceof Error
+          ? err.message
+          : "Failed to send inquiry. Please try again."
+      );
     }
   };
 
@@ -254,39 +245,41 @@ export default function CTA() {
               transition={{ duration: 0.6 }}
               className="relative overflow-hidden rounded-3xl border border-border-primary bg-card-bg p-6 md:p-8 backdrop-blur-md shadow-2xl"
             >
-              {/* Google Authorized status capsule */}
-              <div className="mb-6 flex items-center justify-between rounded-2xl bg-bg-secondary border border-border-primary p-4 text-xs">
-                <div className="flex items-center gap-2.5">
-                  <span className="relative flex h-2 w-2">
-                    <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${user ? "bg-emerald-400" : "bg-zinc-600"}`}></span>
-                    <span className={`relative inline-flex h-2 w-2 rounded-full ${user ? "bg-emerald-500" : "bg-zinc-500"}`}></span>
-                  </span>
-                  <span className="font-sans text-text-tertiary text-xs text-left">
-                    {user ? (
-                      <span>Authenticated: <strong className="text-text-primary font-semibold">{user.email}</strong></span>
-                    ) : (
-                      <span>Secure Google Integration disconnected</span>
-                    )}
-                  </span>
+              {/* Google sign-in only required for calendar booking */}
+              {activeTab === "calendar" && (
+                <div className="mb-6 flex items-center justify-between rounded-2xl bg-bg-secondary border border-border-primary p-4 text-xs">
+                  <div className="flex items-center gap-2.5">
+                    <span className="relative flex h-2 w-2">
+                      <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${user ? "bg-emerald-400" : "bg-zinc-600"}`}></span>
+                      <span className={`relative inline-flex h-2 w-2 rounded-full ${user ? "bg-emerald-500" : "bg-zinc-500"}`}></span>
+                    </span>
+                    <span className="font-sans text-text-tertiary text-xs text-left">
+                      {user ? (
+                        <span>Google Calendar: <strong className="text-text-primary font-semibold">{user.email}</strong></span>
+                      ) : (
+                        <span>Connect Google to book a calendar slot</span>
+                      )}
+                    </span>
+                  </div>
+                  {user ? (
+                    <button
+                      onClick={handleSignOut}
+                      className="flex items-center gap-1 font-mono text-[9px] text-brand-blue hover:text-text-primary uppercase tracking-widest font-bold border border-border-primary rounded-full px-3 py-1 cursor-pointer transition-colors hover:bg-card-hover-bg"
+                    >
+                      <LogOut className="h-2.5 w-2.5" />
+                      <span>Disconnect</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleConnectGoogle}
+                      disabled={isAuthenticating}
+                      className="font-mono text-[9px] text-brand-blue hover:text-white uppercase tracking-widest font-bold border border-brand-blue/30 rounded-full px-3 py-1 cursor-pointer transition-colors bg-brand-blue/10"
+                    >
+                      {isAuthenticating ? "Connecting..." : "Connect"}
+                    </button>
+                  )}
                 </div>
-                {user ? (
-                  <button
-                    onClick={handleSignOut}
-                    className="flex items-center gap-1 font-mono text-[9px] text-brand-blue hover:text-text-primary uppercase tracking-widest font-bold border border-border-primary rounded-full px-3 py-1 cursor-pointer transition-colors hover:bg-card-hover-bg"
-                  >
-                    <LogOut className="h-2.5 w-2.5" />
-                    <span>Disconnect</span>
-                  </button>
-                ) : (
-                  <button
-                    onClick={handleConnectGoogle}
-                    disabled={isAuthenticating}
-                    className="font-mono text-[9px] text-brand-blue hover:text-white uppercase tracking-widest font-bold border border-brand-blue/30 rounded-full px-3 py-1 cursor-pointer transition-colors bg-brand-blue/10"
-                  >
-                    {isAuthenticating ? "Connecting..." : "Connect"}
-                  </button>
-                )}
-              </div>
+              )}
 
               <AnimatePresence mode="wait">
                 {!inquired ? (
@@ -421,7 +414,7 @@ export default function CTA() {
                           {submitStatus === "submitting" ? (
                             <>
                               <Loader2 className="h-4 w-4 animate-spin text-white" />
-                              <span>Sending secure notification...</span>
+                              <span>Sending inquiry...</span>
                             </>
                           ) : (
                             <>
@@ -487,7 +480,7 @@ export default function CTA() {
 
                     {activeTab === "form" ? (
                       <p className="mx-auto mt-4 max-w-sm font-sans text-base leading-relaxed text-text-secondary">
-                        Awesome <span className="text-brand-blue font-bold">{formData.name || "partner"}</span>, our lead growth diagnostics engineer has received your custom brand analysis. A secure email containing the details has been successfully dispatched to <span className="text-brand-blue font-bold">magniarventures@gmail.com</span> using your authorized Gmail API session!
+                        Thanks <span className="text-brand-blue font-bold">{formData.name || "partner"}</span> — your inquiry was received. Our team at <span className="text-brand-blue font-bold">magniarventures@gmail.com</span> will follow up shortly.
                       </p>
                     ) : (
                       <div className="mx-auto mt-4 max-w-sm space-y-4">

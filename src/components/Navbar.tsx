@@ -52,8 +52,50 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleHashScroll = () => {
+      if (window.location.hash) {
+        const hash = window.location.hash.substring(1);
+        setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            window.scrollTo({
+              top: element.offsetTop - 80,
+              behavior: "smooth",
+            });
+          }
+        }, 150);
+      }
+    };
+
+    window.addEventListener("hashchange", handleHashScroll);
+    handleHashScroll();
+
+    // Listen for custom navigate event to trigger hash check as well
+    window.addEventListener("navigate", handleHashScroll);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashScroll);
+      window.removeEventListener("navigate", handleHashScroll);
+    };
+  }, []);
+
   const scrollToSection = (id: string) => {
     setIsOpen(false);
+    if (window.location.pathname !== "/" && window.location.pathname !== "/index.html") {
+      window.history.pushState({}, "", `/#${id}`);
+      window.dispatchEvent(new Event("navigate"));
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          window.scrollTo({
+            top: element.offsetTop - 80,
+            behavior: "smooth",
+          });
+        }
+      }, 100);
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       window.scrollTo({
@@ -81,7 +123,14 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 md:px-12">
         {/* Logo */}
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => {
+            if (window.location.pathname !== "/" && window.location.pathname !== "/index.html") {
+              window.history.pushState({}, "", "/");
+              window.dispatchEvent(new Event("navigate"));
+            } else {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
           className="group flex items-center gap-2 cursor-pointer"
           id="nav-logo-btn"
         >
