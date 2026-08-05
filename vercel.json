@@ -5,7 +5,15 @@
       "destination": "https://app.magniar.com/wp-json/:path*"
     },
     {
-      "source": "/((?!assets/|api/|wp-json/|.*\\..*).*)",
+      "source": "/printing-devices",
+      "destination": "/printing-devices/index.html"
+    },
+    {
+      "source": "/printing-devices/:path*",
+      "destination": "/printing-devices/:path/index.html"
+    },
+    {
+      "source": "/((?!assets/|api/|wp-json/|printing-devices/|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]
