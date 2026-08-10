@@ -1,177 +1,117 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
-:root {
-  /* Default Theme: Dark Mode */
-  --bg-primary: #050505;
-  --bg-secondary: #0a0a0a;
-  --text-primary: #ffffff;
-  --text-secondary: #d1d5db; /* gray-300 */
-  --text-tertiary: #9ca3af;  /* gray-400 */
-  --border-primary: rgba(255, 255, 255, 0.05);
-  --card-bg: rgba(10, 10, 10, 0.65);
-  --card-hover-bg: rgba(255, 255, 255, 0.01);
-  --theme-glow-color: rgba(59, 130, 246, 0.08);
+@layer base {
+  :root {
+    --magniar-bg: #050505;
+    --magniar-surface: #0A0C0F;
+    --magniar-surface-elevated: #101318;
+    --magniar-text-primary: #F5F7FA;
+    --magniar-text-secondary: #9CA3AF;
+    --magniar-text-muted: #6B7280;
+    --magniar-border: rgba(255, 255, 255, 0.08);
+    --magniar-border-active: rgba(0, 153, 255, 0.4);
+    --magniar-accent: #0099FF;
+    --magniar-accent-glow: rgba(0, 153, 255, 0.25);
+    
+    --font-heading: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--magniar-bg);
+    color: var(--magniar-text-primary);
+    overflow-x: hidden;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+
+  p, span, button, input, textarea, select, a, .font-sans {
+    font-family: var(--font-body);
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
 }
 
-:root.light {
-  /* Light Mode Theme */
-  --bg-primary: #f8fafc; /* Slate 50 */
-  --bg-secondary: #f1f5f9; /* Slate 100 */
-  --text-primary: #0f172a; /* Slate 900 */
-  --text-secondary: #334155; /* Slate 700 */
-  --text-tertiary: #64748b;  /* Slate 500 */
-  --border-primary: rgba(15, 23, 42, 0.08); /* subtle slate border */
-  --card-bg: rgba(255, 255, 255, 0.85); /* crisp white transparent card */
-  --card-hover-bg: rgba(255, 255, 255, 0.98);
-  --theme-glow-color: rgba(59, 130, 246, 0.03);
+/* Magniar Grid Overlay Background */
+.magniar-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
-@theme {
-  --color-brand-dark: var(--bg-secondary);
-  --color-brand-blue: #3b82f6;
-  --color-brand-pink: #60a5fa;
-  
-  --color-bg-primary: var(--bg-primary);
-  --color-bg-secondary: var(--bg-secondary);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-tertiary: var(--text-tertiary);
-  --color-border-primary: var(--border-primary);
-  --color-card-bg: var(--card-bg);
-  --color-card-hover-bg: var(--card-hover-bg);
-  
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+.magniar-grid-pattern-dense {
+  background-size: 20px 20px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }
 
-/* Base resets & styles matching high-end agency vibe */
-html {
-  scroll-behavior: smooth;
-  background-color: var(--bg-primary);
-  color: var(--text-secondary);
-  overflow-x: hidden;
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+.magniar-glass {
+  background: rgba(10, 12, 15, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-body {
-  font-family: var(--font-sans);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+.magniar-glow-accent {
+  box-shadow: 0 0 25px rgba(0, 153, 255, 0.15);
 }
 
-/* Custom Scrollbar fitting the futuristic aesthetics */
+.magniar-glow-accent-subtle {
+  box-shadow: 0 0 15px rgba(0, 153, 255, 0.08);
+}
+
+/* Custom scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: #050505;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #111827;
-  border-radius: 9999px;
-  border: 1px solid var(--border-primary);
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #1f2937;
+  background: rgba(0, 153, 255, 0.4);
 }
 
-/* Custom keyframes for slow premium animations */
-@keyframes orb-float-1 {
+/* Magniar Signal Pulse Animation */
+@keyframes magniar-pulse {
   0%, 100% {
-    transform: translate(0px, 0px) scale(1);
-    filter: blur(100px) brightness(1);
-  }
-  33% {
-    transform: translate(40px, -60px) scale(1.15);
-    filter: blur(120px) brightness(1.2);
-  }
-  66% {
-    transform: translate(-30px, 30px) scale(0.9);
-    filter: blur(110px) brightness(0.9);
-  }
-}
-
-@keyframes orb-float-2 {
-  0%, 100% {
-    transform: translate(0px, 0px) scale(1.05);
-    filter: blur(120px) brightness(1);
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 8px rgba(0, 153, 255, 0.8);
   }
   50% {
-    transform: translate(-50px, 50px) scale(0.85);
-    filter: blur(140px) brightness(1.1);
+    opacity: 0.4;
+    transform: scale(0.92);
+    box-shadow: 0 0 2px rgba(0, 153, 255, 0.2);
   }
 }
 
-@keyframes mesh-drift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+.animate-magniar-pulse {
+  animation: magniar-pulse 2.5s infinite ease-in-out;
 }
 
-.animate-orb-1 {
-  animation: orb-float-1 16s infinite ease-in-out;
+@keyframes signal-scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
-.animate-orb-2 {
-  animation: orb-float-2 22s infinite ease-in-out;
+.animate-signal-scan {
+  animation: signal-scan 3s infinite linear;
 }
 
-.animate-gradient-text {
-  background: linear-gradient(to right, #ffffff, #93c5fd, #3b82f6, #ffffff);
-  background-size: 300% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: mesh-drift 8s ease infinite;
-}
-
-/* Card gradients & custom shadows */
-.glass-panel {
-  background: var(--card-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--border-primary);
-  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-}
-
-.glass-panel-hover {
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-panel-hover:hover {
-  border-color: rgba(59, 130, 246, 0.3);
-  box-shadow: 0 15px 50px rgba(59, 130, 246, 0.08), 0 0 30px rgba(96, 165, 250, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-  transform: translateY(-4px);
-}
-
-.text-gradient {
-  background: linear-gradient(to right, #3b82f6, #60a5fa);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.glow-glow {
-  filter: drop-shadow(0 0 16px rgba(59, 130, 246, 0.45));
-}
-
-.glow-glow-pink {
-  filter: drop-shadow(0 0 16px rgba(236, 72, 153, 0.45));
-}
-
-/* Layout container styling */
-.container-premium {
-  width: 100%;
-  max-width: 80rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
