@@ -55,6 +55,9 @@ export const AdminShell: React.FC<AdminShellProps> = ({
             if (isMounted) {
               setIsAuthenticated(isAdmin);
               setIsCheckingSession(false);
+              if (!isAdmin) {
+                void supabase.auth.signOut();
+              }
             }
           })
           .catch(() => {
@@ -84,6 +87,9 @@ export const AdminShell: React.FC<AdminShellProps> = ({
             if (isMounted) {
               setIsAuthenticated(isAdmin);
               setIsCheckingSession(false);
+              if (!isAdmin) {
+                void supabase.auth.signOut();
+              }
             }
           }
         );
