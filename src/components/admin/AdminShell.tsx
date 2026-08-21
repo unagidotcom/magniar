@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { AdminSidebar } from './AdminSidebar';
 import { AdminHeader } from './AdminHeader';
 import { DashboardPage } from './dashboard/DashboardPage';
-import { ProspectsPage } from './prospects/ProspectsPage';
 import { ClientsPage } from './clients/ClientsPage';
-import { ProjectsPage } from './projects/ProjectsPage';
-import { CampaignsPage } from './campaigns/CampaignsPage';
+import { InvoicesPage } from './invoices/InvoicesPage';
 import { AdminModulePlaceholder } from './AdminModulePlaceholder';
 import { AdminLogin } from './AdminLogin';
 import { AdminToast, ToastMessage } from './AdminToast';
-import { MOCK_NOTIFICATIONS, MockNotification } from '../../data/adminMockData';
+import { MockNotification } from '../../data/adminMockData';
 import { supabase, isSupabaseConfigured, checkIsUserAdmin } from '../../lib/supabase';
+import { listProjectRequests } from '../../services/projectRequestService';
 
 interface AdminShellProps {
   onReturnToPublicSite?: () => void;
@@ -29,7 +28,8 @@ export const AdminShell: React.FC<AdminShellProps> = ({
   const [isCheckingSession, setIsCheckingSession] = useState<boolean>(isSupabaseConfigured);
   const [currentRoute, setCurrentRoute] = useState<string>(initialRoute);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState<boolean>(false);
-  const [notifications, setNotifications] = useState<MockNotification[]>(MOCK_NOTIFICATIONS);
+  const [notifications, setNotifications] = useState<MockNotification[]>([]);
+  const [openRequestsCount, setOpenRequestsCount] = useState<number>(0);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
   // Check Supabase session on mount & subscribe to auth changes
@@ -104,6 +104,22 @@ export const AdminShell: React.FC<AdminShellProps> = ({
   useEffect(() => {
     setCurrentRoute(initialRoute);
   }, [initialRoute]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setOpenRequestsCount(0);
+      return;
+    }
+
+    listProjectRequests()
+      .then((rows) => {
+        setOpenRequestsCount(rows.filter((row) => row.status === 'NEW').length);
+      })
+      .catch((err) => {
+        console.error('Open request count load failed:', err);
+        setOpenRequestsCount(0);
+      });
+  }, [isAuthenticated, currentRoute]);
 
   // Sync URL history state
   useEffect(() => {
@@ -190,8 +206,6 @@ export const AdminShell: React.FC<AdminShellProps> = ({
     );
   }
 
-  const openRequestsCount = notifications.filter((n) => !n.is_read && n.type === 'REQUEST').length + 5;
-
   return (
     <div className="min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row antialiased selection:bg-[#0099FF] selection:text-white font-mono">
       {/* Sidebar */}
@@ -226,26 +240,14 @@ export const AdminShell: React.FC<AdminShellProps> = ({
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
             />
-          ) : currentRoute === 'prospects' ? (
-            <ProspectsPage
-              onNavigate={(r) => setCurrentRoute(r)}
-              onTriggerToast={triggerToast}
-              simulatedState={simulatedState}
-            />
           ) : currentRoute === 'clients' ? (
             <ClientsPage
               onNavigate={(r) => setCurrentRoute(r)}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
             />
-          ) : currentRoute === 'projects' ? (
-            <ProjectsPage
-              onNavigate={(r) => setCurrentRoute(r)}
-              onTriggerToast={triggerToast}
-              simulatedState={simulatedState}
-            />
-          ) : currentRoute === 'campaigns' ? (
-            <CampaignsPage
+          ) : currentRoute === 'invoices' ? (
+            <InvoicesPage
               onNavigate={(r) => setCurrentRoute(r)}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}

@@ -5,12 +5,11 @@ import { ClientTable } from './ClientTable';
 import { ClientCard } from './ClientCard';
 import { ClientDetail } from './ClientDetail';
 import { NewClientModal } from './NewClientModal';
-import { Chapter17DesignReview } from './Chapter17DesignReview';
 import { AdminPageHeader } from '../AdminPageHeader';
 import { AdminSkeletonTable } from '../AdminSkeleton';
 import { AdminEmptyState } from '../AdminEmptyState';
 import { AdminErrorState } from '../AdminErrorState';
-import { Search, Filter, Plus, RefreshCw, X, Building2, Users, Briefcase, ShieldCheck } from 'lucide-react';
+import { Search, RefreshCw, X } from 'lucide-react';
 
 interface ClientsPageProps {
   onNavigate?: (route: string) => void;
@@ -25,29 +24,73 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({
 }) => {
   const [clients, setClients] = useState<Client[]>([]);
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   // Filter & search states
   const [activeStatusFilter, setActiveStatusFilter] = useState<string>('ALL');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [ownerFilter, setOwnerFilter] = useState<string>('ALL');
-  const [tierFilter, setTierFilter] = useState<string>('ALL');
 
   // Modal state
   const [newClientModalOpen, setNewClientModalOpen] = useState<boolean>(false);
 
   // Load clients data
-  const refreshData = () => {
-    const list = clientService.getClients();
-    setClients(list);
-    if (selectedClient) {
-      const updated = list.find((c) => c.id === selectedClient.id);
-      if (updated) setSelectedClient(updated);
+  const refreshData = async () => {
+    setIsLoading(true);
+    setLoadError(null);
+    try {
+      const list = await clientService.getClients();
+      setClients(list);
+      if (selectedClient) {
+        const updated = list.find((c) => c.id === selectedClient.id);
+        if (updated) setSelectedClient(updated);
+      }
+    } catch (err: any) {
+      const message = err?.message || 'Failed to load clients.';
+      console.error('Client directory load failed:', err);
+      setLoadError(message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    refreshData();
+    void refreshData();
   }, []);
+
+  if (isLoading && !clients.length) {
+    return (
+      <div className="space-y-6 animate-in fade-in duration-300 font-mono">
+        <AdminPageHeader
+          title="Clients Directory"
+          subtitle="Commercial clients with active retainers, projects, contacts, agreements, and client portal status."
+          moduleCode="CRM-03 / CLIENTS"
+        />
+        <AdminSkeletonTable />
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="space-y-6 animate-in fade-in duration-300 font-mono">
+        <AdminPageHeader
+          title="Clients Directory"
+          subtitle="Commercial clients with active retainers, projects, contacts, agreements, and client portal status."
+          moduleCode="CRM-03 / CLIENTS"
+        />
+        <AdminErrorState
+          title="Failed to load Clients Directory"
+          message={loadError}
+          onRetry={() => {
+            void refreshData();
+            onTriggerToast('info', 'Retrying Fetch', 'Re-syncing clients directory state...');
+          }}
+        />
+      </div>
+    );
+  }
 
   if (simulatedState === 'skeleton') {
     return (
@@ -77,10 +120,16 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({
         <NewClientModal
           isOpen={newClientModalOpen}
           onClose={() => setNewClientModalOpen(false)}
-          onSubmit={(data) => {
-            const created = clientService.createClient(data);
-            refreshData();
-            onTriggerToast('success', 'Client Registered', `Created client record ${created.id} for ${created.business_name}.`);
+          onSubmit={async (data) => {
+            try {
+              const created = await clientService.createClient(data);
+              await refreshData();
+              onTriggerToast('success', 'Client Registered', `Created client record ${created.id} for ${created.business_name}.`);
+            } catch (err: any) {
+              console.error('Client creation failed:', err);
+              onTriggerToast('error', 'Client Not Created', err?.message || 'Could not create client record.');
+              throw err;
+            }
           }}
         />
       </div>
@@ -124,9 +173,6 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({
     // Owner filter
     if (ownerFilter !== 'ALL' && c.account_owner !== ownerFilter) return false;
 
-    // Tier filter
-    if (tierFilter !== 'ALL' && c.tier !== tierFilter) return false;
-
     // Search query
     if (searchTerm.trim()) {
       const q = searchTerm.toLowerCase();
@@ -145,26 +191,46 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({
     return true;
   });
 
-  const handleUpdateStatus = (id: string, status: ClientStatus, reason?: string) => {
-    clientService.updateStatus(id, status, reason);
-    refreshData();
+  const handleUpdateStatus = async (id: string, status: ClientStatus, reason?: string) => {
+    try {
+      await clientService.updateStatus(id, status, reason);
+      await refreshData();
+    } catch (err: any) {
+      console.error('Client status update failed:', err);
+      onTriggerToast('error', 'Status Not Updated', err?.message || 'Could not update client status.');
+    }
   };
 
-  const handleAddContact = (clientId: string, contact: Omit<ClientContact, 'id'>) => {
-    clientService.addContact(clientId, contact);
-    refreshData();
-    onTriggerToast('success', 'Contact Added', `Added ${contact.name} to client contact directory.`);
+  const handleAddContact = async (clientId: string, contact: Omit<ClientContact, 'id'>) => {
+    try {
+      await clientService.addContact(clientId, contact);
+      await refreshData();
+      onTriggerToast('success', 'Contact Added', `Added ${contact.name} to client contact directory.`);
+    } catch (err: any) {
+      console.error('Client contact creation failed:', err);
+      onTriggerToast('error', 'Contact Not Added', err?.message || 'Could not add contact.');
+    }
   };
 
-  const handleAddNote = (clientId: string, text: string) => {
-    clientService.addNote(clientId, text, 'Kaelen Voss');
-    refreshData();
-    onTriggerToast('success', 'Note Added', 'Appended note to client activity log.');
+  const handleAddNote = async (clientId: string, text: string) => {
+    try {
+      await clientService.addNote(clientId, text, 'Magniar Admin');
+      await refreshData();
+      onTriggerToast('success', 'Note Added', 'Appended note to client activity log.');
+    } catch (err: any) {
+      console.error('Client note creation failed:', err);
+      onTriggerToast('error', 'Note Not Added', err?.message || 'Could not add note.');
+    }
   };
 
-  const handleInvitePortal = (clientId: string) => {
-    clientService.invitePortal(clientId);
-    refreshData();
+  const handleInvitePortal = async (clientId: string) => {
+    try {
+      await clientService.invitePortal(clientId);
+      await refreshData();
+    } catch (err: any) {
+      console.error('Client portal invite failed:', err);
+      onTriggerToast('error', 'Portal Invite Not Updated', err?.message || 'Could not update portal invite status.');
+    }
   };
 
   const handleOpenSourceRequest = (requestCode: string) => {
@@ -187,9 +253,6 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300 font-mono text-xs">
-      {/* Chapter 17 Design Review Collapsible Documentation */}
-      <Chapter17DesignReview />
-
       {selectedClient ? (
         <ClientDetail
           client={selectedClient}
@@ -322,27 +385,11 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({
                 </select>
               </div>
 
-              <div className="flex items-center gap-1.5">
-                <span className="text-[10px] text-white/40 uppercase">Tier:</span>
-                <select
-                  value={tierFilter}
-                  onChange={(e) => setTierFilter(e.target.value)}
-                  className="bg-[#050505] border border-white/10 text-white font-mono text-xs rounded-[2px] p-2 focus:outline-none focus:border-[#0099FF]"
-                >
-                  <option value="ALL">All Tiers</option>
-                  <option value="ENTERPRISE">ENTERPRISE</option>
-                  <option value="GROWTH">GROWTH</option>
-                  <option value="SCALE">SCALE</option>
-                  <option value="STANDARD">STANDARD</option>
-                </select>
-              </div>
-
-              {(activeStatusFilter !== 'ALL' || ownerFilter !== 'ALL' || tierFilter !== 'ALL' || searchTerm !== '') && (
+              {(activeStatusFilter !== 'ALL' || ownerFilter !== 'ALL' || searchTerm !== '') && (
                 <button
                   onClick={() => {
                     setActiveStatusFilter('ALL');
                     setOwnerFilter('ALL');
-                    setTierFilter('ALL');
                     setSearchTerm('');
                   }}
                   className="px-2.5 py-2 bg-white/5 hover:bg-white/10 text-[#0099FF] rounded-[2px] border border-white/10 text-[11px]"
@@ -363,7 +410,7 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({
 
             <button
               onClick={() => {
-                refreshData();
+                void refreshData();
                 onTriggerToast('info', 'Refreshed Directory', 'Synced latest client dataset.');
               }}
               className="hover:text-white flex items-center gap-1 text-[11px]"
@@ -382,7 +429,6 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({
               onAction={() => {
                 setActiveStatusFilter('ALL');
                 setOwnerFilter('ALL');
-                setTierFilter('ALL');
                 setSearchTerm('');
               }}
             />
@@ -419,10 +465,16 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({
       <NewClientModal
         isOpen={newClientModalOpen}
         onClose={() => setNewClientModalOpen(false)}
-        onSubmit={(data) => {
-          const created = clientService.createClient(data);
-          refreshData();
-          onTriggerToast('success', 'CLIENT REGISTERED', `Created client record ${created.id} for ${created.business_name}.`);
+        onSubmit={async (data) => {
+          try {
+            const created = await clientService.createClient(data);
+            await refreshData();
+            onTriggerToast('success', 'CLIENT REGISTERED', `Created client record ${created.id} for ${created.business_name}.`);
+          } catch (err: any) {
+            console.error('Client creation failed:', err);
+            onTriggerToast('error', 'CLIENT NOT CREATED', err?.message || 'Could not create client record.');
+            throw err;
+          }
         }}
       />
     </div>

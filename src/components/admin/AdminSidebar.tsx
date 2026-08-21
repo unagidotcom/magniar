@@ -3,19 +3,10 @@ import {
   LayoutDashboard,
   Inbox,
   Users,
-  Briefcase,
-  Compass,
   FileText,
-  DollarSign,
-  BarChart3,
-  Layers,
-  Shield,
   Settings,
   LogOut,
   X,
-  Sparkles,
-  UserCheck,
-  Radio,
 } from 'lucide-react';
 
 interface AdminSidebarProps {
@@ -52,27 +43,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           badge: openRequestsCount > 0 ? `${openRequestsCount} NEW` : undefined,
           badgeColor: 'bg-[#0099FF]/20 text-[#0099FF]',
         },
-        { id: 'prospects', label: 'Prospects CRM', icon: UserCheck },
         { id: 'clients', label: 'Clients Directory', icon: Users },
-        { id: 'projects', label: 'Active Projects', icon: Briefcase },
-        { id: 'campaigns', label: 'Campaigns & Channels', icon: Radio },
       ],
     },
     {
-      groupLabel: 'FINANCE & OPS',
+      groupLabel: 'FINANCE',
       items: [
-        { id: 'strategies', label: 'Strategies & Plans', icon: Compass },
-        { id: 'proposals', label: 'Proposals', icon: Layers },
         { id: 'invoices', label: 'Invoices & Billing', icon: FileText },
-        { id: 'payments', label: 'Payments Ledger', icon: DollarSign },
-      ],
-    },
-    {
-      groupLabel: 'INTELLIGENCE',
-      items: [
-        { id: 'reports', label: 'Reports & Analytics', icon: BarChart3 },
-        { id: 'content', label: 'Content CMS', icon: Sparkles },
-        { id: 'team', label: 'Team Directory', icon: Shield },
       ],
     },
     {

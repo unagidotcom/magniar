@@ -32,9 +32,6 @@ export const RequestPipeline: React.FC<RequestPipelineProps> = ({
           )}
         </div>
 
-        <span className="font-mono text-[9px] text-amber-400 bg-amber-400/10 border border-amber-400/20 px-1.5 py-0.5 rounded-[2px] uppercase self-start sm:self-auto">
-          DEMO DATA
-        </span>
       </div>
 
       {/* Pipeline Stepped Track */}

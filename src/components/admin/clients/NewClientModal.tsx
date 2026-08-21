@@ -5,7 +5,7 @@ import { X, Building2, UserPlus, Layers } from 'lucide-react';
 interface NewClientModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (clientData: Partial<Client>) => void;
+  onSubmit: (clientData: Partial<Client>) => void | Promise<void>;
 }
 
 export const NewClientModal: React.FC<NewClientModalProps> = ({ isOpen, onClose, onSubmit }) => {
@@ -23,37 +23,45 @@ export const NewClientModal: React.FC<NewClientModalProps> = ({ isOpen, onClose,
   const [status, setStatus] = useState<ClientStatus>('ONBOARDING');
   const [description, setDescription] = useState('');
   const [objective, setObjective] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!businessName.trim() || !contactName.trim() || !contactEmail.trim()) return;
 
-    onSubmit({
-      business_name: businessName,
-      industry,
-      business_model: businessModel,
-      company_size: companySize,
-      primary_market: primaryMarket,
-      website: website || 'https://example.com',
-      account_owner: accountOwner,
-      status,
-      description,
-      primary_objective: objective,
-      contacts: [
-        {
-          id: `cnt-${Date.now()}`,
-          name: contactName,
-          role: contactRole,
-          email: contactEmail,
-          phone: contactPhone,
-          is_primary: true,
-        },
-      ],
-    });
+    setIsSubmitting(true);
+    try {
+      await onSubmit({
+        business_name: businessName,
+        industry,
+        business_model: businessModel,
+        company_size: companySize,
+        primary_market: primaryMarket,
+        website: website || '',
+        account_owner: accountOwner,
+        status,
+        description,
+        primary_objective: objective,
+        contacts: [
+          {
+            id: `cnt-${Date.now()}`,
+            name: contactName,
+            role: contactRole,
+            email: contactEmail,
+            phone: contactPhone,
+            is_primary: true,
+          },
+        ],
+      });
 
-    onClose();
+      onClose();
+    } catch (err) {
+      console.error('New client form submission failed:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -250,9 +258,10 @@ export const NewClientModal: React.FC<NewClientModalProps> = ({ isOpen, onClose,
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-[#0099FF] hover:bg-[#0099FF]/80 text-white font-bold rounded-[2px]"
+              disabled={isSubmitting}
+              className="px-4 py-2 bg-[#0099FF] hover:bg-[#0099FF]/80 disabled:opacity-50 text-white font-bold rounded-[2px]"
             >
-              Register Client Record
+              {isSubmitting ? 'Saving...' : 'Register Client Record'}
             </button>
           </div>
         </form>

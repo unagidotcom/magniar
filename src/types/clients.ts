@@ -142,6 +142,9 @@ export interface Client {
   // Client Portal Integration
   portal_status: PortalStatus;
   portal_invited_at?: string;
+  show_on_homepage?: boolean;
+  homepage_label?: string;
+  homepage_order?: number;
 
   // Metadata
   created_at: string;

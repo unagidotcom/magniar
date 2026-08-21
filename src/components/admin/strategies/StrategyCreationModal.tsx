@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X, Search, Compass, AlertCircle } from 'lucide-react';
 import { StrategyType, BusinessModel } from '../../../types/strategies';
+import { Client } from '../../../types/clients';
 import { projectService } from '../../../services/projectService';
 import { clientService } from '../../../services/clientService';
 
@@ -18,7 +19,7 @@ export const StrategyCreationModal: React.FC<StrategyCreationModalProps> = ({
   onTriggerToast,
 }) => {
   const projects = projectService.getProjects();
-  const clients = clientService.getClients();
+  const [clients, setClients] = useState<Client[]>([]);
 
   const [selectedProjectId, setSelectedProjectId] = useState<string>('');
   const [strategyName, setStrategyName] = useState<string>('');
@@ -30,6 +31,18 @@ export const StrategyCreationModal: React.FC<StrategyCreationModalProps> = ({
   const [businessModel, setBusinessModel] = useState<BusinessModel>('Ecommerce');
   const [strategicProblem, setStrategicProblem] = useState<string>('');
   const [strategicOpportunity, setStrategicOpportunity] = useState<string>('');
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    clientService
+      .getClients()
+      .then(setClients)
+      .catch((err) => {
+        console.error('Strategy client options load failed:', err);
+        setClients([]);
+      });
+  }, [isOpen]);
 
   if (!isOpen) return null;
 

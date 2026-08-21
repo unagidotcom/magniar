@@ -26,9 +26,6 @@ export const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
           <span className="font-mono text-[9px] text-white/40 uppercase">
             AGENCY RETAINERS (EXCLUDES CLIENT MEDIA SPEND)
           </span>
-          <span className="font-mono text-[9px] text-amber-400 bg-amber-400/10 border border-amber-400/20 px-1.5 py-0.5 rounded-[2px] uppercase">
-            DEMO DATA
-          </span>
         </div>
       </div>
 
@@ -53,7 +50,7 @@ export const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
             {financial.outstandingInvoices}
           </div>
           <div className="font-mono text-[10px] text-white/40">
-            4 Unsettled Invoices
+            Draft or sent invoices
           </div>
         </div>
 
@@ -65,7 +62,7 @@ export const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
             {financial.overdueInvoices}
           </div>
           <div className="font-mono text-[10px] text-rose-400/80">
-            1 Invoice &gt;7 Days
+            Overdue invoice total
           </div>
         </div>
 
@@ -77,7 +74,7 @@ export const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({
             {financial.paidThisMonth}
           </div>
           <div className="font-mono text-[10px] text-white/40">
-            Wire / ACH Settled
+            Closed invoice total
           </div>
         </div>
       </div>

@@ -17,13 +17,14 @@ export const UpcomingList: React.FC<UpcomingListProps> = ({ events }) => {
           </h3>
         </div>
 
-        <span className="font-mono text-[9px] text-amber-400 bg-amber-400/10 border border-amber-400/20 px-1.5 py-0.5 rounded-[2px] uppercase">
-          DEMO DATA
-        </span>
       </div>
 
       <div className="space-y-2.5">
-        {events.map((evt) => (
+        {events.length === 0 ? (
+          <div className="p-4 text-xs font-mono text-white/50">
+            No upcoming live milestones yet.
+          </div>
+        ) : events.map((evt) => (
           <div
             key={evt.id}
             className="p-3 bg-[#050505] border border-white/5 rounded-[2px] flex items-center gap-3.5"

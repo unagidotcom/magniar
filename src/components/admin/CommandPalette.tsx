@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, LayoutDashboard, Inbox, Users, Briefcase, FileText, Settings, ShieldAlert, ArrowRight } from 'lucide-react';
+import { Search, X, LayoutDashboard, Inbox, Users, FileText, Settings, ShieldAlert, ArrowRight } from 'lucide-react';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -38,12 +38,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   const commands = [
     { id: 'dash', label: 'Go to Dashboard', icon: LayoutDashboard, category: 'NAVIGATE', route: 'dashboard' },
     { id: 'reqs', label: 'Go to Requests Queue', icon: Inbox, category: 'NAVIGATE', route: 'requests' },
-    { id: 'prosp', label: 'Go to Prospects CRM', icon: Users, category: 'NAVIGATE', route: 'prospects' },
     { id: 'clis', label: 'Go to Clients Directory', icon: Users, category: 'NAVIGATE', route: 'clients' },
-    { id: 'projs', label: 'Go to Active Projects', icon: Briefcase, category: 'NAVIGATE', route: 'projects' },
     { id: 'invs', label: 'Go to Invoices & Ledger', icon: FileText, category: 'NAVIGATE', route: 'invoices' },
     { id: 'sett', label: 'Go to System Settings', icon: Settings, category: 'NAVIGATE', route: 'settings' },
-    { id: 'create-req', label: 'Simulate New Client Request Intake', icon: Inbox, category: 'ACTIONS', action: 'New Request' },
     { id: 'create-inv', label: 'Generate Draft Invoice', icon: FileText, category: 'ACTIONS', action: 'New Invoice' },
     { id: 'clear-notif', label: 'Mark All Notifications as Read', icon: ShieldAlert, category: 'ACTIONS', action: 'Clear Notifications' },
   ];

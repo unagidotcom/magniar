@@ -65,6 +65,11 @@ export const ActiveClientsCard: React.FC<ActiveClientsCardProps> = ({
         </button>
       </div>
 
+      {clients.length === 0 ? (
+        <div className="p-6 bg-[#050505] border border-white/5 rounded-[2px] text-xs font-mono text-white/50">
+          No live client records yet.
+        </div>
+      ) : (
       <div className="space-y-2.5">
         {clients.map((cli) => (
           <div
@@ -101,6 +106,7 @@ export const ActiveClientsCard: React.FC<ActiveClientsCardProps> = ({
           </div>
         ))}
       </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, RefreshCw, Eye } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { AdminPageHeader } from '../AdminPageHeader';
 import { AdminDrawer } from '../AdminDrawer';
 import { AdminSkeletonCard, AdminSkeletonTable } from '../AdminSkeleton';
@@ -17,25 +17,19 @@ import {
   UpcomingEvent,
   ActivityLogItem,
 } from '../../../services/dashboardService';
-
-import {
-  MOCK_REQUESTS,
-  MOCK_PROJECTS,
-  MockRequest,
-  MockProject,
-} from '../../../data/adminMockData';
+import { listProjectRequests } from '../../../services/projectRequestService';
+import { clientService } from '../../../services/clientService';
+import { Invoice, listInvoices } from '../../../services/invoiceService';
 
 import { AttentionPanel } from './AttentionPanel';
 import { BusinessMetrics } from './BusinessMetrics';
 import { RequestPipeline } from './RequestPipeline';
-import { RecentRequestsTable } from './RecentRequestsTable';
+import { DashboardRequest, RecentRequestsTable } from './RecentRequestsTable';
 import { ActiveClientsCard } from './ActiveClientsCard';
 import { ActiveProjectsCard } from './ActiveProjectsCard';
 import { UpcomingList } from './UpcomingList';
 import { FinancialSnapshot } from './FinancialSnapshot';
 import { ActivityFeed } from './ActivityFeed';
-import { QuickActionsModal } from './QuickActionsModal';
-import { Chapter14DesignReview } from './Chapter14DesignReview';
 
 interface DashboardPageProps {
   onNavigate: (route: string) => void;
@@ -49,40 +43,122 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   simulatedState = 'normal',
 }) => {
   const [selectedPipelineStage, setSelectedPipelineStage] = useState<string | null>(null);
-  const [activeQuickAction, setActiveQuickAction] = useState<
-    'NEW_REQUEST' | 'NEW_CLIENT' | 'NEW_PROJECT' | 'CREATE_INVOICE' | null
-  >(null);
-
   // Drawers
-  const [inspectingRequest, setInspectingRequest] = useState<MockRequest | null>(null);
+  const [inspectingRequest, setInspectingRequest] = useState<DashboardRequest | null>(null);
   const [inspectingClient, setInspectingClient] = useState<ClientHealthItem | null>(null);
-  const [inspectingProject, setInspectingProject] = useState<MockProject | null>(null);
+  const [inspectingProject, setInspectingProject] = useState<any | null>(null);
+  const [recentRequests, setRecentRequests] = useState<DashboardRequest[]>([]);
+  const [activeClientsCount, setActiveClientsCount] = useState(0);
+  const [activeProjectsCount] = useState(0);
+  const [proposalsCount] = useState(0);
+  const [outstandingInvoicesCount, setOutstandingInvoicesCount] = useState(0);
 
   // Data loaded from service
   const [attentionItems, setAttentionItems] = useState<AttentionItem[]>([]);
   const [pipelineStages, setPipelineStages] = useState<PipelineStageCount[]>([]);
   const [clientHealthList, setClientHealthList] = useState<ClientHealthItem[]>([]);
   const [financialSummary, setFinancialSummary] = useState<FinancialSummary>({
-    monthlyRevenue: '$215,000.00',
-    revenueGrowth: '+28.4%',
-    outstandingInvoices: '$84,500.00',
-    overdueInvoices: '$28,000.00',
-    upcomingInvoices: '$35,000.00',
-    paidThisMonth: '$45,000.00',
-    isDemoData: true,
+    monthlyRevenue: '$0.00',
+    revenueGrowth: 'Live',
+    outstandingInvoices: '$0.00',
+    overdueInvoices: '$0.00',
+    upcomingInvoices: '$0.00',
+    paidThisMonth: '$0.00',
+    isDemoData: false,
   });
   const [revenueTrend, setRevenueTrend] = useState<RevenueDataPoint[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([]);
   const [activityFeed, setActivityFeed] = useState<ActivityLogItem[]>([]);
 
   useEffect(() => {
-    setAttentionItems(dashboardService.getAttentionItems());
-    setPipelineStages(dashboardService.getPipelineCounts());
-    setClientHealthList(dashboardService.getClientHealthList());
-    setFinancialSummary(dashboardService.getFinancialSummary());
-    setRevenueTrend(dashboardService.getRevenueTrend());
-    setUpcomingEvents(dashboardService.getUpcomingEvents());
-    setActivityFeed(dashboardService.getActivityFeed());
+    const formatMoney = (cents: number) =>
+      new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }).format((cents || 0) / 100);
+
+    const loadDashboard = async () => {
+      setAttentionItems(dashboardService.getAttentionItems());
+      setUpcomingEvents(dashboardService.getUpcomingEvents());
+      setActivityFeed(dashboardService.getActivityFeed());
+      setRevenueTrend(dashboardService.getRevenueTrend());
+
+      try {
+        const [requests, clients, invoices] = await Promise.all([
+          listProjectRequests(),
+          clientService.getClients(),
+          listInvoices(),
+        ]);
+
+        const mappedRequests: DashboardRequest[] = requests.slice(0, 8).map((req) => ({
+          id: req.id,
+          code: req.request_number,
+          company: req.company_name,
+          client_name: `${req.first_name} ${req.last_name}`,
+          email: req.email,
+          industry: req.industry || 'Not specified',
+          subject: req.engagement_type || req.project_service_budget || 'Project request',
+          status: req.status,
+          created_at: req.created_at,
+          budget_tier: req.project_service_budget || 'Not specified',
+          summary: req.tell_us_more || req.anything_else || 'No summary provided.',
+        }));
+        setRecentRequests(mappedRequests);
+
+        const stageTemplate = dashboardService.getPipelineCounts();
+        const counts = requests.reduce<Record<string, number>>((acc, req) => {
+          acc[req.status] = (acc[req.status] || 0) + 1;
+          return acc;
+        }, {});
+        setPipelineStages(
+          stageTemplate.map((stage) => ({
+            ...stage,
+            count: counts[stage.stage] || 0,
+          }))
+        );
+
+        setClientHealthList(
+          clients
+            .filter((client) => client.status !== 'ARCHIVED')
+            .slice(0, 5)
+            .map((client) => ({
+              id: client.id,
+              clientName: client.business_name,
+              industry: client.industry,
+              leadPartner: client.account_owner,
+              healthStatus: client.health,
+              monthlyValue:
+                client.services.find((service) => service.monthly_fee_display)?.monthly_fee_display || '$0.00',
+              activeProjects: client.projects.length,
+              nextAction: client.next_action?.title || 'No next action set',
+              note: client.health_reason || client.pause_reason || client.description,
+            }))
+        );
+        setActiveClientsCount(clients.filter((client) => client.status === 'ACTIVE').length);
+
+        const outstanding = invoices.filter((invoice) => ['DRAFT', 'SENT', 'OVERDUE'].includes(invoice.status));
+        const overdue = invoices.filter((invoice) => invoice.status === 'OVERDUE');
+        const paid = invoices.filter((invoice) => invoice.status === 'PAID');
+        const sum = (rows: Invoice[]) => rows.reduce((total, invoice) => total + invoice.total_cents, 0);
+        setOutstandingInvoicesCount(outstanding.length);
+        setFinancialSummary({
+          monthlyRevenue: formatMoney(sum(paid)),
+          revenueGrowth: 'Live',
+          outstandingInvoices: formatMoney(sum(outstanding)),
+          overdueInvoices: formatMoney(sum(overdue)),
+          upcomingInvoices: formatMoney(sum(outstanding)),
+          paidThisMonth: formatMoney(sum(paid)),
+          isDemoData: false,
+        });
+      } catch (err) {
+        console.error('Dashboard live data load failed:', err);
+        setPipelineStages(dashboardService.getPipelineCounts());
+        setClientHealthList([]);
+        setFinancialSummary(dashboardService.getFinancialSummary());
+      }
+    };
+
+    void loadDashboard();
   }, []);
 
   // Simulated Skeleton View
@@ -115,14 +191,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         />
         <AdminEmptyState
           title="WELCOME TO MAGNIAR."
-          description="Your workspace is ready. Once requests, clients, and projects are created, your operational overview will appear here."
-          actionLabel="Create First Intake Request"
-          onAction={() => setActiveQuickAction('NEW_REQUEST')}
-        />
-        <QuickActionsModal
-          actionType={activeQuickAction}
-          onClose={() => setActiveQuickAction(null)}
-          onSubmit={(title, msg) => onTriggerToast('success', title, msg)}
+          description="Your workspace is ready. Once requests, clients, and invoices are created, your operational overview will appear here."
+          actionLabel="Open Requests Queue"
+          onAction={() => onNavigate('requests')}
         />
       </div>
     );
@@ -162,15 +233,15 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         actions={
           <div className="flex items-center gap-2 flex-wrap">
             <button
-              onClick={() => setActiveQuickAction('NEW_REQUEST')}
+              onClick={() => onNavigate('requests')}
               className="px-3 py-1.5 bg-[#0099FF] hover:bg-[#0088EE] text-white font-mono text-xs font-semibold rounded-[2px] flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>+ NEW REQUEST</span>
+              <span>REQUESTS</span>
             </button>
 
             <button
-              onClick={() => setActiveQuickAction('NEW_CLIENT')}
+              onClick={() => onNavigate('clients')}
               className="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white/90 font-mono text-xs font-semibold rounded-[2px] border border-white/10 flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
@@ -178,11 +249,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             </button>
 
             <button
-              onClick={() => setActiveQuickAction('NEW_PROJECT')}
+              onClick={() => onNavigate('invoices')}
               className="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white/90 font-mono text-xs font-semibold rounded-[2px] border border-white/10 flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>+ NEW PROJECT</span>
+              <span>+ INVOICE</span>
             </button>
           </div>
         }
@@ -197,7 +268,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       {/* 07 & 08 - Key Metrics: BUSINESS OVERVIEW */}
       <BusinessMetrics
         financial={financialSummary}
-        openRequestsCount={MOCK_REQUESTS.length}
+        openRequestsCount={recentRequests.length}
+        activeClientsCount={activeClientsCount}
+        activeProjectsCount={activeProjectsCount}
+        proposalsCount={proposalsCount}
+        outstandingInvoicesCount={outstandingInvoicesCount}
       />
 
       {/* 11 & 12 - Request Pipeline */}
@@ -209,7 +284,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
       {/* 13 & 14 - Recent Requests */}
       <RecentRequestsTable
-        requests={MOCK_REQUESTS}
+        requests={recentRequests}
         selectedStage={selectedPipelineStage}
         onInspectRequest={(req) => setInspectingRequest(req)}
         onNavigateToRequests={() => onNavigate('requests')}
@@ -224,7 +299,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         />
 
         <ActiveProjectsCard
-          projects={MOCK_PROJECTS}
+          projects={[]}
           onInspectProject={(proj) => setInspectingProject(proj)}
           onNavigateToProjects={() => onNavigate('projects')}
         />
@@ -247,16 +322,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           onTriggerToast('info', act.title, act.entityName);
           onNavigate(act.routeTarget);
         }}
-      />
-
-      {/* Chapter 14 Design Review Docs */}
-      <Chapter14DesignReview />
-
-      {/* Quick Actions Modal */}
-      <QuickActionsModal
-        actionType={activeQuickAction}
-        onClose={() => setActiveQuickAction(null)}
-        onSubmit={(title, msg) => onTriggerToast('success', title, msg)}
       />
 
       {/* Inspection Drawer: Request */}
@@ -301,12 +366,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <div className="flex items-center justify-end gap-2 pt-4">
               <button
                 onClick={() => {
-                  onTriggerToast('success', 'Request Qualified', `Promoted ${inspectingRequest.code} to discovery.`);
+                  onNavigate('requests');
                   setInspectingRequest(null);
                 }}
                 className="px-4 py-2 bg-[#0099FF] text-white font-semibold rounded-[2px]"
               >
-                Promote to Discovery
+                Open Requests Queue
               </button>
             </div>
           </div>

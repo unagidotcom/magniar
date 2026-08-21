@@ -1,5 +1,5 @@
 import React from 'react';
-import { Briefcase, ArrowRight, Eye } from 'lucide-react';
+import { Briefcase, Eye } from 'lucide-react';
 import { MockProject } from '../../../data/adminMockData';
 import { AdminStatusBadge } from '../AdminStatusBadge';
 
@@ -12,7 +12,6 @@ interface ActiveProjectsCardProps {
 export const ActiveProjectsCard: React.FC<ActiveProjectsCardProps> = ({
   projects,
   onInspectProject,
-  onNavigateToProjects,
 }) => {
   return (
     <div className="bg-[#0A0A0C] border border-white/10 rounded-[2px] p-5 space-y-4">
@@ -24,15 +23,14 @@ export const ActiveProjectsCard: React.FC<ActiveProjectsCardProps> = ({
           </h3>
         </div>
 
-        <button
-          onClick={onNavigateToProjects}
-          className="text-xs font-mono text-[#0099FF] hover:underline flex items-center gap-1"
-        >
-          <span>View Portfolio ({projects.length})</span>
-          <ArrowRight className="w-3.5 h-3.5" />
-        </button>
+        <span className="text-[10px] font-mono text-white/40 uppercase">Pending production migration</span>
       </div>
 
+      {projects.length === 0 ? (
+        <div className="p-6 bg-[#050505] border border-white/5 rounded-[2px] text-xs font-mono text-white/50">
+          No live project records connected yet.
+        </div>
+      ) : (
       <div className="overflow-x-auto">
         <table className="w-full text-left font-mono text-xs">
           <thead className="bg-[#050505] border-b border-white/10 text-white/40 uppercase tracking-wider text-[10px]">
@@ -80,6 +78,7 @@ export const ActiveProjectsCard: React.FC<ActiveProjectsCardProps> = ({
           </tbody>
         </table>
       </div>
+      )}
     </div>
   );
 };

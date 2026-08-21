@@ -30,11 +30,13 @@ export const AttentionPanel: React.FC<AttentionPanelProps> = ({
           </span>
         </div>
 
-        <span className="font-mono text-[9px] text-amber-400 bg-amber-400/10 border border-amber-400/20 px-1.5 py-0.5 rounded-[2px] uppercase">
-          DEMO DATA
-        </span>
       </div>
 
+      {sortedItems.length === 0 ? (
+        <div className="p-6 bg-[#0A0A0C] border border-white/10 rounded-[2px] text-xs font-mono text-white/50">
+          No urgent live action items.
+        </div>
+      ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
         {sortedItems.map((item) => (
           <div
@@ -82,6 +84,7 @@ export const AttentionPanel: React.FC<AttentionPanelProps> = ({
           </div>
         ))}
       </div>
+      )}
     </section>
   );
 };
