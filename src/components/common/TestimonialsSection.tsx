@@ -16,8 +16,8 @@ export const TestimonialsSection: React.FC = () => {
             </span>
           </div>
 
-          <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-            CONFIDENTIALITY & <span className="text-[#0099FF]">AUTHENTICITY.</span>
+          <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+            Confidentiality and <span className="text-[#0099FF]">authenticity.</span>
           </h2>
         </div>
 
@@ -33,7 +33,7 @@ export const TestimonialsSection: React.FC = () => {
 
           <div className="space-y-3">
             <h3 className="text-2xl sm:text-3xl font-bold text-white font-heading tracking-tight">
-              VERIFIED CLIENT ENDORSEMENTS
+              Verified client endorsements
             </h3>
             <p className="text-base text-slate-300 leading-relaxed max-w-2xl font-sans font-normal">
               We adhere strictly to non-disclosure agreements and client confidentiality. Public endorsements, verified client quotes, and executive video interviews are published selectively as NDA waivers are approved.
@@ -49,4 +49,3 @@ export const TestimonialsSection: React.FC = () => {
     </section>
   );
 };
-

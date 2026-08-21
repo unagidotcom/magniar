@@ -23,11 +23,11 @@ export const EcommerceSection: React.FC<EcommerceSectionProps> = ({
   ];
 
   const pillars = [
-    { title: 'STORE', desc: 'Custom storefront architecture and checkout optimization.', icon: Store },
-    { title: 'TRAFFIC', desc: 'Performance acquisition across paid social and search channels.', icon: BarChart2 },
-    { title: 'CONVERSION', desc: 'Speed, UX clarity, and cart recovery automation.', icon: ShoppingBag },
-    { title: 'RETENTION', desc: 'LTV optimization, email/SMS flows, and customer loyalty.', icon: Repeat },
-    { title: 'OPERATIONS', desc: 'Inventory sync, marketplace APIs, and fulfillment workflows.', icon: Cpu },
+    { title: 'Store', desc: 'Custom storefront architecture and checkout optimization.', icon: Store },
+    { title: 'Traffic', desc: 'Performance acquisition across paid social and search channels.', icon: BarChart2 },
+    { title: 'Conversion', desc: 'Speed, UX clarity, and cart recovery automation.', icon: ShoppingBag },
+    { title: 'Retention', desc: 'LTV optimization, email/SMS flows, and customer loyalty.', icon: Repeat },
+    { title: 'Operations', desc: 'Inventory sync, marketplace APIs, and fulfillment workflows.', icon: Cpu },
   ];
 
   return (
@@ -43,9 +43,9 @@ export const EcommerceSection: React.FC<EcommerceSectionProps> = ({
             </span>
           </div>
 
-          <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-            ECOMMERCE IS NOT <br />
-            <span className="text-[#0099FF]">JUST A STORE.</span>
+          <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+            Ecommerce is more <br />
+            <span className="text-[#0099FF]">than a store.</span>
           </h2>
 
           <p className="text-lg text-slate-300 font-normal leading-relaxed">
@@ -66,7 +66,7 @@ export const EcommerceSection: React.FC<EcommerceSectionProps> = ({
                   <span className="font-heading text-xs text-[#0099FF] font-bold">0{idx + 1}</span>
                   <Icon className="w-5 h-5 text-slate-400 group-hover:text-[#0099FF] transition-colors" />
                 </div>
-                <h3 className="font-heading text-lg font-bold text-white uppercase group-hover:text-[#0099FF] transition-colors">
+                <h3 className="font-heading text-lg font-bold text-white group-hover:text-[#0099FF] transition-colors">
                   {p.title}
                 </h3>
                 <p className="text-sm text-slate-300 font-sans font-normal leading-relaxed">
@@ -100,4 +100,3 @@ export const EcommerceSection: React.FC<EcommerceSectionProps> = ({
     </section>
   );
 };
-

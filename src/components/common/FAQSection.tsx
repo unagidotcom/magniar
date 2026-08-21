@@ -23,8 +23,8 @@ export const FAQSection: React.FC = () => {
             </span>
           </div>
 
-          <h2 className="font-heading text-2xl sm:text-4xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-            FREQUENTLY ASKED <span className="text-[#0099FF]">QUESTIONS.</span>
+          <h2 className="font-heading text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.08]">
+            Frequently asked <span className="text-[#0099FF]">questions.</span>
           </h2>
 
           <p className="text-[13px] sm:text-sm text-slate-300 font-normal leading-relaxed">

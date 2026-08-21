@@ -32,9 +32,9 @@ export function InsightsSection({
               </span>
             </div>
 
-            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-              MAGNIAR INTELLIGENCE. <br />
-              <span className="text-[#0099FF]">WHAT WE'RE THINKING ABOUT.</span>
+            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+              Magniar intelligence. <br />
+              <span className="text-[#0099FF]">What we're thinking about.</span>
             </h2>
 
             <p className="text-lg text-slate-300 font-normal leading-relaxed">
@@ -90,4 +90,3 @@ export function InsightsSection({
     </section>
   );
 }
-

@@ -37,9 +37,9 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
               </span>
             </div>
 
-            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08] uppercase">
-              ONE PARTNER. <br />
-              <span className="text-[#0099FF]">FOUR DISCIPLINES.</span>
+            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+              One partner. <br />
+              <span className="text-[#0099FF]">Four connected disciplines.</span>
             </h2>
 
             <p className="text-lg text-slate-300 font-normal leading-relaxed">
@@ -254,4 +254,3 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
     </section>
   );
 };
-

@@ -35,9 +35,9 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({
               </span>
             </div>
 
-            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-              FROM DIAGNOSIS TO <br />
-              <span className="text-[#0099FF]">COMPOUNDING GROWTH.</span>
+            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+              From diagnosis <br />
+              <span className="text-[#0099FF]">to compounding growth.</span>
             </h2>
 
             <p className="text-lg text-slate-300 font-normal leading-relaxed">
@@ -168,4 +168,3 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({
     </section>
   );
 };
-

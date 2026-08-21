@@ -31,9 +31,9 @@ export function WorkSection({ onExploreFullWork, onSelectCaseStudy }: WorkSectio
               </span>
             </div>
 
-            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-              VERIFIED WORK. <br />
-              <span className="text-[#0099FF]">COMING SOON.</span>
+            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+              Verified work, <br />
+              <span className="text-[#0099FF]">coming soon.</span>
             </h2>
 
             <p className="text-lg text-slate-300 font-normal leading-relaxed">

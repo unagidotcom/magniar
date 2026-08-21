@@ -50,9 +50,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Primary Dominant Headline */}
           <h1 className="font-heading text-4xl sm:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.05] select-none">
-            MARKETING. <br />
-            DEVELOPMENT. <br />
-            <span className="text-[#0099FF]">AI STRATEGY.</span>
+            Marketing, development, <br />
+            and <span className="text-[#0099FF]">AI strategy</span> for growth.
           </h1>
 
           {/* Supporting Positioning Statement */}

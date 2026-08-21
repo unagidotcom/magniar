@@ -38,9 +38,9 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
               </span>
             </div>
 
-            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-              BUILT AROUND <br />
-              <span className="text-[#0099FF]">THE BUSINESS.</span>
+            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+              Built around <br />
+              <span className="text-[#0099FF]">the business.</span>
             </h2>
 
             <p className="text-lg text-slate-300 font-normal leading-relaxed">
@@ -173,8 +173,8 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
               THE MAGNIAR APPROACH
             </span>
             <h3 className="font-heading text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-              YOUR BUSINESS DOESN'T FIT A TEMPLATE. <br />
-              <span className="text-slate-400 font-normal">NEITHER SHOULD YOUR GROWTH STRATEGY.</span>
+              Your business doesn't fit a template. <br />
+              <span className="text-slate-400 font-normal">Neither should your growth strategy.</span>
             </h3>
             <p className="text-base text-slate-300 font-sans leading-relaxed">
               Whether you are a DTC brand, B2B firm, or multi-marketplace seller, we assemble the exact architecture required for your unit economics.
@@ -203,4 +203,3 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
     </section>
   );
 };
-

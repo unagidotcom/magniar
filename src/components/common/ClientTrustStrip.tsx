@@ -43,8 +43,8 @@ export const ClientTrustStrip: React.FC = () => {
               </span>
             </div>
 
-            <h2 className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-              CLIENTS WE <span className="text-[#0099FF]">WORK WITH.</span>
+            <h2 className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.08]">
+              Clients we <span className="text-[#0099FF]">work with.</span>
             </h2>
           </div>
 
@@ -83,7 +83,7 @@ export const ClientTrustStrip: React.FC = () => {
 
                 <div className="space-y-2 pt-5">
                   <div className="flex items-start justify-between gap-3">
-                    <span className="font-heading text-base font-bold text-slate-100 group-hover:text-[#0099FF] uppercase transition-colors leading-tight">
+                    <span className="font-heading text-base font-bold text-slate-100 group-hover:text-[#0099FF] transition-colors leading-tight">
                       {item.business_name}
                     </span>
                     {item.website && <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-[#0099FF] shrink-0" />}

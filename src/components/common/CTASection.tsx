@@ -27,9 +27,9 @@ export const CTASection: React.FC<CTASectionProps> = ({
             </span>
           </div>
 
-          <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08] uppercase">
-            READY TO BUILD <br />
-            <span className="text-[#0099FF]">WHAT'S NEXT?</span>
+          <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+            Ready to build <br />
+            <span className="text-[#0099FF]">what's next?</span>
           </h2>
 
           <p className="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed">
@@ -60,4 +60,3 @@ export const CTASection: React.FC<CTASectionProps> = ({
     </section>
   );
 };
-

@@ -19,6 +19,7 @@ import { AboutPage } from './components/about/AboutPage';
 import { AdminShell } from './components/admin/AdminShell';
 import { ContactPage } from './components/contact/ContactPage';
 import { ClientTrustStrip } from './components/common/ClientTrustStrip';
+import { ThemeSwitcher } from './components/common/ThemeSwitcher';
 import { EcommerceSection } from './components/sections/EcommerceSection';
 import { TestimonialsSection } from './components/common/TestimonialsSection';
 import { FAQSection } from './components/common/FAQSection';
@@ -259,9 +260,9 @@ export default function App() {
                         </span>
                       </div>
 
-                      <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-                        ONE GROWTH PARTNER. <br />
-                        <span className="text-[#0099FF]">FROM STRATEGY TO SCALE.</span>
+                      <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+                        One growth partner, <br />
+                        <span className="text-[#0099FF]">from strategy to scale.</span>
                       </h2>
 
                       <p className="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed">
@@ -435,6 +436,7 @@ export default function App() {
           <Footer onNavigate={handleNavigate} onStartProject={handleStartProject} />
         </>
       )}
+      <ThemeSwitcher />
     </div>
   );
 }
