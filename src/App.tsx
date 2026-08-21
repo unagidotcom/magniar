@@ -248,9 +248,9 @@ export default function App() {
                 />
 
                 {/* SECTION 2: POSITIONING STATEMENT */}
-                <div className="py-24 sm:py-32 px-4 sm:px-6 lg:px-12 bg-[#030508] border-t border-white/10 relative overflow-hidden">
-                  <div className="max-w-[1440px] mx-auto space-y-16">
-                    <div className="max-w-3xl space-y-6">
+                <section className="py-20 sm:py-24 px-4 sm:px-6 lg:px-12 bg-[#030508] border-y border-white/10 relative overflow-hidden">
+                  <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+                    <div className="lg:col-span-5 space-y-6">
                       <div className="flex items-center gap-3">
                         <TechnicalLabel text="OUR APPROACH" />
                         <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
@@ -270,7 +270,7 @@ export default function App() {
                     </div>
 
                     {/* 4 Core Disciplines Bar */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-10 border-t border-white/10">
+                    <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="p-6 bg-[#080B10] border border-white/10 rounded-[2px] space-y-3 hover:border-[#0099FF]/40 transition-all">
                         <span className="font-heading text-xs font-bold text-[#0099FF] tracking-wider uppercase block">01 PERFORMANCE</span>
                         <p className="text-sm text-slate-300 font-sans font-normal leading-relaxed">Paid acquisition, media buying & demand generation.</p>
@@ -289,10 +289,7 @@ export default function App() {
                       </div>
                     </div>
                   </div>
-                </div>
-
-                {/* CLIENT TRUST STRIP */}
-                <ClientTrustStrip />
+                </section>
 
                 {/* SECTION 3: CAPABILITIES */}
                 <CapabilitiesSection
@@ -318,25 +315,28 @@ export default function App() {
                   onSeeProcess={() => handleNavigate('process-page')}
                 />
 
-                {/* SECTION 7: WORK */}
+                {/* SECTION 7: CLIENTS */}
+                <ClientTrustStrip />
+
+                {/* SECTION 8: WORK */}
                 <WorkSection
                   onExploreFullWork={() => handleNavigate('work-page')}
                   onSelectCaseStudy={handleSelectCaseStudy}
                 />
 
-                {/* SECTION 8: TESTIMONIALS */}
+                {/* SECTION 9: TESTIMONIALS */}
                 <TestimonialsSection />
 
-                {/* SECTION 9: INSIGHTS */}
+                {/* SECTION 10: INSIGHTS */}
                 <InsightsSection
                   onExploreFullInsights={() => handleNavigate('insights-page')}
                   onSelectArticle={handleSelectArticle}
                 />
 
-                {/* SECTION 10: FAQ */}
+                {/* SECTION 11: FAQ */}
                 <FAQSection />
 
-                {/* SECTION 11: FINAL CTA */}
+                {/* SECTION 12: FINAL CTA */}
                 <CTASection
                   onStartProject={handleStartProject}
                   onBookConversation={handleStartProject}

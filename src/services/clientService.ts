@@ -20,6 +20,7 @@ type ClientRow = {
   primary_market: string;
   markets_served: string;
   website?: string | null;
+  logo_url?: string | null;
   description: string;
   primary_objective: string;
   client_since: string;
@@ -69,6 +70,7 @@ const normalizeClient = (row: ClientRow): Client => ({
   primary_market: row.primary_market,
   markets_served: row.markets_served,
   website: row.website || '',
+  logo_url: row.logo_url || undefined,
   description: row.description || '',
   primary_objective: row.primary_objective || '',
   client_since: row.client_since,
@@ -170,6 +172,7 @@ class ClientService {
       primary_market: newClientData.primary_market || 'North America',
       markets_served: newClientData.markets_served || 'US',
       website: newClientData.website || null,
+      logo_url: newClientData.logo_url || null,
       description: newClientData.description || '',
       primary_objective: newClientData.primary_objective || '',
       account_owner: accountOwner,

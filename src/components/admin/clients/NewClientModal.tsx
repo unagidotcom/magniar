@@ -15,6 +15,7 @@ export const NewClientModal: React.FC<NewClientModalProps> = ({ isOpen, onClose,
   const [companySize, setCompanySize] = useState('10-50 employees');
   const [primaryMarket, setPrimaryMarket] = useState('North America');
   const [website, setWebsite] = useState('');
+  const [logoUrl, setLogoUrl] = useState('');
   const [contactName, setContactName] = useState('');
   const [contactRole, setContactRole] = useState('Founder');
   const [contactEmail, setContactEmail] = useState('');
@@ -40,6 +41,7 @@ export const NewClientModal: React.FC<NewClientModalProps> = ({ isOpen, onClose,
         company_size: companySize,
         primary_market: primaryMarket,
         website: website || '',
+        logo_url: logoUrl || '',
         account_owner: accountOwner,
         status,
         description,
@@ -153,6 +155,19 @@ export const NewClientModal: React.FC<NewClientModalProps> = ({ isOpen, onClose,
                 />
               </div>
 
+              <div>
+                <label className="block text-[10px] text-white/40 uppercase mb-1">Logo URL</label>
+                <input
+                  type="url"
+                  value={logoUrl}
+                  onChange={(e) => setLogoUrl(e.target.value)}
+                  placeholder="https://client-domain.com/logo.png"
+                  className="w-full bg-[#050505] border border-white/10 rounded-[2px] px-3 py-2 text-white focus:outline-none focus:border-[#0099FF]"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-[10px] text-white/40 uppercase mb-1">Magniar Account Owner</label>
                 <input

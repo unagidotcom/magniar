@@ -6,6 +6,7 @@ export interface HomepageClient {
   industry: string;
   homepage_label: string;
   website?: string | null;
+  logo_url?: string | null;
 }
 
 export async function listHomepageClients(): Promise<HomepageClient[]> {

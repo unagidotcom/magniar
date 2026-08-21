@@ -112,6 +112,7 @@ export interface Client {
   primary_market: string;
   markets_served: string;
   website: string;
+  logo_url?: string;
   description: string;
   primary_objective: string;
 
