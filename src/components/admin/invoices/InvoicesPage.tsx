@@ -8,6 +8,11 @@ import { AdminSkeletonTable } from '../AdminSkeleton';
 import { Client } from '../../../types/clients';
 import { clientService } from '../../../services/clientService';
 import {
+  BusinessSettings,
+  defaultBusinessSettings,
+  getBusinessSettings,
+} from '../../../services/businessSettingsService';
+import {
   createInvoice,
   downloadInvoiceTemplate,
   Invoice,
@@ -29,6 +34,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
 }) => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
+  const [businessSettings, setBusinessSettings] = useState<BusinessSettings>(defaultBusinessSettings);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -52,6 +58,12 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
         listInvoices(),
         clientService.getClients(),
       ]);
+      getBusinessSettings()
+        .then(setBusinessSettings)
+        .catch((err) => {
+          console.error('Invoice business settings load failed:', err);
+          setBusinessSettings(defaultBusinessSettings);
+        });
       setInvoices(invoiceRows);
       setClients(clientRows);
       if (!clientId && clientRows[0]) {
@@ -91,6 +103,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
         amountCents: Math.round(Number(amount) * 100),
         dueDate,
         notes,
+        currency: businessSettings.default_currency,
       });
       await loadData();
       resetForm();
@@ -106,7 +119,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
 
   const handleDownload = async (invoice: Invoice) => {
     try {
-      await downloadInvoiceTemplate(invoice);
+      await downloadInvoiceTemplate(invoice, businessSettings);
       await loadData();
       onTriggerToast('success', 'Invoice Downloaded', `${invoice.invoice_number} downloaded as an HTML template.`);
     } catch (err: any) {

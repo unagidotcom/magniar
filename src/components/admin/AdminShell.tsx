@@ -4,6 +4,7 @@ import { AdminHeader } from './AdminHeader';
 import { DashboardPage } from './dashboard/DashboardPage';
 import { ClientsPage } from './clients/ClientsPage';
 import { InvoicesPage } from './invoices/InvoicesPage';
+import { SettingsPage } from './settings/SettingsPage';
 import { AdminModulePlaceholder } from './AdminModulePlaceholder';
 import { AdminLogin } from './AdminLogin';
 import { AdminToast, ToastMessage } from './AdminToast';
@@ -255,6 +256,11 @@ export const AdminShell: React.FC<AdminShellProps> = ({
           ) : currentRoute === 'invoices' ? (
             <InvoicesPage
               onNavigate={(r) => setCurrentRoute(r)}
+              onTriggerToast={triggerToast}
+              simulatedState={simulatedState}
+            />
+          ) : currentRoute === 'settings' ? (
+            <SettingsPage
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
             />

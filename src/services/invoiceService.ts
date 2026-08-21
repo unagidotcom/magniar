@@ -1,5 +1,6 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { Client } from '../types/clients';
+import { BusinessSettings, defaultBusinessSettings } from './businessSettingsService';
 
 export type InvoiceStatus = 'DRAFT' | 'SENT' | 'PAID' | 'OVERDUE' | 'VOID' | 'ARCHIVED';
 
@@ -37,6 +38,7 @@ export interface CreateInvoiceInput {
   amountCents: number;
   dueDate: string;
   notes?: string;
+  currency?: string;
 }
 
 const requireSupabase = () => {
@@ -85,6 +87,7 @@ export async function createInvoice(input: CreateInvoiceInput): Promise<Invoice>
       client_name: input.client.business_name,
       client_email: primaryEmailForClient(input.client),
       due_date: input.dueDate,
+      currency: input.currency || 'USD',
       subtotal_cents: Math.round(input.amountCents),
       service_summary: input.serviceSummary.trim(),
       line_items: lineItems,
@@ -143,7 +146,13 @@ const escapeHtml = (value: string) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 
-export function buildInvoiceTemplate(invoice: Invoice): string {
+const compactLines = (lines: Array<string | null | undefined>) =>
+  lines.map((line) => line?.trim()).filter(Boolean) as string[];
+
+export function buildInvoiceTemplate(
+  invoice: Invoice,
+  businessSettings: BusinessSettings = defaultBusinessSettings
+): string {
   const rows = invoice.line_items
     .map(
       (item) => `
@@ -155,6 +164,25 @@ export function buildInvoiceTemplate(invoice: Invoice): string {
         </tr>`
     )
     .join('');
+  const businessName =
+    businessSettings.legal_name.trim() ||
+    businessSettings.display_name.trim() ||
+    'Magniar';
+  const businessContact = compactLines([
+    businessSettings.email,
+    businessSettings.phone,
+    businessSettings.website,
+  ]);
+  const businessAddress = compactLines([
+    businessSettings.address_line_1,
+    businessSettings.address_line_2,
+    compactLines([businessSettings.city, businessSettings.region, businessSettings.postal_code]).join(', '),
+    businessSettings.country,
+  ]);
+  const taxLine =
+    businessSettings.tax_id_label && businessSettings.tax_id_value
+      ? `${businessSettings.tax_id_label}: ${businessSettings.tax_id_value}`
+      : '';
 
   return `<!doctype html>
 <html>
@@ -166,6 +194,7 @@ export function buildInvoiceTemplate(invoice: Invoice): string {
     header { display: flex; justify-content: space-between; gap: 24px; border-bottom: 1px solid #d1d5db; padding-bottom: 24px; }
     h1 { letter-spacing: 0.08em; margin: 0; }
     .muted { color: #6b7280; font-size: 13px; }
+    .line { margin-top: 4px; }
     .block { margin-top: 28px; }
     table { border-collapse: collapse; width: 100%; margin-top: 16px; }
     th, td { border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: left; }
@@ -176,8 +205,11 @@ export function buildInvoiceTemplate(invoice: Invoice): string {
 <body>
   <header>
     <div>
-      <h1>MAGNIAR</h1>
-      <div class="muted">Growth, media, commerce and engineering services</div>
+      <h1>${escapeHtml(businessName)}</h1>
+      ${businessSettings.display_name && businessSettings.display_name !== businessName ? `<div class="muted">${escapeHtml(businessSettings.display_name)}</div>` : ''}
+      ${businessContact.map((line) => `<div class="muted line">${escapeHtml(line)}</div>`).join('')}
+      ${businessAddress.map((line) => `<div class="muted line">${escapeHtml(line)}</div>`).join('')}
+      ${taxLine ? `<div class="muted line">${escapeHtml(taxLine)}</div>` : ''}
     </div>
     <div>
       <strong>${escapeHtml(invoice.invoice_number)}</strong><br />
@@ -205,12 +237,17 @@ export function buildInvoiceTemplate(invoice: Invoice): string {
   </section>
 
   ${invoice.notes ? `<section class="block"><div class="muted">Notes</div><p>${escapeHtml(invoice.notes)}</p></section>` : ''}
+  ${businessSettings.payment_instructions ? `<section class="block"><div class="muted">Payment Instructions</div><p>${escapeHtml(businessSettings.payment_instructions)}</p></section>` : ''}
+  ${businessSettings.invoice_footer ? `<section class="block"><p class="muted">${escapeHtml(businessSettings.invoice_footer)}</p></section>` : ''}
 </body>
 </html>`;
 }
 
-export async function downloadInvoiceTemplate(invoice: Invoice): Promise<void> {
-  const html = buildInvoiceTemplate(invoice);
+export async function downloadInvoiceTemplate(
+  invoice: Invoice,
+  businessSettings?: BusinessSettings
+): Promise<void> {
+  const html = buildInvoiceTemplate(invoice, businessSettings);
   const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
