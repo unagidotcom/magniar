@@ -199,6 +199,8 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
       currency: currency || 'USD',
     }).format((cents || 0) / 100);
 
+  const displayStatus = (status: InvoiceStatus) => (status === 'SENT' ? 'UNPAID' : status);
+
   if (simulatedState === 'skeleton' || (isLoading && !invoices.length)) {
     return (
       <div className="space-y-6 animate-in fade-in duration-300 font-mono">
@@ -283,7 +285,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                     <td className="p-3.5 text-white/50">{invoice.issue_date}</td>
                     <td className="p-3.5 text-white/50">{invoice.due_date}</td>
                     <td className="p-3.5">
-                      <AdminStatusBadge status={invoice.status} />
+                      <AdminStatusBadge status={displayStatus(invoice.status)} />
                     </td>
                     <td className="p-3.5 text-right">
                       <div className="flex items-center justify-end gap-2">
@@ -307,7 +309,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                             className="p-1.5 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white rounded-[2px] border border-white/10 inline-flex items-center gap-1 text-[11px]"
                           >
                             <Send className="w-3.5 h-3.5" />
-                            <span>Mark Sent</span>
+                            <span>Mark Unpaid</span>
                           </button>
                         )}
                         {invoice.status !== 'PAID' && invoice.status !== 'VOID' && invoice.status !== 'ARCHIVED' && (
@@ -320,7 +322,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                         )}
                         {invoice.status === 'PAID' && (
                           <button
-                            onClick={() => void handleStatusUpdate(invoice.id, 'UNPAID')}
+                            onClick={() => void handleStatusUpdate(invoice.id, 'SENT')}
                             className="p-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 rounded-[2px] border border-amber-500/20 inline-flex items-center gap-1 text-[11px]"
                           >
                             Unpaid
@@ -429,7 +431,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                   >
                     <option value="DRAFT">DRAFT</option>
                     <option value="SENT">SENT</option>
-                    <option value="UNPAID">UNPAID</option>
+                    <option value="SENT">UNPAID</option>
                     <option value="PAID">PAID</option>
                     <option value="OVERDUE">OVERDUE</option>
                     <option value="VOID">VOID</option>

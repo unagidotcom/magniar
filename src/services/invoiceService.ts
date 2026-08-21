@@ -2,7 +2,7 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { Client } from '../types/clients';
 import { BusinessSettings, defaultBusinessSettings } from './businessSettingsService';
 
-export type InvoiceStatus = 'DRAFT' | 'SENT' | 'UNPAID' | 'PAID' | 'OVERDUE' | 'VOID' | 'ARCHIVED';
+export type InvoiceStatus = 'DRAFT' | 'SENT' | 'PAID' | 'OVERDUE' | 'VOID' | 'ARCHIVED';
 
 export interface InvoiceLineItem {
   description: string;
@@ -121,7 +121,7 @@ export async function updateInvoiceStatus(
     patch.sent_at = new Date().toISOString();
   }
 
-  if (status === 'UNPAID' || status === 'DRAFT') {
+  if (status === 'DRAFT') {
     patch.sent_at = null;
   }
 
@@ -176,7 +176,7 @@ export async function updateInvoice(
     patch.sent_at = new Date().toISOString();
   }
 
-  if (input.status === 'UNPAID' || input.status === 'DRAFT') {
+  if (input.status === 'DRAFT') {
     patch.sent_at = null;
   }
 
