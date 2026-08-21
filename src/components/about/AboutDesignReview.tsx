@@ -37,7 +37,7 @@ export const AboutDesignReview: React.FC<AboutDesignReviewProps> = ({
     {
       num: '06',
       title: 'CONNECTION TO CASE STUDIES',
-      desc: 'Links to Chapter 08 Case Studies via "SEE THE SYSTEM IN PRACTICE" featuring live client cards (e.g. Solaris Apparel) and direct detail view callbacks.',
+      desc: 'Links to Chapter 08 Case Studies are retained, but public cards are hidden until verified client work is published from the Admin OS.',
     },
     {
       num: '07',

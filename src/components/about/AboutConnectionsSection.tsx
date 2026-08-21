@@ -24,62 +24,64 @@ export const AboutConnectionsSection: React.FC<AboutConnectionsProps> = ({
 
   return (
     <div className="space-y-0">
-      {/* 1. SELECTED WORK CONNECTION (SECTION 26) */}
-      <section className="py-20 sm:py-28 border-b border-white/10 bg-[#080B10] relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <div>
-              <span className="font-mono text-xs text-[#0099FF] tracking-[0.2em] uppercase font-semibold block mb-2 flex items-center gap-2">
-                <Briefcase className="w-3.5 h-3.5 text-[#0099FF]" />
-                [ 13 — PROOF OF PERFORMANCE ]
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#F5F7FA] uppercase">
-                SEE THE SYSTEM <span className="text-[#0099FF]">IN PRACTICE</span>
-              </h2>
+      {featuredCaseStudies.length > 0 && (
+        /* 1. SELECTED WORK CONNECTION (SECTION 26) */
+        <section className="py-20 sm:py-28 border-b border-white/10 bg-[#080B10] relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+              <div>
+                <span className="font-mono text-xs text-[#0099FF] tracking-[0.2em] uppercase font-semibold block mb-2 flex items-center gap-2">
+                  <Briefcase className="w-3.5 h-3.5 text-[#0099FF]" />
+                  [ 13 — PROOF OF PERFORMANCE ]
+                </span>
+                <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#F5F7FA] uppercase">
+                  SEE THE SYSTEM <span className="text-[#0099FF]">IN PRACTICE</span>
+                </h2>
+              </div>
+
+              <button
+                onClick={onExploreWork}
+                className="inline-flex items-center gap-2 px-5 py-3 bg-white/5 border border-white/15 text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-white/10 transition-all cursor-pointer self-start md:self-auto"
+              >
+                <span>VIEW ALL CASE STUDIES</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
 
-            <button
-              onClick={onExploreWork}
-              className="inline-flex items-center gap-2 px-5 py-3 bg-white/5 border border-white/15 text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-white/10 transition-all cursor-pointer self-start md:self-auto"
-            >
-              <span>VIEW ALL CASE STUDIES</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {featuredCaseStudies.map((cs) => (
+                <div
+                  key={cs.id}
+                  onClick={() => onSelectCaseStudy && onSelectCaseStudy(cs.slug)}
+                  className="p-6 sm:p-8 bg-[#050505] border border-white/10 hover:border-[#0099FF]/50 transition-all group cursor-pointer flex flex-col justify-between"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between font-mono text-xs text-[#8D949E]">
+                      <span className="text-[#0099FF] font-bold">{cs.clientName}</span>
+                      <span>{cs.geography}</span>
+                    </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {featuredCaseStudies.map((cs) => (
-              <div
-                key={cs.id}
-                onClick={() => onSelectCaseStudy && onSelectCaseStudy(cs.slug)}
-                className="p-6 sm:p-8 bg-[#050505] border border-white/10 hover:border-[#0099FF]/50 transition-all group cursor-pointer flex flex-col justify-between"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between font-mono text-xs text-[#8D949E]">
-                    <span className="text-[#0099FF] font-bold">{cs.clientName}</span>
-                    <span>{cs.geography}</span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white uppercase group-hover:text-[#0099FF] transition-colors leading-tight">
+                      {cs.title}
+                    </h3>
+
+                    <p className="text-xs text-[#8D949E] line-clamp-3 leading-relaxed">
+                      {cs.subtitle}
+                    </p>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-bold text-white uppercase group-hover:text-[#0099FF] transition-colors leading-tight">
-                    {cs.title}
-                  </h3>
-
-                  <p className="text-xs text-[#8D949E] line-clamp-3 leading-relaxed">
-                    {cs.subtitle}
-                  </p>
+                  <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+                    <span className="text-[#8D949E] uppercase">{cs.engagementType}</span>
+                    <span className="text-[#0099FF] font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                      CASE STUDY <ArrowUpRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
                 </div>
-
-                <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between font-mono text-xs">
-                  <span className="text-[#8D949E] uppercase">{cs.engagementType}</span>
-                  <span className="text-[#0099FF] font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                    CASE STUDY <ArrowUpRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 2. INSIGHTS CONNECTION (SECTION 27) */}
       <section className="py-20 sm:py-28 border-b border-white/10 bg-[#050505] relative">

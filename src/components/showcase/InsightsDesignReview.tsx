@@ -31,7 +31,7 @@ export function InsightsDesignReview() {
       num: '05',
       question: 'How articles connect to case studies',
       answer:
-        'Articles link directly to relevant proof of execution in Chapter 08. For example, an article on Paid Acquisition scaling links directly to the Solaris Apparel Case Study, creating an interconnected proof network between theory and real-world results.',
+        'Articles can link directly to relevant proof of execution in Chapter 08 once verified case studies are published from the Admin OS, creating an interconnected proof network between theory and real-world results.',
     },
     {
       num: '06',

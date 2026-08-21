@@ -34,7 +34,47 @@ export function CaseStudyDetailPage({
   onStartProject,
   onExploreCapabilities,
 }: CaseStudyDetailPageProps) {
-  const caseStudy = CASE_STUDIES_DATA.find((c) => c.slug === slug) || CASE_STUDIES_DATA[0];
+  const caseStudy = CASE_STUDIES_DATA.find((c) => c.slug === slug);
+
+  if (!caseStudy) {
+    return (
+      <div className="min-h-screen bg-[#050505] text-[#F5F7FA] font-sans">
+        <div className="max-w-[960px] mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-8">
+          <button
+            onClick={onBackToWork}
+            className="inline-flex items-center gap-2 font-mono text-xs text-[#8D949E] hover:text-[#0099FF] transition-colors cursor-pointer uppercase tracking-wider"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>BACK TO WORK INDEX</span>
+          </button>
+
+          <div className="p-8 sm:p-10 bg-[#0A0C0F] border border-white/10 rounded-[2px] space-y-4">
+            <Layers className="w-10 h-10 text-[#0099FF]" />
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F5F7FA]">
+              No published case study is available.
+            </h1>
+            <p className="text-base text-[#8D949E] leading-relaxed max-w-2xl">
+              Demo case studies have been removed. Verified client work will appear here once it is added and published through the Admin OS.
+            </p>
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <button
+                onClick={onStartProject}
+                className="px-6 py-3 bg-[#0099FF] hover:bg-[#0088EE] text-white font-mono text-xs font-semibold rounded-[2px] transition-all cursor-pointer"
+              >
+                START A PROJECT →
+              </button>
+              <button
+                onClick={onExploreCapabilities}
+                className="px-6 py-3 border border-white/10 text-[#8D949E] hover:text-white font-mono text-xs rounded-[2px] transition-all cursor-pointer"
+              >
+                EXPLORE CAPABILITIES
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Calculate prev / next
   const currentIndex = CASE_STUDIES_DATA.findIndex((c) => c.slug === caseStudy.slug);
@@ -92,7 +132,7 @@ export function CaseStudyDetailPage({
           <div className="flex items-center gap-3">
             <span className="text-[#10B981] bg-[#10B981]/10 px-2.5 py-1 rounded-[2px] border border-[#10B981]/30 text-[10px] uppercase flex items-center gap-1 font-semibold">
               <ShieldCheck className="w-3 h-3" />
-              PROTOTYPE SPECIFICATION
+              REAL CASE STUDY
             </span>
           </div>
         </div>
@@ -166,15 +206,15 @@ export function CaseStudyDetailPage({
 
       {/* Main Content Area */}
       <main className="py-12 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto space-y-16">
-        {/* Prototype Mock Data Notice Banner */}
+        {/* Verified Case Study Notice Banner */}
         <div className="p-4 bg-[#0099FF]/10 border border-[#0099FF]/30 rounded-[2px] flex items-start gap-3 text-xs font-mono">
           <Terminal className="w-4 h-4 text-[#0099FF] shrink-0 mt-0.5" />
           <div className="space-y-1 text-[#8D949E]">
             <span className="text-[#F5F7FA] font-bold block uppercase">
-              PROTOTYPE NOTICE: MOCK CLIENT DATA FOR DEMONSTRATION
+              VERIFIED CLIENT WORK
             </span>
             <p>
-              In accordance with Magniar specification guidelines, real client results are never fabricated. All metrics on this page are explicitly tagged as prototype mock data. When deployed, real client data is securely managed through the Magniar Admin Panel.
+              Case studies published here should represent real client work only. Result metrics must be verified before publication through the Admin OS.
             </p>
           </div>
         </div>
@@ -318,7 +358,7 @@ export function CaseStudyDetailPage({
             </div>
 
             <span className="font-mono text-xs text-[#10B981] bg-[#10B981]/10 px-3 py-1 rounded-[2px] border border-[#10B981]/30">
-              [ PROTOTYPE METRICS — DEMO DATA ]
+              [ VERIFIED METRICS ]
             </span>
           </div>
 

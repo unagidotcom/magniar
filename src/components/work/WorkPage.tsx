@@ -99,18 +99,18 @@ export function WorkPage({
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#F5F7FA]">
-            SELECTED WORK. <br />
-            <span className="text-[#8D949E] font-normal">PROOF OF EXECUTION & SCALE.</span>
+            VERIFIED WORK. <br />
+            <span className="text-[#8D949E] font-normal">REAL CASE STUDIES ONLY.</span>
           </h1>
 
           <p className="text-base sm:text-lg text-[#8D949E] max-w-3xl leading-relaxed">
-            Detailed case studies showcasing how Magniar partners with growing brands across acquisition, commerce infrastructure, custom software engineering, and AI data intelligence.
+            Verified client work will appear here once real case studies are published from the Admin OS.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-mono text-[#8D949E]">
             <span className="flex items-center gap-1.5 text-[#10B981]">
               <ShieldCheck className="w-4 h-4 text-[#10B981]" />
-              PROTOTYPE DATA SPECIFICATION VERIFIED
+              REAL CASE STUDIES ONLY
             </span>
             <span>•</span>
             <span>SHOWING {filteredCaseStudies.length} OF {CASE_STUDIES_DATA.length} CASE STUDIES</span>
@@ -142,18 +142,20 @@ export function WorkPage({
           <div className="p-12 text-center bg-[#0A0C0F] border border-white/10 rounded-[2px] space-y-4">
             <Layers className="w-10 h-10 text-[#0099FF] mx-auto" />
             <h3 className="text-xl font-bold text-[#F5F7FA] font-mono">
-              NO CASE STUDIES MATCH YOUR FILTER SELECTION
+              NO PUBLISHED CASE STUDIES YET
             </h3>
             <p className="text-xs font-mono text-[#8D949E] max-w-md mx-auto">
-              Try adjusting your industry, capability, platform, or media budget filter criteria.
+              Real client work will appear here once it is added and published through the Admin OS.
             </p>
-            <button
-              onClick={handleResetFilters}
-              className="px-4 py-2 bg-[#0099FF] text-white text-xs font-mono font-semibold rounded-[2px] inline-flex items-center gap-2 cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>RESET ALL FILTERS</span>
-            </button>
+            {CASE_STUDIES_DATA.length > 0 && (
+              <button
+                onClick={handleResetFilters}
+                className="px-4 py-2 bg-[#0099FF] text-white text-xs font-mono font-semibold rounded-[2px] inline-flex items-center gap-2 cursor-pointer"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>RESET ALL FILTERS</span>
+              </button>
+            )}
           </div>
         )}
 

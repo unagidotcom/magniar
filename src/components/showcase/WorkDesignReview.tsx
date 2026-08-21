@@ -7,7 +7,7 @@ export function WorkDesignReview() {
       num: '01',
       question: 'Why the Work page feels like proof rather than a portfolio gallery',
       answer:
-        'Instead of generic SaaS cards featuring superficial hero images and promotional buzzwords, each Magniar case study is structured like an engineering brief. Cards display operational metadata (Geography, Business Model, Capability Pillars, Platforms, Media Budget Range, Status) and a dedicated primary highlight. The detail view outlines factual context: Client Bio, Challenge, Objective, Strategy Steps (01–04), Execution Deliverables, and explicit Prototype Results with zero fabricated claims.',
+        'Instead of generic SaaS cards featuring superficial hero images and promotional buzzwords, each Magniar case study is structured like an engineering brief. Cards display operational metadata (Geography, Business Model, Capability Pillars, Platforms, Media Budget Range, Status) and a dedicated primary highlight. Demo case studies are intentionally removed until verified client work is published from the Admin OS.',
     },
     {
       num: '02',
@@ -31,7 +31,7 @@ export function WorkDesignReview() {
       num: '05',
       question: 'How filtering works',
       answer:
-        'Filtering provides multi-dimensional exploration across 8 independent vectors: Industry, Business Model, Capability, Service, Platform, Budget Range, Status, and Geography. Search operates instantaneously via client-side state in the prototype.',
+        'Filtering provides multi-dimensional exploration across 8 independent vectors: Industry, Business Model, Capability, Service, Platform, Budget Range, Status, and Geography. The interface remains ready for real published case-study records.',
     },
     {
       num: '06',
@@ -49,7 +49,7 @@ export function WorkDesignReview() {
       num: '08',
       question: 'How the architecture supports one client having multiple case studies',
       answer:
-        'Clients and Case Studies are separate entities (`ClientRef` vs `CaseStudy`). A `clientId` foreign key links case studies to a client record. A single client can have multiple case study entries over time (e.g. "Solaris Paid Acquisition" followed later by "Solaris Headless Shopify Migration").',
+        'Clients and Case Studies are separate entities (`ClientRef` vs `CaseStudy`). A `clientId` foreign key links case studies to a client record. A single client can have multiple verified case study entries over time.',
     },
     {
       num: '09',
