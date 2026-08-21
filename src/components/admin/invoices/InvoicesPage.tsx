@@ -27,12 +27,14 @@ interface InvoicesPageProps {
   onNavigate?: (route: string) => void;
   onTriggerToast: (type: 'success' | 'info' | 'error', title: string, message?: string) => void;
   simulatedState?: 'normal' | 'skeleton' | 'empty' | 'error';
+  onLedgerChange?: () => void;
 }
 
 export const InvoicesPage: React.FC<InvoicesPageProps> = ({
   onNavigate,
   onTriggerToast,
   simulatedState = 'normal',
+  onLedgerChange,
 }) => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
@@ -150,6 +152,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
             servicePeriod,
           });
       await loadData();
+      onLedgerChange?.();
       resetForm();
       setModalOpen(false);
       onTriggerToast(
@@ -180,6 +183,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
     try {
       const updated = await updateInvoiceStatus(invoiceId, status);
       await loadData();
+      onLedgerChange?.();
       onTriggerToast('success', 'Invoice Updated', `${updated.invoice_number} marked ${status}.`);
     } catch (err: any) {
       console.error('Invoice status update failed:', err);
@@ -193,7 +197,9 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
 
     try {
       await deleteInvoice(invoice.id);
+      setInvoices((current) => current.filter((row) => row.id !== invoice.id));
       await loadData();
+      onLedgerChange?.();
       onTriggerToast('success', 'Invoice Deleted', `${invoice.invoice_number} was removed.`);
     } catch (err: any) {
       console.error('Invoice deletion failed:', err);
@@ -265,9 +271,9 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
           onAction={openNewInvoiceModal}
         />
       ) : (
-        <div className="bg-[#0A0A0C] border border-white/10 rounded-[2px] overflow-hidden">
+        <div className="bg-[#0A0A0C] border border-white/10 rounded-[2px] overflow-hidden min-w-0">
           <div className="overflow-x-auto">
-            <table className="w-full text-left font-mono text-xs">
+            <table className="w-full min-w-[980px] text-left font-mono text-xs">
               <thead className="bg-[#050505] border-b border-white/10 text-white/40 uppercase tracking-wider text-[10px]">
                 <tr>
                   <th className="p-3.5">Invoice</th>
@@ -282,31 +288,31 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
               <tbody className="divide-y divide-white/[0.05]">
                 {invoices.map((invoice) => (
                   <tr key={invoice.id} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="p-3.5 text-[#0099FF] font-medium">{invoice.invoice_number}</td>
-                    <td className="p-3.5">
-                      <div className="text-white font-medium">{invoice.client_name}</div>
-                      <div className="text-[11px] text-white/40">{invoice.client_email || 'No email stored'}</div>
+                    <td className="p-3.5 text-[#0099FF] font-medium whitespace-nowrap">{invoice.invoice_number}</td>
+                    <td className="p-3.5 max-w-[220px]">
+                      <div className="text-white font-medium truncate">{invoice.client_name}</div>
+                      <div className="text-[11px] text-white/40 truncate">{invoice.client_email || 'No email stored'}</div>
                     </td>
-                    <td className="p-3.5 text-white font-semibold">
+                    <td className="p-3.5 text-white font-semibold whitespace-nowrap">
                       {formatMoney(invoice.total_cents, invoice.currency)}
                     </td>
-                    <td className="p-3.5 text-white/50">{invoice.issue_date}</td>
-                    <td className="p-3.5 text-white/50">{invoice.due_date}</td>
+                    <td className="p-3.5 text-white/50 whitespace-nowrap">{invoice.issue_date}</td>
+                    <td className="p-3.5 text-white/50 whitespace-nowrap">{invoice.due_date}</td>
                     <td className="p-3.5">
                       <AdminStatusBadge status={displayStatus(invoice.status)} />
                     </td>
                     <td className="p-3.5 text-right">
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex items-center justify-end gap-1.5">
                         <button
                           onClick={() => openEditInvoiceModal(invoice)}
-                          className="p-1.5 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white rounded-[2px] border border-white/10 inline-flex items-center gap-1 text-[11px]"
+                          className="p-1.5 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white rounded-[2px] border border-white/10 inline-flex items-center gap-1 text-[11px] whitespace-nowrap"
                         >
                           <Edit className="w-3.5 h-3.5" />
                           <span>Edit</span>
                         </button>
                         <button
                           onClick={() => void handleDownload(invoice)}
-                          className="p-1.5 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white rounded-[2px] border border-white/10 inline-flex items-center gap-1 text-[11px]"
+                          className="p-1.5 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white rounded-[2px] border border-white/10 inline-flex items-center gap-1 text-[11px] whitespace-nowrap"
                         >
                           <Download className="w-3.5 h-3.5" />
                           <span>Download</span>
@@ -314,7 +320,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                         {invoice.status === 'DRAFT' && (
                           <button
                             onClick={() => void handleStatusUpdate(invoice.id, 'SENT')}
-                            className="p-1.5 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white rounded-[2px] border border-white/10 inline-flex items-center gap-1 text-[11px]"
+                            className="p-1.5 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white rounded-[2px] border border-white/10 inline-flex items-center gap-1 text-[11px] whitespace-nowrap"
                           >
                             <Send className="w-3.5 h-3.5" />
                             <span>Mark Unpaid</span>
@@ -323,7 +329,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                         {invoice.status !== 'PAID' && invoice.status !== 'VOID' && invoice.status !== 'ARCHIVED' && (
                           <button
                             onClick={() => void handleStatusUpdate(invoice.id, 'PAID')}
-                            className="p-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 rounded-[2px] border border-emerald-500/20 inline-flex items-center gap-1 text-[11px]"
+                            className="p-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 rounded-[2px] border border-emerald-500/20 inline-flex items-center gap-1 text-[11px] whitespace-nowrap"
                           >
                             Paid
                           </button>
@@ -331,7 +337,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                         {invoice.status === 'PAID' && (
                           <button
                             onClick={() => void handleStatusUpdate(invoice.id, 'SENT')}
-                            className="p-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 rounded-[2px] border border-amber-500/20 inline-flex items-center gap-1 text-[11px]"
+                            className="p-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 rounded-[2px] border border-amber-500/20 inline-flex items-center gap-1 text-[11px] whitespace-nowrap"
                           >
                             Unpaid
                           </button>
@@ -339,6 +345,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                         <button
                           onClick={() => void handleDeleteInvoice(invoice)}
                           className="p-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 rounded-[2px] border border-rose-500/20 inline-flex items-center gap-1 text-[11px]"
+                          title={`Delete ${invoice.invoice_number}`}
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -353,8 +360,8 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-[#0A0A0C] border border-white/10 rounded-[2px] w-full max-w-xl p-6 space-y-5 text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto">
+          <div className="bg-[#0A0A0C] border border-white/10 rounded-[2px] w-full max-w-xl max-h-[calc(100vh-2rem)] overflow-y-auto p-5 sm:p-6 space-y-5 text-white">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-2">
                 <FileText className="w-4 h-4 text-[#0099FF]" />
@@ -485,7 +492,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-white/10">
+              <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 pt-3 border-t border-white/10">
                 <button
                   type="button"
                   onClick={() => { setModalOpen(false); resetForm(); }}
@@ -496,7 +503,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="px-4 py-2 bg-[#0099FF] hover:bg-[#0099FF]/80 disabled:opacity-50 text-white font-bold rounded-[2px] inline-flex items-center gap-2"
+                  className="px-4 py-2 bg-[#0099FF] hover:bg-[#0099FF]/80 disabled:opacity-50 text-white font-bold rounded-[2px] inline-flex items-center justify-center gap-2"
                 >
                   {isSaving && <RefreshCw className="w-3.5 h-3.5 animate-spin" />}
                   {editingInvoice ? 'Save Invoice' : 'Create Invoice'}

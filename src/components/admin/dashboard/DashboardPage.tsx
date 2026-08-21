@@ -35,12 +35,14 @@ interface DashboardPageProps {
   onNavigate: (route: string) => void;
   onTriggerToast: (type: 'success' | 'info' | 'error', title: string, message?: string) => void;
   simulatedState?: 'normal' | 'skeleton' | 'empty' | 'error';
+  refreshKey?: number;
 }
 
 export const DashboardPage: React.FC<DashboardPageProps> = ({
   onNavigate,
   onTriggerToast,
   simulatedState = 'normal',
+  refreshKey = 0,
 }) => {
   const [selectedPipelineStage, setSelectedPipelineStage] = useState<string | null>(null);
   // Drawers
@@ -159,7 +161,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     };
 
     void loadDashboard();
-  }, []);
+  }, [refreshKey]);
 
   // Simulated Skeleton View
   if (simulatedState === 'skeleton') {

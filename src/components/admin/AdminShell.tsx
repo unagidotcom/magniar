@@ -38,6 +38,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
   const [openRequestsCount, setOpenRequestsCount] = useState<number>(0);
   const [adminProfile, setAdminProfile] = useState<AdminDisplayProfile>(defaultAdminDisplayProfile);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const [adminDataRevision, setAdminDataRevision] = useState<number>(0);
 
   // Check Supabase session on mount & subscribe to auth changes
   useEffect(() => {
@@ -196,6 +197,10 @@ export const AdminShell: React.FC<AdminShellProps> = ({
     }
   };
 
+  const handleAdminDataChanged = () => {
+    setAdminDataRevision((revision) => revision + 1);
+  };
+
   // Loading indicator during session check
   if (isCheckingSession) {
     return (
@@ -228,7 +233,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
   }
 
   return (
-    <div className="magniar-admin-shell min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row antialiased selection:bg-[#0099FF] selection:text-white">
+    <div className="magniar-admin-shell min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row antialiased selection:bg-[#0099FF] selection:text-white overflow-x-hidden">
       {/* Sidebar */}
       <AdminSidebar
         currentRoute={currentRoute}
@@ -256,12 +261,13 @@ export const AdminShell: React.FC<AdminShellProps> = ({
         />
 
         {/* View Content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-8">
+        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-8">
           {currentRoute === 'dashboard' ? (
             <DashboardPage
               onNavigate={(r) => setCurrentRoute(r)}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
+              refreshKey={adminDataRevision}
             />
           ) : currentRoute === 'clients' ? (
             <ClientsPage
@@ -274,6 +280,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
               onNavigate={(r) => setCurrentRoute(r)}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
+              onLedgerChange={handleAdminDataChanged}
             />
           ) : currentRoute === 'settings' ? (
             <SettingsPage

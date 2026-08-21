@@ -199,12 +199,17 @@ export async function updateInvoice(
 
 export async function deleteInvoice(invoiceId: string): Promise<void> {
   const db = requireSupabase();
-  const { error } = await db
+  const { data, error } = await db
     .from('invoices')
     .delete()
-    .eq('id', invoiceId);
+    .eq('id', invoiceId)
+    .select('id')
+    .single();
 
   if (error) throw error;
+  if (!data) {
+    throw new Error('Invoice was not deleted. Refresh the ledger and try again.');
+  }
 }
 
 export async function markInvoiceDownloaded(invoiceId: string): Promise<void> {

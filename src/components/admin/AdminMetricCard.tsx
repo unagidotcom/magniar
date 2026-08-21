@@ -19,9 +19,9 @@ export const AdminMetricCard: React.FC<AdminMetricCardProps> = ({
   isDemoData = true,
 }) => {
   return (
-    <div className="bg-[#0A0A0C] border border-white/10 rounded-[2px] p-5 space-y-3 relative group hover:border-white/20 transition-colors">
-      <div className="flex items-center justify-between gap-2">
-        <span className="font-mono text-[11px] text-white/50 tracking-wider uppercase font-medium">
+    <div className="bg-[#0A0A0C] border border-white/10 rounded-[2px] p-4 sm:p-5 space-y-3 relative group hover:border-white/20 transition-colors min-w-0 overflow-hidden">
+      <div className="flex items-center justify-between gap-2 min-w-0">
+        <span className="font-mono text-[11px] text-white/50 tracking-wider uppercase font-medium truncate">
           {label}
         </span>
         {isDemoData && (
@@ -34,13 +34,13 @@ export const AdminMetricCard: React.FC<AdminMetricCardProps> = ({
         )}
       </div>
 
-      <div className="flex items-baseline justify-between gap-2 pt-1">
-        <div className="text-2xl lg:text-3xl font-display font-semibold text-white tracking-tight">
+      <div className="flex flex-col xl:flex-row xl:items-baseline xl:justify-between gap-2 pt-1 min-w-0">
+        <div className="text-xl sm:text-2xl lg:text-[1.625rem] font-display font-semibold text-white tracking-tight min-w-0 break-words">
           {value}
         </div>
         {change && (
           <div
-            className={`flex items-center gap-1 font-mono text-xs ${
+            className={`flex items-center gap-1 font-mono text-xs min-w-0 ${
               isPositive ? 'text-emerald-400' : 'text-rose-400'
             }`}
           >
@@ -49,14 +49,14 @@ export const AdminMetricCard: React.FC<AdminMetricCardProps> = ({
             ) : (
               <TrendingDown className="w-3.5 h-3.5" />
             )}
-            <span>{change}</span>
+            <span className="truncate">{change}</span>
           </div>
         )}
       </div>
 
       {sublabel && (
-        <div className="font-mono text-[11px] text-white/40 pt-1 border-t border-white/[0.05] flex items-center justify-between">
-          <span>{sublabel}</span>
+        <div className="font-mono text-[11px] text-white/40 pt-1 border-t border-white/[0.05] flex items-center justify-between gap-2 min-w-0">
+          <span className="truncate">{sublabel}</span>
           <Info className="w-3 h-3 text-white/20 group-hover:text-white/40 transition-colors" />
         </div>
       )}
