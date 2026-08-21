@@ -42,7 +42,9 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [clientId, setClientId] = useState('');
   const [serviceSummary, setServiceSummary] = useState('');
+  const [servicePeriod, setServicePeriod] = useState('');
   const [amount, setAmount] = useState('');
+  const [currency, setCurrency] = useState('USD');
   const [dueDate, setDueDate] = useState('');
   const [notes, setNotes] = useState('');
   const [invoiceStatus, setInvoiceStatus] = useState<InvoiceStatus>('DRAFT');
@@ -87,7 +89,9 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
 
   const resetForm = () => {
     setServiceSummary('');
+    setServicePeriod('');
     setAmount('');
+    setCurrency(businessSettings.default_currency || 'USD');
     setDueDate('');
     setNotes('');
     setInvoiceStatus('DRAFT');
@@ -106,7 +110,9 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
     setEditingInvoice(invoice);
     setClientId(invoice.client_id || clients.find((client) => client.business_name === invoice.client_name)?.id || '');
     setServiceSummary(invoice.service_summary);
+    setServicePeriod(invoice.line_items[0]?.service_period || '');
     setAmount(String((invoice.subtotal_cents || 0) / 100));
+    setCurrency(invoice.currency || businessSettings.default_currency || 'USD');
     setDueDate(invoice.due_date);
     setNotes(invoice.notes || '');
     setInvoiceStatus(invoice.status);
@@ -131,7 +137,8 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
             dueDate,
             notes,
             status: invoiceStatus,
-            currency: businessSettings.default_currency,
+            currency,
+            servicePeriod,
           })
         : await createInvoice({
             client: selectedClient as Client,
@@ -139,7 +146,8 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
             amountCents,
             dueDate,
             notes,
-            currency: businessSettings.default_currency,
+            currency,
+            servicePeriod,
           });
       await loadData();
       resetForm();
@@ -395,7 +403,18 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-[10px] text-white/40 uppercase mb-1">Service Period</label>
+                <input
+                  type="text"
+                  value={servicePeriod}
+                  onChange={(event) => setServicePeriod(event.target.value)}
+                  placeholder="July 2026 or 1-31 July 2026"
+                  className="w-full bg-[#050505] border border-white/10 rounded-[2px] px-3 py-2 text-white focus:outline-none focus:border-[#0099FF]"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-[10px] text-white/40 uppercase mb-1">Amount</label>
                   <input
@@ -408,6 +427,21 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                     className="w-full bg-[#050505] border border-white/10 rounded-[2px] px-3 py-2 text-white focus:outline-none focus:border-[#0099FF]"
                     required
                   />
+                </div>
+                <div>
+                  <label className="block text-[10px] text-white/40 uppercase mb-1">Currency</label>
+                  <select
+                    value={currency}
+                    onChange={(event) => setCurrency(event.target.value)}
+                    className="w-full bg-[#050505] border border-white/10 rounded-[2px] px-3 py-2 text-white focus:outline-none focus:border-[#0099FF]"
+                    required
+                  >
+                    <option value="INR">INR</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="AED">AED</option>
+                  </select>
                 </div>
                 <div>
                   <label className="block text-[10px] text-white/40 uppercase mb-1">Due Date</label>
