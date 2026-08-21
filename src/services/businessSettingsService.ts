@@ -49,6 +49,55 @@ const requireSupabase = () => {
   return supabase;
 };
 
+const isMissingBusinessSettingsTable = (error: any) =>
+  error?.code === 'PGRST205' ||
+  String(error?.message || '').includes("business_settings") ||
+  String(error?.message || '').includes('schema cache');
+
+const normalizeSettings = (settings?: Partial<BusinessSettings> | null): BusinessSettings => ({
+  ...defaultBusinessSettings,
+  ...(settings || {}),
+  id: true,
+  legal_name: settings?.legal_name || '',
+  display_name: settings?.display_name || 'Magniar',
+  default_currency: (settings?.default_currency || 'USD').toUpperCase(),
+});
+
+async function getBusinessSettingsFromUserMetadata(): Promise<BusinessSettings> {
+  const db = requireSupabase();
+  const {
+    data: { user },
+    error,
+  } = await db.auth.getUser();
+
+  if (error) throw error;
+  return normalizeSettings(user?.user_metadata?.business_settings);
+}
+
+async function saveBusinessSettingsToUserMetadata(
+  settings: BusinessSettings
+): Promise<BusinessSettings> {
+  const db = requireSupabase();
+  const {
+    data: { user },
+    error: userError,
+  } = await db.auth.getUser();
+
+  if (userError) throw userError;
+  if (!user) throw new Error('No authenticated admin session found.');
+
+  const payload = normalizeSettings(settings);
+  const { error } = await db.auth.updateUser({
+    data: {
+      ...user.user_metadata,
+      business_settings: payload,
+    },
+  });
+
+  if (error) throw error;
+  return payload;
+}
+
 export async function getBusinessSettings(): Promise<BusinessSettings> {
   const db = requireSupabase();
   const { data, error } = await db
@@ -57,21 +106,27 @@ export async function getBusinessSettings(): Promise<BusinessSettings> {
     .eq('id', true)
     .maybeSingle();
 
-  if (error) throw error;
-  return data ? { ...defaultBusinessSettings, ...(data as BusinessSettings) } : defaultBusinessSettings;
+  if (error) {
+    if (isMissingBusinessSettingsTable(error)) {
+      return getBusinessSettingsFromUserMetadata();
+    }
+    throw error;
+  }
+
+  return data ? normalizeSettings(data as BusinessSettings) : getBusinessSettingsFromUserMetadata();
 }
 
 export async function saveBusinessSettings(
   settings: BusinessSettings
 ): Promise<BusinessSettings> {
   const db = requireSupabase();
-  const payload: BusinessSettings = {
+  const payload = normalizeSettings({
     ...settings,
     id: true,
     legal_name: settings.legal_name.trim(),
     display_name: settings.display_name.trim() || 'Magniar',
     default_currency: settings.default_currency.trim().toUpperCase() || 'USD',
-  };
+  });
 
   const { data, error } = await db
     .from('business_settings')
@@ -79,6 +134,12 @@ export async function saveBusinessSettings(
     .select('*')
     .single();
 
-  if (error) throw error;
-  return { ...defaultBusinessSettings, ...(data as BusinessSettings) };
+  if (error) {
+    if (isMissingBusinessSettingsTable(error)) {
+      return saveBusinessSettingsToUserMetadata(payload);
+    }
+    throw error;
+  }
+
+  return normalizeSettings(data as BusinessSettings);
 }
