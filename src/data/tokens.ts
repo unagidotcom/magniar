@@ -180,28 +180,28 @@ export const TYPOGRAPHY_SCALE: TypographyScaleItem[] = [
   {
     token: 'H3',
     name: 'Heading 3',
-    clampValue: 'clamp(1.5rem, 2vw, 2rem)',
-    fallbackSize: '24px - 32px',
+    clampValue: 'clamp(1.75rem, 2.2vw, 2.25rem)',
+    fallbackSize: '28px - 36px',
     weight: 'Weight 500 (Medium)',
-    letterSpacing: '-0.015em',
+    letterSpacing: '0em',
     sampleText: 'Multi-Channel Attribution Engine',
     usageContext: 'Card titles, widget headers, modular section labels.'
   },
   {
     token: 'BODY_LARGE',
     name: 'Body Large',
-    clampValue: '1.25rem (20px)',
-    fallbackSize: '20px',
+    clampValue: '1.3125rem (21px)',
+    fallbackSize: '21px',
     weight: 'Weight 400 (Regular)',
-    letterSpacing: '-0.01em',
+    letterSpacing: '0em',
     sampleText: 'Magniar constructs scalable growth infrastructure combining custom web platforms with real-time performance analytics.',
     usageContext: 'Lead paragraphs, introductory narrative text.'
   },
   {
     token: 'BODY',
     name: 'Body Standard',
-    clampValue: '1rem (16px)',
-    fallbackSize: '16px',
+    clampValue: '1.0625rem (17px)',
+    fallbackSize: '17px',
     weight: 'Weight 400 (Regular)',
     letterSpacing: '0em',
     sampleText: 'Every campaign metric is ingested, normalized, and evaluated against target ROAS thresholds in real time.',
@@ -210,8 +210,8 @@ export const TYPOGRAPHY_SCALE: TypographyScaleItem[] = [
   {
     token: 'SMALL',
     name: 'Small Text',
-    clampValue: '0.875rem (14px)',
-    fallbackSize: '14px',
+    clampValue: '0.9375rem (15px)',
+    fallbackSize: '15px',
     weight: 'Weight 400 / 500',
     letterSpacing: '0em',
     sampleText: 'Last synchronized 2 minutes ago across 14 connected ad accounts.',
@@ -220,12 +220,12 @@ export const TYPOGRAPHY_SCALE: TypographyScaleItem[] = [
   {
     token: 'MICRO',
     name: 'Micro Technical',
-    clampValue: '0.6875rem (11px)',
-    fallbackSize: '11px',
+    clampValue: '0.8125rem (13px)',
+    fallbackSize: '13px',
     weight: 'Weight 500 (Geist Mono)',
-    letterSpacing: '+0.06em (Uppercase)',
+    letterSpacing: '+0.04em (Uppercase only)',
     sampleText: '01 / PERFORMANCE MARKETING ENGINE — STATUS: OPERATIONAL',
-    usageContext: 'Technical category eyebrows, coordinate markers, system status badges.'
+    usageContext: 'Technical category eyebrows, coordinate markers, and system status badges. Do not use as the main admin body font.'
   }
 ];
 
@@ -380,10 +380,10 @@ export const DO_DONT_RULES: DoDontRule[] = [
   {
     id: 2,
     category: 'Typography',
-    ruleTitle: 'Intentional Hierarchy & Geist Font',
-    doText: 'Use Geist sans-serif in title-case for headings with high negative space and high readability.',
-    dontText: 'Do not use cyberpunk novelty fonts, excessive letter spacing on every sentence, or ALL-CAPS hero paragraphs.',
-    doVisualNote: 'Clean headline "Growth Engineered." in 64px Geist semi-bold.',
+    ruleTitle: 'Magniar Three-Font System',
+    doText: 'Use Manrope for brand display and headings, Inter for product UI/body text, and Geist Mono only for technical identifiers, code, and compact system badges.',
+    dontText: 'Do not use cyberpunk novelty fonts, excessive letter spacing on every sentence, tiny admin body copy, or ALL-CAPS hero paragraphs.',
+    doVisualNote: 'Clean headline "Growth Engineered." in Manrope semi-bold with 17px+ readable body copy.',
     dontVisualNote: 'G R O W T H  S Y S T E M  E N G I N E E R E D in futuristic block lettering.'
   },
   {

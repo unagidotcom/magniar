@@ -101,7 +101,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row font-mono">
+    <div className="magniar-admin-shell min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row">
       {/* Left Branding Panel */}
       <div className="lg:w-1/2 p-8 lg:p-16 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/10 bg-[radial-gradient(ellipse_at_top_left,rgba(0,153,255,0.08),transparent_70%)] relative overflow-hidden">
         <div className="space-y-8 relative z-10">

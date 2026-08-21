@@ -199,7 +199,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
   // Loading indicator during session check
   if (isCheckingSession) {
     return (
-      <div className="min-h-screen bg-[#050505] text-[#F5F7FA] flex items-center justify-center font-mono text-xs">
+      <div className="magniar-admin-shell min-h-screen bg-[#050505] text-[#F5F7FA] flex items-center justify-center text-xs">
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full bg-[#0099FF] animate-ping" />
           <span className="text-[#8D949E] uppercase tracking-widest">
@@ -228,7 +228,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row antialiased selection:bg-[#0099FF] selection:text-white font-mono">
+    <div className="magniar-admin-shell min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row antialiased selection:bg-[#0099FF] selection:text-white">
       {/* Sidebar */}
       <AdminSidebar
         currentRoute={currentRoute}
