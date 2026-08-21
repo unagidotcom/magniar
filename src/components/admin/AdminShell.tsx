@@ -11,6 +11,11 @@ import { AdminToast, ToastMessage } from './AdminToast';
 import { MockNotification } from '../../data/adminMockData';
 import { supabase, isSupabaseConfigured, checkIsUserAdmin } from '../../lib/supabase';
 import { listProjectRequests } from '../../services/projectRequestService';
+import {
+  AdminDisplayProfile,
+  defaultAdminDisplayProfile,
+  getCurrentAdminDisplayProfile,
+} from '../../services/adminProfileService';
 
 interface AdminShellProps {
   onReturnToPublicSite?: () => void;
@@ -31,6 +36,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState<boolean>(false);
   const [notifications, setNotifications] = useState<MockNotification[]>([]);
   const [openRequestsCount, setOpenRequestsCount] = useState<number>(0);
+  const [adminProfile, setAdminProfile] = useState<AdminDisplayProfile>(defaultAdminDisplayProfile);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
   // Check Supabase session on mount & subscribe to auth changes
@@ -115,6 +121,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
   useEffect(() => {
     if (!isAuthenticated) {
       setOpenRequestsCount(0);
+      setAdminProfile(defaultAdminDisplayProfile);
       return;
     }
 
@@ -125,6 +132,13 @@ export const AdminShell: React.FC<AdminShellProps> = ({
       .catch((err) => {
         console.error('Open request count load failed:', err);
         setOpenRequestsCount(0);
+      });
+
+    getCurrentAdminDisplayProfile()
+      .then(setAdminProfile)
+      .catch((err) => {
+        console.error('Admin display profile load failed:', err);
+        setAdminProfile(defaultAdminDisplayProfile);
       });
   }, [isAuthenticated, currentRoute]);
 
@@ -223,6 +237,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
         onSignOut={handleSignOut}
         mobileOpen={mobileSidebarOpen}
         onMobileClose={() => setMobileSidebarOpen(false)}
+        adminProfile={adminProfile}
       />
 
       {/* Main App Content Area */}
@@ -237,6 +252,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
           onNotificationClick={handleNotificationClick}
           onSignOut={handleSignOut}
           onReturnToPublicSite={onReturnToPublicSite}
+          adminProfile={adminProfile}
         />
 
         {/* View Content */}
@@ -263,6 +279,8 @@ export const AdminShell: React.FC<AdminShellProps> = ({
             <SettingsPage
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
+              adminProfile={adminProfile}
+              onAdminProfileChange={setAdminProfile}
             />
           ) : (
             <AdminModulePlaceholder

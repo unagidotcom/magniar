@@ -4,6 +4,7 @@ import { CommandPalette } from './CommandPalette';
 import { NotificationCenter } from './NotificationCenter';
 import { AdminUserMenu } from './AdminUserMenu';
 import { MockNotification } from '../../data/adminMockData';
+import { AdminDisplayProfile, initialsForName } from '../../services/adminProfileService';
 
 interface AdminHeaderProps {
   currentRoute: string;
@@ -14,6 +15,7 @@ interface AdminHeaderProps {
   onNotificationClick: (notif: MockNotification) => void;
   onSignOut: () => void;
   onReturnToPublicSite?: () => void;
+  adminProfile: AdminDisplayProfile;
 }
 
 export const AdminHeader: React.FC<AdminHeaderProps> = ({
@@ -25,6 +27,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
   onNotificationClick,
   onSignOut,
   onReturnToPublicSite,
+  adminProfile,
 }) => {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -128,10 +131,10 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
             className="flex items-center gap-2 pl-2 pr-2.5 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-[2px] transition-colors"
           >
             <div className="w-6 h-6 rounded-full bg-[#0099FF]/20 border border-[#0099FF]/40 text-[#0099FF] font-mono text-[10px] font-bold flex items-center justify-center">
-              KV
+              {initialsForName(adminProfile.displayName)}
             </div>
             <span className="hidden sm:inline-block font-mono text-xs text-white/80">
-              KVoss
+              {adminProfile.displayName}
             </span>
           </button>
 
@@ -140,6 +143,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
             onClose={() => setUserMenuOpen(false)}
             onSignOut={onSignOut}
             onOpenSettings={() => onNavigate('settings')}
+            adminProfile={adminProfile}
           />
         </div>
       </div>

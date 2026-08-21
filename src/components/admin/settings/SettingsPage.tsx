@@ -9,17 +9,26 @@ import {
   getBusinessSettings,
   saveBusinessSettings,
 } from '../../../services/businessSettingsService';
+import {
+  AdminDisplayProfile,
+  saveCurrentAdminDisplayProfile,
+} from '../../../services/adminProfileService';
 
 interface SettingsPageProps {
   onTriggerToast: (type: 'success' | 'info' | 'error', title: string, message?: string) => void;
   simulatedState?: 'normal' | 'skeleton' | 'empty' | 'error';
+  adminProfile: AdminDisplayProfile;
+  onAdminProfileChange: (profile: AdminDisplayProfile) => void;
 }
 
 export const SettingsPage: React.FC<SettingsPageProps> = ({
   onTriggerToast,
   simulatedState = 'normal',
+  adminProfile,
+  onAdminProfileChange,
 }) => {
   const [settings, setSettings] = useState<BusinessSettings>(defaultBusinessSettings);
+  const [profileDraft, setProfileDraft] = useState<AdminDisplayProfile>(adminProfile);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -42,8 +51,19 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
     void loadSettings();
   }, []);
 
+  useEffect(() => {
+    setProfileDraft(adminProfile);
+  }, [adminProfile]);
+
   const updateField = (field: keyof BusinessSettings, value: string) => {
     setSettings((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const updateProfileField = (field: keyof AdminDisplayProfile, value: string) => {
+    setProfileDraft((prev) => ({
       ...prev,
       [field]: value,
     }));
@@ -53,9 +73,14 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
     event.preventDefault();
     setIsSaving(true);
     try {
-      const saved = await saveBusinessSettings(settings);
+      const [saved, savedProfile] = await Promise.all([
+        saveBusinessSettings(settings),
+        saveCurrentAdminDisplayProfile(profileDraft),
+      ]);
       setSettings(saved);
-      onTriggerToast('success', 'Business Details Saved', 'Invoice templates will use the updated business profile.');
+      setProfileDraft(savedProfile);
+      onAdminProfileChange(savedProfile);
+      onTriggerToast('success', 'Settings Saved', 'Business details and admin display profile were updated.');
     } catch (err: any) {
       console.error('Business settings save failed:', err);
       onTriggerToast('error', 'Settings Not Saved', err?.message || 'Could not save business settings.');
@@ -108,6 +133,45 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
       />
 
       <form onSubmit={handleSubmit} className="bg-[#0A0A0C] border border-white/10 rounded-[2px] p-5 space-y-6">
+        <div className="flex items-center gap-2 border-b border-white/10 pb-4">
+          <Building2 className="w-4 h-4 text-[#0099FF]" />
+          <h2 className="text-sm font-bold text-white uppercase">Admin Display Profile</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-[10px] text-white/40 uppercase mb-1">Admin Display Name</label>
+            <input
+              value={profileDraft.displayName}
+              onChange={(event) => updateProfileField('displayName', event.target.value)}
+              className={inputClass}
+              placeholder="Your name"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-[10px] text-white/40 uppercase mb-1">Display Email</label>
+            <input
+              type="email"
+              value={profileDraft.displayEmail}
+              onChange={(event) => updateProfileField('displayEmail', event.target.value)}
+              className={inputClass}
+              placeholder="admin@example.com"
+            />
+          </div>
+          <div>
+            <label className="block text-[10px] text-white/40 uppercase mb-1">Role Label</label>
+            <input
+              value={profileDraft.roleLabel}
+              onChange={(event) => updateProfileField('roleLabel', event.target.value)}
+              className={inputClass}
+              placeholder="Super Admin"
+            />
+          </div>
+        </div>
+
+        <div className="pt-2 border-t border-white/10" />
+
         <div className="flex items-center gap-2 border-b border-white/10 pb-4">
           <Building2 className="w-4 h-4 text-[#0099FF]" />
           <h2 className="text-sm font-bold text-white uppercase">Business & Invoice Profile</h2>

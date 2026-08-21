@@ -8,6 +8,7 @@ import {
   LogOut,
   X,
 } from 'lucide-react';
+import { AdminDisplayProfile, initialsForName } from '../../services/adminProfileService';
 
 interface AdminSidebarProps {
   currentRoute: string;
@@ -16,6 +17,7 @@ interface AdminSidebarProps {
   onSignOut: () => void;
   mobileOpen: boolean;
   onMobileClose: () => void;
+  adminProfile: AdminDisplayProfile;
 }
 
 export const AdminSidebar: React.FC<AdminSidebarProps> = ({
@@ -25,6 +27,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   onSignOut,
   mobileOpen,
   onMobileClose,
+  adminProfile,
 }) => {
   const sections = [
     {
@@ -140,14 +143,14 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="w-8 h-8 rounded-full bg-[#0099FF]/20 border border-[#0099FF]/40 flex items-center justify-center font-mono text-xs font-bold text-[#0099FF] shrink-0">
-              KV
+              {initialsForName(adminProfile.displayName)}
             </div>
             <div className="min-w-0 space-y-0.5">
               <div className="font-display text-xs font-semibold text-white truncate">
-                Kaelen Voss
+                {adminProfile.displayName}
               </div>
               <div className="font-mono text-[10px] text-white/40 truncate">
-                Super Admin
+                {adminProfile.roleLabel}
               </div>
             </div>
           </div>
