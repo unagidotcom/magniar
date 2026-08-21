@@ -2,7 +2,7 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { Client } from '../types/clients';
 import { BusinessSettings, defaultBusinessSettings } from './businessSettingsService';
 
-export type InvoiceStatus = 'DRAFT' | 'SENT' | 'PAID' | 'OVERDUE' | 'VOID' | 'ARCHIVED';
+export type InvoiceStatus = 'DRAFT' | 'SENT' | 'UNPAID' | 'PAID' | 'OVERDUE' | 'VOID' | 'ARCHIVED';
 
 export interface InvoiceLineItem {
   description: string;
@@ -38,6 +38,16 @@ export interface CreateInvoiceInput {
   amountCents: number;
   dueDate: string;
   notes?: string;
+  currency?: string;
+}
+
+export interface UpdateInvoiceInput {
+  client?: Client;
+  serviceSummary: string;
+  amountCents: number;
+  dueDate: string;
+  notes?: string;
+  status: InvoiceStatus;
   currency?: string;
 }
 
@@ -111,6 +121,10 @@ export async function updateInvoiceStatus(
     patch.sent_at = new Date().toISOString();
   }
 
+  if (status === 'UNPAID' || status === 'DRAFT') {
+    patch.sent_at = null;
+  }
+
   const { data, error } = await db
     .from('invoices')
     .update(patch)
@@ -120,6 +134,72 @@ export async function updateInvoiceStatus(
 
   if (error) throw error;
   return data as Invoice;
+}
+
+export async function updateInvoice(
+  invoiceId: string,
+  input: UpdateInvoiceInput
+): Promise<Invoice> {
+  if (!input.serviceSummary.trim()) {
+    throw new Error('Invoice service summary is required.');
+  }
+
+  if (!Number.isFinite(input.amountCents) || input.amountCents <= 0) {
+    throw new Error('Invoice amount must be greater than zero.');
+  }
+
+  const lineItems: InvoiceLineItem[] = [
+    {
+      description: input.serviceSummary.trim(),
+      quantity: 1,
+      unit_amount_cents: Math.round(input.amountCents),
+    },
+  ];
+
+  const patch: Record<string, unknown> = {
+    due_date: input.dueDate,
+    currency: input.currency || 'USD',
+    subtotal_cents: Math.round(input.amountCents),
+    service_summary: input.serviceSummary.trim(),
+    line_items: lineItems,
+    notes: input.notes?.trim() || null,
+    status: input.status,
+  };
+
+  if (input.client) {
+    patch.client_id = input.client.id;
+    patch.client_name = input.client.business_name;
+    patch.client_email = primaryEmailForClient(input.client);
+  }
+
+  if (input.status === 'SENT') {
+    patch.sent_at = new Date().toISOString();
+  }
+
+  if (input.status === 'UNPAID' || input.status === 'DRAFT') {
+    patch.sent_at = null;
+  }
+
+  const db = requireSupabase();
+  const { data, error } = await db
+    .from('invoices')
+    .update(patch)
+    .eq('id', invoiceId)
+    .select('*')
+    .single();
+
+  if (error) throw error;
+  return data as Invoice;
+}
+
+export async function deleteInvoice(invoiceId: string): Promise<void> {
+  const db = requireSupabase();
+  const { error } = await db
+    .from('invoices')
+    .delete()
+    .eq('id', invoiceId);
+
+  if (error) throw error;
 }
 
 export async function markInvoiceDownloaded(invoiceId: string): Promise<void> {

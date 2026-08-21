@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Download, FileText, RefreshCw, Send, X } from 'lucide-react';
+import { Download, Edit, FileText, RefreshCw, Send, Trash2, X } from 'lucide-react';
 import { AdminPageHeader } from '../AdminPageHeader';
 import { AdminStatusBadge } from '../AdminStatusBadge';
 import { AdminEmptyState } from '../AdminEmptyState';
@@ -14,10 +14,12 @@ import {
 } from '../../../services/businessSettingsService';
 import {
   createInvoice,
+  deleteInvoice,
   downloadInvoiceTemplate,
   Invoice,
   InvoiceStatus,
   listInvoices,
+  updateInvoice,
   updateInvoiceStatus,
 } from '../../../services/invoiceService';
 
@@ -43,6 +45,8 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
   const [amount, setAmount] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [notes, setNotes] = useState('');
+  const [invoiceStatus, setInvoiceStatus] = useState<InvoiceStatus>('DRAFT');
+  const [editingInvoice, setEditingInvoice] = useState<Invoice | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   const selectedClient = useMemo(
@@ -86,32 +90,68 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
     setAmount('');
     setDueDate('');
     setNotes('');
+    setInvoiceStatus('DRAFT');
+    setEditingInvoice(null);
   };
 
-  const handleCreateInvoice = async (event: React.FormEvent) => {
+  const openNewInvoiceModal = () => {
+    resetForm();
+    if (!clientId && clients[0]) {
+      setClientId(clients[0].id);
+    }
+    setModalOpen(true);
+  };
+
+  const openEditInvoiceModal = (invoice: Invoice) => {
+    setEditingInvoice(invoice);
+    setClientId(invoice.client_id || clients.find((client) => client.business_name === invoice.client_name)?.id || '');
+    setServiceSummary(invoice.service_summary);
+    setAmount(String((invoice.subtotal_cents || 0) / 100));
+    setDueDate(invoice.due_date);
+    setNotes(invoice.notes || '');
+    setInvoiceStatus(invoice.status);
+    setModalOpen(true);
+  };
+
+  const handleSaveInvoice = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!selectedClient) {
+    if (!selectedClient && !editingInvoice) {
       onTriggerToast('error', 'Invoice Not Created', 'Select a client before creating an invoice.');
       return;
     }
 
     setIsSaving(true);
     try {
-      const created = await createInvoice({
-        client: selectedClient,
-        serviceSummary,
-        amountCents: Math.round(Number(amount) * 100),
-        dueDate,
-        notes,
-        currency: businessSettings.default_currency,
-      });
+      const amountCents = Math.round(Number(amount) * 100);
+      const saved = editingInvoice
+        ? await updateInvoice(editingInvoice.id, {
+            client: selectedClient,
+            serviceSummary,
+            amountCents,
+            dueDate,
+            notes,
+            status: invoiceStatus,
+            currency: businessSettings.default_currency,
+          })
+        : await createInvoice({
+            client: selectedClient as Client,
+            serviceSummary,
+            amountCents,
+            dueDate,
+            notes,
+            currency: businessSettings.default_currency,
+          });
       await loadData();
       resetForm();
       setModalOpen(false);
-      onTriggerToast('success', 'Invoice Created', `Draft invoice ${created.invoice_number} is ready to download.`);
+      onTriggerToast(
+        'success',
+        editingInvoice ? 'Invoice Updated' : 'Invoice Created',
+        `${saved.invoice_number} is ready.`
+      );
     } catch (err: any) {
-      console.error('Invoice creation failed:', err);
-      onTriggerToast('error', 'Invoice Not Created', err?.message || 'Could not create invoice.');
+      console.error('Invoice save failed:', err);
+      onTriggerToast('error', 'Invoice Not Saved', err?.message || 'Could not save invoice.');
     } finally {
       setIsSaving(false);
     }
@@ -136,6 +176,20 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
     } catch (err: any) {
       console.error('Invoice status update failed:', err);
       onTriggerToast('error', 'Invoice Not Updated', err?.message || 'Could not update invoice status.');
+    }
+  };
+
+  const handleDeleteInvoice = async (invoice: Invoice) => {
+    const confirmed = window.confirm(`Delete invoice ${invoice.invoice_number}? This cannot be undone.`);
+    if (!confirmed) return;
+
+    try {
+      await deleteInvoice(invoice.id);
+      await loadData();
+      onTriggerToast('success', 'Invoice Deleted', `${invoice.invoice_number} was removed.`);
+    } catch (err: any) {
+      console.error('Invoice deletion failed:', err);
+      onTriggerToast('error', 'Invoice Not Deleted', err?.message || 'Could not delete invoice.');
     }
   };
 
@@ -182,7 +236,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
         subtitle="Create invoice templates, track status, and download client-ready billing files."
         moduleCode="FIN-05 / INVOICES"
         primaryActionLabel="+ New Invoice"
-        onPrimaryAction={() => setModalOpen(true)}
+        onPrimaryAction={openNewInvoiceModal}
         onRefresh={() => void loadData()}
       />
 
@@ -198,7 +252,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
           title="No Invoices Created"
           description="The invoice ledger is empty."
           actionLabel="+ Create First Invoice"
-          onAction={() => setModalOpen(true)}
+          onAction={openNewInvoiceModal}
         />
       ) : (
         <div className="bg-[#0A0A0C] border border-white/10 rounded-[2px] overflow-hidden">
@@ -234,6 +288,13 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                     <td className="p-3.5 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <button
+                          onClick={() => openEditInvoiceModal(invoice)}
+                          className="p-1.5 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white rounded-[2px] border border-white/10 inline-flex items-center gap-1 text-[11px]"
+                        >
+                          <Edit className="w-3.5 h-3.5" />
+                          <span>Edit</span>
+                        </button>
+                        <button
                           onClick={() => void handleDownload(invoice)}
                           className="p-1.5 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white rounded-[2px] border border-white/10 inline-flex items-center gap-1 text-[11px]"
                         >
@@ -249,7 +310,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                             <span>Mark Sent</span>
                           </button>
                         )}
-                        {invoice.status !== 'PAID' && invoice.status !== 'VOID' && (
+                        {invoice.status !== 'PAID' && invoice.status !== 'VOID' && invoice.status !== 'ARCHIVED' && (
                           <button
                             onClick={() => void handleStatusUpdate(invoice.id, 'PAID')}
                             className="p-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 rounded-[2px] border border-emerald-500/20 inline-flex items-center gap-1 text-[11px]"
@@ -257,6 +318,20 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                             Paid
                           </button>
                         )}
+                        {invoice.status === 'PAID' && (
+                          <button
+                            onClick={() => void handleStatusUpdate(invoice.id, 'UNPAID')}
+                            className="p-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 rounded-[2px] border border-amber-500/20 inline-flex items-center gap-1 text-[11px]"
+                          >
+                            Unpaid
+                          </button>
+                        )}
+                        <button
+                          onClick={() => void handleDeleteInvoice(invoice)}
+                          className="p-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 rounded-[2px] border border-rose-500/20 inline-flex items-center gap-1 text-[11px]"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -273,14 +348,23 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-2">
                 <FileText className="w-4 h-4 text-[#0099FF]" />
-                <h3 className="font-bold text-sm uppercase">Create Invoice Template</h3>
+                <h3 className="font-bold text-sm uppercase">
+                  {editingInvoice ? 'Edit Invoice Template' : 'Create Invoice Template'}
+                </h3>
               </div>
-              <button onClick={() => setModalOpen(false)} className="text-white/40 hover:text-white">
+              <button onClick={() => { setModalOpen(false); resetForm(); }} className="text-white/40 hover:text-white">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleCreateInvoice} className="space-y-4">
+            <form onSubmit={handleSaveInvoice} className="space-y-4">
+              {editingInvoice && (
+                <div className="p-3 bg-[#050505] border border-white/10 rounded-[2px] flex items-center justify-between gap-3">
+                  <span className="text-white/40 uppercase">Invoice Number</span>
+                  <span className="text-[#0099FF] font-bold">{editingInvoice.invoice_number}</span>
+                </div>
+              )}
+
               <div>
                 <label className="block text-[10px] text-white/40 uppercase mb-1">Client</label>
                 <select
@@ -335,6 +419,25 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                 </div>
               </div>
 
+              {editingInvoice && (
+                <div>
+                  <label className="block text-[10px] text-white/40 uppercase mb-1">Status</label>
+                  <select
+                    value={invoiceStatus}
+                    onChange={(event) => setInvoiceStatus(event.target.value as InvoiceStatus)}
+                    className="w-full bg-[#050505] border border-white/10 rounded-[2px] px-3 py-2 text-white focus:outline-none focus:border-[#0099FF]"
+                  >
+                    <option value="DRAFT">DRAFT</option>
+                    <option value="SENT">SENT</option>
+                    <option value="UNPAID">UNPAID</option>
+                    <option value="PAID">PAID</option>
+                    <option value="OVERDUE">OVERDUE</option>
+                    <option value="VOID">VOID</option>
+                    <option value="ARCHIVED">ARCHIVED</option>
+                  </select>
+                </div>
+              )}
+
               <div>
                 <label className="block text-[10px] text-white/40 uppercase mb-1">Notes</label>
                 <textarea
@@ -349,7 +452,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
               <div className="flex items-center justify-end gap-3 pt-3 border-t border-white/10">
                 <button
                   type="button"
-                  onClick={() => setModalOpen(false)}
+                  onClick={() => { setModalOpen(false); resetForm(); }}
                   className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-[2px] border border-white/10"
                 >
                   Cancel
@@ -360,7 +463,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                   className="px-4 py-2 bg-[#0099FF] hover:bg-[#0099FF]/80 disabled:opacity-50 text-white font-bold rounded-[2px] inline-flex items-center gap-2"
                 >
                   {isSaving && <RefreshCw className="w-3.5 h-3.5 animate-spin" />}
-                  Create Invoice
+                  {editingInvoice ? 'Save Invoice' : 'Create Invoice'}
                 </button>
               </div>
             </form>

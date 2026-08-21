@@ -17,6 +17,7 @@ export type StatusType =
   | 'OVERDUE'
   | 'PAID'
   | 'PENDING'
+  | 'UNPAID'
   | 'DRAFT'
   | 'ARCHIVED';
 
@@ -33,7 +34,7 @@ export const AdminStatusBadge: React.FC<AdminStatusBadgeProps> = ({
 
   let styles = 'bg-white/5 text-white/70 border-white/10';
 
-  if (norm === 'NEW' || norm === 'PENDING') {
+  if (norm === 'NEW' || norm === 'PENDING' || norm === 'UNPAID') {
     styles = 'bg-amber-500/10 text-amber-300 border-amber-500/30';
   } else if (
     norm === 'ACTIVE' ||
