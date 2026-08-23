@@ -170,7 +170,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:block lg:w-64 shrink-0 border-r border-white/10 h-screen sticky top-0 z-30">
+      <aside className="hidden lg:block lg:w-64 shrink-0 border-r border-white/10 h-screen sticky top-0 self-start z-30">
         {sidebarContent}
       </aside>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Plus } from 'lucide-react';
 import { AdminPageHeader } from '../AdminPageHeader';
 import { AdminDrawer } from '../AdminDrawer';
@@ -72,96 +72,96 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([]);
   const [activityFeed, setActivityFeed] = useState<ActivityLogItem[]>([]);
 
-  useEffect(() => {
+  const loadDashboard = useCallback(async () => {
     const formatMoney = (cents: number) =>
       new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
       }).format((cents || 0) / 100);
 
-    const loadDashboard = async () => {
-      setAttentionItems(dashboardService.getAttentionItems());
-      setUpcomingEvents(dashboardService.getUpcomingEvents());
-      setActivityFeed(dashboardService.getActivityFeed());
-      setRevenueTrend(dashboardService.getRevenueTrend());
+    setAttentionItems(dashboardService.getAttentionItems());
+    setUpcomingEvents(dashboardService.getUpcomingEvents());
+    setActivityFeed(dashboardService.getActivityFeed());
+    setRevenueTrend(dashboardService.getRevenueTrend());
 
-      try {
-        const [requests, clients, invoices] = await Promise.all([
-          listProjectRequests(),
-          clientService.getClients(),
-          listInvoices(),
-        ]);
+    try {
+      const [requests, clients, invoices] = await Promise.all([
+        listProjectRequests(),
+        clientService.getClients(),
+        listInvoices(),
+      ]);
 
-        const mappedRequests: DashboardRequest[] = requests.slice(0, 8).map((req) => ({
-          id: req.id,
-          code: req.request_number,
-          company: req.company_name,
-          client_name: `${req.first_name} ${req.last_name}`,
-          email: req.email,
-          industry: req.industry || 'Not specified',
-          subject: req.engagement_type || req.project_service_budget || 'Project request',
-          status: req.status,
-          created_at: req.created_at,
-          budget_tier: req.project_service_budget || 'Not specified',
-          summary: req.tell_us_more || req.anything_else || 'No summary provided.',
-        }));
-        setRecentRequests(mappedRequests);
+      const mappedRequests: DashboardRequest[] = requests.slice(0, 8).map((req) => ({
+        id: req.id,
+        code: req.request_number,
+        company: req.company_name,
+        client_name: `${req.first_name} ${req.last_name}`,
+        email: req.email,
+        industry: req.industry || 'Not specified',
+        subject: req.engagement_type || req.project_service_budget || 'Project request',
+        status: req.status,
+        created_at: req.created_at,
+        budget_tier: req.project_service_budget || 'Not specified',
+        summary: req.tell_us_more || req.anything_else || 'No summary provided.',
+      }));
+      setRecentRequests(mappedRequests);
 
-        const stageTemplate = dashboardService.getPipelineCounts();
-        const counts = requests.reduce<Record<string, number>>((acc, req) => {
-          acc[req.status] = (acc[req.status] || 0) + 1;
-          return acc;
-        }, {});
-        setPipelineStages(
-          stageTemplate.map((stage) => ({
-            ...stage,
-            count: counts[stage.stage] || 0,
+      const stageTemplate = dashboardService.getPipelineCounts();
+      const counts = requests.reduce<Record<string, number>>((acc, req) => {
+        acc[req.status] = (acc[req.status] || 0) + 1;
+        return acc;
+      }, {});
+      setPipelineStages(
+        stageTemplate.map((stage) => ({
+          ...stage,
+          count: counts[stage.stage] || 0,
+        }))
+      );
+
+      setClientHealthList(
+        clients
+          .filter((client) => client.status !== 'ARCHIVED')
+          .slice(0, 5)
+          .map((client) => ({
+            id: client.id,
+            clientName: client.business_name,
+            industry: client.industry,
+            leadPartner: client.account_owner,
+            healthStatus: client.health,
+            monthlyValue:
+              client.services.find((service) => service.monthly_fee_display)?.monthly_fee_display || '$0.00',
+            activeProjects: client.projects.length,
+            nextAction: client.next_action?.title || 'No next action set',
+            note: client.health_reason || client.pause_reason || client.description,
           }))
-        );
+      );
+      setActiveClientsCount(clients.filter((client) => client.status === 'ACTIVE').length);
 
-        setClientHealthList(
-          clients
-            .filter((client) => client.status !== 'ARCHIVED')
-            .slice(0, 5)
-            .map((client) => ({
-              id: client.id,
-              clientName: client.business_name,
-              industry: client.industry,
-              leadPartner: client.account_owner,
-              healthStatus: client.health,
-              monthlyValue:
-                client.services.find((service) => service.monthly_fee_display)?.monthly_fee_display || '$0.00',
-              activeProjects: client.projects.length,
-              nextAction: client.next_action?.title || 'No next action set',
-              note: client.health_reason || client.pause_reason || client.description,
-            }))
-        );
-        setActiveClientsCount(clients.filter((client) => client.status === 'ACTIVE').length);
+      const outstanding = invoices.filter((invoice) => ['DRAFT', 'SENT', 'OVERDUE'].includes(invoice.status));
+      const overdue = invoices.filter((invoice) => invoice.status === 'OVERDUE');
+      const paid = invoices.filter((invoice) => invoice.status === 'PAID');
+      const sum = (rows: Invoice[]) => rows.reduce((total, invoice) => total + invoice.total_cents, 0);
+      setOutstandingInvoicesCount(outstanding.length);
+      setFinancialSummary({
+        monthlyRevenue: formatMoney(sum(paid)),
+        revenueGrowth: 'Live',
+        outstandingInvoices: formatMoney(sum(outstanding)),
+        overdueInvoices: formatMoney(sum(overdue)),
+        upcomingInvoices: formatMoney(sum(outstanding)),
+        paidThisMonth: formatMoney(sum(paid)),
+        isDemoData: false,
+      });
+    } catch (err) {
+      console.error('Dashboard live data load failed:', err);
+      setPipelineStages(dashboardService.getPipelineCounts());
+      setClientHealthList([]);
+      setFinancialSummary(dashboardService.getFinancialSummary());
+    }
+  }, []);
 
-        const outstanding = invoices.filter((invoice) => ['DRAFT', 'SENT', 'OVERDUE'].includes(invoice.status));
-        const overdue = invoices.filter((invoice) => invoice.status === 'OVERDUE');
-        const paid = invoices.filter((invoice) => invoice.status === 'PAID');
-        const sum = (rows: Invoice[]) => rows.reduce((total, invoice) => total + invoice.total_cents, 0);
-        setOutstandingInvoicesCount(outstanding.length);
-        setFinancialSummary({
-          monthlyRevenue: formatMoney(sum(paid)),
-          revenueGrowth: 'Live',
-          outstandingInvoices: formatMoney(sum(outstanding)),
-          overdueInvoices: formatMoney(sum(overdue)),
-          upcomingInvoices: formatMoney(sum(outstanding)),
-          paidThisMonth: formatMoney(sum(paid)),
-          isDemoData: false,
-        });
-      } catch (err) {
-        console.error('Dashboard live data load failed:', err);
-        setPipelineStages(dashboardService.getPipelineCounts());
-        setClientHealthList([]);
-        setFinancialSummary(dashboardService.getFinancialSummary());
-      }
-    };
-
+  useEffect(() => {
     void loadDashboard();
-  }, [refreshKey]);
+  }, [loadDashboard, refreshKey]);
 
   // Simulated Skeleton View
   if (simulatedState === 'skeleton') {
@@ -232,8 +232,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         title="DASHBOARD"
         subtitle="A live overview of Magniar's growth operations."
         moduleCode="SYS-001 / OPERATIONAL COMMAND CENTER"
+        onRefresh={() => {
+          void loadDashboard();
+          onTriggerToast('info', 'Dashboard Refreshed', 'Latest live admin data loaded.');
+        }}
         actions={
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2 flex-nowrap">
             <button
               onClick={() => onNavigate('requests')}
               className="px-3 py-1.5 bg-[#0099FF] hover:bg-[#0088EE] text-white font-mono text-xs font-semibold rounded-[2px] flex items-center gap-1.5 transition-colors cursor-pointer"

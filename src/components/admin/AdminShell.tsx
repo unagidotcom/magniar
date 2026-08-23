@@ -17,6 +17,35 @@ import {
   getCurrentAdminDisplayProfile,
 } from '../../services/adminProfileService';
 
+const ADMIN_ROUTES = new Set([
+  'dashboard',
+  'requests',
+  'prospects',
+  'clients',
+  'projects',
+  'campaigns',
+  'strategies',
+  'proposals',
+  'invoices',
+  'payments',
+  'reports',
+  'content',
+  'team',
+  'settings',
+]);
+
+const routeFromAdminPath = (fallback = 'dashboard') => {
+  if (typeof window === 'undefined') return fallback;
+
+  const [, adminSegment, routeSegment] = window.location.pathname.split('/');
+  if (adminSegment !== 'admin') return fallback;
+  if (!routeSegment || routeSegment === 'login') return fallback;
+
+  return ADMIN_ROUTES.has(routeSegment) ? routeSegment : fallback;
+};
+
+const pathForAdminRoute = (route: string) => (route === 'dashboard' ? '/admin' : `/admin/${route}`);
+
 interface AdminShellProps {
   onReturnToPublicSite?: () => void;
   initialRoute?: string;
@@ -32,7 +61,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAuthStatus);
   const [isCheckingSession, setIsCheckingSession] = useState<boolean>(isSupabaseConfigured);
-  const [currentRoute, setCurrentRoute] = useState<string>(initialRoute);
+  const [currentRoute, setCurrentRoute] = useState<string>(() => routeFromAdminPath(initialRoute));
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState<boolean>(false);
   const [notifications, setNotifications] = useState<MockNotification[]>([]);
   const [openRequestsCount, setOpenRequestsCount] = useState<number>(0);
@@ -116,8 +145,19 @@ export const AdminShell: React.FC<AdminShellProps> = ({
   }, []);
 
   useEffect(() => {
-    setCurrentRoute(initialRoute);
+    setCurrentRoute(routeFromAdminPath(initialRoute));
   }, [initialRoute]);
+
+  useEffect(() => {
+    const handleAdminPopState = () => {
+      if (window.location.pathname.startsWith('/admin')) {
+        setCurrentRoute(routeFromAdminPath('dashboard'));
+      }
+    };
+
+    window.addEventListener('popstate', handleAdminPopState);
+    return () => window.removeEventListener('popstate', handleAdminPopState);
+  }, []);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -143,21 +183,6 @@ export const AdminShell: React.FC<AdminShellProps> = ({
       });
   }, [isAuthenticated, currentRoute]);
 
-  // Sync URL history state
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (isAuthenticated) {
-        if (!window.location.pathname.startsWith('/admin') || window.location.pathname === '/admin/login') {
-          window.history.pushState({}, '', '/admin');
-        }
-      } else {
-        if (window.location.pathname.startsWith('/admin') && window.location.pathname !== '/admin/login') {
-          window.history.pushState({}, '', '/admin/login');
-        }
-      }
-    }
-  }, [isAuthenticated]);
-
   // Toast trigger helper
   const triggerToast = (type: 'success' | 'info' | 'error', title: string, message?: string) => {
     const newToast: ToastMessage = {
@@ -178,8 +203,20 @@ export const AdminShell: React.FC<AdminShellProps> = ({
     triggerToast('info', 'Notifications Read', 'All system notifications marked as read.');
   };
 
+  const handleNavigate = (route: string) => {
+    const nextRoute = ADMIN_ROUTES.has(route) ? route : 'dashboard';
+    setCurrentRoute(nextRoute);
+
+    if (typeof window !== 'undefined' && isAuthenticated) {
+      const nextPath = pathForAdminRoute(nextRoute);
+      if (window.location.pathname !== nextPath) {
+        window.history.pushState({}, '', nextPath);
+      }
+    }
+  };
+
   const handleNotificationClick = (notif: MockNotification) => {
-    setCurrentRoute(notif.route_target);
+    handleNavigate(notif.route_target);
     setNotifications((prev) =>
       prev.map((n) => (n.id === notif.id ? { ...n, is_read: true } : n))
     );
@@ -201,6 +238,21 @@ export const AdminShell: React.FC<AdminShellProps> = ({
     setAdminDataRevision((revision) => revision + 1);
   };
 
+  // Sync URL history state
+  useEffect(() => {
+    if (isCheckingSession) return;
+
+    if (typeof window !== 'undefined') {
+      if (isAuthenticated) {
+        if (!window.location.pathname.startsWith('/admin') || window.location.pathname === '/admin/login') {
+          window.history.replaceState({}, '', pathForAdminRoute(currentRoute));
+        }
+      } else if (window.location.pathname.startsWith('/admin') && window.location.pathname !== '/admin/login') {
+        window.history.replaceState({}, '', '/admin/login');
+      }
+    }
+  }, [isAuthenticated, currentRoute, isCheckingSession]);
+
   // Loading indicator during session check
   if (isCheckingSession) {
     return (
@@ -221,9 +273,10 @@ export const AdminShell: React.FC<AdminShellProps> = ({
       <AdminLogin
         onLoginSuccess={() => {
           setIsAuthenticated(true);
-          setCurrentRoute('dashboard');
+          const routeAfterLogin = routeFromAdminPath('dashboard');
+          setCurrentRoute(routeAfterLogin);
           if (typeof window !== 'undefined') {
-            window.history.pushState({}, '', '/admin');
+            window.history.replaceState({}, '', pathForAdminRoute(routeAfterLogin));
           }
           triggerToast('success', 'Authenticated Successfully', 'Welcome to Magniar Operating System.');
         }}
@@ -233,11 +286,11 @@ export const AdminShell: React.FC<AdminShellProps> = ({
   }
 
   return (
-    <div className="magniar-admin-shell min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row antialiased selection:bg-[#0099FF] selection:text-white overflow-x-hidden">
+    <div className="magniar-admin-shell min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row antialiased selection:bg-[#0099FF] selection:text-white">
       {/* Sidebar */}
       <AdminSidebar
         currentRoute={currentRoute}
-        onNavigate={(r) => setCurrentRoute(r)}
+        onNavigate={handleNavigate}
         openRequestsCount={openRequestsCount}
         onSignOut={handleSignOut}
         mobileOpen={mobileSidebarOpen}
@@ -250,7 +303,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
         {/* Header */}
         <AdminHeader
           currentRoute={currentRoute}
-          onNavigate={(r) => setCurrentRoute(r)}
+          onNavigate={handleNavigate}
           onMobileMenuToggle={() => setMobileSidebarOpen(true)}
           notifications={notifications}
           onMarkAllNotificationsRead={handleMarkAllNotificationsRead}
@@ -261,23 +314,23 @@ export const AdminShell: React.FC<AdminShellProps> = ({
         />
 
         {/* View Content */}
-        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-8">
+        <main className="flex-1 min-w-0 overflow-x-hidden p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-8">
           {currentRoute === 'dashboard' ? (
             <DashboardPage
-              onNavigate={(r) => setCurrentRoute(r)}
+              onNavigate={handleNavigate}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
               refreshKey={adminDataRevision}
             />
           ) : currentRoute === 'clients' ? (
             <ClientsPage
-              onNavigate={(r) => setCurrentRoute(r)}
+              onNavigate={handleNavigate}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
             />
           ) : currentRoute === 'invoices' ? (
             <InvoicesPage
-              onNavigate={(r) => setCurrentRoute(r)}
+              onNavigate={handleNavigate}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
               onLedgerChange={handleAdminDataChanged}
@@ -292,7 +345,7 @@ export const AdminShell: React.FC<AdminShellProps> = ({
           ) : (
             <AdminModulePlaceholder
               route={currentRoute}
-              onNavigate={(r) => setCurrentRoute(r)}
+              onNavigate={handleNavigate}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
             />
