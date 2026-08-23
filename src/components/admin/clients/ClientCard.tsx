@@ -1,6 +1,7 @@
 import React from 'react';
 import { Client } from '../../../types/clients';
-import { ChevronRight, Clock, Building2, User, Layers } from 'lucide-react';
+import { ChevronRight, Clock } from 'lucide-react';
+import { ClientLogo } from '../../common/ClientLogo';
 
 interface ClientCardProps {
   client: Client;
@@ -65,15 +66,23 @@ export const ClientCard: React.FC<ClientCardProps> = ({ client, onOpenClient }) 
       </div>
 
       {/* Business & Primary Contact */}
-      <div>
-        <h3 className="text-base font-bold text-white hover:text-[#0099FF] transition-colors">
-          {client.business_name}
-        </h3>
-        {primaryContact && (
-          <p className="text-xs text-white/60 mt-0.5">
-            {primaryContact.name} ({primaryContact.role})
-          </p>
-        )}
+      <div className="flex items-center gap-3 min-w-0">
+        <ClientLogo
+          name={client.business_name}
+          logoUrl={client.logo_url}
+          className="h-12 w-16 shrink-0 flex items-center justify-center bg-[#050505] border border-white/10 rounded-[2px] px-2"
+          imageClassName="max-h-8 max-w-full object-contain"
+        />
+        <div className="min-w-0">
+          <h3 className="text-base font-bold text-white hover:text-[#0099FF] transition-colors truncate">
+            {client.business_name}
+          </h3>
+          {primaryContact && (
+            <p className="text-xs text-white/60 mt-0.5 truncate">
+              {primaryContact.name} ({primaryContact.role})
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Services chips */}

@@ -2,14 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { TechnicalLabel } from './TechnicalLabel';
 import { HomepageClient, listHomepageClients } from '../../services/homepageClientService';
 import { ExternalLink, Building2 } from 'lucide-react';
-
-const getInitials = (name: string) =>
-  name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join('') || 'MG';
+import { ClientLogo } from './ClientLogo';
 
 export const ClientTrustStrip: React.FC = () => {
   const [clients, setClients] = useState<HomepageClient[]>([]);
@@ -63,23 +56,7 @@ export const ClientTrustStrip: React.FC = () => {
                 rel={item.website ? 'noreferrer' : undefined}
                 className="p-5 bg-[#080B10] border border-white/10 hover:border-[#0099FF]/40 transition-all rounded-[2px] group min-h-[172px] flex flex-col justify-between"
               >
-                <div className="h-16 flex items-center justify-center bg-[#050505] border border-white/10 rounded-[2px] px-4">
-                  {item.logo_url ? (
-                    <img
-                      src={item.logo_url}
-                      alt={`${item.business_name} logo`}
-                      className="max-h-10 max-w-full object-contain"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="flex items-center gap-2 text-[#0099FF]">
-                      <Building2 className="w-5 h-5" />
-                      <span className="font-heading text-xl font-bold tracking-wider">
-                        {getInitials(item.business_name)}
-                      </span>
-                    </div>
-                  )}
-                </div>
+                <ClientLogo name={item.business_name} logoUrl={item.logo_url} />
 
                 <div className="space-y-2 pt-5">
                   <div className="flex items-start justify-between gap-3">
