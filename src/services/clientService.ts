@@ -118,6 +118,15 @@ const buildActivity = (
   author,
 });
 
+const isMissingLogoUrlColumnError = (error: unknown) => {
+  const message =
+    typeof error === 'object' && error && 'message' in error
+      ? String((error as { message?: unknown }).message || '')
+      : String(error || '');
+
+  return message.includes("'logo_url'") && message.includes("'clients'");
+};
+
 class ClientService {
   public async getClients(): Promise<Client[]> {
     const db = requireSupabase();
@@ -162,7 +171,7 @@ class ClientService {
         ]
       : [];
 
-    const payload = {
+    const payload: Record<string, unknown> = {
       source_prospect_id: newClientData.source_prospect_id || null,
       source_request_id: newClientData.source_request_id || null,
       business_name: newClientData.business_name || 'New Client Business',
@@ -172,7 +181,6 @@ class ClientService {
       primary_market: newClientData.primary_market || 'North America',
       markets_served: newClientData.markets_served || 'US',
       website: newClientData.website || null,
-      logo_url: newClientData.logo_url || null,
       description: newClientData.description || '',
       primary_objective: newClientData.primary_objective || '',
       account_owner: accountOwner,
@@ -211,11 +219,19 @@ class ClientService {
       raw_client_data: newClientData,
     };
 
-    const { data, error } = await db
-      .from('clients')
-      .insert(payload)
-      .select('*')
-      .single();
+    if (typeof newClientData.logo_url === 'string' && newClientData.logo_url.trim()) {
+      payload.logo_url = newClientData.logo_url.trim();
+    }
+
+    let { data, error } = await db.from('clients').insert(payload).select('*').single();
+
+    if (error && isMissingLogoUrlColumnError(error) && 'logo_url' in payload) {
+      const fallbackPayload = { ...payload };
+      delete fallbackPayload.logo_url;
+      const fallbackResult = await db.from('clients').insert(fallbackPayload).select('*').single();
+      data = fallbackResult.data;
+      error = fallbackResult.error;
+    }
 
     if (error) throw error;
     return normalizeClient(data as ClientRow);
