@@ -3,6 +3,7 @@ import {
   LayoutDashboard,
   Inbox,
   Users,
+  Globe,
   FileText,
   Settings,
   LogOut,
@@ -47,6 +48,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           badgeColor: 'bg-[#0099FF]/20 text-[#0099FF]',
         },
         { id: 'clients', label: 'Clients Directory', icon: Users },
+        { id: 'websites', label: 'Websites', icon: Globe },
       ],
     },
     {

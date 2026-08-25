@@ -27,12 +27,13 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
     if (setActiveTab) {
       setActiveTab(id);
     } else if (onNavigate) {
-      if (id === 'capabilities') onNavigate('capabilities-page');
+      if (id === 'services') onNavigate('services');
       else if (id === 'process') onNavigate('process-page');
       else if (id === 'industries') onNavigate('industries-page');
       else if (id === 'work') onNavigate('work-page');
       else if (id === 'insights') onNavigate('insights-page');
       else if (id === 'about') onNavigate('about-page');
+      else if (id === 'contact') onNavigate('contact-page');
       else onNavigate('homepage');
     }
   };
@@ -105,7 +106,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
                             {group.items.slice(0, 3).map((item, i) => (
                               <button
                                 key={i}
-                                onClick={() => handleLinkClick('capabilities')}
+                                onClick={() => handleLinkClick('services')}
                                 className="hover:text-[#F5F7FA] transition-colors py-0.5 block text-left"
                               >
                                 • {item.name}
@@ -170,7 +171,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
 
         <div className="flex items-center justify-between text-[10px] font-mono text-[#5A626E] pt-2">
           <span>© 2026 MAGNIAR</span>
-          <span className="text-[#0099FF]">GLOBAL GROWTH OPERATING SYSTEM</span>
+          <span className="text-[#0099FF]">DIGITAL SERVICES</span>
         </div>
       </div>
     </div>

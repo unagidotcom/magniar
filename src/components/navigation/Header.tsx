@@ -197,6 +197,8 @@ export const Header: React.FC<HeaderProps> = ({
       <CapabilitiesMegaMenu
         isOpen={megaMenuOpen}
         onClose={() => setMegaMenuOpen(false)}
+        onStartProject={onStartProject}
+        onNavigate={onNavigate}
       />
 
       {/* Mobile Fullscreen Menu */}

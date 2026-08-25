@@ -4,7 +4,7 @@ import { TechnicalLabel } from './TechnicalLabel';
 import { ChevronDown } from 'lucide-react';
 
 export const FAQSection: React.FC = () => {
-  const [openId, setOpenId] = useState<string | null>('business-size');
+  const [openId, setOpenId] = useState<string | null>('services');
 
   const toggleItem = (id: string) => {
     setOpenId(openId === id ? null : id);
@@ -28,7 +28,7 @@ export const FAQSection: React.FC = () => {
           </h2>
 
           <p className="text-[13px] sm:text-sm text-slate-300 font-normal leading-relaxed">
-            Concise answers regarding our capabilities, international scope, platform support, and how we engage with growth-focused businesses.
+            Concise answers about services, locations, platforms, pricing, and how to start a project with Magniar.
           </p>
         </div>
 

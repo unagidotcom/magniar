@@ -7,13 +7,33 @@ import { X, ShieldCheck, ArrowUpRight } from 'lucide-react';
 interface CapabilitiesMegaMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  onStartProject?: () => void;
+  onNavigate?: (route: string) => void;
 }
 
 export const CapabilitiesMegaMenu: React.FC<CapabilitiesMegaMenuProps> = ({
   isOpen,
-  onClose
+  onClose,
+  onStartProject,
+  onNavigate,
 }) => {
   if (!isOpen) return null;
+
+  const handleServicesClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    onClose();
+    if (onNavigate) onNavigate('services');
+  };
+
+  const handleStartProjectClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    onClose();
+    if (onStartProject) {
+      onStartProject();
+    } else if (onNavigate) {
+      onNavigate('start-project');
+    }
+  };
 
   return (
     <div
@@ -26,9 +46,9 @@ export const CapabilitiesMegaMenu: React.FC<CapabilitiesMegaMenuProps> = ({
         {/* Header row inside mega menu */}
         <div className="flex items-center justify-between pb-6 mb-8 border-b border-white/10 font-mono text-[11px] text-[#8D949E] tracking-wider uppercase">
           <div className="flex items-center gap-4">
-            <span className="text-[#0099FF] font-semibold">CAPABILITIES ARCHITECTURE</span>
+            <span className="text-[#0099FF] font-semibold">SERVICES</span>
             <span className="text-white/20">|</span>
-            <SignalIndicator label="4 CORE PILLARS ONLINE" size="sm" />
+            <SignalIndicator label="4 SERVICE AREAS" size="sm" />
           </div>
 
           <button
@@ -45,32 +65,32 @@ export const CapabilitiesMegaMenu: React.FC<CapabilitiesMegaMenuProps> = ({
           <div className="lg:col-span-3 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/10 pb-8 lg:pb-0 lg:pr-8">
             <div className="space-y-4">
               <span className="font-mono text-[10px] text-[#0099FF] tracking-widest uppercase block">
-                INTEGRATED AGENCY ECOSYSTEM
+                DIGITAL SERVICES
               </span>
               <h3 className="text-xl lg:text-2xl font-light text-[#F5F7FA] leading-tight">
-                One connected engine for paid growth, commerce, code, and AI.
+                Websites, eCommerce, marketing and support from one place.
               </h3>
               <p className="text-xs text-[#8D949E] leading-relaxed">
-                Magniar connects performance acquisition, digital storefronts, custom technology infrastructure, and predictive AI intelligence into unified growth systems.
+                Choose a focused service or combine work into a practical digital plan for your business.
               </p>
             </div>
 
             <div className="pt-6 mt-6 border-t border-white/10 space-y-4">
               <div className="flex items-center gap-2 text-[11px] font-mono text-[#5A626E]">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#0099FF]" />
-                <span>SERVER-SIDE DATA & TRACKING GUARANTEE</span>
+                <span>CLEAR SCOPE BEFORE WORK BEGINS</span>
               </div>
 
               <a
                 href="#start"
-                onClick={onClose}
+                onClick={handleStartProjectClick}
                 className="group flex items-center justify-between p-3 bg-white/[0.03] hover:bg-[#0099FF]/10 border border-white/10 hover:border-[#0099FF]/40 rounded-[2px] transition-all duration-200"
               >
                 <div>
                   <div className="text-xs font-mono font-medium text-[#F5F7FA] group-hover:text-[#0099FF]">
-                    REQUEST ROADMAP
+                    START A PROJECT
                   </div>
-                  <div className="text-[10px] text-[#8D949E]">Custom audit & system architecture</div>
+                  <div className="text-[10px] text-[#8D949E]">Tell us what you need built or improved</div>
                 </div>
                 <ArrowUpRight className="w-4 h-4 text-[#8D949E] group-hover:text-[#0099FF] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
@@ -102,8 +122,8 @@ export const CapabilitiesMegaMenu: React.FC<CapabilitiesMegaMenuProps> = ({
                     {group.items.map((item, idx) => (
                       <li key={idx} className="group/item">
                         <a
-                          href="#capabilities"
-                          onClick={onClose}
+                          href="#services"
+                          onClick={handleServicesClick}
                           className="block p-2 rounded-[2px] hover:bg-white/[0.04] transition-colors"
                         >
                           <div className="text-xs font-medium text-[#F5F7FA] group-hover/item:text-[#0099FF] flex items-center justify-between">

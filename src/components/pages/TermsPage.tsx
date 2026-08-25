@@ -32,7 +32,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({
           </h1>
 
           <p className="text-slate-300 text-lg leading-relaxed font-normal">
-            By accessing or using the website and agency services operated by Magniar LLC, you agree to comply with and be bound by the following terms and conditions.
+            By accessing or using the website and agency services operated by Magniar, you agree to comply with and be bound by the following terms and conditions.
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({
               <span className="text-[#0099FF]">01 /</span> USE OF WEBSITE & INTELLECTUAL PROPERTY
             </h2>
             <p>
-              All materials on this website—including proprietary marketing frameworks, visual designs, case studies, code, and trade branding—are the intellectual property of Magniar LLC. Unauthorised copying, scraping, or reproduction is strictly prohibited.
+              All materials on this website, including proprietary marketing frameworks, visual designs, case studies, code, and trade branding, are the intellectual property of Magniar. Unauthorised copying, scraping, or reproduction is strictly prohibited.
             </p>
           </section>
 

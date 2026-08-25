@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, LayoutDashboard, Inbox, Users, FileText, Settings, ShieldAlert, ArrowRight } from 'lucide-react';
+import { Search, X, LayoutDashboard, Inbox, Users, Globe, FileText, Settings, ShieldAlert, ArrowRight } from 'lucide-react';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -39,6 +39,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     { id: 'dash', label: 'Go to Dashboard', icon: LayoutDashboard, category: 'NAVIGATE', route: 'dashboard' },
     { id: 'reqs', label: 'Go to Requests Queue', icon: Inbox, category: 'NAVIGATE', route: 'requests' },
     { id: 'clis', label: 'Go to Clients Directory', icon: Users, category: 'NAVIGATE', route: 'clients' },
+    { id: 'webs', label: 'Go to Websites', icon: Globe, category: 'NAVIGATE', route: 'websites' },
     { id: 'invs', label: 'Go to Invoices & Ledger', icon: FileText, category: 'NAVIGATE', route: 'invoices' },
     { id: 'sett', label: 'Go to System Settings', icon: Settings, category: 'NAVIGATE', route: 'settings' },
     { id: 'create-inv', label: 'Generate Draft Invoice', icon: FileText, category: 'ACTIONS', action: 'New Invoice' },

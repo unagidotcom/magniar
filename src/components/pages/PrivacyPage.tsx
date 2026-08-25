@@ -32,7 +32,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
           </h1>
 
           <p className="text-slate-300 text-lg leading-relaxed font-normal">
-            Magniar LLC ("Magniar", "we", "us", or "our") is committed to protecting your privacy and maintaining the confidentiality of information provided to us through our website and agency services.
+            Magniar ("Magniar", "we", "us", or "our") is committed to protecting your privacy and maintaining the confidentiality of information provided to us through our website and agency services.
           </p>
         </div>
 

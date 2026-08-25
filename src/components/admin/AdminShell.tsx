@@ -5,6 +5,7 @@ import { DashboardPage } from './dashboard/DashboardPage';
 import { ClientsPage } from './clients/ClientsPage';
 import { InvoicesPage } from './invoices/InvoicesPage';
 import { SettingsPage } from './settings/SettingsPage';
+import { WebsitesPage } from './websites/WebsitesPage';
 import { AdminModulePlaceholder } from './AdminModulePlaceholder';
 import { AdminLogin } from './AdminLogin';
 import { AdminToast, ToastMessage } from './AdminToast';
@@ -22,6 +23,7 @@ const ADMIN_ROUTES = new Set([
   'requests',
   'prospects',
   'clients',
+  'websites',
   'projects',
   'campaigns',
   'strategies',
@@ -324,6 +326,12 @@ export const AdminShell: React.FC<AdminShellProps> = ({
             />
           ) : currentRoute === 'clients' ? (
             <ClientsPage
+              onNavigate={handleNavigate}
+              onTriggerToast={triggerToast}
+              simulatedState={simulatedState}
+            />
+          ) : currentRoute === 'websites' ? (
+            <WebsitesPage
               onNavigate={handleNavigate}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}

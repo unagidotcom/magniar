@@ -7,7 +7,7 @@ interface ContactFormProps {
   forceErrorDemo?: boolean;
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal, forceErrorDemo = false }) => {
+export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,25 +18,22 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal, forceErr
   });
 
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [formError, setFormError] = useState('');
 
   const selectedSubjectObj = CONTACT_SUBJECTS.find((s) => s.id === formData.subject);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError('');
+
     if (!formData.name || !formData.email || !formData.message) {
       setStatus('error');
+      setFormError('Please complete the required fields: Name, Email, and Message.');
       return;
     }
 
-    setStatus('submitting');
-
-    setTimeout(() => {
-      if (forceErrorDemo) {
-        setStatus('error');
-      } else {
-        setStatus('success');
-      }
-    }, 1200);
+    setStatus('error');
+    setFormError('Direct message delivery is not connected yet. Please email magniarventures@gmail.com or call 8798250520.');
   };
 
   const handleReset = () => {
@@ -49,6 +46,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal, forceErr
       message: '',
     });
     setStatus('idle');
+    setFormError('');
   };
 
   return (
@@ -105,7 +103,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal, forceErr
                     <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" />
                     <div>
                       <span className="font-bold block">MESSAGE COULD NOT BE SENT.</span>
-                      <span>Please check required fields (Name, Email, Message) and try again.</span>
+                      <span>{formError || 'Please check required fields (Name, Email, Message) and try again.'}</span>
                     </div>
                   </div>
                 )}

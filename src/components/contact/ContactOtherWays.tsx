@@ -1,6 +1,6 @@
 import React from 'react';
 import { CONTACT_OTHER_WAYS } from '../../data/contactData';
-import { Mail, Clock, Globe, Lock } from 'lucide-react';
+import { Mail, Clock, Globe, Phone } from 'lucide-react';
 
 export const ContactOtherWays: React.FC = () => {
   const getIcon = (iconName: string) => {
@@ -11,8 +11,8 @@ export const ContactOtherWays: React.FC = () => {
         return <Clock className="w-5 h-5 text-[#0099FF]" />;
       case 'Globe':
         return <Globe className="w-5 h-5 text-[#0099FF]" />;
-      case 'Lock':
-        return <Lock className="w-5 h-5 text-[#0099FF]" />;
+      case 'Phone':
+        return <Phone className="w-5 h-5 text-[#0099FF]" />;
       default:
         return <Globe className="w-5 h-5 text-[#0099FF]" />;
     }

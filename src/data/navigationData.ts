@@ -1,114 +1,108 @@
 import { CapabilityGroup, NavLink, FooterColumn } from '../types/navigation';
 
 export const PRIMARY_NAV_LINKS: NavLink[] = [
-  { id: 'capabilities', label: 'Capabilities', href: '#capabilities', hasMegaMenu: true },
+  { id: 'services', label: 'Services', href: '#services', hasMegaMenu: true },
   { id: 'work', label: 'Work', href: '#work' },
-  { id: 'insights', label: 'Insights', href: '#insights' },
   { id: 'about', label: 'About', href: '#about' },
+  { id: 'insights', label: 'Insights', href: '#insights' },
+  { id: 'contact', label: 'Contact', href: '#contact' },
 ];
 
 export const MOBILE_NAV_LINKS: NavLink[] = [
-  { id: 'capabilities', label: 'Capabilities', href: '#capabilities', hasMegaMenu: true },
+  { id: 'services', label: 'Services', href: '#services', hasMegaMenu: true },
   { id: 'work', label: 'Work', href: '#work' },
-  { id: 'insights', label: 'Insights', href: '#insights' },
   { id: 'about', label: 'About', href: '#about' },
-  { id: 'process', label: 'Process', href: '#process' },
-  { id: 'industries', label: 'Industries', href: '#industries' },
+  { id: 'insights', label: 'Insights', href: '#insights' },
+  { id: 'contact', label: 'Contact', href: '#contact' },
 ];
 
 export const CAPABILITY_GROUPS: CapabilityGroup[] = [
   {
-    id: 'performance',
-    numberLabel: '01 / PERFORMANCE',
-    title: 'Performance Marketing',
-    summary: 'Data-driven acquisition across global paid channels.',
+    id: 'websites',
+    numberLabel: '01 / WEBSITES',
+    title: 'Websites',
+    summary: 'Business websites, WordPress builds and landing pages.',
     items: [
-      { name: 'Google Ads', description: 'Search, Shopping, Display & Performance Max scale.' },
-      { name: 'Meta Ads', description: 'Facebook & Instagram automated creative funnels.' },
-      { name: 'TikTok Ads', description: 'Short-form viral commerce & impulse acquisition.' },
-      { name: 'LinkedIn Ads', description: 'B2B enterprise pipeline and high-ACV targeting.' },
-      { name: 'Native Advertising', description: 'Outbrain & Taboola editorial programmatic scale.' },
+      { name: 'Website Design & Development', description: 'Modern websites designed for clarity and conversion.' },
+      { name: 'WordPress', description: 'Flexible WordPress sites with practical editing workflows.' },
+      { name: 'Custom Websites', description: 'Tailored web experiences for specific business needs.' },
+      { name: 'Landing Pages', description: 'Focused pages for campaigns, launches and lead generation.' },
     ]
   },
   {
-    id: 'commerce',
-    numberLabel: '02 / COMMERCE',
-    title: 'Digital Commerce',
-    summary: 'Build and scale high-converting storefronts & marketplaces.',
+    id: 'ecommerce',
+    numberLabel: '02 / ECOMMERCE',
+    title: 'eCommerce',
+    summary: 'Shopify, WooCommerce and conversion-focused storefronts.',
     items: [
-      { name: 'Shopify & Shopify Plus', description: 'Custom headless & theme architecture.' },
-      { name: 'WooCommerce & WordPress', description: 'Flexible open-source enterprise stores.' },
-      { name: 'Amazon Marketplace', description: 'FBA optimization, A+ content & PPC ads.' },
-      { name: 'Walmart & Target Marketplaces', description: 'Omnichannel retail presence & inventory sync.' },
-      { name: 'TikTok Shop, Etsy, eBay & Meesho', description: 'Global social commerce & cross-border selling.' },
+      { name: 'Shopify', description: 'Custom Shopify setup, theme work and store improvements.' },
+      { name: 'WooCommerce', description: 'WordPress commerce builds and practical store management.' },
+      { name: 'eCommerce Development', description: 'Product, checkout and catalog experiences.' },
+      { name: 'Storefront Optimization', description: 'Cleaner shopping journeys and conversion-focused improvements.' },
     ]
   },
   {
-    id: 'technology',
-    numberLabel: '03 / TECHNOLOGY',
-    title: 'Growth Infrastructure',
-    summary: 'Engineered web systems, tracking & integrations.',
+    id: 'marketing',
+    numberLabel: '03 / MARKETING',
+    title: 'Marketing',
+    summary: 'Meta Ads, Google Ads, analytics and campaign management.',
     items: [
-      { name: 'Custom Web Development', description: 'Fast, responsive Next.js & React applications.' },
-      { name: 'Analytics & Server GTM', description: 'Precision multi-touch attribution & server-side tracking.' },
-      { name: 'API & Commerce Integrations', description: 'Custom CRM, ERP & platform webhooks.' },
-      { name: 'Conversion Automation', description: 'Behavioral triggers & funnel optimization.' },
+      { name: 'Meta Ads', description: 'Facebook and Instagram campaign setup and management.' },
+      { name: 'Google Ads', description: 'Search and paid traffic campaigns for demand capture.' },
+      { name: 'Analytics & Tracking', description: 'Measurement setup for websites, campaigns and conversions.' },
+      { name: 'Campaign Management', description: 'Ongoing optimization and reporting for active accounts.' },
     ]
   },
   {
-    id: 'intelligence',
-    numberLabel: '04 / INTELLIGENCE',
-    title: 'AI & Data Strategy',
-    summary: 'Transform workflows and decision-making with custom AI.',
+    id: 'maintenance',
+    numberLabel: '04 / MAINTENANCE',
+    title: 'Maintenance',
+    summary: 'Website care, performance, support and ongoing updates.',
     items: [
-      { name: 'AI Strategy & Growth Architecture', description: 'Custom roadmap for enterprise AI adoption.' },
-      { name: 'Automated AI Workflows', description: 'LLM-powered creative & ops automation.' },
-      { name: 'Performance Intelligence', description: 'Predictive LTV, CPA & ROAS modeling.' },
-      { name: 'AI-Assisted Marketing Systems', description: 'Dynamic campaign synthesis & ad generation.' },
+      { name: 'Website Care', description: 'Routine updates and support for active websites.' },
+      { name: 'Performance', description: 'Speed, stability and technical quality improvements.' },
+      { name: 'Technical Support', description: 'Help with website issues, fixes and platform questions.' },
+      { name: 'Ongoing Updates', description: 'Content, feature and maintenance changes as needs evolve.' },
     ]
   }
 ];
 
 export const FOOTER_COLUMNS: FooterColumn[] = [
   {
-    title: 'CAPABILITIES',
+    title: 'SERVICES',
     numberLabel: '01',
     links: [
-      { label: 'Performance Marketing', href: '#capabilities' },
-      { label: 'Digital Commerce', href: '#capabilities' },
-      { label: 'Growth Technology', href: '#capabilities' },
-      { label: 'AI & Data Strategy', href: '#capabilities' },
-    ]
-  },
-  {
-    title: 'PLATFORMS',
-    numberLabel: '02',
-    links: [
-      { label: 'Google Ads & Shopping', href: '#platforms' },
-      { label: 'Meta (FB / IG)', href: '#platforms' },
-      { label: 'TikTok Shop & Ads', href: '#platforms' },
-      { label: 'Shopify & WooCommerce', href: '#platforms' },
-      { label: 'Amazon & Walmart', href: '#platforms' },
+      { label: 'Websites', href: '#services' },
+      { label: 'eCommerce', href: '#services' },
+      { label: 'Marketing', href: '#services' },
+      { label: 'Maintenance', href: '#services' },
     ]
   },
   {
     title: 'COMPANY',
-    numberLabel: '03',
+    numberLabel: '02',
     links: [
-      { label: 'Process', href: '#process' },
-      { label: 'Growth Lab', href: '#growth-lab' },
-      { label: 'About Magniar', href: '#about' },
-      { label: 'Start a Project', href: '#start' },
+      { label: 'About', href: '#about' },
+      { label: 'Work', href: '#work' },
+      { label: 'Insights', href: '#insights' },
+      { label: 'Contact', href: '#contact' },
     ]
   },
   {
-    title: 'CLIENT WORKSPACE',
+    title: 'LEGAL',
+    numberLabel: '03',
+    links: [
+      { label: 'Privacy Policy', href: '#privacy' },
+      { label: 'Terms & Conditions', href: '#terms' },
+      { label: 'Cancellation & Refund Policy', href: '#refund-policy' },
+    ]
+  },
+  {
+    title: 'START',
     numberLabel: '04',
     links: [
+      { label: 'Start a Project', href: '#start' },
       { label: 'Client Login', href: '/portal' },
-      { label: 'Portal Dashboard', href: '/admin/login' },
-      { label: 'Performance Reports', href: '/portal' },
-      { label: 'Invoices & Billing', href: '/portal' },
     ]
   }
 ];

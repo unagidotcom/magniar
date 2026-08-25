@@ -29,7 +29,7 @@ export const ClientTrustStrip: React.FC = () => {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-6">
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-3">
-              <TechnicalLabel text="OUR CLIENTS" />
+              <TechnicalLabel text="CLIENT TRUST" />
               <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
               <span className="font-sans text-xs text-slate-400 uppercase tracking-wider font-semibold">
                 PUBLISHED FROM ADMIN OS
@@ -37,12 +37,12 @@ export const ClientTrustStrip: React.FC = () => {
             </div>
 
             <h2 className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.08]">
-              Clients we <span className="text-[#0099FF]">work with.</span>
+              Trusted by businesses building what comes next.
             </h2>
           </div>
 
           <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-lg">
-            Client logos and names shown here are controlled from the Admin OS client directory.
+            Client names and logos shown here are controlled from the Admin OS client directory.
           </p>
         </div>
 
