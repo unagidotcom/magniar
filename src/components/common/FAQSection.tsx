@@ -10,16 +10,16 @@ export const FAQSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="bg-[#F8F5EF] px-4 py-14 text-[#1F241F] sm:px-6 sm:py-16 lg:px-12">
+    <section id="faq" className="bg-[#F4F1EA] px-4 py-12 text-[#20211F] sm:px-6 sm:py-14 lg:px-12">
       <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 lg:grid-cols-12">
         <div className="lg:col-span-4">
-          <span className="text-xs font-bold uppercase tracking-[0.16em] text-[#877969]">
+          <span className="text-xs font-bold uppercase tracking-[0.16em] text-[#B86F55]">
             Frequently asked questions
           </span>
           <h2 className="mt-3 max-w-[390px] font-heading text-[1.85rem] font-semibold leading-tight sm:text-[2.25rem]">
             Small answers before a bigger conversation.
           </h2>
-          <p className="mt-4 max-w-[360px] text-sm leading-6 text-[#5D5A50]">
+          <p className="mt-4 max-w-[360px] text-sm leading-6 text-[#686963]">
             Concise answers about services, locations, platforms, pricing, and how to start a project with Magniar.
           </p>
         </div>
@@ -32,7 +32,7 @@ export const FAQSection: React.FC = () => {
               <div
                 key={item.id}
                 className={`overflow-hidden rounded-[8px] border transition-colors ${
-                  isOpen ? 'border-[#CFC0AE] bg-[#FFF9EE]' : 'border-[#E1D6C7] bg-[#F5F0E8] hover:bg-[#FFF9EE]'
+                  isOpen ? 'border-[#D5D1C8] bg-[#FAF9F6]' : 'border-[#D5D1C8] bg-[#E9E6DE] hover:bg-[#FAF9F6]'
                 }`}
               >
                 <button
@@ -41,19 +41,19 @@ export const FAQSection: React.FC = () => {
                   aria-expanded={isOpen}
                 >
                   <div className="flex items-start gap-3">
-                    <span className="pt-0.5 text-[11px] font-bold text-[#877969]">0{idx + 1}</span>
-                    <span className="text-[0.98rem] font-semibold leading-6 text-[#1F241F]">{item.question}</span>
+                    <span className="pt-0.5 text-[11px] font-bold text-[#B86F55]">0{idx + 1}</span>
+                    <span className="text-[0.98rem] font-semibold leading-6 text-[#20211F]">{item.question}</span>
                   </div>
 
                   <ChevronDown
-                    className={`h-4 w-4 shrink-0 text-[#877969] transition-transform duration-200 ${
+                    className={`h-4 w-4 shrink-0 text-[#686963] transition-transform duration-200 ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="border-t border-[#E1D6C7] px-4 pb-4 pt-3 text-sm leading-6 text-[#5D5A50] sm:pl-12">
+                  <div className="border-t border-[#D5D1C8] px-4 pb-4 pt-3 text-sm leading-6 text-[#686963] sm:pl-12">
                     {item.answer}
                   </div>
                 )}

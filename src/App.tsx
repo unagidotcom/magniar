@@ -19,8 +19,42 @@ import { ClientLoginPage } from './components/pages/ClientLoginPage';
 import { HomePage } from './components/home/HomePage';
 import { StartProjectStep, ProjectRequestFormData } from './types/startProject';
 
+const getInitialSiteView = ():
+  | 'homepage'
+  | 'about-page'
+  | 'start-project'
+  | 'capabilities-page'
+  | 'process-page'
+  | 'industries-page'
+  | 'work-page'
+  | 'work-detail'
+  | 'insights-page'
+  | 'insights-detail'
+  | 'contact-page'
+  | 'privacy-page'
+  | 'terms-page'
+  | 'login-page'
+  | 'admin-os' => {
+  if (typeof window === 'undefined') return 'homepage';
+
+  const path = window.location.pathname;
+  if (path === '/admin' || path === '/admin/login' || path.startsWith('/admin/')) {
+    return 'admin-os';
+  }
+  if (path === '/portal' || path === '/portal/login' || path.startsWith('/portal/') || path === '/client-login') {
+    return 'login-page';
+  }
+
+  return 'homepage';
+};
+
+const getInitialActiveTab = () => {
+  if (typeof window === 'undefined') return 'shell';
+  return window.location.pathname.startsWith('/admin') ? 'admin-os' : 'shell';
+};
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>('shell');
+  const [activeTab, setActiveTab] = useState<string>(() => getInitialActiveTab());
 
   const [siteView, setSiteView] = useState<
     | 'homepage'
@@ -38,7 +72,7 @@ export default function App() {
     | 'terms-page'
     | 'login-page'
     | 'admin-os'
-  >('homepage');
+  >(() => getInitialSiteView());
 
   // Admin OS States
   const [adminAuthStatus] = useState<boolean>(false);

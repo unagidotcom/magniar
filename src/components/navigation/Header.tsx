@@ -46,7 +46,7 @@ export const Header: React.FC<HeaderProps> = ({
       className={`
         sticky top-0 z-40 w-full transition-all duration-300 ease-out h-[76px] lg:h-[84px] flex items-center
         ${isScrolled 
-          ? 'bg-[#F8F5EF]/94 backdrop-blur-md border-b border-[#D8CDBF] shadow-[0_10px_34px_rgba(45,39,31,0.10)]' 
+          ? 'bg-[#F4F1EA]/94 backdrop-blur-md border-b border-[#D5D1C8] shadow-[0_10px_34px_rgba(45,39,31,0.10)]'
           : 'bg-[#F8F5EF]/88 backdrop-blur-md border-b border-[#E4D8C8]'
         }
       `}
@@ -61,10 +61,10 @@ export const Header: React.FC<HeaderProps> = ({
               if (onNavigate) onNavigate('homepage');
               else if (setActiveTab) setActiveTab('homepage');
             }}
-            className="group flex items-center gap-3 font-heading text-lg sm:text-xl font-extrabold tracking-[0.16em] text-[#1F241F] hover:text-[#11140F] transition-colors select-none"
+            className="group flex items-center gap-3 font-heading text-lg sm:text-xl font-extrabold tracking-[0.16em] text-[#20211F] hover:text-[#11140F] transition-colors select-none"
           >
             <span>MAGNIAR</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#F0D84C]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#B86F55]" />
           </a>
         </div>
 
@@ -83,8 +83,8 @@ export const Header: React.FC<HeaderProps> = ({
                       group font-sans text-sm tracking-wide uppercase transition-colors duration-200
                       flex items-center gap-1.5 cursor-pointer select-none py-1
                       ${megaMenuOpen || isActive
-                        ? 'text-[#1F241F] font-semibold' 
-                        : 'text-[#5D5A50] hover:text-[#1F241F]'
+                        ? 'text-[#20211F] font-semibold'
+                        : 'text-[#686963] hover:text-[#20211F]'
                       }
                     `}
                     aria-expanded={megaMenuOpen}
@@ -92,11 +92,11 @@ export const Header: React.FC<HeaderProps> = ({
                     <span>{link.label}</span>
                     <ChevronDown
                       className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                        megaMenuOpen ? 'rotate-180 text-[#7E8F5A]' : 'text-[#877969] group-hover:text-[#1F241F]'
+                        megaMenuOpen ? 'rotate-180 text-[#B86F55]' : 'text-[#686963] group-hover:text-[#20211F]'
                       }`}
                     />
                     {(megaMenuOpen || isActive) && (
-                      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#F0D84C]" />
+                      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#B86F55]" />
                     )}
                   </button>
                 </div>
@@ -116,14 +116,14 @@ export const Header: React.FC<HeaderProps> = ({
                 className={`
                   relative font-sans text-sm tracking-wide uppercase transition-colors duration-200 py-1 cursor-pointer
                   ${isActive
-                    ? 'text-[#1F241F] font-semibold'
-                    : 'text-[#5D5A50] hover:text-[#1F241F]'
+                    ? 'text-[#20211F] font-semibold'
+                    : 'text-[#686963] hover:text-[#20211F]'
                   }
                 `}
               >
                 <span>{link.label}</span>
                 {isActive && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#F0D84C]" />
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#B86F55]" />
                 )}
               </a>
             );
@@ -139,7 +139,7 @@ export const Header: React.FC<HeaderProps> = ({
               e.preventDefault();
               if (onNavigate) onNavigate('portal');
             }}
-            className="hidden lg:flex items-center gap-1.5 font-sans text-sm font-medium text-[#5D5A50] hover:text-[#1F241F] transition-colors tracking-wide uppercase group py-2 cursor-pointer"
+            className="hidden lg:flex items-center gap-1.5 font-sans text-sm font-medium text-[#686963] hover:text-[#20211F] transition-colors tracking-wide uppercase group py-2 cursor-pointer"
           >
             <span>CLIENT LOGIN</span>
           </a>
@@ -156,7 +156,7 @@ export const Header: React.FC<HeaderProps> = ({
               }
             }}
           >
-            <MagniarButton variant="primary" size="md" className="rounded-full border-[#1F241F] bg-[#1F241F] text-[#FFF9EE] hover:bg-[#343B34] hover:shadow-none">
+            <MagniarButton variant="primary" size="md" className="rounded-[5px] border-[#B86F55] bg-[#B86F55] text-[#F4F1EA] hover:bg-[#8F4F3D] hover:shadow-none">
               START A PROJECT
             </MagniarButton>
           </a>
@@ -176,18 +176,18 @@ export const Header: React.FC<HeaderProps> = ({
               }
             }}
           >
-            <MagniarButton variant="primary" size="sm" className="rounded-full border-[#1F241F] bg-[#1F241F] text-[#FFF9EE] hover:bg-[#343B34] hover:shadow-none">
+            <MagniarButton variant="primary" size="sm" className="rounded-[5px] border-[#B86F55] bg-[#B86F55] text-[#F4F1EA] hover:bg-[#8F4F3D] hover:shadow-none">
               START
             </MagniarButton>
           </a>
 
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="px-3.5 py-2 text-[#1F241F] hover:text-[#11140F] border border-[#D8CDBF] rounded-full bg-[#FFF9EE] hover:bg-white cursor-pointer flex items-center gap-2 font-sans text-xs font-semibold tracking-wider uppercase"
+            className="px-3.5 py-2 text-[#20211F] hover:text-[#11140F] border border-[#D5D1C8] rounded-[5px] bg-[#FAF9F6] hover:bg-white cursor-pointer flex items-center gap-2 font-sans text-xs font-semibold tracking-wider uppercase"
             aria-label="Open navigation menu"
           >
             <span>MENU</span>
-            <Menu className="w-4 h-4 text-[#7E8F5A]" />
+            <Menu className="w-4 h-4 text-[#B86F55]" />
           </button>
         </div>
       </div>
