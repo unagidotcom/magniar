@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FAQ_ITEMS } from '../../data/faqData';
-import { TechnicalLabel } from './TechnicalLabel';
 import { ChevronDown } from 'lucide-react';
 
 export const FAQSection: React.FC = () => {
@@ -11,62 +10,50 @@ export const FAQSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-[#050505] text-[#F5F7FA] border-t border-white/10 relative">
-      <div className="max-w-[1120px] mx-auto space-y-8">
-        {/* Section Header */}
-        <div className="max-w-2xl space-y-3">
-          <div className="flex items-center gap-3">
-            <TechnicalLabel text="FREQUENTLY ASKED QUESTIONS" />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
-            <span className="font-sans text-[12px] text-slate-400 uppercase tracking-wider font-semibold">
-              AGENCY & ENGAGEMENT FAQs
-            </span>
-          </div>
-
-          <h2 className="font-heading text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.08]">
-            Frequently asked <span className="text-[#0099FF]">questions.</span>
+    <section id="faq" className="bg-[#F8F5EF] px-4 py-14 text-[#1F241F] sm:px-6 sm:py-16 lg:px-12">
+      <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <span className="text-xs font-bold uppercase tracking-[0.16em] text-[#877969]">
+            Frequently asked questions
+          </span>
+          <h2 className="mt-3 max-w-[390px] font-heading text-[1.85rem] font-semibold leading-tight sm:text-[2.25rem]">
+            Small answers before a bigger conversation.
           </h2>
-
-          <p className="text-[13px] sm:text-sm text-slate-300 font-normal leading-relaxed">
+          <p className="mt-4 max-w-[360px] text-sm leading-6 text-[#5D5A50]">
             Concise answers about services, locations, platforms, pricing, and how to start a project with Magniar.
           </p>
         </div>
 
-        {/* FAQ Accordion Grid */}
-        <div className="space-y-2.5">
+        <div className="space-y-2 lg:col-span-8">
           {FAQ_ITEMS.map((item, idx) => {
             const isOpen = openId === item.id;
 
             return (
               <div
                 key={item.id}
-                className={`
-                  border transition-all rounded-[2px] overflow-hidden
-                  ${isOpen 
-                    ? 'bg-[#080B10] border-[#0099FF]/60 shadow-[0_0_20px_rgba(0,153,255,0.1)]' 
-                    : 'bg-[#030508] border-white/10 hover:border-white/20'
-                  }
-                `}
+                className={`overflow-hidden rounded-[8px] border transition-colors ${
+                  isOpen ? 'border-[#CFC0AE] bg-[#FFF9EE]' : 'border-[#E1D6C7] bg-[#F5F0E8] hover:bg-[#FFF9EE]'
+                }`}
               >
                 <button
                   onClick={() => toggleItem(item.id)}
-                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 cursor-pointer font-sans text-[13px]"
+                  className="flex w-full items-center justify-between gap-4 p-4 text-left"
                   aria-expanded={isOpen}
                 >
-                  <div className="flex items-center gap-3.5 font-heading text-[13px] sm:text-sm font-bold text-white">
-                    <span className="text-[#0099FF] text-[12px] font-bold">0{idx + 1}.</span>
-                    <span>{item.question}</span>
+                  <div className="flex items-start gap-3">
+                    <span className="pt-0.5 text-[11px] font-bold text-[#877969]">0{idx + 1}</span>
+                    <span className="text-[0.98rem] font-semibold leading-6 text-[#1F241F]">{item.question}</span>
                   </div>
 
                   <ChevronDown
-                    className={`w-4 h-4 text-[#0099FF] shrink-0 transition-transform duration-200 ${
+                    className={`h-4 w-4 shrink-0 text-[#877969] transition-transform duration-200 ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="px-4 pb-5 sm:px-5 sm:pb-5 font-sans text-[13px] text-slate-300 leading-relaxed border-t border-white/5 pt-3">
+                  <div className="border-t border-[#E1D6C7] px-4 pb-4 pt-3 text-sm leading-6 text-[#5D5A50] sm:pl-12">
                     {item.answer}
                   </div>
                 )}

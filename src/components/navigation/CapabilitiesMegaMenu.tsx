@@ -1,8 +1,7 @@
 import React from 'react';
 import { CAPABILITY_GROUPS } from '../../data/navigationData';
-import { SignalIndicator } from '../common/SignalIndicator';
 import { ArrowIcon } from '../common/ArrowIcon';
-import { X, ShieldCheck, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck, X } from 'lucide-react';
 
 interface CapabilitiesMegaMenuProps {
   isOpen: boolean;
@@ -22,122 +21,95 @@ export const CapabilitiesMegaMenu: React.FC<CapabilitiesMegaMenuProps> = ({
   const handleServicesClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     onClose();
-    if (onNavigate) onNavigate('services');
+    onNavigate?.('services');
   };
 
   const handleStartProjectClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     onClose();
-    if (onStartProject) {
-      onStartProject();
-    } else if (onNavigate) {
-      onNavigate('start-project');
-    }
+    if (onStartProject) onStartProject();
+    else onNavigate?.('start-project');
   };
 
   return (
-    <div
-      className="absolute top-full left-0 w-full z-50 bg-[#0A0C0F]/95 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] transition-all duration-300 ease-out animate-in fade-in slide-in-from-top-2"
-    >
-      {/* Top Subtle Electric Blue Signal Bar */}
-      <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#0099FF] to-transparent opacity-60" />
-
-      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 py-8 lg:py-10">
-        {/* Header row inside mega menu */}
-        <div className="flex items-center justify-between pb-6 mb-8 border-b border-white/10 font-mono text-[11px] text-[#8D949E] tracking-wider uppercase">
-          <div className="flex items-center gap-4">
-            <span className="text-[#0099FF] font-semibold">SERVICES</span>
-            <span className="text-white/20">|</span>
-            <SignalIndicator label="4 SERVICE AREAS" size="sm" />
+    <div className="absolute left-0 top-full z-50 w-full border-b border-[#D8CDBF] bg-[#F8F5EF]/98 shadow-[0_24px_60px_rgba(43,38,30,0.14)] backdrop-blur-xl">
+      <div className="mx-auto max-w-[1320px] px-4 py-6 sm:px-6 lg:px-12 lg:py-8">
+        <div className="mb-6 flex items-center justify-between border-b border-[#E1D6C7] pb-4 text-[11px] font-bold uppercase tracking-[0.14em] text-[#877969]">
+          <div className="flex items-center gap-3">
+            <span className="text-[#1F241F]">Services</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-[#F0D84C]" />
+            <span>4 service areas</span>
           </div>
-
           <button
             onClick={onClose}
-            className="flex items-center gap-1.5 text-[#8D949E] hover:text-white transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 rounded-full border border-[#D8CDBF] bg-[#FFF9EE] px-3 py-1.5 text-[#5D5A50] transition-colors hover:text-[#1F241F]"
           >
-            <span>CLOSE</span>
-            <X className="w-4 h-4" />
+            <span>Close</span>
+            <X className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-          {/* Left Column - Brand Positioning & Quick Action */}
-          <div className="lg:col-span-3 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/10 pb-8 lg:pb-0 lg:pr-8">
-            <div className="space-y-4">
-              <span className="font-mono text-[10px] text-[#0099FF] tracking-widest uppercase block">
-                DIGITAL SERVICES
-              </span>
-              <h3 className="text-xl lg:text-2xl font-light text-[#F5F7FA] leading-tight">
-                Websites, eCommerce, marketing and support from one place.
-              </h3>
-              <p className="text-xs text-[#8D949E] leading-relaxed">
-                Choose a focused service or combine work into a practical digital plan for your business.
-              </p>
-            </div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+          <div className="rounded-[8px] bg-[#171A16] p-5 text-[#FFF9EE] lg:col-span-4 lg:p-6">
+            <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#F0D84C]">
+              Digital services
+            </span>
+            <h3 className="mt-4 max-w-sm font-heading text-2xl font-semibold leading-tight">
+              Websites, eCommerce, marketing and support from one place.
+            </h3>
+            <p className="mt-4 max-w-sm text-sm leading-6 text-[#D8D0C4]">
+              Choose a focused service or combine work into a practical digital plan for your business.
+            </p>
 
-            <div className="pt-6 mt-6 border-t border-white/10 space-y-4">
-              <div className="flex items-center gap-2 text-[11px] font-mono text-[#5A626E]">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#0099FF]" />
-                <span>CLEAR SCOPE BEFORE WORK BEGINS</span>
+            <div className="mt-8 border-t border-[#FFF9EE]/12 pt-5">
+              <div className="mb-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[#D8D0C4]">
+                <ShieldCheck className="h-4 w-4 text-[#F0D84C]" />
+                Clear scope before work begins
               </div>
-
               <a
                 href="#start"
                 onClick={handleStartProjectClick}
-                className="group flex items-center justify-between p-3 bg-white/[0.03] hover:bg-[#0099FF]/10 border border-white/10 hover:border-[#0099FF]/40 rounded-[2px] transition-all duration-200"
+                className="group flex items-center justify-between rounded-[8px] bg-[#F0D84C] p-4 text-[#1F241F] transition-transform hover:-translate-y-0.5"
               >
-                <div>
-                  <div className="text-xs font-mono font-medium text-[#F5F7FA] group-hover:text-[#0099FF]">
-                    START A PROJECT
-                  </div>
-                  <div className="text-[10px] text-[#8D949E]">Tell us what you need built or improved</div>
-                </div>
-                <ArrowUpRight className="w-4 h-4 text-[#8D949E] group-hover:text-[#0099FF] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <span>
+                  <span className="block text-sm font-semibold">Start a Project</span>
+                  <span className="block text-xs text-[#504A30]">Tell us what you need built or improved</span>
+                </span>
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
             </div>
           </div>
 
-          {/* Right Section - 4 Core Pillars Grid */}
-          <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {CAPABILITY_GROUPS.map((group) => (
-              <div key={group.id} className="group/pillar flex flex-col justify-between">
-                <div>
-                  {/* Pillar Label & Title */}
-                  <div className="pb-3 mb-4 border-b border-white/10 flex items-center justify-between">
-                    <span className="font-mono text-[11px] font-semibold text-[#0099FF] tracking-wider">
-                      {group.numberLabel}
-                    </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]/30 group-hover/pillar:bg-[#0099FF] group-hover/pillar:shadow-[0_0_8px_#0099FF] transition-all" />
-                  </div>
-
-                  <h4 className="text-base font-medium text-[#F5F7FA] mb-1 group-hover/pillar:text-white transition-colors">
-                    {group.title}
-                  </h4>
-                  <p className="text-[11px] text-[#8D949E] mb-4 min-h-[32px] leading-snug">
-                    {group.summary}
-                  </p>
-
-                  {/* Capability List Items */}
-                  <ul className="space-y-2.5">
-                    {group.items.map((item, idx) => (
-                      <li key={idx} className="group/item">
-                        <a
-                          href="#services"
-                          onClick={handleServicesClick}
-                          className="block p-2 rounded-[2px] hover:bg-white/[0.04] transition-colors"
-                        >
-                          <div className="text-xs font-medium text-[#F5F7FA] group-hover/item:text-[#0099FF] flex items-center justify-between">
-                            <span>{item.name}</span>
-                            <ArrowIcon size={12} className="opacity-0 group-hover/item:opacity-100 text-[#0099FF] transition-opacity" />
-                          </div>
-                          <div className="text-[10px] text-[#5A626E] group-hover/item:text-[#8D949E] mt-0.5 line-clamp-1">
-                            {item.description}
-                          </div>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:col-span-8 lg:grid-cols-4">
+            {CAPABILITY_GROUPS.map((group, index) => (
+              <div
+                key={group.id}
+                className={`rounded-[8px] border border-[#D8CDBF] p-4 ${index === 0 ? 'bg-[#EFE6D6]' : index === 1 ? 'bg-[#E0EBDD]' : index === 2 ? 'bg-[#EFE0D3]' : 'bg-[#DCE7E7]'}`}
+              >
+                <div className="mb-5 flex items-center justify-between border-b border-[#1F241F]/10 pb-3">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#756C5E]">
+                    {group.numberLabel}
+                  </span>
+                  <span className="h-2 w-2 rounded-full bg-[#F0D84C]" />
                 </div>
+
+                <h4 className="font-heading text-lg font-semibold text-[#1F241F]">{group.title}</h4>
+                <p className="mt-2 min-h-[54px] text-xs leading-5 text-[#5D5A50]">{group.summary}</p>
+
+                <ul className="mt-5 space-y-1.5">
+                  {group.items.map((item) => (
+                    <li key={item.name}>
+                      <a
+                        href="#services"
+                        onClick={handleServicesClick}
+                        className="group/item flex items-center justify-between gap-2 rounded-[6px] px-2 py-2 text-sm font-medium text-[#1F241F] transition-colors hover:bg-[#FFF9EE]/70"
+                      >
+                        <span className="truncate">{item.name}</span>
+                        <ArrowIcon size={12} className="shrink-0 text-[#756C5E] opacity-0 transition-opacity group-hover/item:opacity-100" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
