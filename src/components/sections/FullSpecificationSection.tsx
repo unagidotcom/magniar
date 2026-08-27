@@ -26,7 +26,7 @@ export const FullSpecificationSection: React.FC = () => {
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-2">
-        <div className="font-mono text-xs uppercase tracking-wider text-[#0099FF] flex items-center gap-2">
+        <div className="font-mono text-xs uppercase tracking-wider text-[#B89A72] flex items-center gap-2">
           <span>10 / FULL SPECIFICATION DOCUMENT READER</span>
           <span className="h-[1px] flex-1 bg-white/10" />
         </div>
@@ -37,7 +37,7 @@ export const FullSpecificationSection: React.FC = () => {
 
           <button
             onClick={handleCopyAllSpec}
-            className="px-3.5 py-2 rounded-lg bg-[#0099FF] text-black text-xs font-medium hover:bg-[#33AFFF] transition-colors flex items-center gap-2"
+            className="px-3.5 py-2 rounded-lg bg-[#B89A72] text-black text-xs font-medium hover:bg-[#C8AA82] transition-colors flex items-center gap-2"
           >
             {copied ? (
               <>
@@ -65,7 +65,7 @@ export const FullSpecificationSection: React.FC = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Filter specification chapters, tokens, or rules..."
-          className="w-full rounded-xl bg-[#0A0C0F] border border-white/10 pl-10 pr-4 py-3 text-sm text-white focus:border-[#0099FF] focus:outline-none transition-colors"
+          className="w-full rounded-xl bg-[#0A0C0F] border border-white/10 pl-10 pr-4 py-3 text-sm text-white focus:border-[#B89A72] focus:outline-none transition-colors"
         />
       </div>
 
@@ -77,7 +77,7 @@ export const FullSpecificationSection: React.FC = () => {
             className="rounded-xl border border-white/10 bg-[#0A0C0F] p-6 space-y-4 hover:border-white/20 transition-colors"
           >
             <div className="flex items-center gap-3 border-b border-white/5 pb-3">
-              <span className="font-mono text-xs text-[#0099FF] bg-[#0099FF]/10 px-2 py-0.5 rounded border border-[#0099FF]/20">
+              <span className="font-mono text-xs text-[#B89A72] bg-[#B89A72]/10 px-2 py-0.5 rounded border border-[#B89A72]/20">
                 {chapter.sectionCode}
               </span>
               <h3 className="text-lg font-semibold text-white">{chapter.title}</h3>
@@ -88,11 +88,11 @@ export const FullSpecificationSection: React.FC = () => {
             </p>
 
             <div className="pt-2 border-t border-white/5 space-y-2">
-              <span className="font-mono text-[11px] text-[#0099FF]">KEY SPECIFICATION DIRECTIVES:</span>
+              <span className="font-mono text-[11px] text-[#B89A72]">KEY SPECIFICATION DIRECTIVES:</span>
               <ul className="space-y-1">
                 {chapter.keyTakeaways.map((takeaway, idx) => (
                   <li key={idx} className="text-xs text-[#F5F7FA] font-mono flex items-start gap-2">
-                    <span className="text-[#0099FF]">•</span>
+                    <span className="text-[#B89A72]">•</span>
                     <span>{takeaway}</span>
                   </li>
                 ))}

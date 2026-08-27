@@ -31,7 +31,7 @@ export const ColorSystemSection: React.FC = () => {
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-2">
-        <div className="font-mono text-xs uppercase tracking-wider text-[#0099FF] flex items-center gap-2">
+        <div className="font-mono text-xs uppercase tracking-wider text-[#B89A72] flex items-center gap-2">
           <span>01 / COLOR SYSTEM & SIGNAL BEHAVIOR</span>
           <span className="h-[1px] flex-1 bg-white/10" />
         </div>
@@ -39,14 +39,14 @@ export const ColorSystemSection: React.FC = () => {
           Restrained Dark Palette & Electric Blue Signal
         </h2>
         <p className="text-sm text-[#8D949E] max-w-3xl leading-relaxed">
-          The Magniar palette is anchored by near-black canvases (#050505) and cool charcoal surfaces (#0A0C0F). Electric Blue (#0099FF) is strictly reserved as an active signal, highlight, or status indicator—never as a dominant background fill.
+          The Magniar palette is anchored by near-black canvases (#050505) and cool charcoal surfaces (#0A0C0F). Electric Blue (#B89A72) is strictly reserved as an active signal, highlight, or status indicator—never as a dominant background fill.
         </p>
       </div>
 
       {/* Signal Rule Banner */}
-      <div className="rounded-xl border border-[#0099FF]/30 bg-[#0A0C0F] p-6 space-y-4">
+      <div className="rounded-xl border border-[#B89A72]/30 bg-[#0A0C0F] p-6 space-y-4">
         <div className="flex items-center gap-2 text-white font-medium text-sm">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#0099FF] animate-magniar-pulse" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#B89A72] animate-magniar-pulse" />
           <span>CRITICAL BEHAVIORAL RULE: ELECTRIC BLUE IS A SIGNAL</span>
         </div>
         <p className="text-xs text-[#8D949E] leading-relaxed">
@@ -66,8 +66,8 @@ export const ColorSystemSection: React.FC = () => {
                 <p className="text-xs font-medium text-white">ROAS Metric Tracking</p>
                 <p className="text-[10px] text-[#8D949E]">Updated 2m ago</p>
               </div>
-              <span className="font-mono text-xs text-[#0099FF] bg-[#0099FF]/10 px-2 py-1 rounded border border-[#0099FF]/30 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF] animate-magniar-pulse" />
+              <span className="font-mono text-xs text-[#B89A72] bg-[#B89A72]/10 px-2 py-1 rounded border border-[#B89A72]/30 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72] animate-magniar-pulse" />
                 4.82x
               </span>
             </div>
@@ -80,7 +80,7 @@ export const ColorSystemSection: React.FC = () => {
               <span className="flex items-center gap-1.5"><AlertTriangle className="h-3.5 w-3.5" /> BANNED CLICHÉ (DON'T)</span>
               <span>100% OVERUSED BLUE</span>
             </div>
-            <div className="p-3 rounded-md bg-[#0099FF] text-black font-medium text-xs flex items-center justify-between shadow-[0_0_20px_rgba(0,153,255,0.8)]">
+            <div className="p-3 rounded-md bg-[#B89A72] text-black font-medium text-xs flex items-center justify-between shadow-[0_0_20px_rgba(184,154,114,0.8)]">
               <span>ROAS Metric Tracking</span>
               <span>4.82x</span>
             </div>
@@ -97,7 +97,7 @@ export const ColorSystemSection: React.FC = () => {
             onClick={() => setSelectedCategory(cat.id)}
             className={`px-3 py-1.5 rounded-md font-mono text-xs transition-colors border ${
               selectedCategory === cat.id
-                ? 'bg-[#0099FF]/20 text-[#0099FF] border-[#0099FF]/50'
+                ? 'bg-[#B89A72]/20 text-[#B89A72] border-[#B89A72]/50'
                 : 'bg-[#0A0C0F] text-[#8D949E] border-white/10 hover:text-white'
             }`}
           >
@@ -111,7 +111,7 @@ export const ColorSystemSection: React.FC = () => {
         {filteredTokens.map((token: ColorToken) => (
           <div
             key={token.variable}
-            className="group rounded-xl border border-white/10 bg-[#0A0C0F] p-4 space-y-3 hover:border-[#0099FF]/40 transition-all duration-150"
+            className="group rounded-xl border border-white/10 bg-[#0A0C0F] p-4 space-y-3 hover:border-[#B89A72]/40 transition-all duration-150"
           >
             {/* Color Visual Block */}
             <div 
@@ -137,7 +137,7 @@ export const ColorSystemSection: React.FC = () => {
                 <h4 className="text-sm font-medium text-white">{token.name}</h4>
                 <button
                   onClick={() => handleCopy(token.hex, token.variable)}
-                  className="text-[#8D949E] hover:text-[#0099FF] transition-colors p-1"
+                  className="text-[#8D949E] hover:text-[#B89A72] transition-colors p-1"
                   title="Copy Hex Value"
                 >
                   {copiedVar === token.variable ? (
@@ -148,7 +148,7 @@ export const ColorSystemSection: React.FC = () => {
                 </button>
               </div>
 
-              <div className="font-mono text-[11px] text-[#0099FF]">{token.variable}</div>
+              <div className="font-mono text-[11px] text-[#B89A72]">{token.variable}</div>
               <p className="text-xs text-[#8D949E] leading-relaxed pt-1">{token.description}</p>
             </div>
 

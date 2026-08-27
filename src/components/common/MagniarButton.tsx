@@ -50,50 +50,50 @@ export const MagniarButton: React.FC<MagniarButtonProps> = ({
   let variantClasses = '';
 
   if (variant === 'primary') {
-    // High-contrast primary CTA: Bold white text on dark surface or high-contrast crisp white fill
+    // Primary CTA: confident blue fill with white text.
     variantClasses = `
-      bg-[#F5F7FA] text-[#050505] font-semibold border border-white
-      hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]
-      active:bg-[#E2E8F0] active:scale-[0.99]
-      focus-visible:ring-2 focus-visible:ring-[#0099FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]
+      bg-[#B89A72] text-[#FFFFFF] font-semibold border border-[#B89A72]
+      hover:bg-[#8F714D] hover:border-[#8F714D] hover:shadow-none
+      active:bg-[#8F714D] active:scale-[0.99]
+      focus-visible:ring-2 focus-visible:ring-[#B89A72] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0D0F]
     `;
   } else if (variant === 'secondary') {
-    // Secondary action: Dark charcoal background with crisp hairline border and subtle electric blue hover accent
+    // Secondary action: Dark charcoal background with crisp hairline border and subtle blue hover accent
     variantClasses = `
-      bg-[#0A0C0F] text-[#F5F7FA] font-medium border border-white/15
-      hover:border-[#0099FF]/50 hover:bg-[#101318] hover:text-white hover:shadow-[0_0_15px_rgba(0,153,255,0.12)]
-      active:bg-[#050505] active:scale-[0.99]
-      focus-visible:ring-2 focus-visible:ring-[#0099FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]
+      bg-[#0B0D0F] text-[#F5F7FA] font-medium border border-white/15
+      hover:border-[#B89A72]/50 hover:bg-[#8F714D] hover:text-white hover:shadow-[0_0_15px_rgba(184,154,114,0.12)]
+      active:bg-[#0B0D0F] active:scale-[0.99]
+      focus-visible:ring-2 focus-visible:ring-[#B89A72] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0D0F]
     `;
   } else if (variant === 'utility') {
     // Utility action (e.g. Client Login): Clean subtle outline, discreet
     variantClasses = `
-      bg-transparent text-[#8D949E] font-medium border border-white/10
+      bg-transparent text-[#68717C] font-medium border border-white/10
       hover:text-[#F5F7FA] hover:border-white/25 hover:bg-white/[0.04]
       active:bg-white/[0.08] active:scale-[0.99]
-      focus-visible:ring-2 focus-visible:ring-[#0099FF]
+      focus-visible:ring-2 focus-visible:ring-[#B89A72]
     `;
   } else if (variant === 'text') {
     // Text button
     variantClasses = `
-      bg-transparent text-[#8D949E] font-medium border border-transparent p-0
-      hover:text-[#0099FF]
-      active:text-[#0099FF]/80
-      focus-visible:ring-2 focus-visible:ring-[#0099FF]
+      bg-transparent text-[#68717C] font-medium border border-transparent p-0
+      hover:text-[#B89A72]
+      active:text-[#B89A72]/80
+      focus-visible:ring-2 focus-visible:ring-[#B89A72]
     `;
   }
 
   // Forced Button State Classes for Playground inspection
   let simulatedStateClasses = '';
   if (buttonState === 'hover') {
-    if (variant === 'primary') simulatedStateClasses = 'bg-white shadow-[0_0_20px_rgba(255,255,255,0.25)]';
-    if (variant === 'secondary') simulatedStateClasses = 'border-[#0099FF]/60 bg-[#101318] text-white shadow-[0_0_15px_rgba(0,153,255,0.15)]';
+    if (variant === 'primary') simulatedStateClasses = 'bg-[#8F714D] border-[#8F714D] shadow-none';
+    if (variant === 'secondary') simulatedStateClasses = 'border-[#B89A72]/60 bg-[#8F714D] text-white shadow-[0_0_15px_rgba(184,154,114,0.15)]';
     if (variant === 'utility') simulatedStateClasses = 'text-white border-white/30 bg-white/[0.06]';
-    if (variant === 'text') simulatedStateClasses = 'text-[#0099FF]';
+    if (variant === 'text') simulatedStateClasses = 'text-[#B89A72]';
   } else if (buttonState === 'active') {
     simulatedStateClasses = 'scale-[0.98] opacity-90';
   } else if (buttonState === 'focus') {
-    simulatedStateClasses = 'ring-2 ring-[#0099FF] ring-offset-2 ring-offset-[#050505] outline-none';
+    simulatedStateClasses = 'ring-2 ring-[#B89A72] ring-offset-2 ring-offset-[#0B0D0F] outline-none';
   }
 
   const disabledClasses = isForceDisabled

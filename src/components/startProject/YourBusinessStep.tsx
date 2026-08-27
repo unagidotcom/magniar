@@ -26,7 +26,7 @@ export const YourBusinessStep: React.FC<YourBusinessStepProps> = ({
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-3">
-        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#0099FF] uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#B89A72] uppercase tracking-wider">
           <Building2 className="w-4 h-4" />
           <span>Step 03 / 08 — Business Context</span>
         </div>
@@ -44,14 +44,14 @@ export const YourBusinessStep: React.FC<YourBusinessStepProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="block font-sans text-sm font-semibold text-slate-200">
-              Company Name <span className="text-[#0099FF]">*</span>
+              Company Name <span className="text-[#B89A72]">*</span>
             </label>
             <input
               type="text"
               value={formData.companyName}
               onChange={(e) => onChange({ companyName: e.target.value })}
               placeholder="e.g. Solaris Apparel Co."
-              className={`w-full px-4 py-3.5 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all ${
+              className={`w-full px-4 py-3.5 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all ${
                 errors.companyName ? 'border-red-500/80 bg-red-950/20' : 'border-white/15'
               }`}
             />
@@ -65,7 +65,7 @@ export const YourBusinessStep: React.FC<YourBusinessStepProps> = ({
           <div className="space-y-2">
             <label className="block font-sans text-sm font-semibold text-slate-200 flex items-center justify-between">
               <span>
-                Website URL <span className="text-[#0099FF]">*</span>
+                Website URL <span className="text-[#B89A72]">*</span>
               </span>
               <Globe className="w-4 h-4 text-slate-400" />
             </label>
@@ -74,7 +74,7 @@ export const YourBusinessStep: React.FC<YourBusinessStepProps> = ({
               value={formData.website}
               onChange={(e) => onChange({ website: e.target.value })}
               placeholder="https://solarisapparel.com"
-              className={`w-full px-4 py-3.5 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all ${
+              className={`w-full px-4 py-3.5 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all ${
                 errors.website ? 'border-red-500/80 bg-red-950/20' : 'border-white/15'
               }`}
             />
@@ -94,12 +94,12 @@ export const YourBusinessStep: React.FC<YourBusinessStepProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="block font-sans text-sm font-semibold text-slate-200">
-              Industry Category <span className="text-[#0099FF]">*</span>
+              Industry Category <span className="text-[#B89A72]">*</span>
             </label>
             <select
               value={formData.industry}
               onChange={(e) => onChange({ industry: e.target.value })}
-              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all cursor-pointer"
+              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all cursor-pointer"
             >
               {INDUSTRY_OPTIONS.map((ind) => (
                 <option key={ind} value={ind} className="bg-[#080A0D] text-white">
@@ -111,12 +111,12 @@ export const YourBusinessStep: React.FC<YourBusinessStepProps> = ({
 
           <div className="space-y-2">
             <label className="block font-sans text-sm font-semibold text-slate-200">
-              Business Model <span className="text-[#0099FF]">*</span>
+              Business Model <span className="text-[#B89A72]">*</span>
             </label>
             <select
               value={formData.businessModel}
               onChange={(e) => onChange({ businessModel: e.target.value })}
-              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all cursor-pointer"
+              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all cursor-pointer"
             >
               {BUSINESS_MODEL_OPTIONS.map((m) => (
                 <option key={m} value={m} className="bg-[#080A0D] text-white">
@@ -138,7 +138,7 @@ export const YourBusinessStep: React.FC<YourBusinessStepProps> = ({
               value={formData.primaryMarket}
               onChange={(e) => onChange({ primaryMarket: e.target.value })}
               placeholder="e.g. North America, Global, Europe"
-              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all"
+              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all"
             />
           </div>
 
@@ -151,7 +151,7 @@ export const YourBusinessStep: React.FC<YourBusinessStepProps> = ({
               value={formData.targetMarket || ''}
               onChange={(e) => onChange({ targetMarket: e.target.value })}
               placeholder="e.g. United Kingdom, Australia, Japan"
-              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all"
+              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all"
             />
           </div>
         </div>
@@ -160,7 +160,7 @@ export const YourBusinessStep: React.FC<YourBusinessStepProps> = ({
         <div className="space-y-3 pt-2">
           <div className="flex items-center justify-between">
             <label className="block font-sans text-sm font-semibold text-slate-200 flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-[#0099FF]" />
+              <TrendingUp className="w-4 h-4 text-[#B89A72]" />
               <span>Approximate Annual Revenue Scale</span>
             </label>
             <span className="font-sans text-xs text-slate-400">Optional</span>
@@ -181,7 +181,7 @@ export const YourBusinessStep: React.FC<YourBusinessStepProps> = ({
                   onClick={() => onChange({ businessSize: scale })}
                   className={`px-4 py-3 rounded-lg border font-sans text-xs sm:text-sm text-center transition-all cursor-pointer font-medium ${
                     isSelected
-                      ? 'bg-[#0099FF]/15 border-[#0099FF] text-white font-bold ring-1 ring-[#0099FF] shadow-[0_0_15px_rgba(0,153,255,0.2)]'
+                      ? 'bg-[#B89A72]/15 border-[#B89A72] text-white font-bold ring-1 ring-[#B89A72] shadow-[0_0_15px_rgba(184,154,114,0.2)]'
                       : 'bg-[#050505] border-white/15 text-slate-300 hover:text-white hover:border-white/30'
                   }`}
                 >
@@ -207,7 +207,7 @@ export const YourBusinessStep: React.FC<YourBusinessStepProps> = ({
         <button
           type="button"
           onClick={onNext}
-          className="px-8 py-4 rounded-lg bg-[#0099FF] hover:bg-[#0088EE] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(0,153,255,0.35)] hover:shadow-[0_0_30px_rgba(0,153,255,0.5)]"
+          className="px-8 py-4 rounded-lg bg-[#B89A72] hover:bg-[#8F714D] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(184,154,114,0.35)] hover:shadow-[0_0_30px_rgba(184,154,114,0.5)]"
         >
           <span>Continue to Capabilities</span>
           <ArrowRight className="w-4 h-4" />

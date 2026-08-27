@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PRIMARY_NAV_LINKS } from '../../data/navigationData';
 import { MagniarButton } from '../common/MagniarButton';
+import { BrandLogo } from '../common/BrandLogo';
 import { CapabilitiesMegaMenu } from './CapabilitiesMegaMenu';
 import { MobileMenu } from './MobileMenu';
 import { ChevronDown, Menu } from 'lucide-react';
@@ -44,15 +45,15 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header
       className={`
-        sticky top-0 z-40 w-full transition-all duration-300 ease-out h-[76px] lg:h-[84px] flex items-center
+        sticky top-0 z-40 w-full transition-all duration-300 ease-out h-[60px] lg:h-[64px] flex items-center
         ${isScrolled 
-          ? 'bg-[#F4F1EA]/94 backdrop-blur-md border-b border-[#D5D1C8] shadow-[0_10px_34px_rgba(45,39,31,0.10)]'
-          : 'bg-[#F8F5EF]/88 backdrop-blur-md border-b border-[#E4D8C8]'
+          ? 'bg-[#F5F7FA]/94 backdrop-blur-md border-b border-[#D9DEE5] shadow-[0_10px_34px_rgba(11,13,15,0.10)]'
+          : 'bg-[#F5F7FA]/88 backdrop-blur-md border-b border-[#D9DEE5]'
         }
       `}
     >
-      <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-12 flex items-center justify-between">
-        {/* LEFT ZONE — MAGNIAR Brand Wordmark */}
+      <div className="mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        {/* LEFT ZONE - MAGNIAR Brand Wordmark */}
         <div className="flex items-center gap-6 sm:gap-8">
           <a
             href="#"
@@ -61,15 +62,15 @@ export const Header: React.FC<HeaderProps> = ({
               if (onNavigate) onNavigate('homepage');
               else if (setActiveTab) setActiveTab('homepage');
             }}
-            className="group flex items-center gap-3 font-heading text-lg sm:text-xl font-extrabold tracking-[0.16em] text-[#20211F] hover:text-[#11140F] transition-colors select-none"
+            className="group flex h-9 items-center transition-opacity hover:opacity-80 sm:h-10"
+            aria-label="Magniar & Co home"
           >
-            <span>MAGNIAR</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#B86F55]" />
+            <BrandLogo variant="wordmark" className="h-full w-[170px] sm:w-[192px]" />
           </a>
         </div>
 
         {/* CENTER ZONE — Primary Navigation (Capabilities, Work, Insights, About) */}
-        <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
           {PRIMARY_NAV_LINKS.map((link) => {
             const isActive = activeTab === link.id;
 
@@ -80,11 +81,11 @@ export const Header: React.FC<HeaderProps> = ({
                     onClick={() => setMegaMenuOpen(!megaMenuOpen)}
                     onMouseEnter={() => setMegaMenuOpen(true)}
                     className={`
-                      group font-sans text-sm tracking-wide uppercase transition-colors duration-200
+                      group font-sans text-xs tracking-wide uppercase transition-colors duration-200
                       flex items-center gap-1.5 cursor-pointer select-none py-1
                       ${megaMenuOpen || isActive
-                        ? 'text-[#20211F] font-semibold'
-                        : 'text-[#686963] hover:text-[#20211F]'
+                        ? 'text-[#0B0D0F] font-semibold'
+                        : 'text-[#68717C] hover:text-[#0B0D0F]'
                       }
                     `}
                     aria-expanded={megaMenuOpen}
@@ -92,11 +93,11 @@ export const Header: React.FC<HeaderProps> = ({
                     <span>{link.label}</span>
                     <ChevronDown
                       className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                        megaMenuOpen ? 'rotate-180 text-[#B86F55]' : 'text-[#686963] group-hover:text-[#20211F]'
+                        megaMenuOpen ? 'rotate-180 text-[#B89A72]' : 'text-[#68717C] group-hover:text-[#0B0D0F]'
                       }`}
                     />
                     {(megaMenuOpen || isActive) && (
-                      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#B86F55]" />
+                      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#B89A72]" />
                     )}
                   </button>
                 </div>
@@ -114,16 +115,16 @@ export const Header: React.FC<HeaderProps> = ({
                   else if (onNavigate) onNavigate(`${link.id}-page`);
                 }}
                 className={`
-                  relative font-sans text-sm tracking-wide uppercase transition-colors duration-200 py-1 cursor-pointer
+                  relative font-sans text-xs tracking-wide uppercase transition-colors duration-200 py-1 cursor-pointer
                   ${isActive
-                    ? 'text-[#20211F] font-semibold'
-                    : 'text-[#686963] hover:text-[#20211F]'
+                    ? 'text-[#0B0D0F] font-semibold'
+                    : 'text-[#68717C] hover:text-[#0B0D0F]'
                   }
                 `}
               >
                 <span>{link.label}</span>
                 {isActive && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#B86F55]" />
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#B89A72]" />
                 )}
               </a>
             );
@@ -131,7 +132,7 @@ export const Header: React.FC<HeaderProps> = ({
         </nav>
 
         {/* RIGHT ZONE — Client Login & Primary CTA */}
-        <div className="hidden sm:flex items-center gap-6">
+        <div className="hidden sm:flex items-center gap-4">
           {/* Client Login (Secondary, Quiet Text Link) */}
           <a
             href="/portal"
@@ -139,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({
               e.preventDefault();
               if (onNavigate) onNavigate('portal');
             }}
-            className="hidden lg:flex items-center gap-1.5 font-sans text-sm font-medium text-[#686963] hover:text-[#20211F] transition-colors tracking-wide uppercase group py-2 cursor-pointer"
+            className="hidden lg:flex items-center gap-1.5 font-sans text-xs font-medium text-[#68717C] hover:text-[#0B0D0F] transition-colors tracking-wide uppercase group py-2 cursor-pointer"
           >
             <span>CLIENT LOGIN</span>
           </a>
@@ -156,17 +157,17 @@ export const Header: React.FC<HeaderProps> = ({
               }
             }}
           >
-            <MagniarButton variant="primary" size="md" className="rounded-[5px] border-[#B86F55] bg-[#B86F55] text-[#F4F1EA] hover:bg-[#8F4F3D] hover:shadow-none">
+            <MagniarButton variant="primary" size="sm" className="rounded-[5px] !border-[#B89A72] !bg-[#B89A72] !text-[#FFFFFF] hover:!bg-[#8F714D] hover:shadow-none">
               START A PROJECT
             </MagniarButton>
           </a>
         </div>
 
         {/* Mobile Menu Toggle Button */}
-        <div className="flex lg:hidden items-center gap-3">
+        <div className="flex lg:hidden items-center gap-2">
           <a
             href="#start"
-            className="sm:hidden"
+            className="hidden min-[360px]:block sm:hidden"
             onClick={(e) => {
               e.preventDefault();
               if (onStartProject) {
@@ -176,18 +177,18 @@ export const Header: React.FC<HeaderProps> = ({
               }
             }}
           >
-            <MagniarButton variant="primary" size="sm" className="rounded-[5px] border-[#B86F55] bg-[#B86F55] text-[#F4F1EA] hover:bg-[#8F4F3D] hover:shadow-none">
+            <MagniarButton variant="primary" size="sm" className="rounded-[5px] !border-[#B89A72] !bg-[#B89A72] !text-[#FFFFFF] hover:!bg-[#8F714D] hover:shadow-none">
               START
             </MagniarButton>
           </a>
 
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="px-3.5 py-2 text-[#20211F] hover:text-[#11140F] border border-[#D5D1C8] rounded-[5px] bg-[#FAF9F6] hover:bg-white cursor-pointer flex items-center gap-2 font-sans text-xs font-semibold tracking-wider uppercase"
+            className="px-3 py-2 text-[#0B0D0F] hover:text-[#8F714D] border border-[#D9DEE5] rounded-[5px] bg-[#FFFFFF] hover:bg-white cursor-pointer flex items-center gap-1.5 font-sans text-xs font-semibold tracking-wider uppercase"
             aria-label="Open navigation menu"
           >
             <span>MENU</span>
-            <Menu className="w-4 h-4 text-[#B86F55]" />
+            <Menu className="w-4 h-4 text-[#B89A72]" />
           </button>
         </div>
       </div>

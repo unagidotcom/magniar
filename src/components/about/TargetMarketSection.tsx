@@ -42,12 +42,12 @@ export const TargetMarketSection: React.FC<TargetMarketSectionProps> = ({
           {/* Left Column: Target Focus */}
           <div className="lg:col-span-7 space-y-8">
             <div className="space-y-4">
-              <span className="font-mono text-xs text-[#0099FF] tracking-[0.2em] uppercase font-semibold block">
+              <span className="font-mono text-xs text-[#B89A72] tracking-[0.2em] uppercase font-semibold block">
                 [ 05 — TARGET AUDIENCE & FOCUS ]
               </span>
               <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#F5F7FA] uppercase leading-tight">
                 BUILT FOR BUSINESSES <br />
-                <span className="text-[#0099FF]">THAT ARE READY TO MOVE.</span>
+                <span className="text-[#B89A72]">THAT ARE READY TO MOVE.</span>
               </h2>
               <p className="text-base text-[#8D949E] leading-relaxed">
                 We partner with decision-makers who value speed, technical accountability, and unified growth execution over vanity reports.
@@ -58,7 +58,7 @@ export const TargetMarketSection: React.FC<TargetMarketSectionProps> = ({
               {targetProfiles.map((item, idx) => (
                 <div key={idx} className="p-4 bg-[#050505] border border-white/10 space-y-2">
                   <div className="flex items-center gap-2 font-mono text-xs text-white font-bold">
-                    <Check className="w-3.5 h-3.5 text-[#0099FF] shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-[#B89A72] shrink-0" />
                     <span>{item.title}</span>
                   </div>
                   <p className="text-xs text-[#8D949E] leading-relaxed">
@@ -72,8 +72,8 @@ export const TargetMarketSection: React.FC<TargetMarketSectionProps> = ({
           {/* Right Column: International & Global Reach */}
           <div className="lg:col-span-5 bg-[#050505] border border-white/15 p-6 sm:p-8 space-y-6 relative">
             <div className="flex items-center justify-between pb-4 border-b border-white/10 font-mono text-xs">
-              <span className="text-[#0099FF] font-bold flex items-center gap-2 uppercase">
-                <Globe2 className="w-4 h-4 text-[#0099FF]" />
+              <span className="text-[#B89A72] font-bold flex items-center gap-2 uppercase">
+                <Globe2 className="w-4 h-4 text-[#B89A72]" />
                 GLOBAL REACH
               </span>
               <span className="text-[#8D949E]">CROSS-BORDER READY</span>
@@ -93,15 +93,15 @@ export const TargetMarketSection: React.FC<TargetMarketSectionProps> = ({
             <div className="p-4 bg-[#0A0D12] border border-white/10 space-y-3 font-mono text-xs">
               <div className="flex items-center justify-between text-white">
                 <span className="text-[#8D949E]">AMERICAS & EUROPE</span>
-                <span className="text-[#0099FF] font-bold">USD / EUR / GBP</span>
+                <span className="text-[#B89A72] font-bold">USD / EUR / GBP</span>
               </div>
               <div className="flex items-center justify-between text-white">
                 <span className="text-[#8D949E]">ASIA PACIFIC & LATAM</span>
-                <span className="text-[#0099FF] font-bold">MULTI-CURRENCY</span>
+                <span className="text-[#B89A72] font-bold">MULTI-CURRENCY</span>
               </div>
               <div className="flex items-center justify-between text-white">
                 <span className="text-[#8D949E]">CROSS-BORDER SELLING</span>
-                <span className="text-[#0099FF] font-bold">FEEDS & TAX SYNC</span>
+                <span className="text-[#B89A72] font-bold">FEEDS & TAX SYNC</span>
               </div>
             </div>
 
@@ -111,7 +111,7 @@ export const TargetMarketSection: React.FC<TargetMarketSectionProps> = ({
 
             <button
               onClick={onStartProject}
-              className="w-full py-3 bg-[#0099FF] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#0088EE] transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 bg-[#B89A72] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#8F714D] transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>DISCUSS YOUR MARKET EXPANSION</span>
               <ArrowUpRight className="w-4 h-4" />

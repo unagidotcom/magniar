@@ -14,13 +14,13 @@ export const ContactHero: React.FC<ContactHeroProps> = ({ onStartProject }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl space-y-6">
           {/* Eyebrow badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0099FF]/10 border border-[#0099FF]/30 text-[#0099FF] font-mono text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#B89A72]/10 border border-[#B89A72]/30 text-[#B89A72] font-mono text-xs font-semibold uppercase tracking-wider">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>GENERAL COMMUNICATIONS</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-[0.95]">
-            LET'S <span className="text-[#0099FF]">TALK.</span>
+            LET'S <span className="text-[#B89A72]">TALK.</span>
           </h1>
 
           <p className="text-lg sm:text-2xl text-[#8D949E] font-light leading-relaxed max-w-3xl">
@@ -30,8 +30,8 @@ export const ContactHero: React.FC<ContactHeroProps> = ({ onStartProject }) => {
           {/* Qualification distinction callout banner */}
           <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 bg-[#080B10] border border-white/10">
             <div className="space-y-1">
-              <span className="font-mono text-xs text-[#0099FF] uppercase font-bold flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#0099FF]" />
+              <span className="font-mono text-xs text-[#B89A72] uppercase font-bold flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#B89A72]" />
                 FOR GROWTH ENGAGEMENTS & CUSTOM SYSTEMS
               </span>
               <p className="text-xs text-[#8D949E]">
@@ -41,7 +41,7 @@ export const ContactHero: React.FC<ContactHeroProps> = ({ onStartProject }) => {
 
             <button
               onClick={onStartProject}
-              className="px-5 py-2.5 bg-[#0099FF] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#0088EE] transition-all flex items-center gap-2 shrink-0 cursor-pointer shadow-[0_0_20px_rgba(0,153,255,0.2)]"
+              className="px-5 py-2.5 bg-[#B89A72] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#8F714D] transition-all flex items-center gap-2 shrink-0 cursor-pointer shadow-[0_0_20px_rgba(184,154,114,0.2)]"
             >
               <span>START A PROJECT</span>
               <ArrowRight className="w-4 h-4" />

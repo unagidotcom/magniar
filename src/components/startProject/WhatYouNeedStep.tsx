@@ -82,7 +82,7 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-3">
-        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#0099FF] uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#B89A72] uppercase tracking-wider">
           <Layers className="w-4 h-4" />
           <span>Step 04 / 08 — Capabilities & Support</span>
         </div>
@@ -101,12 +101,12 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
           onClick={handleToggleNotSure}
           className={`w-full flex items-center justify-between p-4 sm:p-5 rounded-lg border transition-all cursor-pointer ${
             formData.isNotSureNeeds
-              ? 'bg-[#0099FF]/15 border-[#0099FF] text-white ring-1 ring-[#0099FF] shadow-[0_0_20px_rgba(0,153,255,0.2)]'
+              ? 'bg-[#B89A72]/15 border-[#B89A72] text-white ring-1 ring-[#B89A72] shadow-[0_0_20px_rgba(184,154,114,0.2)]'
               : 'bg-[#050505] border-white/15 text-slate-300 hover:text-white hover:border-white/30'
           }`}
         >
           <div className="flex items-center gap-3.5">
-            <HelpCircle className={`w-5 h-5 flex-shrink-0 ${formData.isNotSureNeeds ? 'text-[#0099FF]' : 'text-slate-400'}`} />
+            <HelpCircle className={`w-5 h-5 flex-shrink-0 ${formData.isNotSureNeeds ? 'text-[#B89A72]' : 'text-slate-400'}`} />
             <div className="text-left font-sans text-sm sm:text-base font-semibold">
               <span>I'm not sure which specific services I need yet — help me diagnose</span>
             </div>
@@ -114,7 +114,7 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
           <div
             className={`w-6 h-6 rounded-full border flex items-center justify-center flex-shrink-0 ${
               formData.isNotSureNeeds
-                ? 'bg-[#0099FF] border-[#0099FF] text-white'
+                ? 'bg-[#B89A72] border-[#B89A72] text-white'
                 : 'border-white/20'
             }`}
           >
@@ -124,8 +124,8 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
 
         {/* Reassurance Box */}
         {formData.isNotSureNeeds && (
-          <div className="p-4 rounded-lg bg-[#0099FF]/10 border border-[#0099FF]/30 font-sans text-sm text-slate-200 space-y-1.5 animate-fadeIn">
-            <div className="font-sans text-xs font-bold text-[#0099FF] uppercase tracking-wider flex items-center gap-2">
+          <div className="p-4 rounded-lg bg-[#B89A72]/10 border border-[#B89A72]/30 font-sans text-sm text-slate-200 space-y-1.5 animate-fadeIn">
+            <div className="font-sans text-xs font-bold text-[#B89A72] uppercase tracking-wider flex items-center gap-2">
               <Sparkles className="w-4 h-4" />
               <span>We'll help you map the right solution</span>
             </div>
@@ -146,11 +146,11 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
             className="w-full px-6 py-4 sm:py-5 flex items-center justify-between border-b border-white/10 hover:bg-white/[0.02] transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-3 sm:gap-4">
-              <BarChart2 className="w-5 h-5 text-[#0099FF]" />
+              <BarChart2 className="w-5 h-5 text-[#B89A72]" />
               <span className="font-heading font-bold text-base sm:text-lg text-white">
                 Performance Marketing & Paid Media
               </span>
-              <span className="font-sans text-xs font-semibold text-[#0099FF] bg-[#0099FF]/15 px-2.5 py-0.5 rounded-full border border-[#0099FF]/30">
+              <span className="font-sans text-xs font-semibold text-[#B89A72] bg-[#B89A72]/15 px-2.5 py-0.5 rounded-full border border-[#B89A72]/30">
                 {formData.performanceServices?.length || 0} Selected
               </span>
             </div>
@@ -172,12 +172,12 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
                     onClick={() => toggleArrayItem('performanceServices', svc)}
                     className={`px-4 py-3 rounded-lg border font-sans text-xs sm:text-sm text-left transition-all cursor-pointer flex items-center justify-between gap-2 font-medium ${
                       isSelected
-                        ? 'bg-[#0099FF]/15 border-[#0099FF] text-white font-bold ring-1 ring-[#0099FF]'
+                        ? 'bg-[#B89A72]/15 border-[#B89A72] text-white font-bold ring-1 ring-[#B89A72]'
                         : 'bg-[#080A0D] border-white/10 text-slate-300 hover:text-white hover:border-white/30'
                     }`}
                   >
                     <span>{svc}</span>
-                    {isSelected && <Check className="w-4 h-4 text-[#0099FF] flex-shrink-0" />}
+                    {isSelected && <Check className="w-4 h-4 text-[#B89A72] flex-shrink-0" />}
                   </button>
                 );
               })}
@@ -193,11 +193,11 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
             className="w-full px-6 py-4 sm:py-5 flex items-center justify-between border-b border-white/10 hover:bg-white/[0.02] transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-3 sm:gap-4">
-              <ShoppingBag className="w-5 h-5 text-[#0099FF]" />
+              <ShoppingBag className="w-5 h-5 text-[#B89A72]" />
               <span className="font-heading font-bold text-base sm:text-lg text-white">
                 Digital Commerce & Marketplaces
               </span>
-              <span className="font-sans text-xs font-semibold text-[#0099FF] bg-[#0099FF]/15 px-2.5 py-0.5 rounded-full border border-[#0099FF]/30">
+              <span className="font-sans text-xs font-semibold text-[#B89A72] bg-[#B89A72]/15 px-2.5 py-0.5 rounded-full border border-[#B89A72]/30">
                 {formData.commercePlatforms?.length || 0} Selected
               </span>
             </div>
@@ -219,12 +219,12 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
                     onClick={() => toggleArrayItem('commercePlatforms', platform)}
                     className={`px-4 py-3 rounded-lg border font-sans text-xs sm:text-sm text-left transition-all cursor-pointer flex items-center justify-between gap-2 font-medium ${
                       isSelected
-                        ? 'bg-[#0099FF]/15 border-[#0099FF] text-white font-bold ring-1 ring-[#0099FF]'
+                        ? 'bg-[#B89A72]/15 border-[#B89A72] text-white font-bold ring-1 ring-[#B89A72]'
                         : 'bg-[#080A0D] border-white/10 text-slate-300 hover:text-white hover:border-white/30'
                     }`}
                   >
                     <span>{platform}</span>
-                    {isSelected && <Check className="w-4 h-4 text-[#0099FF] flex-shrink-0" />}
+                    {isSelected && <Check className="w-4 h-4 text-[#B89A72] flex-shrink-0" />}
                   </button>
                 );
               })}
@@ -240,11 +240,11 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
             className="w-full px-6 py-4 sm:py-5 flex items-center justify-between border-b border-white/10 hover:bg-white/[0.02] transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-3 sm:gap-4">
-              <Code2 className="w-5 h-5 text-[#0099FF]" />
+              <Code2 className="w-5 h-5 text-[#B89A72]" />
               <span className="font-heading font-bold text-base sm:text-lg text-white">
                 Growth Technology & Systems Engineering
               </span>
-              <span className="font-sans text-xs font-semibold text-[#0099FF] bg-[#0099FF]/15 px-2.5 py-0.5 rounded-full border border-[#0099FF]/30">
+              <span className="font-sans text-xs font-semibold text-[#B89A72] bg-[#B89A72]/15 px-2.5 py-0.5 rounded-full border border-[#B89A72]/30">
                 {formData.developmentServices?.length || 0} Selected
               </span>
             </div>
@@ -266,12 +266,12 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
                     onClick={() => toggleArrayItem('developmentServices', dev)}
                     className={`px-4 py-3 rounded-lg border font-sans text-xs sm:text-sm text-left transition-all cursor-pointer flex items-center justify-between gap-2 font-medium ${
                       isSelected
-                        ? 'bg-[#0099FF]/15 border-[#0099FF] text-white font-bold ring-1 ring-[#0099FF]'
+                        ? 'bg-[#B89A72]/15 border-[#B89A72] text-white font-bold ring-1 ring-[#B89A72]'
                         : 'bg-[#080A0D] border-white/10 text-slate-300 hover:text-white hover:border-white/30'
                     }`}
                   >
                     <span>{dev}</span>
-                    {isSelected && <Check className="w-4 h-4 text-[#0099FF] flex-shrink-0" />}
+                    {isSelected && <Check className="w-4 h-4 text-[#B89A72] flex-shrink-0" />}
                   </button>
                 );
               })}
@@ -287,11 +287,11 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
             className="w-full px-6 py-4 sm:py-5 flex items-center justify-between border-b border-white/10 hover:bg-white/[0.02] transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-3 sm:gap-4">
-              <Cpu className="w-5 h-5 text-[#0099FF]" />
+              <Cpu className="w-5 h-5 text-[#B89A72]" />
               <span className="font-heading font-bold text-base sm:text-lg text-white">
                 AI Strategy & Data Intelligence
               </span>
-              <span className="font-sans text-xs font-semibold text-[#0099FF] bg-[#0099FF]/15 px-2.5 py-0.5 rounded-full border border-[#0099FF]/30">
+              <span className="font-sans text-xs font-semibold text-[#B89A72] bg-[#B89A72]/15 px-2.5 py-0.5 rounded-full border border-[#B89A72]/30">
                 {formData.intelligenceServices?.length || 0} Selected
               </span>
             </div>
@@ -313,12 +313,12 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
                     onClick={() => toggleArrayItem('intelligenceServices', intel)}
                     className={`px-4 py-3 rounded-lg border font-sans text-xs sm:text-sm text-left transition-all cursor-pointer flex items-center justify-between gap-2 font-medium ${
                       isSelected
-                        ? 'bg-[#0099FF]/15 border-[#0099FF] text-white font-bold ring-1 ring-[#0099FF]'
+                        ? 'bg-[#B89A72]/15 border-[#B89A72] text-white font-bold ring-1 ring-[#B89A72]'
                         : 'bg-[#080A0D] border-white/10 text-slate-300 hover:text-white hover:border-white/30'
                     }`}
                   >
                     <span>{intel}</span>
-                    {isSelected && <Check className="w-4 h-4 text-[#0099FF] flex-shrink-0" />}
+                    {isSelected && <Check className="w-4 h-4 text-[#B89A72] flex-shrink-0" />}
                   </button>
                 );
               })}
@@ -330,7 +330,7 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
       {/* Selected Total Badge */}
       <div className="font-sans text-sm text-slate-400 flex items-center justify-between border-t border-white/10 pt-4">
         <span>Selected services:</span>
-        <span className="text-[#0099FF] font-bold">
+        <span className="text-[#B89A72] font-bold">
           {formData.isNotSureNeeds ? 'Strategic Diagnosis Requested' : `${totalSelectedCount} items selected`}
         </span>
       </div>
@@ -349,7 +349,7 @@ export const WhatYouNeedStep: React.FC<WhatYouNeedStepProps> = ({
         <button
           type="button"
           onClick={onNext}
-          className="px-8 py-4 rounded-lg bg-[#0099FF] hover:bg-[#0088EE] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(0,153,255,0.35)] hover:shadow-[0_0_30px_rgba(0,153,255,0.5)]"
+          className="px-8 py-4 rounded-lg bg-[#B89A72] hover:bg-[#8F714D] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(184,154,114,0.35)] hover:shadow-[0_0_30px_rgba(184,154,114,0.5)]"
         >
           <span>Continue to Current Setup</span>
           <ArrowRight className="w-4 h-4" />

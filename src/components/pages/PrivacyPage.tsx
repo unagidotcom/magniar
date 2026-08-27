@@ -21,7 +21,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
         <div className="space-y-4 border-b border-white/10 pb-8">
           <div className="flex items-center gap-3">
             <TechnicalLabel>LEGAL / SPECIFICATION</TechnicalLabel>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72]" />
             <span className="font-sans text-xs text-slate-400 uppercase tracking-wider font-medium">
               LAST UPDATED: 2026
             </span>
@@ -37,8 +37,8 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
         </div>
 
         {/* Notice Badge */}
-        <div className="p-5 bg-[#0A0D12] border border-[#0099FF]/30 rounded-[2px] flex items-start gap-3">
-          <ShieldCheck className="w-5 h-5 text-[#0099FF] shrink-0 mt-0.5" />
+        <div className="p-5 bg-[#0A0D12] border border-[#B89A72]/30 rounded-[2px] flex items-start gap-3">
+          <ShieldCheck className="w-5 h-5 text-[#B89A72] shrink-0 mt-0.5" />
           <div className="text-xs text-slate-300 leading-relaxed font-sans">
             <span className="text-white font-heading uppercase font-bold block mb-0.5">
               LEGAL NOTICE & DISCLOSURE
@@ -51,7 +51,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
         <div className="space-y-8 font-normal text-base leading-relaxed text-slate-300">
           <section className="space-y-3">
             <h2 className="text-xl font-heading text-white font-bold uppercase tracking-wider flex items-center gap-2">
-              <span className="text-[#0099FF]">01 /</span> INFORMATION WE COLLECT
+              <span className="text-[#B89A72]">01 /</span> INFORMATION WE COLLECT
             </h2>
             <p>
               When you interact with our website, submit a project inquiry, or engage our marketing and development services, we may collect the following categories of information:
@@ -65,7 +65,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
 
           <section className="space-y-3">
             <h2 className="text-xl font-heading text-white font-bold uppercase tracking-wider flex items-center gap-2">
-              <span className="text-[#0099FF]">02 /</span> HOW WE USE YOUR INFORMATION
+              <span className="text-[#B89A72]">02 /</span> HOW WE USE YOUR INFORMATION
             </h2>
             <p>
               Information collected is strictly utilized to evaluate prospective client fits, fulfill agency proposals, execute agreed client deliverables, and optimize website performance. We do not sell or rent personal or corporate data to third parties.
@@ -74,7 +74,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
 
           <section className="space-y-3">
             <h2 className="text-xl font-heading text-white font-bold uppercase tracking-wider flex items-center gap-2">
-              <span className="text-[#0099FF]">03 /</span> DATA SECURITY & PROTECTION
+              <span className="text-[#B89A72]">03 /</span> DATA SECURITY & PROTECTION
             </h2>
             <p>
               Magniar implements modern, technical, and administrative security measures to protect client details against unauthorized access, loss, or alteration. Access to client data is strictly restricted to authorized agency personnel.
@@ -83,7 +83,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({
 
           <section className="space-y-3">
             <h2 className="text-xl font-heading text-white font-bold uppercase tracking-wider flex items-center gap-2">
-              <span className="text-[#0099FF]">04 /</span> YOUR RIGHTS & INQUIRIES
+              <span className="text-[#B89A72]">04 /</span> YOUR RIGHTS & INQUIRIES
             </h2>
             <p>
               You have the right to request access to, correction of, or deletion of your personal contact data submitted through our public website.

@@ -52,7 +52,7 @@ The interface must communicate engineering rigor, never superficial marketing fl
     content: `Preserved Visual Pillars:
 • Near-black backgrounds (#050505) for high spatial depth
 • Crisp off-white typography (#F5F7FA) for legibility
-• Electric blue (#0099FF) reserved strictly as a signal accent
+• Champagne gold (#B89A72) reserved strictly as a signal accent
 • Technical grid overlays providing structural coordinate context
 • Micro-typography and mono-spaced labels for technical character
 • Floating data visualization widgets with restrained glow
@@ -93,13 +93,13 @@ The interface must communicate engineering rigor, never superficial marketing fl
 • Secondary Text: #8D949E (6.4:1 contrast ratio)
 • Muted Text: #5A626E (3.8:1 contrast ratio)
 • Hairline Border: rgba(255, 255, 255, 0.08)
-• Active Accent Border: rgba(0, 153, 255, 0.40)
-• Electric Blue Signal Accent: #0099FF
+• Active Accent Border: rgba(184, 154, 114, 0.40)
+• Champagne Gold Signal Accent: #B89A72
 
-Color Behavior Rule: Electric Blue is a SIGNAL, not a paint bucket. It represents active states, live performance, key metrics, and interaction focus. The majority of the UI remains black, charcoal, and gray.`,
+Color Behavior Rule: Champagne Gold is a SIGNAL, not a paint bucket. It represents active states, live performance, key metrics, and interaction focus. The majority of the UI remains black, charcoal, and gray.`,
     keyTakeaways: [
       '<5% HSB saturation on charcoal surfaces for organic depth.',
-      'Electric blue is strictly a signal and highlight tone.',
+      'Champagne gold is strictly a signal and highlight tone.',
       'Semantic green/amber/red used sparingly for data states.'
     ]
   },
@@ -190,7 +190,7 @@ Padding Rule: Container outer padding must always equal or exceed the inner padd
     sectionCode: '14, 15 & 16 — BORDER, RADIUS & ELEVATION',
     content: `Borders:
 • Default: 1px hairline rgba(255, 255, 255, 0.08)
-• Active Focus: 1px rgba(0, 153, 255, 0.40)
+• Active Focus: 1px rgba(184, 154, 114, 0.40)
 
 Corner Radii:
 • SMALL (6px): Badges, tooltips, inner chips
@@ -237,12 +237,12 @@ Motion Timings:
     sectionCode: '18 & 19 — DATA VIZ & SIGNAL MOTIF',
     content: `Data Visualization Primitives:
 • KPI stat displays (e.g. $124,820 with ↑ 18.4% status tag)
-• Sparklines with subtle blue gradient fill
+• Sparklines with subtle champagne gradient fill
 • Performance status indicators (e.g. ● OPERATIONAL)
 • Analytical storytelling visuals
 
 Magniar Signal Motif Variations:
-1. Precision Pulse Dot: ● (#0099FF with 2.5s gentle aura pulse)
+1. Precision Pulse Dot: ● (#B89A72 with 2.5s gentle aura pulse)
 2. Vector Signal Line: ┄┄┄┄●────────
 3. System Live Badge: [ SYSTEM / LIVE ]
 4. Border Scan Beam: 3-second horizontal accent beam during syncs`,

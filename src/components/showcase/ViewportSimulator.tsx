@@ -25,7 +25,7 @@ export const ViewportSimulator: React.FC<ViewportSimulatorProps> = ({
       {/* Top Viewport Mode Switcher Toolbar */}
       <div className="bg-[#0A0C0F] border border-white/10 p-3 rounded-[2px] flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
         <div className="flex items-center gap-3">
-          <span className="text-[#0099FF] font-semibold flex items-center gap-2">
+          <span className="text-[#B89A72] font-semibold flex items-center gap-2">
             <Eye className="w-4 h-4" />
             <span>RESPONSIVE VIEWPORT TESTER:</span>
           </span>
@@ -44,8 +44,8 @@ export const ViewportSimulator: React.FC<ViewportSimulatorProps> = ({
                 onClick={() => onViewportChange(m.id)}
                 className={`
                   px-3 py-1.5 rounded-[2px] flex items-center gap-2 font-mono text-[11px] transition-all cursor-pointer
-                  ${isActive 
-                    ? 'bg-[#0099FF] text-white font-semibold shadow-[0_0_12px_rgba(0,153,255,0.3)]' 
+                  ${isActive
+                    ? 'bg-[#B89A72] text-white font-semibold shadow-[0_0_12px_rgba(184,154,114,0.3)]'
                     : 'bg-[#050505] text-[#8D949E] border border-white/10 hover:text-white hover:border-white/20'
                   }
                 `}
@@ -68,7 +68,7 @@ export const ViewportSimulator: React.FC<ViewportSimulatorProps> = ({
           {currentViewport !== '1440px' && (
             <div className="bg-[#0A0C0F] px-4 py-2 border-b border-white/10 flex items-center justify-between font-mono text-[10px] text-[#5A626E]">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#0099FF]" />
+                <span className="w-2 h-2 rounded-full bg-[#B89A72]" />
                 <span>SIMULATED VIEWPORT: {currentViewport}</span>
               </div>
               <span>MAGNIAR SHELL ENVIRONMENT</span>

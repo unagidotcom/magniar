@@ -14,7 +14,7 @@ export const SpacingRadiusSection: React.FC = () => {
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-2">
-        <div className="font-mono text-xs uppercase tracking-wider text-[#0099FF] flex items-center gap-2">
+        <div className="font-mono text-xs uppercase tracking-wider text-[#B89A72] flex items-center gap-2">
           <span>04 / SPACING, RADIUS & ELEVATION SYSTEM</span>
           <span className="h-[1px] flex-1 bg-white/10" />
         </div>
@@ -36,7 +36,7 @@ export const SpacingRadiusSection: React.FC = () => {
           {SPACING_TOKENS.map((token: SpacingToken) => (
             <div key={token.name} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2 rounded-lg hover:bg-white/5 transition-colors">
               <div className="w-48 font-mono text-xs flex items-center gap-2">
-                <span className="text-[#0099FF] font-semibold">{token.pxValue}px</span>
+                <span className="text-[#B89A72] font-semibold">{token.pxValue}px</span>
                 <span className="text-white/30">|</span>
                 <span className="text-white">{token.token}</span>
                 <span className="text-[#5A626E] text-[10px]">({token.remValue})</span>
@@ -45,7 +45,7 @@ export const SpacingRadiusSection: React.FC = () => {
               {/* Visual Width Bar */}
               <div className="flex-1 max-w-xs h-3 bg-[#050505] rounded overflow-hidden border border-white/10 flex items-center px-0.5">
                 <div 
-                  className="h-2 bg-[#0099FF] rounded-sm transition-all"
+                  className="h-2 bg-[#B89A72] rounded-sm transition-all"
                   style={{ width: `${Math.min(100, (token.pxValue / 128) * 100)}%` }}
                 />
               </div>
@@ -72,7 +72,7 @@ export const SpacingRadiusSection: React.FC = () => {
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <h4 className="text-sm font-medium text-white">{rad.name}</h4>
-                    <span className="font-mono text-xs text-[#0099FF] bg-[#0099FF]/10 px-2 py-0.5 rounded border border-[#0099FF]/30">
+                    <span className="font-mono text-xs text-[#B89A72] bg-[#B89A72]/10 px-2 py-0.5 rounded border border-[#B89A72]/30">
                       {rad.pxValue}px
                     </span>
                   </div>
@@ -81,7 +81,7 @@ export const SpacingRadiusSection: React.FC = () => {
 
                 {/* Radius Visual Preview Box */}
                 <div 
-                  className="h-12 w-12 shrink-0 bg-[#0099FF]/10 border border-[#0099FF] flex items-center justify-center font-mono text-[10px] text-[#0099FF]"
+                  className="h-12 w-12 shrink-0 bg-[#B89A72]/10 border border-[#B89A72] flex items-center justify-center font-mono text-[10px] text-[#B89A72]"
                   style={{ borderRadius: `${rad.pxValue}px` }}
                 >
                   {rad.pxValue}px
@@ -93,7 +93,7 @@ export const SpacingRadiusSection: React.FC = () => {
 
         {/* Interactive Nested Radius Calculator */}
         <div className="space-y-4">
-          <div className="font-mono text-xs text-[#0099FF] uppercase tracking-wider flex items-center gap-2">
+          <div className="font-mono text-xs text-[#B89A72] uppercase tracking-wider flex items-center gap-2">
             <Calculator className="h-3.5 w-3.5" />
             <span>NESTED CORNER RADIUS MATHEMATICAL CALCULATOR</span>
           </div>
@@ -119,7 +119,7 @@ export const SpacingRadiusSection: React.FC = () => {
                   max="24"
                   value={outerRadius}
                   onChange={(e) => setOuterRadius(Number(e.target.value))}
-                  className="w-full accent-[#0099FF]"
+                  className="w-full accent-[#B89A72]"
                 />
               </div>
 
@@ -134,21 +134,21 @@ export const SpacingRadiusSection: React.FC = () => {
                   max="24"
                   value={padding}
                   onChange={(e) => setPadding(Number(e.target.value))}
-                  className="w-full accent-[#0099FF]"
+                  className="w-full accent-[#B89A72]"
                 />
               </div>
             </div>
 
             {/* Live Visual Simulation */}
             <div className="pt-2">
-              <div className="font-mono text-[11px] text-[#0099FF] mb-2 flex justify-between">
+              <div className="font-mono text-[11px] text-[#B89A72] mb-2 flex justify-between">
                 <span>CALCULATED INNER RADIUS: {calculatedInnerRadius}px</span>
                 <span>{calculatedInnerRadius === 0 ? 'SHARP (0px)' : 'PARALLEL CURVE'}</span>
               </div>
 
               {/* Outer Container Box */}
               <div 
-                className="w-full bg-[#050505] border border-[#0099FF]/60 flex items-center justify-center transition-all duration-150"
+                className="w-full bg-[#050505] border border-[#B89A72]/60 flex items-center justify-center transition-all duration-150"
                 style={{ 
                   borderRadius: `${outerRadius}px`,
                   padding: `${padding}px`

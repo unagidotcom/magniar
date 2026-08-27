@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
+  CheckCircle2,
+  Clock3,
   Edit,
   ExternalLink,
   Eye,
@@ -12,7 +14,13 @@ import {
   X,
 } from 'lucide-react';
 import { Client } from '../../../types/clients';
-import { WebsiteInput, WebsitePlatform, WebsiteRecord, WebsiteStatus } from '../../../types/websites';
+import {
+  WebsiteCheckIntervalMinutes,
+  WebsiteInput,
+  WebsitePlatform,
+  WebsiteRecord,
+  WebsiteStatus,
+} from '../../../types/websites';
 import { clientService } from '../../../services/clientService';
 import {
   createWebsite,
@@ -36,16 +44,15 @@ interface WebsitesPageProps {
 }
 
 const PLATFORM_OPTIONS: WebsitePlatform[] = [
-  'HTML / Static',
+  'Auto Detect',
   'WordPress',
   'Shopify',
-  'Webflow',
-  'React',
-  'Next.js',
-  'Vercel',
+  'HTML / Static',
+  'Custom',
   'Other',
 ];
 
+const CHECK_INTERVAL_OPTIONS: WebsiteCheckIntervalMinutes[] = [5, 10, 15, 30, 60];
 const STATUS_OPTIONS: Array<WebsiteStatus | 'ALL'> = ['ALL', 'UNKNOWN', 'ONLINE', 'DOWN', 'ERROR'];
 const MONITORING_OPTIONS = ['ALL', 'ENABLED', 'DISABLED'];
 
@@ -53,9 +60,11 @@ const emptyForm = (clientId = ''): WebsiteInput => ({
   name: '',
   url: '',
   client_id: clientId,
-  platform: 'Other',
+  platform: 'Auto Detect',
   hosting_provider: '',
   monitoring_enabled: true,
+  check_interval_minutes: 10,
+  internal_notes: '',
 });
 
 const displayValue = (value?: string | number) => {
@@ -67,6 +76,18 @@ const clientNameForWebsite = (website: WebsiteRecord, clients: Client[]) =>
   website.client?.business_name ||
   clients.find((client) => client.id === website.client_id)?.business_name ||
   'Unknown client';
+
+const formatCheckInterval = (minutes: number) => {
+  if (minutes === 60) return 'Every hour';
+  return `Every ${minutes} minutes`;
+};
+
+const formatLastChecked = (value?: string) => value || 'Never';
+
+const formatHttpValue = (value?: number) => (value === undefined || value === null ? <span>&mdash;</span> : value);
+
+const formatResponseTime = (value?: number) =>
+  value === undefined || value === null ? <span>&mdash;</span> : `${value} ms`;
 
 interface WebsiteFormModalProps {
   isOpen: boolean;
@@ -99,6 +120,8 @@ const WebsiteFormModal: React.FC<WebsiteFormModalProps> = ({
         platform: website.platform,
         hosting_provider: website.hosting_provider || '',
         monitoring_enabled: website.monitoring_enabled,
+        check_interval_minutes: website.check_interval_minutes,
+        internal_notes: website.internal_notes || '',
       });
     } else {
       setForm(emptyForm(clients[0]?.id || ''));
@@ -137,10 +160,10 @@ const WebsiteFormModal: React.FC<WebsiteFormModalProps> = ({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-3">
             <h4 className="text-[10px] text-[#0099FF] uppercase font-bold tracking-wider">
-              01 - Website Identity
+              Website Information
             </h4>
 
             <div>
@@ -165,7 +188,7 @@ const WebsiteFormModal: React.FC<WebsiteFormModalProps> = ({
                   setForm((current) => ({ ...current, url: event.target.value }));
                   setUrlError(null);
                 }}
-                placeholder="example.com"
+                placeholder="https://example.com"
                 className={`w-full bg-[#050505] border rounded-[2px] px-3 py-2 text-white focus:outline-none ${
                   urlError ? 'border-rose-500/60 focus:border-rose-400' : 'border-white/10 focus:border-[#0099FF]'
                 }`}
@@ -193,12 +216,6 @@ const WebsiteFormModal: React.FC<WebsiteFormModalProps> = ({
                 ))}
               </select>
             </div>
-          </div>
-
-          <div className="space-y-3 pt-2 border-t border-white/10">
-            <h4 className="text-[10px] text-[#0099FF] uppercase font-bold tracking-wider">
-              02 - Metadata
-            </h4>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
@@ -229,23 +246,78 @@ const WebsiteFormModal: React.FC<WebsiteFormModalProps> = ({
                 />
               </div>
             </div>
+          </div>
 
-            <label className="flex items-center justify-between gap-3 p-3 bg-[#050505] border border-white/10 rounded-[2px]">
+          <div className="space-y-3 pt-4 border-t border-white/10">
+            <h4 className="text-[10px] text-[#0099FF] uppercase font-bold tracking-wider">
+              Monitoring
+            </h4>
+
+            <div className="flex items-center justify-between gap-3 p-3 bg-[#050505] border border-white/10 rounded-[2px]">
               <span>
-                <span className="block text-white font-semibold">Monitoring Enabled</span>
+                <span className="block text-white font-semibold">Monitoring</span>
                 <span className="block text-[10px] text-white/40 mt-0.5">
-                  This only stores the preference. Actual checks are not implemented yet.
+                  Stores configuration only. Browser-based checks are not performed.
                 </span>
               </span>
-              <input
-                type="checkbox"
-                checked={form.monitoring_enabled}
-                onChange={(event) =>
-                  setForm((current) => ({ ...current, monitoring_enabled: event.target.checked }))
+              <button
+                type="button"
+                onClick={() =>
+                  setForm((current) => ({ ...current, monitoring_enabled: !current.monitoring_enabled }))
                 }
-                className="h-4 w-4 accent-[#0099FF]"
+                className={`min-w-20 rounded-[2px] border px-3 py-2 text-[11px] font-bold transition-colors ${
+                  form.monitoring_enabled
+                    ? 'bg-[#0099FF]/10 border-[#0099FF]/40 text-[#0099FF]'
+                    : 'bg-white/5 border-white/10 text-white/45'
+                }`}
+                aria-pressed={form.monitoring_enabled}
+              >
+                {form.monitoring_enabled ? 'ON' : 'OFF'}
+              </button>
+            </div>
+
+            {form.monitoring_enabled && (
+              <div className="space-y-3 p-3 bg-[#050505] border border-white/10 rounded-[2px]">
+                <div>
+                  <div className="mb-2 text-[10px] text-white/40 uppercase">Checks</div>
+                  <div className="flex items-center gap-2 text-white/80">
+                    <CheckCircle2 className="h-4 w-4 text-[#0099FF]" />
+                    <span>HTTPS Availability</span>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] text-white/40 uppercase mb-1">Frequency</label>
+                  <select
+                    value={form.check_interval_minutes}
+                    onChange={(event) =>
+                      setForm((current) => ({
+                        ...current,
+                        check_interval_minutes: Number(event.target.value) as WebsiteCheckIntervalMinutes,
+                      }))
+                    }
+                    className="w-full bg-[#050505] border border-white/10 rounded-[2px] px-3 py-2 text-white focus:outline-none focus:border-[#0099FF]"
+                  >
+                    {CHECK_INTERVAL_OPTIONS.map((minutes) => (
+                      <option key={minutes} value={minutes}>
+                        {formatCheckInterval(minutes)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
+
+            <div>
+              <label className="block text-[10px] text-white/40 uppercase mb-1">Internal Notes</label>
+              <textarea
+                value={form.internal_notes || ''}
+                onChange={(event) => setForm((current) => ({ ...current, internal_notes: event.target.value }))}
+                rows={3}
+                placeholder="Internal monitoring or maintenance notes..."
+                className="w-full resize-y bg-[#050505] border border-white/10 rounded-[2px] px-3 py-2 text-white focus:outline-none focus:border-[#0099FF]"
               />
-            </label>
+            </div>
           </div>
 
           <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 pt-3 border-t border-white/10">
@@ -638,12 +710,11 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
         <>
           <div className="hidden md:block bg-[#0A0A0C] border border-white/10 rounded-[2px] overflow-hidden min-w-0">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[1080px] text-left font-mono text-xs">
+              <table className="w-full min-w-[980px] text-left font-mono text-xs">
                 <thead className="bg-[#050505] border-b border-white/10 text-white/40 uppercase tracking-wider text-[10px]">
                   <tr>
                     <th className="p-3.5">Website</th>
                     <th className="p-3.5">Client</th>
-                    <th className="p-3.5">URL</th>
                     <th className="p-3.5">Platform</th>
                     <th className="p-3.5">Status</th>
                     <th className="p-3.5">HTTP</th>
@@ -663,33 +734,26 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
                         <div className="text-white font-bold text-sm truncate max-w-[180px]">
                           {website.name}
                         </div>
-                        <div className="text-[10px] text-white/35 truncate max-w-[180px]">
-                          {website.id}
-                        </div>
-                      </td>
-                      <td className="p-3.5 text-white/80 font-medium max-w-[180px]">
-                        <span className="truncate block">{clientNameForWebsite(website, clients)}</span>
-                      </td>
-                      <td className="p-3.5 max-w-[240px]">
                         <a
                           href={website.normalized_url}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-[#0099FF] hover:text-white inline-flex items-center gap-1 truncate max-w-full"
+                          className="mt-1 text-[10px] text-[#0099FF] hover:text-white inline-flex items-center gap-1 truncate max-w-[210px]"
                         >
                           <span className="truncate">{website.normalized_url}</span>
                           <ExternalLink className="w-3 h-3 shrink-0" />
                         </a>
                       </td>
+                      <td className="p-3.5 text-white/80 font-medium max-w-[180px]">
+                        <span className="truncate block">{clientNameForWebsite(website, clients)}</span>
+                      </td>
                       <td className="p-3.5 text-white/70">{website.platform}</td>
                       <td className="p-3.5">
                         <AdminStatusBadge status={website.current_status} />
                       </td>
-                      <td className="p-3.5 text-white/50">{displayValue(website.last_http_status_code)}</td>
-                      <td className="p-3.5 text-white/50">
-                        {website.last_response_time_ms ? `${website.last_response_time_ms} ms` : <span>&mdash;</span>}
-                      </td>
-                      <td className="p-3.5 text-white/50">{displayValue(website.last_checked_at)}</td>
+                      <td className="p-3.5 text-white/50">{formatHttpValue(website.last_http_status_code)}</td>
+                      <td className="p-3.5 text-white/50">{formatResponseTime(website.last_response_time_ms)}</td>
+                      <td className="p-3.5 text-white/50">{formatLastChecked(website.last_checked_at)}</td>
                       <td className="p-3.5">
                         <span
                           className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] border text-[10px] font-semibold ${
@@ -699,8 +763,11 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
                           }`}
                         >
                           {website.monitoring_enabled ? <Power className="w-3 h-3" /> : <PowerOff className="w-3 h-3" />}
-                          {website.monitoring_enabled ? 'Enabled' : 'Disabled'}
+                          {website.monitoring_enabled ? 'ON' : 'OFF'}
                         </span>
+                        <div className="mt-1 text-[10px] text-white/35">
+                          {formatCheckInterval(website.check_interval_minutes)}
+                        </div>
                       </td>
                       <td className="p-3.5">
                         <div className="flex items-center justify-end gap-1.5">
@@ -759,12 +826,12 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
                   </div>
                   <div>
                     <div className="text-white/35 uppercase">Last Checked</div>
-                    <div className="text-white/60">&mdash;</div>
+                    <div className="text-white/60">{formatLastChecked(website.last_checked_at)}</div>
                   </div>
                   <div>
                     <div className="text-white/35 uppercase">Monitoring</div>
                     <div className={website.monitoring_enabled ? 'text-[#0099FF]' : 'text-white/40'}>
-                      {website.monitoring_enabled ? 'Enabled' : 'Disabled'}
+                      {website.monitoring_enabled ? `ON - ${formatCheckInterval(website.check_interval_minutes)}` : 'OFF'}
                     </div>
                   </div>
                 </div>
@@ -797,6 +864,68 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
         {selectedWebsite && (
           <div className="space-y-6 font-mono text-xs">
             <div className="p-4 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
+              <div className="text-white/40 uppercase text-[10px]">Status</div>
+              <div className="flex items-center justify-between gap-3">
+                <AdminStatusBadge status={selectedWebsite.current_status} />
+                <span className="text-white/50">{formatLastChecked(selectedWebsite.last_checked_at)}</span>
+              </div>
+              <div className="grid grid-cols-3 gap-3 pt-2">
+                <div className="p-3 bg-[#0A0A0C] border border-white/10 rounded-[2px]">
+                  <div className="text-white/35 uppercase text-[10px]">HTTP</div>
+                  <div className="text-white/70 mt-1">{formatHttpValue(selectedWebsite.last_http_status_code)}</div>
+                </div>
+                <div className="p-3 bg-[#0A0A0C] border border-white/10 rounded-[2px]">
+                  <div className="text-white/35 uppercase text-[10px]">Response</div>
+                  <div className="text-white/70 mt-1">{formatResponseTime(selectedWebsite.last_response_time_ms)}</div>
+                </div>
+                <div className="p-3 bg-[#0A0A0C] border border-white/10 rounded-[2px]">
+                  <div className="text-white/35 uppercase text-[10px]">Last Check</div>
+                  <div className="text-white/70 mt-1">{formatLastChecked(selectedWebsite.last_checked_at)}</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
+              <div className="text-white/40 uppercase text-[10px]">Monitoring</div>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-white/40 uppercase">Monitoring</span>
+                <span className={selectedWebsite.monitoring_enabled ? 'text-[#0099FF]' : 'text-white/40'}>
+                  {selectedWebsite.monitoring_enabled ? 'ON' : 'OFF'}
+                </span>
+              </div>
+              {selectedWebsite.monitoring_enabled && (
+                <>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-white/40 uppercase">Check</span>
+                    <span className="text-white/80 inline-flex items-center gap-2">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-[#0099FF]" />
+                      HTTPS Availability
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-white/40 uppercase">Frequency</span>
+                    <span className="text-white/80 inline-flex items-center gap-2">
+                      <Clock3 className="h-3.5 w-3.5 text-[#0099FF]" />
+                      {formatCheckInterval(selectedWebsite.check_interval_minutes)}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-white/40 uppercase">Last checked</span>
+                    <span className="text-white/80">{formatLastChecked(selectedWebsite.last_checked_at)}</span>
+                  </div>
+                </>
+              )}
+              <p className="border-t border-white/10 pt-3 text-white/50 leading-relaxed">
+                Monitoring configuration is stored for the future server-side worker. The browser does not run checks.
+              </p>
+            </div>
+
+            <div className="p-4 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
+              <div className="text-white/40 uppercase text-[10px]">Website</div>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-white/40 uppercase">Website name</span>
+                <span className="text-white font-medium text-right">{selectedWebsite.name}</span>
+              </div>
               <div className="flex items-center justify-between gap-3">
                 <span className="text-white/40 uppercase">URL</span>
                 <a
@@ -821,39 +950,13 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
                 <span className="text-white/40 uppercase">Hosting</span>
                 <span className="text-white/80">{displayValue(selectedWebsite.hosting_provider)}</span>
               </div>
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-white/40 uppercase">Monitoring Status</span>
-                <span className={selectedWebsite.monitoring_enabled ? 'text-[#0099FF]' : 'text-white/40'}>
-                  {selectedWebsite.monitoring_enabled ? 'Enabled' : 'Disabled'}
-                </span>
-              </div>
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-white/40 uppercase">Current Status</span>
-                <AdminStatusBadge status={selectedWebsite.current_status} />
-              </div>
             </div>
 
             <div className="p-4 bg-[#050505] border border-white/10 rounded-[2px] space-y-2">
-              <div className="text-white/40 uppercase text-[10px]">Monitoring</div>
-              <p className="text-white/70 leading-relaxed">
-                This record is ready for monitoring, but HTTPS checks, uptime history, alerts,
-                and automated checks have not been implemented yet.
+              <div className="text-white/40 uppercase text-[10px]">Notes</div>
+              <p className="whitespace-pre-wrap text-white/70 leading-relaxed">
+                {selectedWebsite.internal_notes || 'No internal notes.'}
               </p>
-            </div>
-
-            <div className="grid grid-cols-3 gap-3">
-              <div className="p-3 bg-[#050505] border border-white/10 rounded-[2px]">
-                <div className="text-white/35 uppercase text-[10px]">HTTP</div>
-                <div className="text-white/70 mt-1">&mdash;</div>
-              </div>
-              <div className="p-3 bg-[#050505] border border-white/10 rounded-[2px]">
-                <div className="text-white/35 uppercase text-[10px]">Response</div>
-                <div className="text-white/70 mt-1">&mdash;</div>
-              </div>
-              <div className="p-3 bg-[#050505] border border-white/10 rounded-[2px]">
-                <div className="text-white/35 uppercase text-[10px]">Last Check</div>
-                <div className="text-white/70 mt-1">&mdash;</div>
-              </div>
             </div>
 
             <div className="flex items-center justify-end gap-2">

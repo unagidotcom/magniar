@@ -25,10 +25,10 @@ export const IndustriesDevControlPanel: React.FC<IndustriesDevControlPanelProps>
     <div className="bg-[#0A0D12] border border-white/10 rounded-[2px] p-4 font-mono text-xs text-[#8D949E] space-y-4 shadow-xl">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
         <div className="flex items-center gap-2 text-white font-bold">
-          <Sliders className="w-4 h-4 text-[#0099FF]" />
+          <Sliders className="w-4 h-4 text-[#B89A72]" />
           <span>CHAPTER 07 DIAGNOSTICS & CONTROL PANEL</span>
         </div>
-        <span className="text-[10px] text-[#0099FF] bg-[#0099FF]/10 border border-[#0099FF]/30 px-2 py-0.5 rounded-[2px]">
+        <span className="text-[10px] text-[#B89A72] bg-[#B89A72]/10 border border-[#B89A72]/30 px-2 py-0.5 rounded-[2px]">
           INDUSTRIES / BUSINESS TYPES
         </span>
       </div>
@@ -42,7 +42,7 @@ export const IndustriesDevControlPanel: React.FC<IndustriesDevControlPanelProps>
               onClick={() => onViewportChange('1440px')}
               className={`px-2.5 py-1 rounded-[2px] border text-[11px] cursor-pointer flex items-center gap-1 ${
                 currentViewport === '1440px'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold'
                   : 'bg-[#050505] text-[#8D949E] border-white/10'
               }`}
             >
@@ -53,7 +53,7 @@ export const IndustriesDevControlPanel: React.FC<IndustriesDevControlPanelProps>
               onClick={() => onViewportChange('1024px')}
               className={`px-2.5 py-1 rounded-[2px] border text-[11px] cursor-pointer flex items-center gap-1 ${
                 currentViewport === '1024px'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold'
                   : 'bg-[#050505] text-[#8D949E] border-white/10'
               }`}
             >
@@ -64,7 +64,7 @@ export const IndustriesDevControlPanel: React.FC<IndustriesDevControlPanelProps>
               onClick={() => onViewportChange('768px')}
               className={`px-2.5 py-1 rounded-[2px] border text-[11px] cursor-pointer flex items-center gap-1 ${
                 currentViewport === '768px'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold'
                   : 'bg-[#050505] text-[#8D949E] border-white/10'
               }`}
             >
@@ -75,7 +75,7 @@ export const IndustriesDevControlPanel: React.FC<IndustriesDevControlPanelProps>
               onClick={() => onViewportChange('390px')}
               className={`px-2.5 py-1 rounded-[2px] border text-[11px] cursor-pointer flex items-center gap-1 ${
                 currentViewport === '390px'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold'
                   : 'bg-[#050505] text-[#8D949E] border-white/10'
               }`}
             >
@@ -93,7 +93,7 @@ export const IndustriesDevControlPanel: React.FC<IndustriesDevControlPanelProps>
               onClick={() => onViewModeChange('homepage')}
               className={`px-3 py-1 rounded-[2px] border text-[11px] cursor-pointer flex items-center gap-1.5 ${
                 activeViewMode === 'homepage'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold'
                   : 'bg-[#050505] text-[#8D949E] border-white/10'
               }`}
             >
@@ -105,7 +105,7 @@ export const IndustriesDevControlPanel: React.FC<IndustriesDevControlPanelProps>
               onClick={() => onViewModeChange('industries-page')}
               className={`px-3 py-1 rounded-[2px] border text-[11px] cursor-pointer flex items-center gap-1.5 ${
                 activeViewMode === 'industries-page'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold'
                   : 'bg-[#050505] text-[#8D949E] border-white/10'
               }`}
             >
@@ -121,7 +121,7 @@ export const IndustriesDevControlPanel: React.FC<IndustriesDevControlPanelProps>
           <select
             value={activeCategoryId}
             onChange={(e) => onCategorySelect && onCategorySelect(e.target.value as IndustryCategoryId)}
-            className="w-full bg-[#050505] border border-white/10 text-white text-xs px-2.5 py-1 rounded-[2px] cursor-pointer focus:outline-none focus:border-[#0099FF]"
+            className="w-full bg-[#050505] border border-white/10 text-white text-xs px-2.5 py-1 rounded-[2px] cursor-pointer focus:outline-none focus:border-[#B89A72]"
           >
             {INDUSTRY_CATEGORIES.map((cat) => (
               <option key={cat.id} value={cat.id}>

@@ -46,7 +46,7 @@ export const SidebarNav: React.FC<SidebarNavProps> = ({ activeTab, setActiveTab 
     <aside className="w-full lg:w-72 shrink-0 border-b lg:border-b-0 lg:border-r border-white/10 bg-[#050505] p-3 lg:p-4">
       <div className="mb-3 px-2 font-mono text-[10px] uppercase text-[#5A626E] tracking-wider flex items-center justify-between">
         <span>NAVIGATION // FOUNDATION</span>
-        <span className="text-[#0099FF]">● v1.0</span>
+        <span className="text-[#B89A72]">● v1.0</span>
       </div>
 
       <nav className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 scrollbar-none">
@@ -60,22 +60,22 @@ export const SidebarNav: React.FC<SidebarNavProps> = ({ activeTab, setActiveTab 
               onClick={() => setActiveTab(item.id)}
               className={`flex items-center justify-between w-full min-w-[200px] lg:min-w-0 px-3 py-2.5 rounded-lg text-left transition-all duration-150 border ${
                 isActive
-                  ? 'bg-[#0A0C0F] text-white border-[#0099FF]/40 shadow-[0_0_15px_rgba(0,153,255,0.1)]'
+                  ? 'bg-[#0A0C0F] text-white border-[#B89A72]/40 shadow-[0_0_15px_rgba(184,154,114,0.1)]'
                   : 'text-[#8D949E] border-transparent hover:text-white hover:bg-white/5 hover:border-white/5'
               }`}
             >
               <div className="flex items-center gap-2.5">
-                <span className={`font-mono text-[11px] ${isActive ? 'text-[#0099FF]' : 'text-[#5A626E]'}`}>
+                <span className={`font-mono text-[11px] ${isActive ? 'text-[#B89A72]' : 'text-[#5A626E]'}`}>
                   {item.code}
                 </span>
-                <Icon className={`h-4 w-4 ${isActive ? 'text-[#0099FF]' : 'text-[#8D949E]'}`} />
+                <Icon className={`h-4 w-4 ${isActive ? 'text-[#B89A72]' : 'text-[#8D949E]'}`} />
                 <span className="text-xs font-medium tracking-tight whitespace-nowrap">{item.label}</span>
               </div>
 
               {item.badge && (
                 <span className={`font-mono text-[10px] px-1.5 py-0.5 rounded border ${
                   isActive 
-                    ? 'bg-[#0099FF]/20 text-[#0099FF] border-[#0099FF]/30'
+                    ? 'bg-[#B89A72]/20 text-[#B89A72] border-[#B89A72]/30'
                     : 'bg-white/5 text-[#5A626E] border-white/5'
                 }`}>
                   {item.badge}
@@ -88,8 +88,8 @@ export const SidebarNav: React.FC<SidebarNavProps> = ({ activeTab, setActiveTab 
 
       {/* Footer Info Box */}
       <div className="hidden lg:block mt-8 p-3 rounded-lg bg-[#0A0C0F] border border-white/5 text-[11px] font-mono text-[#8D949E]">
-        <div className="flex items-center gap-2 text-[#0099FF] mb-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF] animate-magniar-pulse" />
+        <div className="flex items-center gap-2 text-[#B89A72] mb-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72] animate-magniar-pulse" />
           <span>CHAPTER 01 APPROVED</span>
         </div>
         <p className="text-[#5A626E] text-[10px] leading-relaxed">

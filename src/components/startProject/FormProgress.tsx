@@ -29,9 +29,9 @@ export const FormProgress: React.FC<FormProgressProps> = ({
 }) => {
   if (currentStep === 8) {
     return (
-      <div className="w-full bg-[#080A0D] border-b border-white/10 px-4 sm:px-6 py-3.5 font-sans text-xs sm:text-sm flex items-center justify-between text-[#0099FF]">
+      <div className="w-full bg-[#080A0D] border-b border-white/10 px-4 sm:px-6 py-3.5 font-sans text-xs sm:text-sm flex items-center justify-between text-[#B89A72]">
         <div className="flex items-center gap-2.5 max-w-[1440px] mx-auto w-full">
-          <span className="w-2 h-2 rounded-full bg-[#0099FF] animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-[#B89A72] animate-pulse" />
           <span className="font-semibold uppercase tracking-wider text-white">Consultation Request Logged</span>
         </div>
       </div>
@@ -46,7 +46,7 @@ export const FormProgress: React.FC<FormProgressProps> = ({
       {/* Top Thin Progress Line */}
       <div className="w-full h-1 bg-white/5 relative overflow-hidden">
         <div
-          className="h-full bg-[#0099FF] transition-all duration-300 ease-out shadow-[0_0_12px_#0099FF]"
+          className="h-full bg-[#B89A72] transition-all duration-300 ease-out shadow-[0_0_12px_#B89A72]"
           style={{ width: `${progressPercent}%` }}
         />
       </div>
@@ -68,7 +68,7 @@ export const FormProgress: React.FC<FormProgressProps> = ({
             )}
 
             <div className="flex items-center gap-2.5 font-sans">
-              <span className="px-2.5 py-0.5 rounded-full bg-[#0099FF]/15 text-[#0099FF] text-xs font-bold border border-[#0099FF]/30">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#B89A72]/15 text-[#B89A72] text-xs font-bold border border-[#B89A72]/30">
                 Step {currentStep + 1} of 8
               </span>
               <span className="font-heading font-bold text-white text-base sm:text-lg tracking-tight">
@@ -91,7 +91,7 @@ export const FormProgress: React.FC<FormProgressProps> = ({
                   type="button"
                   className={`px-3 py-1.5 rounded-full font-medium transition-all flex items-center gap-1.5 ${
                     isActive
-                      ? 'bg-[#0099FF] text-white font-bold shadow-[0_0_12px_rgba(0,153,255,0.4)]'
+                      ? 'bg-[#B89A72] text-white font-bold shadow-[0_0_12px_rgba(184,154,114,0.4)]'
                       : isPast
                       ? 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/10 cursor-pointer'
                       : 'bg-transparent text-white/20 border border-transparent cursor-not-allowed'
@@ -99,7 +99,7 @@ export const FormProgress: React.FC<FormProgressProps> = ({
                 >
                   <span>{item.numberStr}.</span>
                   <span className="hidden lg:inline">{item.label}</span>
-                  {isPast && <Check className="w-3 h-3 text-[#0099FF]" />}
+                  {isPast && <Check className="w-3 h-3 text-[#B89A72]" />}
                 </button>
               );
             })}

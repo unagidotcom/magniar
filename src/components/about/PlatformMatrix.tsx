@@ -17,12 +17,12 @@ export const PlatformMatrix: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <span className="font-mono text-xs text-[#0099FF] tracking-[0.2em] uppercase font-semibold block mb-2">
+            <span className="font-mono text-xs text-[#B89A72] tracking-[0.2em] uppercase font-semibold block mb-2">
               [ 06 — PLATFORM ECOSYSTEM ]
             </span>
             <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#F5F7FA] uppercase">
               DEEP PLATFORM <br />
-              <span className="text-[#0099FF]">FAMILIARITY</span>
+              <span className="text-[#B89A72]">FAMILIARITY</span>
             </h2>
           </div>
           <p className="text-sm text-[#8D949E] max-w-md font-mono">
@@ -38,7 +38,7 @@ export const PlatformMatrix: React.FC = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-2 border transition-colors cursor-pointer ${
                 selectedCategory === cat
-                  ? 'bg-[#0099FF] border-white text-white font-bold'
+                  ? 'bg-[#B89A72] border-white text-white font-bold'
                   : 'bg-[#0A0D12] border-white/10 text-[#8D949E] hover:text-white hover:border-white/30'
               }`}
             >
@@ -52,18 +52,18 @@ export const PlatformMatrix: React.FC = () => {
           {filteredPlatforms.map((item) => (
             <div
               key={item.id}
-              className="p-5 bg-[#080B10] border border-white/10 hover:border-[#0099FF]/50 transition-all group flex flex-col justify-between"
+              className="p-5 bg-[#080B10] border border-white/10 hover:border-[#B89A72]/50 transition-all group flex flex-col justify-between"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between font-mono text-[11px]">
-                  <span className="text-[#0099FF] font-semibold">{item.category}</span>
+                  <span className="text-[#B89A72] font-semibold">{item.category}</span>
                   <span className="text-[#8D949E] flex items-center gap-1">
                     <Server className="w-3 h-3 text-white/30" />
                     {item.region}
                   </span>
                 </div>
 
-                <h3 className="text-lg font-bold text-white uppercase group-hover:text-[#0099FF] transition-colors">
+                <h3 className="text-lg font-bold text-white uppercase group-hover:text-[#B89A72] transition-colors">
                   {item.name}
                 </h3>
 
@@ -74,7 +74,7 @@ export const PlatformMatrix: React.FC = () => {
 
               <div className="pt-4 mt-4 border-t border-white/5 flex items-center justify-between font-mono text-[10px]">
                 <span className="text-[#8D949E]">TECH PROTOCOL</span>
-                <span className="px-2 py-0.5 bg-white/5 text-[#0099FF] border border-white/10 font-bold">
+                <span className="px-2 py-0.5 bg-white/5 text-[#B89A72] border border-white/10 font-bold">
                   {item.techTag}
                 </span>
               </div>
@@ -85,7 +85,7 @@ export const PlatformMatrix: React.FC = () => {
         {/* Footer Note */}
         <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between font-mono text-xs text-[#8D949E]">
           <span className="flex items-center gap-2">
-            <Layers className="w-4 h-4 text-[#0099FF]" />
+            <Layers className="w-4 h-4 text-[#B89A72]" />
             NO RIGID CHANNEL FAVORITISM
           </span>
           <span>PLATFORM SELECTION IS GOVERNED BY UNIT ECONOMICS</span>

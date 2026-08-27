@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MOBILE_NAV_LINKS, CAPABILITY_GROUPS } from '../../data/navigationData';
 import { MagniarButton } from '../common/MagniarButton';
+import { BrandLogo } from '../common/BrandLogo';
 import { ChevronDown, X } from 'lucide-react';
 
 interface MobileMenuProps {
@@ -39,18 +40,13 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col justify-between overflow-y-auto bg-[#F4F1EA] p-5 text-[#20211F] transition-all duration-300 sm:p-8">
-      <div className="flex items-center justify-between border-b border-[#D5D1C8] pb-5">
-        <div className="flex items-center gap-3">
-          <span className="font-heading text-base font-extrabold tracking-[0.16em] uppercase">
-            MAGNIAR
-          </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-[#B86F55]" />
-        </div>
+    <div className="fixed inset-0 z-50 flex flex-col justify-between overflow-y-auto bg-[#F5F7FA] p-5 text-[#0B0D0F] transition-all duration-300 sm:p-8">
+      <div className="flex items-center justify-between border-b border-[#D9DEE5] pb-5">
+        <BrandLogo variant="wordmark" className="h-8 w-[164px]" />
 
         <button
           onClick={onClose}
-          className="rounded-[5px] border border-[#D5D1C8] bg-[#FAF9F6] p-2 text-[#686963] transition-colors hover:text-[#20211F]"
+          className="rounded-[5px] border border-[#D9DEE5] bg-[#FFFFFF] p-2 text-[#68717C] transition-colors hover:text-[#0B0D0F]"
           aria-label="Close menu"
         >
           <X className="h-5 w-5" />
@@ -58,7 +54,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
       </div>
 
       <div className="py-8">
-        <div className="mb-5 text-[11px] font-bold uppercase tracking-[0.16em] text-[#686963]">
+        <div className="mb-5 text-[11px] font-bold uppercase tracking-[0.16em] text-[#68717C]">
           Navigation
         </div>
 
@@ -67,42 +63,42 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
             const num = `0${idx + 1}`;
             if (link.hasMegaMenu) {
               return (
-                <div key={link.id} className="rounded-[6px] border border-[#D5D1C8] bg-[#FAF9F6] p-4">
+                <div key={link.id} className="rounded-[6px] border border-[#D9DEE5] bg-[#FFFFFF] p-4">
                   <div className="flex items-center justify-between">
                     <button
                       onClick={() => handleLinkClick(link.id)}
                       className="flex items-center gap-3 text-left"
                     >
-                      <span className="text-xs font-bold text-[#B86F55]">{num}</span>
+                      <span className="text-xs font-bold text-[#B89A72]">{num}</span>
                       <span className="font-heading text-2xl font-semibold">{link.label}</span>
                     </button>
 
                     <button
                       onClick={() => setCapabilitiesExpanded(!capabilitiesExpanded)}
-                      className="rounded-[5px] bg-[#F4F1EA] p-2 text-[#686963]"
+                      className="rounded-[5px] bg-[#F5F7FA] p-2 text-[#68717C]"
                       aria-label="Toggle services submenu"
                     >
                       <ChevronDown
                         className={`h-5 w-5 transition-transform duration-200 ${
-                          capabilitiesExpanded ? 'rotate-180 text-[#B86F55]' : ''
+                          capabilitiesExpanded ? 'rotate-180 text-[#B89A72]' : ''
                         }`}
                       />
                     </button>
                   </div>
 
                   {capabilitiesExpanded && (
-                    <div className="mt-5 space-y-4 border-t border-[#D5D1C8] pt-5">
+                    <div className="mt-5 space-y-4 border-t border-[#D9DEE5] pt-5">
                       {CAPABILITY_GROUPS.map((group) => (
                         <div key={group.id} className="space-y-2">
-                          <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#B86F55]">
+                          <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#B89A72]">
                             {group.numberLabel} / {group.title}
                           </div>
-                          <div className="grid grid-cols-1 gap-1.5 text-sm text-[#686963]">
+                          <div className="grid grid-cols-1 gap-1.5 text-sm text-[#68717C]">
                             {group.items.slice(0, 3).map((item) => (
                               <button
                                 key={item.name}
                                 onClick={() => handleLinkClick('services')}
-                                className="block rounded-[5px] px-2 py-1.5 text-left transition-colors hover:bg-[#F4F1EA] hover:text-[#20211F]"
+                                className="block rounded-[5px] px-2 py-1.5 text-left transition-colors hover:bg-[#F5F7FA] hover:text-[#0B0D0F]"
                               >
                                 {item.name}
                               </button>
@@ -120,10 +116,10 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
               <button
                 key={link.id}
                 onClick={() => handleLinkClick(link.id)}
-                className="flex w-full items-center justify-between rounded-[6px] border border-[#D5D1C8] bg-[#FAF9F6] p-4 text-left transition-colors hover:bg-white"
+                className="flex w-full items-center justify-between rounded-[6px] border border-[#D9DEE5] bg-[#FFFFFF] p-4 text-left transition-colors hover:bg-white"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-bold text-[#B86F55]">{num}</span>
+                  <span className="text-xs font-bold text-[#B89A72]">{num}</span>
                   <span className="font-heading text-2xl font-semibold">{link.label}</span>
                 </div>
               </button>
@@ -132,7 +128,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
         </nav>
       </div>
 
-      <div className="space-y-4 border-t border-[#D5D1C8] pt-6">
+      <div className="space-y-4 border-t border-[#D9DEE5] pt-6">
         <div className="grid grid-cols-1 gap-3">
           <button
             onClick={() => {
@@ -145,7 +141,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
               variant="utility"
               fullWidth
               size="md"
-              className="rounded-[5px] border-[#D5D1C8] bg-[#FAF9F6] text-[#20211F] hover:bg-white"
+              className="rounded-[5px] border-[#D9DEE5] bg-[#FFFFFF] text-[#0B0D0F] hover:bg-white"
             >
               CLIENT LOGIN
             </MagniarButton>
@@ -163,14 +159,14 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
               variant="primary"
               fullWidth
               size="lg"
-              className="rounded-[5px] border-[#B86F55] bg-[#B86F55] text-[#F4F1EA] hover:bg-[#8F4F3D] hover:shadow-none"
+              className="rounded-[5px] !border-[#B89A72] !bg-[#B89A72] !text-[#FFFFFF] hover:!bg-[#8F714D] hover:shadow-none"
             >
               START A PROJECT
             </MagniarButton>
           </button>
         </div>
 
-        <div className="flex items-center justify-between pt-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#686963]">
+        <div className="flex items-center justify-between pt-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#68717C]">
           <span>2026 MAGNIAR</span>
           <span>Digital services</span>
         </div>

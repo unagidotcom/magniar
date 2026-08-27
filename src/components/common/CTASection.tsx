@@ -13,7 +13,7 @@ export const CTASection: React.FC<CTASectionProps> = ({
   onBookConversation,
 }) => {
   return (
-    <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-12 bg-[#07090D] text-[#F5F7FA] border-t border-white/10 relative overflow-hidden">
+    <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-12 bg-[#0B0D0F] text-[#F5F7FA] border-t border-white/10 relative overflow-hidden">
       {/* Background Grid Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none opacity-30" />
 
@@ -21,7 +21,7 @@ export const CTASection: React.FC<CTASectionProps> = ({
         <div className="space-y-4 max-w-2xl">
           <div className="flex items-center gap-3">
             <TechnicalLabel text="INITIATE ENGAGEMENT" />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72]" />
             <span className="font-sans text-xs text-slate-400 uppercase tracking-wider font-semibold">
               START A CONVERSATION
             </span>
@@ -29,10 +29,10 @@ export const CTASection: React.FC<CTASectionProps> = ({
 
           <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
             Ready to build <br />
-            <span className="text-[#0099FF]">what's next?</span>
+            <span className="text-[#B89A72]">what's next?</span>
           </h2>
 
-          <p className="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed">
+          <p className="text-lg sm:text-xl text-[#D9DEE5] font-normal leading-relaxed">
             Tell us where the business is today, where you want it to go, and what needs to change.
           </p>
         </div>

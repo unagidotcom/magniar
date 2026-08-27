@@ -97,7 +97,7 @@ export function ArticleDetailPage({
     <div className="min-h-screen bg-[#050505] text-[#F5F7FA] font-sans relative pb-20">
       {/* Reading Progress Top Bar */}
       <div
-        className="fixed top-0 left-0 h-[3px] bg-[#0099FF] z-50 transition-all duration-150"
+        className="fixed top-0 left-0 h-[3px] bg-[#B89A72] z-50 transition-all duration-150"
         style={{ width: `${scrollProgress}%` }}
       />
 
@@ -106,7 +106,7 @@ export function ArticleDetailPage({
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
           <button
             onClick={onBackToInsights}
-            className="inline-flex items-center gap-2 font-mono text-xs text-[#8D949E] hover:text-[#0099FF] transition-colors cursor-pointer uppercase tracking-wider"
+            className="inline-flex items-center gap-2 font-mono text-xs text-[#8D949E] hover:text-[#B89A72] transition-colors cursor-pointer uppercase tracking-wider"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>BACK TO MAGNIAR INTELLIGENCE INDEX</span>
@@ -131,7 +131,7 @@ export function ArticleDetailPage({
         {/* Article Hero Header */}
         <div className="max-w-4xl space-y-6">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-3 py-1 bg-[#0099FF]/10 border border-[#0099FF]/30 text-[#0099FF] font-mono text-xs font-semibold rounded-[2px] uppercase tracking-wider">
+            <span className="px-3 py-1 bg-[#B89A72]/10 border border-[#B89A72]/30 text-[#B89A72] font-mono text-xs font-semibold rounded-[2px] uppercase tracking-wider">
               {article.contentType}
             </span>
             <span className="px-3 py-1 bg-white/5 border border-white/10 text-[#10B981] font-mono text-xs font-semibold rounded-[2px] uppercase tracking-wider">
@@ -150,7 +150,7 @@ export function ArticleDetailPage({
           {/* Author & Meta Row */}
           <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-[#8D949E]">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[#0099FF]/20 border border-[#0099FF]/40 flex items-center justify-center font-bold text-[#0099FF]">
+              <div className="w-8 h-8 rounded-full bg-[#B89A72]/20 border border-[#B89A72]/40 flex items-center justify-center font-bold text-[#B89A72]">
                 M
               </div>
               <div>
@@ -179,16 +179,16 @@ export function ArticleDetailPage({
 
         {/* Key Takeaways Box (Scannable Executive Summary) */}
         {article.keyTakeaways && article.keyTakeaways.length > 0 && (
-          <div className="bg-[#0A0C0F] border border-[#0099FF]/30 rounded-[2px] p-6 sm:p-8 space-y-4 max-w-4xl relative overflow-hidden shadow-xl">
-            <div className="flex items-center gap-2 font-mono text-xs font-bold text-[#0099FF] uppercase tracking-wider border-b border-white/10 pb-3">
-              <Sparkles className="w-4 h-4 text-[#0099FF]" />
+          <div className="bg-[#0A0C0F] border border-[#B89A72]/30 rounded-[2px] p-6 sm:p-8 space-y-4 max-w-4xl relative overflow-hidden shadow-xl">
+            <div className="flex items-center gap-2 font-mono text-xs font-bold text-[#B89A72] uppercase tracking-wider border-b border-white/10 pb-3">
+              <Sparkles className="w-4 h-4 text-[#B89A72]" />
               <span>KEY TAKEAWAYS — EXECUTIVE SUMMARY</span>
             </div>
 
             <ul className="space-y-3 font-sans text-xs sm:text-sm text-[#F5F7FA]">
               {article.keyTakeaways.map((takeaway, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF] mt-2 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72] mt-2 shrink-0" />
                   <span className="leading-relaxed">{takeaway}</span>
                 </li>
               ))}
@@ -214,7 +214,7 @@ export function ArticleDetailPage({
 
                 {/* Callout Quote */}
                 {sec.calloutQuote && (
-                  <blockquote className="my-6 p-6 bg-[#0A0C0F] border-l-2 border-[#0099FF] text-[#F5F7FA] italic font-serif text-base sm:text-lg leading-relaxed rounded-r-[2px]">
+                  <blockquote className="my-6 p-6 bg-[#0A0C0F] border-l-2 border-[#B89A72] text-[#F5F7FA] italic font-serif text-base sm:text-lg leading-relaxed rounded-r-[2px]">
                     "{sec.calloutQuote}"
                   </blockquote>
                 )}
@@ -222,7 +222,7 @@ export function ArticleDetailPage({
                 {/* Data Callout */}
                 {sec.dataCallout && (
                   <div className="my-6 p-6 bg-[#0A0C0F] border border-white/10 rounded-[2px] space-y-2 font-mono text-xs">
-                    <span className="text-[#0099FF] font-bold block uppercase tracking-wider">
+                    <span className="text-[#B89A72] font-bold block uppercase tracking-wider">
                       {sec.dataCallout.label}
                     </span>
                     <span className="text-3xl font-bold text-[#F5F7FA] block">
@@ -249,7 +249,7 @@ export function ArticleDetailPage({
                           <span className="text-[10px] text-[#8D949E] block">
                             {dp.label}
                           </span>
-                          <span className="text-sm font-bold text-[#0099FF] block">
+                          <span className="text-sm font-bold text-[#B89A72] block">
                             {dp.value}
                           </span>
                           {dp.badge && (
@@ -267,7 +267,7 @@ export function ArticleDetailPage({
                 {sec.codeBlock && (
                   <div className="my-6 rounded-[2px] overflow-hidden border border-white/15 bg-[#050505] font-mono text-xs">
                     <div className="bg-[#0A0C0F] px-4 py-2 border-b border-white/10 text-[10px] text-[#8D949E] flex items-center justify-between">
-                      <span className="text-[#0099FF] font-semibold">
+                      <span className="text-[#B89A72] font-semibold">
                         {sec.codeBlock.language.toUpperCase()} ENGINE CODE
                       </span>
                       <span>UTF-8 SPECIFICATION</span>
@@ -282,8 +282,8 @@ export function ArticleDetailPage({
 
             {/* Contextual Case Study Link Card */}
             {relatedCaseStudy && (
-              <div className="p-6 bg-[#0A0C0F] border border-[#0099FF]/40 rounded-[2px] space-y-3 font-mono text-xs my-8">
-                <div className="flex items-center gap-2 text-[#0099FF] font-bold uppercase tracking-wider">
+              <div className="p-6 bg-[#0A0C0F] border border-[#B89A72]/40 rounded-[2px] space-y-3 font-mono text-xs my-8">
+                <div className="flex items-center gap-2 text-[#B89A72] font-bold uppercase tracking-wider">
                   <Terminal className="w-4 h-4" />
                   <span>CONNECTED PROOF OF WORK / CASE STUDY</span>
                 </div>
@@ -299,7 +299,7 @@ export function ArticleDetailPage({
                       ? onSelectCaseStudy(relatedCaseStudy.slug)
                       : alert(`Navigating to Case Study: ${relatedCaseStudy.slug}`)
                   }
-                  className="px-4 py-2 bg-[#0099FF] text-white font-mono text-xs font-semibold rounded-[2px] inline-flex items-center gap-2 cursor-pointer transition-colors"
+                  className="px-4 py-2 bg-[#B89A72] text-white font-mono text-xs font-semibold rounded-[2px] inline-flex items-center gap-2 cursor-pointer transition-colors"
                 >
                   <span>VIEW CASE STUDY EXECUTION →</span>
                 </button>
@@ -332,7 +332,7 @@ export function ArticleDetailPage({
               <div className="flex flex-wrap items-center gap-3">
                 <button
                   onClick={onStartProject}
-                  className="px-6 py-3 bg-[#0099FF] hover:bg-[#0088EE] text-white font-mono text-xs font-semibold rounded-[2px] transition-all cursor-pointer uppercase tracking-wider"
+                  className="px-6 py-3 bg-[#B89A72] hover:bg-[#8F714D] text-white font-mono text-xs font-semibold rounded-[2px] transition-all cursor-pointer uppercase tracking-wider"
                 >
                   {article.ctaConfig?.buttonText || 'START A PROJECT →'}
                 </button>
@@ -357,7 +357,7 @@ export function ArticleDetailPage({
                   <a
                     key={item.id}
                     href={`#${item.id}`}
-                    className="block text-[#8D949E] hover:text-[#0099FF] transition-colors line-clamp-1 text-xs py-1"
+                    className="block text-[#8D949E] hover:text-[#B89A72] transition-colors line-clamp-1 text-xs py-1"
                   >
                     {item.title}
                   </a>
@@ -376,7 +376,7 @@ export function ArticleDetailPage({
                 </p>
                 <button
                   onClick={onExploreCapabilities}
-                  className="text-xs text-[#0099FF] hover:text-white transition-colors block cursor-pointer"
+                  className="text-xs text-[#B89A72] hover:text-white transition-colors block cursor-pointer"
                 >
                   EXPLORE CAPABILITY DETAILS →
                 </button>
@@ -390,7 +390,7 @@ export function ArticleDetailPage({
           <div className="space-y-6 pt-12 border-t border-white/10">
             <div className="flex items-center justify-between font-mono text-xs text-[#8D949E]">
               <span className="text-[#F5F7FA] font-bold uppercase tracking-wider flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-[#0099FF]" />
+                <BookOpen className="w-4 h-4 text-[#B89A72]" />
                 WHAT TO READ NEXT
               </span>
             </div>

@@ -55,8 +55,8 @@ export const SchedulePage: React.FC = () => {
               {/* Left Column: Calendar, Time Slots & Timezone */}
               <div className="lg:col-span-7 space-y-8 p-6 sm:p-8 bg-[#050505] border border-white/10">
                 {/* Protocol Note */}
-                <div className="p-4 bg-[#0A0D12] border border-[#0099FF]/30 text-xs font-mono text-[#8D949E] flex items-start gap-3">
-                  <Info className="w-4 h-4 text-[#0099FF] shrink-0 mt-0.5" />
+                <div className="p-4 bg-[#0A0D12] border border-[#B89A72]/30 text-xs font-mono text-[#8D949E] flex items-start gap-3">
+                  <Info className="w-4 h-4 text-[#B89A72] shrink-0 mt-0.5" />
                   <div>
                     <span className="text-white font-bold block">CONTROLLED ACCESS SCHEDULING</span>
                     <span>This page is accessible via invitation or qualified project submission. All sessions are 30-minute structured discovery conversations.</span>
@@ -95,7 +95,7 @@ export const SchedulePage: React.FC = () => {
                 />
 
                 <div className="mt-4 p-4 bg-[#050505] border border-white/10 flex items-center gap-3 font-mono text-[11px] text-[#8D949E]">
-                  <ShieldCheck className="w-4 h-4 text-[#0099FF] shrink-0" />
+                  <ShieldCheck className="w-4 h-4 text-[#B89A72] shrink-0" />
                   <span>SYNCHRONIZED WITH MAGNIAR ENGINE • NO OPEN PUBLIC CALENDARS</span>
                 </div>
               </div>

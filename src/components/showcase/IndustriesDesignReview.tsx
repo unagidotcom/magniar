@@ -49,8 +49,8 @@ export const IndustriesDesignReview: React.FC = () => {
     <div className="w-full bg-[#080A0D] border border-white/10 rounded-[2px] p-6 lg:p-10 font-sans space-y-8">
       {/* Header */}
       <div className="border-b border-white/10 pb-6 space-y-2">
-        <div className="flex items-center gap-2 font-mono text-xs text-[#0099FF]">
-          <BookOpen className="w-4 h-4 text-[#0099FF]" />
+        <div className="flex items-center gap-2 font-mono text-xs text-[#B89A72]">
+          <BookOpen className="w-4 h-4 text-[#B89A72]" />
           <span>CHAPTER 07 DESIGN REVIEW — INDUSTRIES / BUSINESS TYPES</span>
         </div>
         <h2 className="font-mono text-2xl lg:text-3xl font-bold text-white">
@@ -68,8 +68,8 @@ export const IndustriesDesignReview: React.FC = () => {
             key={idx}
             className="bg-[#050608] border border-white/10 p-5 rounded-[2px] space-y-2.5 font-sans relative"
           >
-            <div className="flex items-center gap-2 font-mono text-xs text-[#0099FF] font-bold">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#0099FF]" />
+            <div className="flex items-center gap-2 font-mono text-xs text-[#B89A72] font-bold">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#B89A72]" />
               <span>REQUIREMENT 0{idx + 1}</span>
             </div>
             <h3 className="font-mono text-sm font-bold text-white border-b border-white/5 pb-2">
@@ -85,7 +85,7 @@ export const IndustriesDesignReview: React.FC = () => {
       {/* Verification Footer */}
       <div className="bg-[#0A0D12] border border-white/10 p-4 rounded-[2px] flex items-center justify-between text-xs font-mono text-[#5A626E]">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#0099FF]" />
+          <span className="w-2 h-2 rounded-full bg-[#B89A72]" />
           <span>CHAPTER 07 INDUSTRIES PROTOCOL VERIFIED</span>
         </div>
         <span>SPECIFICATION COMPLETE</span>

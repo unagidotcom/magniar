@@ -36,11 +36,11 @@ export const StartProjectDevControlPanel: React.FC<StartProjectDevControlPanelPr
   onViewModeChange,
 }) => {
   return (
-    <div className="bg-[#0A0C0F] border border-[#0099FF]/40 rounded-[2px] p-4 font-mono text-xs text-[#F5F7FA] space-y-3 shadow-2xl">
+    <div className="bg-[#0A0C0F] border border-[#B89A72]/40 rounded-[2px] p-4 font-mono text-xs text-[#F5F7FA] space-y-3 shadow-2xl">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#0099FF] animate-pulse" />
-          <span className="font-bold text-[#0099FF] tracking-widest uppercase text-[11px]">
+          <span className="w-2 h-2 rounded-full bg-[#B89A72] animate-pulse" />
+          <span className="font-bold text-[#B89A72] tracking-widest uppercase text-[11px]">
             DEV CONTROL PANEL — CHAPTER 10 / START A PROJECT
           </span>
         </div>
@@ -51,7 +51,7 @@ export const StartProjectDevControlPanel: React.FC<StartProjectDevControlPanelPr
             onClick={() => onViewModeChange('form')}
             className={`px-3 py-1 rounded-[2px] transition-colors cursor-pointer text-[11px] ${
               activeViewMode === 'form'
-                ? 'bg-[#0099FF] text-white font-bold'
+                ? 'bg-[#B89A72] text-white font-bold'
                 : 'bg-white/5 text-[#8D949E] hover:text-white border border-white/10'
             }`}
           >
@@ -61,7 +61,7 @@ export const StartProjectDevControlPanel: React.FC<StartProjectDevControlPanelPr
             onClick={() => onViewModeChange('ch10-review')}
             className={`px-3 py-1 rounded-[2px] transition-colors cursor-pointer text-[11px] ${
               activeViewMode === 'ch10-review'
-                ? 'bg-[#0099FF] text-white font-bold'
+                ? 'bg-[#B89A72] text-white font-bold'
                 : 'bg-white/5 text-[#8D949E] hover:text-white border border-white/10'
             }`}
           >
@@ -85,7 +85,7 @@ export const StartProjectDevControlPanel: React.FC<StartProjectDevControlPanelPr
                 onClick={() => onStepChange(st)}
                 className={`px-2 py-1 rounded-[2px] border text-[10px] cursor-pointer transition-colors ${
                   isActive
-                    ? 'bg-[#0099FF] border-[#0099FF] text-white font-bold'
+                    ? 'bg-[#B89A72] border-[#B89A72] text-white font-bold'
                     : 'bg-black/40 border-white/10 text-[#8D949E] hover:text-white'
                 }`}
               >
@@ -99,7 +99,7 @@ export const StartProjectDevControlPanel: React.FC<StartProjectDevControlPanelPr
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={onPrefillSampleData}
-            className="px-2.5 py-1 rounded-[2px] bg-[#0099FF]/20 text-[#0099FF] border border-[#0099FF]/40 hover:bg-[#0099FF]/30 font-bold text-[10px] cursor-pointer flex items-center gap-1"
+            className="px-2.5 py-1 rounded-[2px] bg-[#B89A72]/20 text-[#B89A72] border border-[#B89A72]/40 hover:bg-[#B89A72]/30 font-bold text-[10px] cursor-pointer flex items-center gap-1"
           >
             <CheckSquare className="w-3 h-3" />
             <span>PREFILL SAMPLE BRIEF</span>
@@ -133,7 +133,7 @@ export const StartProjectDevControlPanel: React.FC<StartProjectDevControlPanelPr
               onClick={() => onViewportChange(v)}
               className={`px-2 py-0.5 rounded-[2px] border ${
                 currentViewport === v
-                  ? 'border-[#0099FF] text-[#0099FF] font-bold bg-[#0099FF]/10'
+                  ? 'border-[#B89A72] text-[#B89A72] font-bold bg-[#B89A72]/10'
                   : 'border-white/10 text-[#8D949E] hover:text-white'
               }`}
             >

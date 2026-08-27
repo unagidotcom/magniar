@@ -22,10 +22,10 @@ export const SignalIndicator: React.FC<SignalIndicatorProps> = ({
     <div className={`inline-flex items-center gap-2 font-mono ${textSize} uppercase tracking-wider ${className}`}>
       <span className="relative flex items-center justify-center">
         {pulse && (
-          <span className={`absolute inline-flex ${dotSize} rounded-full bg-[#0099FF] opacity-75 animate-ping`} />
+          <span className={`absolute inline-flex ${dotSize} rounded-full bg-[#B89A72] opacity-75 animate-ping`} />
         )}
         <span
-          className={`relative inline-block ${dotSize} rounded-full bg-[#0099FF] shadow-[0_0_8px_#0099FF]`}
+          className={`relative inline-block ${dotSize} rounded-full bg-[#B89A72] shadow-[0_0_8px_#B89A72]`}
         />
       </span>
       <span className="text-[#F5F7FA] font-medium tracking-widest">{label}</span>

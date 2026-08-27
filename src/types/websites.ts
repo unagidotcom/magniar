@@ -1,14 +1,14 @@
 export type WebsiteStatus = 'UNKNOWN' | 'ONLINE' | 'DOWN' | 'ERROR';
 
 export type WebsitePlatform =
+  | 'Auto Detect'
   | 'HTML / Static'
   | 'WordPress'
   | 'Shopify'
-  | 'Webflow'
-  | 'React'
-  | 'Next.js'
-  | 'Vercel'
+  | 'Custom'
   | 'Other';
+
+export type WebsiteCheckIntervalMinutes = 5 | 10 | 15 | 30 | 60;
 
 export interface WebsiteClientSummary {
   id: string;
@@ -27,10 +27,12 @@ export interface WebsiteRecord {
   platform: WebsitePlatform | string;
   hosting_provider?: string;
   monitoring_enabled: boolean;
+  check_interval_minutes: WebsiteCheckIntervalMinutes;
   current_status: WebsiteStatus;
   last_http_status_code?: number;
   last_response_time_ms?: number;
   last_checked_at?: string;
+  internal_notes?: string;
   created_at: string;
   updated_at: string;
 }
@@ -42,4 +44,6 @@ export interface WebsiteInput {
   platform: WebsitePlatform | string;
   hosting_provider?: string;
   monitoring_enabled: boolean;
+  check_interval_minutes: WebsiteCheckIntervalMinutes;
+  internal_notes?: string;
 }

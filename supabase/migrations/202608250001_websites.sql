@@ -4,9 +4,12 @@ create table if not exists public.websites (
   name text not null check (char_length(trim(name)) > 0),
   url text not null check (char_length(trim(url)) > 0),
   normalized_url text not null check (char_length(trim(normalized_url)) > 0),
-  platform text not null default 'Other',
+  platform text not null default 'Auto Detect',
   hosting_provider text,
   monitoring_enabled boolean not null default true,
+  check_interval_minutes integer not null default 10
+    constraint websites_check_interval_minutes_check
+    check (check_interval_minutes in (5, 10, 15, 30, 60)),
   current_status text not null default 'UNKNOWN'
     check (current_status in ('UNKNOWN', 'ONLINE', 'DOWN', 'ERROR')),
   last_http_status_code integer,
@@ -14,10 +17,39 @@ create table if not exists public.websites (
     last_response_time_ms is null or last_response_time_ms >= 0
   ),
   last_checked_at timestamptz,
+  internal_notes text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   constraint websites_normalized_url_unique unique (normalized_url)
 );
+
+alter table public.websites
+  add column if not exists check_interval_minutes integer not null default 10;
+
+alter table public.websites
+  add column if not exists internal_notes text;
+
+update public.websites
+set check_interval_minutes = 10
+where check_interval_minutes is null;
+
+alter table public.websites
+  alter column check_interval_minutes set default 10,
+  alter column check_interval_minutes set not null;
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'websites_check_interval_minutes_check'
+      and conrelid = 'public.websites'::regclass
+  ) then
+    alter table public.websites
+      add constraint websites_check_interval_minutes_check
+      check (check_interval_minutes in (5, 10, 15, 30, 60));
+  end if;
+end $$;
 
 create index if not exists websites_client_id_idx
   on public.websites (client_id);

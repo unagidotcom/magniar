@@ -6,6 +6,7 @@ interface ClientLogoProps {
   logoUrl?: string | null;
   className?: string;
   imageClassName?: string;
+  fallbackClassName?: string;
 }
 
 const getInitials = (name: string) =>
@@ -16,15 +17,34 @@ const getInitials = (name: string) =>
     .map((part) => part[0]?.toUpperCase())
     .join('') || 'MG';
 
+const isLikelyImageUrl = (url: string) => {
+  try {
+    const parsed = new URL(url);
+    const path = parsed.pathname.toLowerCase();
+
+    if (!path || path === '/') return false;
+    return (
+      /\.(png|jpe?g|webp|svg|gif|avif)(\?.*)?$/.test(path) ||
+      path.includes('/storage/v1/object/') ||
+      path.includes('/cdn/shop/files/') ||
+      path.includes('/uploads/') ||
+      path.includes('/images/')
+    );
+  } catch {
+    return false;
+  }
+};
+
 export const ClientLogo: React.FC<ClientLogoProps> = ({
   name,
   logoUrl,
-  className = 'h-16 flex items-center justify-center bg-[#050505] border border-white/10 rounded-[2px] px-4',
+  className = 'h-16 flex items-center justify-center bg-[#0B0D0F] border border-white/10 rounded-[2px] px-4',
   imageClassName = 'max-h-10 max-w-full object-contain',
+  fallbackClassName = 'flex items-center gap-2 text-[#B89A72]',
 }) => {
   const [hasImageError, setHasImageError] = useState(false);
   const normalizedLogoUrl = logoUrl?.trim();
-  const shouldShowImage = Boolean(normalizedLogoUrl && !hasImageError);
+  const shouldShowImage = Boolean(normalizedLogoUrl && isLikelyImageUrl(normalizedLogoUrl) && !hasImageError);
 
   useEffect(() => {
     setHasImageError(false);
@@ -41,7 +61,7 @@ export const ClientLogo: React.FC<ClientLogoProps> = ({
           onError={() => setHasImageError(true)}
         />
       ) : (
-        <div className="flex items-center gap-2 text-[#0099FF]">
+        <div className={fallbackClassName}>
           <Building2 className="w-5 h-5" />
           <span className="font-heading text-xl font-bold tracking-wider">
             {getInitials(name)}

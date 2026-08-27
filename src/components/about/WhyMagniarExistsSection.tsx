@@ -13,12 +13,12 @@ export const WhyMagniarExistsSection: React.FC<WhyMagniarExistsProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mb-16 space-y-4">
-          <span className="font-mono text-xs text-[#0099FF] tracking-[0.2em] uppercase font-semibold block">
+          <span className="font-mono text-xs text-[#B89A72] tracking-[0.2em] uppercase font-semibold block">
             [ 03 — WHY MAGNIAR EXISTS ]
           </span>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#F5F7FA] uppercase leading-tight">
             THE PROBLEM WITH <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0099FF] via-white to-[#0099FF]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B89A72] via-white to-[#B89A72]">
               FRAGMENTED GROWTH STACKS.
             </span>
           </h2>
@@ -82,24 +82,24 @@ export const WhyMagniarExistsSection: React.FC<WhyMagniarExistsProps> = ({
           </div>
 
           {/* RIGHT: THE MAGNIAR UNIFIED MODEL */}
-          <div className="p-6 sm:p-8 bg-[#050505] border border-[#0099FF] relative shadow-[0_0_30px_rgba(0,153,255,0.1)]">
-            <div className="flex items-center justify-between pb-4 border-b border-[#0099FF]/30 mb-6 font-mono text-xs">
-              <span className="text-[#0099FF] font-bold flex items-center gap-2 uppercase">
-                <CheckCircle className="w-4 h-4 text-[#0099FF]" />
+          <div className="p-6 sm:p-8 bg-[#050505] border border-[#B89A72] relative shadow-[0_0_30px_rgba(184,154,114,0.1)]">
+            <div className="flex items-center justify-between pb-4 border-b border-[#B89A72]/30 mb-6 font-mono text-xs">
+              <span className="text-[#B89A72] font-bold flex items-center gap-2 uppercase">
+                <CheckCircle className="w-4 h-4 text-[#B89A72]" />
                 MAGNIAR CONNECTED MODEL
               </span>
-              <span className="text-[#0099FF]">UNIFIED OPERATING SYSTEM</span>
+              <span className="text-[#B89A72]">UNIFIED OPERATING SYSTEM</span>
             </div>
 
             {/* Connected Stack Visual */}
-            <div className="p-5 bg-[#0099FF]/10 border border-[#0099FF]/40 space-y-3 font-mono text-xs mb-8">
+            <div className="p-5 bg-[#B89A72]/10 border border-[#B89A72]/40 space-y-3 font-mono text-xs mb-8">
               <div className="flex items-center justify-between font-bold text-white">
                 <span>PERFORMANCE + COMMERCE + TECH + AI</span>
-                <span className="text-[#0099FF]">CONNECTED</span>
+                <span className="text-[#B89A72]">CONNECTED</span>
               </div>
 
               <div className="p-3 bg-[#050505] border border-white/10 text-[#F5F7FA] space-y-1">
-                <div className="flex justify-between font-bold text-[#0099FF]">
+                <div className="flex justify-between font-bold text-[#B89A72]">
                   <span>REAL-TIME DATA FEEDBACK LOOP</span>
                   <span>100% ALIGNED</span>
                 </div>
@@ -111,15 +111,15 @@ export const WhyMagniarExistsSection: React.FC<WhyMagniarExistsProps> = ({
 
             <ul className="space-y-2 text-xs text-[#F5F7FA] font-mono border-t border-white/10 pt-4">
               <li className="flex items-center gap-2">
-                <span className="text-[#0099FF]">✓</span>
+                <span className="text-[#B89A72]">✓</span>
                 <span>Single partner accountable for complete end-to-end unit economics</span>
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-[#0099FF]">✓</span>
+                <span className="text-[#B89A72]">✓</span>
                 <span>First-party server GTM tracking ensures precision attribution</span>
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-[#0099FF]">✓</span>
+                <span className="text-[#B89A72]">✓</span>
                 <span>Technical engineers optimized specifically for growth & speed</span>
               </li>
             </ul>
@@ -133,7 +133,7 @@ export const WhyMagniarExistsSection: React.FC<WhyMagniarExistsProps> = ({
           </span>
           <button
             onClick={onStartProject}
-            className="px-5 py-3 bg-[#0099FF] text-white font-bold uppercase tracking-wider hover:bg-[#0088EE] transition-all flex items-center gap-2 shrink-0 cursor-pointer"
+            className="px-5 py-3 bg-[#B89A72] text-white font-bold uppercase tracking-wider hover:bg-[#8F714D] transition-all flex items-center gap-2 shrink-0 cursor-pointer"
           >
             <span>CONNECT YOUR STACK</span>
             <ArrowRight className="w-4 h-4" />

@@ -92,7 +92,7 @@ export function WorkPage({
         {/* Page Hero Header */}
         <div className="border-b border-white/10 pb-8 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="px-3 py-1 bg-[#0099FF]/10 border border-[#0099FF]/30 text-[#0099FF] text-xs font-mono font-semibold rounded-[2px] uppercase tracking-wider flex items-center gap-1.5">
+            <span className="px-3 py-1 bg-[#B89A72]/10 border border-[#B89A72]/30 text-[#B89A72] text-xs font-mono font-semibold rounded-[2px] uppercase tracking-wider flex items-center gap-1.5">
               <Terminal className="w-3.5 h-3.5" />
               WORK & CASE STUDIES INDEX
             </span>
@@ -140,7 +140,7 @@ export function WorkPage({
         ) : (
           /* Empty State */
           <div className="p-12 text-center bg-[#0A0C0F] border border-white/10 rounded-[2px] space-y-4">
-            <Layers className="w-10 h-10 text-[#0099FF] mx-auto" />
+            <Layers className="w-10 h-10 text-[#B89A72] mx-auto" />
             <h3 className="text-xl font-bold text-[#F5F7FA] font-mono">
               NO PUBLISHED CASE STUDIES YET
             </h3>
@@ -150,7 +150,7 @@ export function WorkPage({
             {CASE_STUDIES_DATA.length > 0 && (
               <button
                 onClick={handleResetFilters}
-                className="px-4 py-2 bg-[#0099FF] text-white text-xs font-mono font-semibold rounded-[2px] inline-flex items-center gap-2 cursor-pointer"
+                className="px-4 py-2 bg-[#B89A72] text-white text-xs font-mono font-semibold rounded-[2px] inline-flex items-center gap-2 cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>RESET ALL FILTERS</span>
@@ -171,7 +171,7 @@ export function WorkPage({
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={onStartProject}
-              className="px-6 py-3 bg-[#0099FF] hover:bg-[#0088EE] text-white font-mono text-xs font-semibold rounded-[2px] transition-all cursor-pointer"
+              className="px-6 py-3 bg-[#B89A72] hover:bg-[#8F714D] text-white font-mono text-xs font-semibold rounded-[2px] transition-all cursor-pointer"
             >
               START A PROJECT →
             </button>

@@ -16,7 +16,7 @@ export function WorkCard({ caseStudy, onSelect, featuredLayout = false }: WorkCa
       case 'ONGOING':
         return 'bg-[#10B981]/10 text-[#10B981] border-[#10B981]/30';
       case 'COMPLETED':
-        return 'bg-[#0099FF]/10 text-[#0099FF] border-[#0099FF]/30';
+        return 'bg-[#B89A72]/10 text-[#B89A72] border-[#B89A72]/30';
       case 'SELECTED_PROJECT':
         return 'bg-[#8B5CF6]/10 text-[#8B5CF6] border-[#8B5CF6]/30';
       case 'PAST_CLIENT':
@@ -46,7 +46,7 @@ export function WorkCard({ caseStudy, onSelect, featuredLayout = false }: WorkCa
   return (
     <article
       onClick={() => onSelect(caseStudy.slug)}
-      className={`group relative bg-[#0A0C0F] border border-white/10 rounded-[2px] p-6 sm:p-8 hover:border-[#0099FF]/50 transition-all duration-300 cursor-pointer flex flex-col justify-between ${
+      className={`group relative bg-[#0A0C0F] border border-white/10 rounded-[2px] p-6 sm:p-8 hover:border-[#B89A72]/50 transition-all duration-300 cursor-pointer flex flex-col justify-between ${
         featuredLayout ? 'lg:col-span-2 bg-gradient-to-br from-[#0A0C0F] via-[#0D1015] to-[#0A0C0F]' : ''
       }`}
     >
@@ -59,7 +59,7 @@ export function WorkCard({ caseStudy, onSelect, featuredLayout = false }: WorkCa
             </span>
             <span className="text-white/20">•</span>
             <span className="font-sans text-xs text-slate-300 flex items-center gap-1">
-              <Globe className="w-3.5 h-3.5 text-[#0099FF]" />
+              <Globe className="w-3.5 h-3.5 text-[#B89A72]" />
               {caseStudy.geography}
             </span>
           </div>
@@ -78,12 +78,12 @@ export function WorkCard({ caseStudy, onSelect, featuredLayout = false }: WorkCa
 
         {/* Title and Business Subtitle */}
         <div className="mb-6 space-y-2">
-          <div className="flex items-center gap-2 font-sans text-xs text-[#0099FF]">
+          <div className="flex items-center gap-2 font-sans text-xs text-[#B89A72]">
             <span className="uppercase tracking-wider font-semibold">{caseStudy.businessModel}</span>
             <span className="text-white/20">|</span>
             <span className="text-slate-300">{caseStudy.engagementType}</span>
           </div>
-          <h3 className="font-heading text-xl sm:text-2xl font-bold text-[#F5F7FA] group-hover:text-[#0099FF] transition-colors leading-snug">
+          <h3 className="font-heading text-xl sm:text-2xl font-bold text-[#F5F7FA] group-hover:text-[#B89A72] transition-colors leading-snug">
             {caseStudy.title}
           </h3>
           <p className="text-sm text-slate-300 line-clamp-2 leading-relaxed">
@@ -103,7 +103,7 @@ export function WorkCard({ caseStudy, onSelect, featuredLayout = false }: WorkCa
               </span>
             </div>
             <div className="text-right">
-              <span className="font-heading text-xl font-extrabold text-[#0099FF]">
+              <span className="font-heading text-xl font-extrabold text-[#B89A72]">
                 {caseStudy.results[0].metric}
               </span>
             </div>
@@ -138,7 +138,7 @@ export function WorkCard({ caseStudy, onSelect, featuredLayout = false }: WorkCa
 
           <div>
             <span className="text-slate-400 block text-xs uppercase font-medium">MEDIA BUDGET</span>
-            <span className="text-[#0099FF] font-semibold block mt-1 flex items-center gap-1 text-sm">
+            <span className="text-[#B89A72] font-semibold block mt-1 flex items-center gap-1 text-sm">
               <DollarSign className="w-3.5 h-3.5" />
               {caseStudy.mediaBudgetDisplay}
             </span>
@@ -147,9 +147,9 @@ export function WorkCard({ caseStudy, onSelect, featuredLayout = false }: WorkCa
 
         {/* View Case Study CTA */}
         <div className="flex items-center justify-end pt-2">
-          <span className="inline-flex items-center gap-1.5 text-xs font-sans font-semibold tracking-wider text-[#F5F7FA] group-hover:text-[#0099FF] transition-colors uppercase">
+          <span className="inline-flex items-center gap-1.5 text-xs font-sans font-semibold tracking-wider text-[#F5F7FA] group-hover:text-[#B89A72] transition-colors uppercase">
             VIEW CASE STUDY
-            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-[#0099FF]" />
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-[#B89A72]" />
           </span>
         </div>
       </div>

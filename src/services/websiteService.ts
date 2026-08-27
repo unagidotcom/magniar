@@ -1,5 +1,5 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
-import { WebsiteInput, WebsiteRecord, WebsiteStatus } from '../types/websites';
+import { WebsiteCheckIntervalMinutes, WebsiteInput, WebsiteRecord, WebsiteStatus } from '../types/websites';
 
 type WebsiteRow = {
   id: string;
@@ -16,10 +16,12 @@ type WebsiteRow = {
   platform: string;
   hosting_provider?: string | null;
   monitoring_enabled: boolean;
+  check_interval_minutes?: WebsiteCheckIntervalMinutes | null;
   current_status: WebsiteStatus;
   last_http_status_code?: number | null;
   last_response_time_ms?: number | null;
   last_checked_at?: string | null;
+  internal_notes?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -81,13 +83,20 @@ const normalizeRow = (row: WebsiteRow): WebsiteRecord => ({
   platform: row.platform,
   hosting_provider: row.hosting_provider || undefined,
   monitoring_enabled: row.monitoring_enabled,
+  check_interval_minutes: row.check_interval_minutes || 10,
   current_status: row.current_status || 'UNKNOWN',
-  last_http_status_code: row.last_http_status_code || undefined,
-  last_response_time_ms: row.last_response_time_ms || undefined,
+  last_http_status_code: row.last_http_status_code ?? undefined,
+  last_response_time_ms: row.last_response_time_ms ?? undefined,
   last_checked_at: formatTimestamp(row.last_checked_at),
+  internal_notes: row.internal_notes || undefined,
   created_at: formatTimestamp(row.created_at) || '',
   updated_at: formatTimestamp(row.updated_at) || '',
 });
+
+const normalizeCheckInterval = (value: WebsiteInput['check_interval_minutes']) => {
+  const allowed = [5, 10, 15, 30, 60];
+  return allowed.includes(value) ? value : 10;
+};
 
 const buildPayload = (input: WebsiteInput) => {
   if (!input.name.trim()) {
@@ -105,9 +114,11 @@ const buildPayload = (input: WebsiteInput) => {
     name: input.name.trim(),
     url: normalizedUrl,
     normalized_url: normalizedUrl,
-    platform: input.platform || 'Other',
+    platform: input.platform || 'Auto Detect',
     hosting_provider: input.hosting_provider?.trim() || null,
     monitoring_enabled: input.monitoring_enabled,
+    check_interval_minutes: normalizeCheckInterval(input.check_interval_minutes),
+    internal_notes: input.internal_notes?.trim() || null,
   };
 };
 

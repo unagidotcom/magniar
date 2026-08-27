@@ -17,12 +17,12 @@ export const TechnicalLabel: React.FC<TechnicalLabelProps> = ({
     ? 'px-2 py-0.5 text-[9px] tracking-[0.12em]' 
     : 'px-2.5 py-1 text-[10px] tracking-[0.14em]';
 
-  let variantClasses = 'border border-white/10 bg-[#0A0C0F] text-[#8D949E]';
+  let variantClasses = 'border border-white/10 bg-[#0B0D0F] text-[#68717C]';
 
   if (variant === 'active') {
-    variantClasses = 'border-[#0099FF]/40 bg-[#0099FF]/10 text-[#0099FF] font-semibold shadow-[0_0_12px_rgba(0,153,255,0.15)]';
+    variantClasses = 'border-[#B89A72]/40 bg-[#B89A72]/10 text-[#B89A72] font-semibold shadow-[0_0_12px_rgba(184,154,114,0.15)]';
   } else if (variant === 'ghost') {
-    variantClasses = 'bg-transparent text-[#8D949E] border-transparent';
+    variantClasses = 'bg-transparent text-[#68717C] border-transparent';
   }
 
   return (

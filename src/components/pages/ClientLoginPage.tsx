@@ -23,10 +23,10 @@ export const ClientLoginPage: React.FC<ClientLoginPageProps> = ({
         <div className="relative z-10 space-y-6">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="flex items-center gap-2">
-              <Lock className="w-4 h-4 text-[#0099FF]" />
+              <Lock className="w-4 h-4 text-[#B89A72]" />
               <TechnicalLabel>CLIENT WORKSPACE / ACCESS</TechnicalLabel>
             </div>
-            <span className="font-sans text-xs text-[#0099FF] bg-[#0099FF]/10 px-2.5 py-0.5 border border-[#0099FF]/30 rounded-[2px] font-semibold uppercase">
+            <span className="font-sans text-xs text-[#B89A72] bg-[#B89A72]/10 px-2.5 py-0.5 border border-[#B89A72]/30 rounded-[2px] font-semibold uppercase">
               CLOSED PREVIEW
             </span>
           </div>
@@ -35,7 +35,7 @@ export const ClientLoginPage: React.FC<ClientLoginPageProps> = ({
             <h1 className="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase">
               CLIENT ACCESS
             </h1>
-            <p className="text-lg text-[#0099FF] font-sans font-semibold">
+            <p className="text-lg text-[#B89A72] font-sans font-semibold">
               Client portal coming soon.
             </p>
             <p className="text-base text-slate-300 leading-relaxed font-normal">
@@ -46,7 +46,7 @@ export const ClientLoginPage: React.FC<ClientLoginPageProps> = ({
           {/* Info Card */}
           <div className="p-5 bg-[#030508] border border-white/10 rounded-[2px] space-y-2 font-sans text-xs text-slate-300">
             <div className="flex items-center gap-2 text-white font-semibold">
-              <Clock className="w-4 h-4 text-[#0099FF]" />
+              <Clock className="w-4 h-4 text-[#B89A72]" />
               <span>ACTIVE CLIENT SUPPORT</span>
             </div>
             <p className="text-xs leading-relaxed text-slate-300">
@@ -60,7 +60,7 @@ export const ClientLoginPage: React.FC<ClientLoginPageProps> = ({
               onClick={onReturnHome}
               className="px-4 py-2.5 bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:border-white/20 transition-all font-sans text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
             >
-              <ArrowLeft className="w-4 h-4 text-[#0099FF]" />
+              <ArrowLeft className="w-4 h-4 text-[#B89A72]" />
               <span>RETURN HOME</span>
             </button>
 

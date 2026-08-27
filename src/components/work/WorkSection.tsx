@@ -25,7 +25,7 @@ export function WorkSection({ onExploreFullWork, onSelectCaseStudy }: WorkSectio
           <div className="space-y-4 max-w-3xl">
             <div className="flex items-center gap-3">
               <TechnicalLabel text="CLIENT PROOF & OUTCOMES" />
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72]" />
               <span className="font-sans text-xs text-slate-400 uppercase tracking-wider font-semibold">
                 CASE STUDIES
               </span>
@@ -33,7 +33,7 @@ export function WorkSection({ onExploreFullWork, onSelectCaseStudy }: WorkSectio
 
             <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
               Verified work, <br />
-              <span className="text-[#0099FF]">coming soon.</span>
+              <span className="text-[#B89A72]">coming soon.</span>
             </h2>
 
             <p className="text-lg text-slate-300 font-normal leading-relaxed">
@@ -62,7 +62,7 @@ export function WorkSection({ onExploreFullWork, onSelectCaseStudy }: WorkSectio
           </div>
         ) : (
           <div className="p-8 sm:p-10 bg-[#080B10] border border-white/10 rounded-[2px] text-center space-y-4">
-            <Layers className="w-10 h-10 text-[#0099FF] mx-auto" />
+            <Layers className="w-10 h-10 text-[#B89A72] mx-auto" />
             <h3 className="font-heading text-2xl sm:text-3xl font-bold text-white">
               Real case studies are being prepared.
             </h3>
@@ -75,16 +75,16 @@ export function WorkSection({ onExploreFullWork, onSelectCaseStudy }: WorkSectio
         {/* Footer Summary Strip */}
         <div className="p-6 bg-[#080B10] border border-white/10 rounded-[2px] flex flex-wrap items-center justify-between gap-4 font-sans text-xs text-slate-300">
           <div className="flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full bg-[#0099FF]" />
+            <span className="w-2 h-2 rounded-full bg-[#B89A72]" />
             <span className="text-slate-200 font-medium text-sm">Verified work will appear here after real case studies are published.</span>
           </div>
 
           <button
             onClick={onExploreFullWork}
-            className="text-[#0099FF] hover:underline flex items-center gap-1.5 font-semibold uppercase tracking-wider cursor-pointer text-xs"
+            className="text-[#B89A72] hover:underline flex items-center gap-1.5 font-semibold uppercase tracking-wider cursor-pointer text-xs"
           >
             <span>EXPLORE CASE STUDY INDEX</span>
-            <ArrowRight className="w-4 h-4 text-[#0099FF]" />
+            <ArrowRight className="w-4 h-4 text-[#B89A72]" />
           </button>
         </div>
       </div>

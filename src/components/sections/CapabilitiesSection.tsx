@@ -31,7 +31,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
           <div className="space-y-4 max-w-3xl">
             <div className="flex items-center gap-3">
               <TechnicalLabel text="CAPABILITIES" />
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72]" />
               <span className="font-sans text-xs text-slate-400 font-semibold uppercase tracking-wider">
                 INTEGRATED DISCIPLINES
               </span>
@@ -39,7 +39,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
 
             <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
               One partner. <br />
-              <span className="text-[#0099FF]">Four connected disciplines.</span>
+              <span className="text-[#B89A72]">Four connected disciplines.</span>
             </h2>
 
             <p className="text-lg text-slate-300 font-normal leading-relaxed">
@@ -63,7 +63,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
           <div className="lg:col-span-5 space-y-3">
             <div className="font-heading text-xs text-slate-400 uppercase tracking-wider pb-3 border-b border-white/10 flex justify-between font-semibold">
               <span>DISCIPLINE OVERVIEW</span>
-              <span className="text-[#0099FF]">01 — 04</span>
+              <span className="text-[#B89A72]">01 — 04</span>
             </div>
 
             {CAPABILITY_PILLARS.map((pillar) => {
@@ -82,21 +82,21 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
                   className={`
                     p-6 rounded-[2px] border text-left transition-all cursor-pointer outline-none group relative overflow-hidden
                     ${isSelected
-                      ? 'bg-[#0A0D12] border-[#0099FF] shadow-[0_0_24px_rgba(0,153,255,0.15)]'
+                      ? 'bg-[#0A0D12] border-[#B89A72] shadow-[0_0_24px_rgba(184,154,114,0.15)]'
                       : 'bg-[#05070A] border-white/10 hover:border-white/30 hover:bg-[#080B10]'
                     }
                   `}
                 >
                   {/* Left Active Accent Indicator */}
                   {isSelected && (
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#0099FF]" />
+                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B89A72]" />
                   )}
 
                   <div className="flex items-center justify-between font-sans text-xs mb-2">
-                    <span className={`font-heading font-extrabold tracking-wider ${isSelected ? 'text-[#0099FF]' : 'text-slate-400 group-hover:text-white'}`}>
+                    <span className={`font-heading font-extrabold tracking-wider ${isSelected ? 'text-[#B89A72]' : 'text-slate-400 group-hover:text-white'}`}>
                       {pillar.numberLabel}
                     </span>
-                    <span className={`text-xs font-semibold uppercase ${isSelected ? 'text-[#0099FF]' : 'text-slate-500'}`}>
+                    <span className={`text-xs font-semibold uppercase ${isSelected ? 'text-[#B89A72]' : 'text-slate-500'}`}>
                       {isSelected ? 'SELECTED' : 'VIEW DETAILS'}
                     </span>
                   </div>
@@ -113,7 +113,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
                   <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center gap-3 font-sans text-xs text-slate-400">
                     {pillar.platforms.slice(0, 4).map((plat) => (
                       <span key={plat} className="flex items-center gap-1.5 text-slate-300 font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]/80" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72]/80" />
                         {plat}
                       </span>
                     ))}
@@ -127,15 +127,15 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
           {/* RIGHT 7-COL: ACTIVE PILLAR DEEP EXPLORER PANEL */}
           <div className="lg:col-span-7 p-8 sm:p-10 rounded-[2px] bg-[#07090D] border border-white/10 space-y-8 relative overflow-hidden">
             {/* Subtle Active Ambient Glow */}
-            <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-[#0099FF]/10 blur-[100px] pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-[#B89A72]/10 blur-[100px] pointer-events-none" />
 
             {/* Active Pillar Header */}
             <div className="space-y-4 pb-6 border-b border-white/10 relative z-10">
               <div className="flex flex-wrap items-center justify-between gap-2 font-sans text-xs">
-                <span className="text-[#0099FF] font-heading font-extrabold tracking-widest uppercase flex items-center gap-2 text-sm">
+                <span className="text-[#B89A72] font-heading font-extrabold tracking-widest uppercase flex items-center gap-2 text-sm">
                   {activePillar.numberLabel} — {activePillar.title}
                 </span>
-                <span className="px-3 py-1 rounded-[2px] bg-[#0099FF]/10 text-[#0099FF] text-xs font-semibold border border-[#0099FF]/30 uppercase">
+                <span className="px-3 py-1 rounded-[2px] bg-[#B89A72]/10 text-[#B89A72] text-xs font-semibold border border-[#B89A72]/30 uppercase">
                   CORE DISCIPLINE
                 </span>
               </div>
@@ -160,7 +160,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
                     key={plat}
                     className="px-3.5 py-1.5 rounded-[2px] bg-[#050505] border border-white/10 text-xs font-sans text-slate-200 font-medium flex items-center gap-2"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72]" />
                     {plat}
                   </span>
                 ))}
@@ -178,11 +178,11 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
                   <div
                     key={svc.id}
                     onClick={() => onSelectService?.(svc.id)}
-                    className="p-4 rounded-[2px] bg-[#030508] border border-white/10 hover:border-[#0099FF]/60 transition-all cursor-pointer group space-y-2"
+                    className="p-4 rounded-[2px] bg-[#030508] border border-white/10 hover:border-[#B89A72]/60 transition-all cursor-pointer group space-y-2"
                   >
-                    <div className="flex items-center justify-between font-heading text-sm text-white group-hover:text-[#0099FF] font-bold">
+                    <div className="flex items-center justify-between font-heading text-sm text-white group-hover:text-[#B89A72] font-bold">
                       <span>{svc.title}</span>
-                      <ChevronRight className="w-4 h-4 text-[#0099FF] group-hover:translate-x-0.5 transition-transform" />
+                      <ChevronRight className="w-4 h-4 text-[#B89A72] group-hover:translate-x-0.5 transition-transform" />
                     </div>
                     <p className="text-xs text-slate-300 font-sans font-normal leading-relaxed line-clamp-2">
                       {svc.oneLiner}
@@ -200,7 +200,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
               <a
                 href="#capabilities-full"
                 onClick={onExploreFullCapabilities}
-                className="text-[#0099FF] hover:underline uppercase tracking-wider font-semibold flex items-center gap-1.5 cursor-pointer text-xs"
+                className="text-[#B89A72] hover:underline uppercase tracking-wider font-semibold flex items-center gap-1.5 cursor-pointer text-xs"
               >
                 <span>EXPLORE ALL {activePillar.title} SERVICES</span>
                 <ArrowRight className="w-4 h-4" />
@@ -215,7 +215,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
         <div className="p-8 rounded-[2px] bg-[#0A0D12] border border-white/10 space-y-6">
           <div className="flex flex-wrap items-center justify-between gap-2 font-sans text-xs border-b border-white/10 pb-4">
             <span className="text-white font-heading font-bold tracking-wider uppercase flex items-center gap-2.5 text-sm">
-              <span className="w-2 h-2 rounded-full bg-[#0099FF]" />
+              <span className="w-2 h-2 rounded-full bg-[#B89A72]" />
               HOW THE FOUR DISCIPLINES CONNECT IN PRACTICE
             </span>
             <span className="text-slate-400 font-medium">INTEGRATED GROWTH ENGINE</span>
@@ -228,11 +228,11 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
                 onClick={() => setActivePillarId(step.pillarId)}
                 className={`p-5 rounded-[2px] bg-[#05070A] border transition-all cursor-pointer space-y-3 ${
                   activePillarId === step.pillarId
-                    ? 'border-[#0099FF] shadow-[0_0_12px_rgba(0,153,255,0.2)]'
+                    ? 'border-[#B89A72] shadow-[0_0_12px_rgba(184,154,114,0.2)]'
                     : 'border-white/10 hover:border-white/30'
                 }`}
               >
-                <div className="flex items-center justify-between text-[#0099FF] font-heading font-extrabold text-xs">
+                <div className="flex items-center justify-between text-[#B89A72] font-heading font-extrabold text-xs">
                   <span>{step.stepNumber}</span>
                   <span className="text-xs text-slate-400 font-sans font-semibold uppercase">{step.pillarId}</span>
                 </div>
@@ -242,7 +242,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({
                 <p className="text-xs text-slate-300 font-sans font-normal leading-relaxed">
                   {step.description}
                 </p>
-                <div className="pt-2 text-xs text-[#0099FF] font-sans font-semibold border-t border-white/10">
+                <div className="pt-2 text-xs text-[#B89A72] font-sans font-semibold border-t border-white/10">
                   {step.outputSignal}
                 </div>
               </div>

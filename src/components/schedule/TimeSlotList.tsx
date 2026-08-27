@@ -15,7 +15,7 @@ export const TimeSlotList: React.FC<TimeSlotListProps> = ({
     <div className="space-y-3">
       <div className="flex items-center justify-between font-mono text-xs">
         <span className="text-white font-bold flex items-center gap-2">
-          <Clock className="w-4 h-4 text-[#0099FF]" />
+          <Clock className="w-4 h-4 text-[#B89A72]" />
           <span>SELECT START TIME</span>
         </span>
         <span className="text-[#8D949E] text-[10px]">30 MIN DURATION</span>
@@ -35,8 +35,8 @@ export const TimeSlotList: React.FC<TimeSlotListProps> = ({
                 !slot.available
                   ? 'bg-white/5 border-white/5 text-white/20 cursor-not-allowed line-through'
                   : isSelected
-                  ? 'bg-[#0099FF] border-[#0099FF] text-white shadow-[0_0_20px_rgba(0,153,255,0.3)]'
-                  : 'bg-[#080B10] border-white/10 text-white hover:border-[#0099FF]/50 hover:bg-white/5'
+                  ? 'bg-[#B89A72] border-[#B89A72] text-white shadow-[0_0_20px_rgba(184,154,114,0.3)]'
+                  : 'bg-[#080B10] border-white/10 text-white hover:border-[#B89A72]/50 hover:bg-white/5'
               }`}
             >
               <span>{slot.time12}</span>

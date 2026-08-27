@@ -16,7 +16,7 @@ export const DoAndDontSection: React.FC = () => {
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-2">
-        <div className="font-mono text-xs uppercase tracking-wider text-[#0099FF] flex items-center gap-2">
+        <div className="font-mono text-xs uppercase tracking-wider text-[#B89A72] flex items-center gap-2">
           <span>08 / DESIGN DO & DON'T SPECIFICATION</span>
           <span className="h-[1px] flex-1 bg-white/10" />
         </div>
@@ -36,7 +36,7 @@ export const DoAndDontSection: React.FC = () => {
             onClick={() => setActiveCategory(cat)}
             className={`px-3 py-1.5 rounded-md font-mono text-xs transition-colors border ${
               activeCategory === cat
-                ? 'bg-[#0099FF]/20 text-[#0099FF] border-[#0099FF]/40'
+                ? 'bg-[#B89A72]/20 text-[#B89A72] border-[#B89A72]/40'
                 : 'bg-[#0A0C0F] text-[#8D949E] border-white/10 hover:text-white'
             }`}
           >
@@ -50,7 +50,7 @@ export const DoAndDontSection: React.FC = () => {
         {filteredRules.map((rule: DoDontRule) => (
           <div key={rule.id} className="rounded-xl border border-white/10 bg-[#0A0C0F] p-5 space-y-4">
             <div className="flex items-center justify-between border-b border-white/5 pb-3">
-              <span className="font-mono text-xs text-[#0099FF] bg-[#0099FF]/10 px-2 py-0.5 rounded border border-[#0099FF]/20">
+              <span className="font-mono text-xs text-[#B89A72] bg-[#B89A72]/10 px-2 py-0.5 rounded border border-[#B89A72]/20">
                 RULE #{rule.id} // {rule.category.toUpperCase()}
               </span>
               <h3 className="text-sm font-medium text-white">{rule.ruleTitle}</h3>

@@ -51,7 +51,7 @@ export const WhereYouAreStep: React.FC<WhereYouAreStepProps> = ({
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-3">
-        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#0099FF] uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#B89A72] uppercase tracking-wider">
           <Compass className="w-4 h-4" />
           <span>Step 05 / 08 — Current Infrastructure</span>
         </div>
@@ -81,12 +81,12 @@ export const WhereYouAreStep: React.FC<WhereYouAreStepProps> = ({
                   onClick={() => toggleArrayItem('currentPlatforms', plat)}
                   className={`px-4 py-2.5 rounded-lg border font-sans text-xs sm:text-sm font-medium transition-all cursor-pointer flex items-center gap-2 ${
                     isSelected
-                      ? 'bg-[#0099FF]/15 border-[#0099FF] text-white font-bold ring-1 ring-[#0099FF]'
+                      ? 'bg-[#B89A72]/15 border-[#B89A72] text-white font-bold ring-1 ring-[#B89A72]'
                       : 'bg-[#050505] border-white/15 text-slate-300 hover:text-white hover:border-white/30'
                   }`}
                 >
                   <span>{plat}</span>
-                  {isSelected && <Check className="w-4 h-4 text-[#0099FF]" />}
+                  {isSelected && <Check className="w-4 h-4 text-[#B89A72]" />}
                 </button>
               );
             })}
@@ -109,12 +109,12 @@ export const WhereYouAreStep: React.FC<WhereYouAreStepProps> = ({
                   onClick={() => onChange({ currentTeam: teamOpt })}
                   className={`p-4 rounded-lg border text-left font-sans text-xs sm:text-sm transition-all cursor-pointer flex items-center justify-between font-medium ${
                     isSelected
-                      ? 'bg-[#0099FF]/15 border-[#0099FF] text-white font-bold ring-1 ring-[#0099FF] shadow-[0_0_15px_rgba(0,153,255,0.2)]'
+                      ? 'bg-[#B89A72]/15 border-[#B89A72] text-white font-bold ring-1 ring-[#B89A72] shadow-[0_0_15px_rgba(184,154,114,0.2)]'
                       : 'bg-[#050505] border-white/15 text-slate-300 hover:text-white hover:border-white/30'
                   }`}
                 >
                   <span>{teamOpt}</span>
-                  {isSelected && <Check className="w-4 h-4 text-[#0099FF]" />}
+                  {isSelected && <Check className="w-4 h-4 text-[#B89A72]" />}
                 </button>
               );
             })}
@@ -153,7 +153,7 @@ export const WhereYouAreStep: React.FC<WhereYouAreStepProps> = ({
         <div className="space-y-2.5">
           <label className="block font-sans text-sm sm:text-base font-semibold text-white flex items-center justify-between">
             <span>
-              Tell us a bit about your current situation <span className="text-[#0099FF]">*</span>
+              Tell us a bit about your current situation <span className="text-[#B89A72]">*</span>
             </span>
             <FileText className="w-4 h-4 text-slate-400" />
           </label>
@@ -162,7 +162,7 @@ export const WhereYouAreStep: React.FC<WhereYouAreStepProps> = ({
             value={formData.tellUsMore}
             onChange={(e) => onChange({ tellUsMore: e.target.value })}
             placeholder="What is happening today, and what would you like to change? (e.g., CAC has escalated, tracking is broken after iOS updates, or scaling requires custom engineering)."
-            className={`w-full p-4 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all leading-relaxed ${
+            className={`w-full p-4 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all leading-relaxed ${
               errors.tellUsMore ? 'border-red-500/80 bg-red-950/20' : 'border-white/15'
             }`}
           />
@@ -181,7 +181,7 @@ export const WhereYouAreStep: React.FC<WhereYouAreStepProps> = ({
         <div className="space-y-3 pt-2">
           <label className="block font-sans text-sm sm:text-base font-semibold text-white flex items-center justify-between">
             <span>What does ideal success look like for this engagement?</span>
-            <Target className="w-4 h-4 text-[#0099FF]" />
+            <Target className="w-4 h-4 text-[#B89A72]" />
           </label>
           <div className="flex flex-wrap gap-2.5">
             {GOALS_SUGGESTIONS_LIST.map((goal) => {
@@ -194,12 +194,12 @@ export const WhereYouAreStep: React.FC<WhereYouAreStepProps> = ({
                   onClick={() => toggleArrayItem('primaryGoals', goal)}
                   className={`px-4 py-2.5 rounded-lg border font-sans text-xs sm:text-sm font-medium transition-all cursor-pointer flex items-center gap-2 ${
                     isSelected
-                      ? 'bg-[#0099FF]/15 border-[#0099FF] text-white font-bold ring-1 ring-[#0099FF]'
+                      ? 'bg-[#B89A72]/15 border-[#B89A72] text-white font-bold ring-1 ring-[#B89A72]'
                       : 'bg-[#050505] border-white/15 text-slate-300 hover:text-white hover:border-white/30'
                   }`}
                 >
                   <span>{goal}</span>
-                  {isSelected && <Check className="w-4 h-4 text-[#0099FF]" />}
+                  {isSelected && <Check className="w-4 h-4 text-[#B89A72]" />}
                 </button>
               );
             })}
@@ -221,7 +221,7 @@ export const WhereYouAreStep: React.FC<WhereYouAreStepProps> = ({
         <button
           type="button"
           onClick={onNext}
-          className="px-8 py-4 rounded-lg bg-[#0099FF] hover:bg-[#0088EE] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(0,153,255,0.35)] hover:shadow-[0_0_30px_rgba(0,153,255,0.5)]"
+          className="px-8 py-4 rounded-lg bg-[#B89A72] hover:bg-[#8F714D] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(184,154,114,0.35)] hover:shadow-[0_0_30px_rgba(184,154,114,0.5)]"
         >
           <span>Continue to Scope & Timeline</span>
           <ArrowRight className="w-4 h-4" />

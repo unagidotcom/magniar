@@ -29,10 +29,10 @@ export function WorkDevControlPanel({
   ];
 
   return (
-    <div className="bg-[#0A0C0F] border border-[#0099FF]/40 rounded-[2px] p-4 font-mono text-xs text-[#F5F7FA] space-y-4 shadow-xl">
+    <div className="bg-[#0A0C0F] border border-[#B89A72]/40 rounded-[2px] p-4 font-mono text-xs text-[#F5F7FA] space-y-4 shadow-xl">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
         <div className="flex items-center gap-2">
-          <Settings2 className="w-4 h-4 text-[#0099FF]" />
+          <Settings2 className="w-4 h-4 text-[#B89A72]" />
           <span className="font-bold text-[#F5F7FA] uppercase tracking-wider text-[11px]">
             CHAPTER 08 — WORK / CASE STUDY DEV CONTROL PANEL
           </span>
@@ -54,7 +54,7 @@ export function WorkDevControlPanel({
               onClick={() => onViewModeChange('homepage')}
               className={`px-2.5 py-1.5 rounded-[2px] border text-[11px] cursor-pointer ${
                 activeViewMode === 'homepage'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold'
                   : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
               }`}
             >
@@ -64,7 +64,7 @@ export function WorkDevControlPanel({
               onClick={() => onViewModeChange('work-page')}
               className={`px-2.5 py-1.5 rounded-[2px] border text-[11px] cursor-pointer ${
                 activeViewMode === 'work-page'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold'
                   : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
               }`}
             >
@@ -74,7 +74,7 @@ export function WorkDevControlPanel({
               onClick={() => onViewModeChange('work-detail')}
               className={`px-2.5 py-1.5 rounded-[2px] border text-[11px] cursor-pointer ${
                 activeViewMode === 'work-detail'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold'
                   : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
               }`}
             >
@@ -97,7 +97,7 @@ export function WorkDevControlPanel({
                   onClick={() => onViewportChange(vp.mode)}
                   className={`px-2 py-1.5 rounded-[2px] border text-[10px] flex items-center gap-1 cursor-pointer ${
                     currentViewport === vp.mode
-                      ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold'
+                      ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold'
                       : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
                   }`}
                 >
@@ -120,7 +120,7 @@ export function WorkDevControlPanel({
               onSlugChange(e.target.value);
               onViewModeChange('work-detail');
             }}
-            className="w-full bg-[#050505] border border-white/10 text-white text-xs py-1.5 px-2 rounded-[2px] focus:outline-none focus:border-[#0099FF]"
+            className="w-full bg-[#050505] border border-white/10 text-white text-xs py-1.5 px-2 rounded-[2px] focus:outline-none focus:border-[#B89A72]"
           >
             {CASE_STUDIES_DATA.map((cs) => (
               <option key={cs.id} value={cs.slug}>

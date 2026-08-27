@@ -30,9 +30,9 @@ export const TokensExporterSection: React.FC = () => {
   --magniar-text-secondary: #8D949E;
   --magniar-text-muted: #5A626E;
   --magniar-border: rgba(255, 255, 255, 0.08);
-  --magniar-border-active: rgba(0, 153, 255, 0.40);
-  --magniar-accent: #0099FF;
-  --magniar-accent-glow: rgba(0, 153, 255, 0.15);
+  --magniar-border-active: rgba(184, 154, 114, 0.40);
+  --magniar-accent: #B89A72;
+  --magniar-accent-glow: rgba(184, 154, 114, 0.15);
   --magniar-success: #10B981;
   --magniar-warning: #F59E0B;
   --magniar-error: #EF4444;
@@ -74,7 +74,7 @@ export const TokensExporterSection: React.FC = () => {
   --color-magniar-bg: #050505;
   --color-magniar-surface: #0A0C0F;
   --color-magniar-surface-elevated: #101318;
-  --color-magniar-accent: #0099FF;
+  --color-magniar-accent: #B89A72;
   --color-magniar-text-primary: #F5F7FA;
   --color-magniar-text-secondary: #8D949E;
   
@@ -113,7 +113,7 @@ export const TokensExporterSection: React.FC = () => {
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-2">
-        <div className="font-mono text-xs uppercase tracking-wider text-[#0099FF] flex items-center gap-2">
+        <div className="font-mono text-xs uppercase tracking-wider text-[#B89A72] flex items-center gap-2">
           <span>09 / DESIGN TOKEN ENGINE & EXPORTER</span>
           <span className="h-[1px] flex-1 bg-white/10" />
         </div>
@@ -134,7 +134,7 @@ export const TokensExporterSection: React.FC = () => {
               onClick={() => setActiveFormat('json')}
               className={`px-3 py-1.5 rounded-md font-mono text-xs transition-colors flex items-center gap-1.5 border ${
                 activeFormat === 'json'
-                  ? 'bg-[#0099FF]/20 text-[#0099FF] border-[#0099FF]/40'
+                  ? 'bg-[#B89A72]/20 text-[#B89A72] border-[#B89A72]/40'
                   : 'bg-[#0A0C0F] text-[#8D949E] border-white/10 hover:text-white'
               }`}
             >
@@ -146,7 +146,7 @@ export const TokensExporterSection: React.FC = () => {
               onClick={() => setActiveFormat('css')}
               className={`px-3 py-1.5 rounded-md font-mono text-xs transition-colors flex items-center gap-1.5 border ${
                 activeFormat === 'css'
-                  ? 'bg-[#0099FF]/20 text-[#0099FF] border-[#0099FF]/40'
+                  ? 'bg-[#B89A72]/20 text-[#B89A72] border-[#B89A72]/40'
                   : 'bg-[#0A0C0F] text-[#8D949E] border-white/10 hover:text-white'
               }`}
             >
@@ -158,11 +158,11 @@ export const TokensExporterSection: React.FC = () => {
               onClick={() => setActiveFormat('tailwind')}
               className={`px-3 py-1.5 rounded-md font-mono text-xs transition-colors flex items-center gap-1.5 border ${
                 activeFormat === 'tailwind'
-                  ? 'bg-[#0099FF]/20 text-[#0099FF] border-[#0099FF]/40'
+                  ? 'bg-[#B89A72]/20 text-[#B89A72] border-[#B89A72]/40'
                   : 'bg-[#0A0C0F] text-[#8D949E] border-white/10 hover:text-white'
               }`}
             >
-              <Code className="h-3.5 w-3.5 text-[#0099FF]" />
+              <Code className="h-3.5 w-3.5 text-[#B89A72]" />
               <span>Tailwind v4 Theme</span>
             </button>
           </div>
@@ -179,7 +179,7 @@ export const TokensExporterSection: React.FC = () => {
 
             <button
               onClick={handleCopyCode}
-              className="px-3 py-1.5 rounded-md bg-[#0099FF] text-black text-xs font-medium hover:bg-[#33AFFF] transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-md bg-[#B89A72] text-black text-xs font-medium hover:bg-[#C8AA82] transition-colors flex items-center gap-1.5"
             >
               {copiedFormat === activeFormat ? (
                 <>

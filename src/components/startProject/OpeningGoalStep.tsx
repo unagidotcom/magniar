@@ -24,7 +24,7 @@ export const OpeningGoalStep: React.FC<OpeningGoalStepProps> = ({
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-3">
-        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#0099FF] uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#B89A72] uppercase tracking-wider">
           <Target className="w-4 h-4" />
           <span>Step 01 / 08 — Strategic Focus</span>
         </div>
@@ -48,7 +48,7 @@ export const OpeningGoalStep: React.FC<OpeningGoalStepProps> = ({
               onClick={() => handleSelect(option.id)}
               className={`p-6 sm:p-7 rounded-xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between gap-4 ${
                 isSelected
-                  ? 'bg-[#0099FF]/10 border-[#0099FF] ring-1 ring-[#0099FF] shadow-[0_0_25px_rgba(0,153,255,0.18)]'
+                  ? 'bg-[#B89A72]/10 border-[#B89A72] ring-1 ring-[#B89A72] shadow-[0_0_25px_rgba(184,154,114,0.18)]'
                   : 'bg-[#080A0D] border-white/10 hover:border-white/30 hover:bg-white/[0.03]'
               }`}
             >
@@ -60,7 +60,7 @@ export const OpeningGoalStep: React.FC<OpeningGoalStepProps> = ({
                 <div
                   className={`w-6 h-6 rounded-full border flex items-center justify-center transition-colors flex-shrink-0 ${
                     isSelected
-                      ? 'bg-[#0099FF] border-[#0099FF] text-white'
+                      ? 'bg-[#B89A72] border-[#B89A72] text-white'
                       : 'border-white/20 bg-white/5 text-transparent'
                   }`}
                 >
@@ -85,7 +85,7 @@ export const OpeningGoalStep: React.FC<OpeningGoalStepProps> = ({
         <button
           type="button"
           onClick={onNext}
-          className="w-full sm:w-auto px-8 py-4 rounded-lg bg-[#0099FF] hover:bg-[#0088EE] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(0,153,255,0.35)] hover:shadow-[0_0_30px_rgba(0,153,255,0.5)]"
+          className="w-full sm:w-auto px-8 py-4 rounded-lg bg-[#B89A72] hover:bg-[#8F714D] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(184,154,114,0.35)] hover:shadow-[0_0_30px_rgba(184,154,114,0.5)]"
         >
           <span>Continue to Your Details</span>
           <ArrowRight className="w-4 h-4" />

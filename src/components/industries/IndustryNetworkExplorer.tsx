@@ -29,7 +29,7 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
   const getCapabilityBadgeColor = (pillar: CapabilityPillarId) => {
     switch (pillar) {
       case 'performance':
-        return 'text-[#0099FF] bg-[#0099FF]/10 border-[#0099FF]/30';
+        return 'text-[#B89A72] bg-[#B89A72]/10 border-[#B89A72]/30';
       case 'commerce':
         return 'text-[#10B981] bg-[#10B981]/10 border-[#10B981]/30';
       case 'development':
@@ -46,8 +46,8 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
       {/* Top Header & Context Description */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
         <div className="space-y-2">
-          <div className="flex items-center gap-2 font-mono text-xs text-[#0099FF]">
-            <span className="w-2 h-2 rounded-full bg-[#0099FF] animate-pulse" />
+          <div className="flex items-center gap-2 font-mono text-xs text-[#B89A72]">
+            <span className="w-2 h-2 rounded-full bg-[#B89A72] animate-pulse" />
             <span>INTERACTIVE BUSINESS ECOSYSTEM</span>
           </div>
           <h3 className="font-mono text-xl sm:text-2xl font-bold tracking-tight text-[#F5F7FA]">
@@ -61,7 +61,7 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
         {/* Selected Category Label Badge */}
         <div className="font-mono text-xs text-right bg-[#0A0D12] border border-white/10 px-4 py-2.5 rounded-[2px] hidden sm:block">
           <span className="text-[#5A626E] uppercase block text-[10px]">CURRENTLY EXPLORING</span>
-          <span className="text-[#0099FF] font-bold text-sm">{selectedCategory.title.toUpperCase()}</span>
+          <span className="text-[#B89A72] font-bold text-sm">{selectedCategory.title.toUpperCase()}</span>
         </div>
       </div>
 
@@ -83,7 +83,7 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
                   px-3.5 py-2 rounded-[2px] font-mono text-xs tracking-wider transition-all cursor-pointer flex items-center gap-2 border select-none
                   ${
                     isSelected
-                      ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold shadow-[0_0_15px_rgba(0,153,255,0.4)]'
+                      ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold shadow-[0_0_15px_rgba(184,154,114,0.4)]'
                       : 'bg-[#0A0D12] text-[#8D949E] hover:text-white border-white/10 hover:border-white/20'
                   }
                 `}
@@ -106,10 +106,10 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
           {/* Node Relationship Map Title */}
           <div className="relative z-10 flex items-center justify-between border-b border-white/10 pb-3">
             <span className="font-mono text-[10px] text-[#5A626E] tracking-widest uppercase flex items-center gap-1.5">
-              <Cpu className="w-3.5 h-3.5 text-[#0099FF]" />
+              <Cpu className="w-3.5 h-3.5 text-[#B89A72]" />
               BUSINESS ECOSYSTEM NETWORK MAP
             </span>
-            <span className="font-mono text-[10px] text-[#0099FF] border border-[#0099FF]/30 px-2 py-0.5 rounded-[2px]">
+            <span className="font-mono text-[10px] text-[#B89A72] border border-[#B89A72]/30 px-2 py-0.5 rounded-[2px]">
               ADAPTIVE MODEL
             </span>
           </div>
@@ -118,8 +118,8 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
           <div className="relative z-10 my-6 flex-1 flex items-center justify-center">
             <div className="w-full max-w-lg relative py-4">
               {/* Central Primary Business Node */}
-              <div className="mx-auto w-48 bg-[#0A0D12] border-2 border-[#0099FF] rounded-[2px] p-3 text-center shadow-[0_0_25px_rgba(0,153,255,0.25)] relative z-20">
-                <span className="font-mono text-[9px] text-[#0099FF] tracking-widest uppercase block mb-1">
+              <div className="mx-auto w-48 bg-[#0A0D12] border-2 border-[#B89A72] rounded-[2px] p-3 text-center shadow-[0_0_25px_rgba(184,154,114,0.25)] relative z-20">
+                <span className="font-mono text-[9px] text-[#B89A72] tracking-widest uppercase block mb-1">
                   BUSINESS CORE
                 </span>
                 <span className="font-mono text-sm font-bold text-white uppercase tracking-wider block">
@@ -134,8 +134,8 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
               <svg className="w-full h-44 absolute inset-0 pointer-events-none z-10 overflow-visible" viewBox="0 0 500 180">
                 <defs>
                   <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#0099FF" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="#0099FF" stopOpacity="0.2" />
+                    <stop offset="0%" stopColor="#B89A72" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#B89A72" stopOpacity="0.2" />
                   </linearGradient>
                 </defs>
                 {/* Lines connecting center (250, 40) to branch nodes */}
@@ -145,8 +145,8 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
                 <line x1="250" y1="40" x2="420" y2="140" stroke="url(#lineGrad)" strokeWidth="1.5" strokeDasharray="3 3" />
 
                 {/* Animated Signal Pulse Dots */}
-                <circle cx="165" cy="90" r="3" fill="#0099FF" className="animate-ping" />
-                <circle cx="280" cy="90" r="3" fill="#0099FF" className="animate-ping" />
+                <circle cx="165" cy="90" r="3" fill="#B89A72" className="animate-ping" />
+                <circle cx="280" cy="90" r="3" fill="#B89A72" className="animate-ping" />
               </svg>
 
               {/* Branching Category Nodes (Bottom Tier) */}
@@ -155,7 +155,7 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
                   onMouseEnter={() => setHoveredNode('models')}
                   onMouseLeave={() => setHoveredNode(null)}
                   className={`bg-[#0A0D12] border p-2.5 rounded-[2px] transition-all cursor-default ${
-                    hoveredNode === 'models' ? 'border-[#0099FF] bg-[#0099FF]/10' : 'border-white/10'
+                    hoveredNode === 'models' ? 'border-[#B89A72] bg-[#B89A72]/10' : 'border-white/10'
                   }`}
                 >
                   <span className="font-mono text-[9px] text-[#5A626E] uppercase block">DIMENSION 01</span>
@@ -171,7 +171,7 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
                   onMouseEnter={() => setHoveredNode('needs')}
                   onMouseLeave={() => setHoveredNode(null)}
                   className={`bg-[#0A0D12] border p-2.5 rounded-[2px] transition-all cursor-default ${
-                    hoveredNode === 'needs' ? 'border-[#0099FF] bg-[#0099FF]/10' : 'border-white/10'
+                    hoveredNode === 'needs' ? 'border-[#B89A72] bg-[#B89A72]/10' : 'border-white/10'
                   }`}
                 >
                   <span className="font-mono text-[9px] text-[#5A626E] uppercase block">DIMENSION 02</span>
@@ -187,14 +187,14 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
                   onMouseEnter={() => setHoveredNode('capabilities')}
                   onMouseLeave={() => setHoveredNode(null)}
                   className={`bg-[#0A0D12] border p-2.5 rounded-[2px] transition-all cursor-default ${
-                    hoveredNode === 'capabilities' ? 'border-[#0099FF] bg-[#0099FF]/10' : 'border-white/10'
+                    hoveredNode === 'capabilities' ? 'border-[#B89A72] bg-[#B89A72]/10' : 'border-white/10'
                   }`}
                 >
                   <span className="font-mono text-[9px] text-[#5A626E] uppercase block">DIMENSION 03</span>
                   <span className="font-mono text-xs font-semibold text-white block truncate">
                     CAPABILITIES
                   </span>
-                  <span className="text-[10px] text-[#0099FF] block mt-1 truncate font-mono">
+                  <span className="text-[10px] text-[#B89A72] block mt-1 truncate font-mono">
                     {selectedCategory.primaryCapabilities.length} Pillars
                   </span>
                 </div>
@@ -203,7 +203,7 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
                   onMouseEnter={() => setHoveredNode('platforms')}
                   onMouseLeave={() => setHoveredNode(null)}
                   className={`bg-[#0A0D12] border p-2.5 rounded-[2px] transition-all cursor-default ${
-                    hoveredNode === 'platforms' ? 'border-[#0099FF] bg-[#0099FF]/10' : 'border-white/10'
+                    hoveredNode === 'platforms' ? 'border-[#B89A72] bg-[#B89A72]/10' : 'border-white/10'
                   }`}
                 >
                   <span className="font-mono text-[9px] text-[#5A626E] uppercase block">DIMENSION 04</span>
@@ -221,7 +221,7 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
           {/* Bottom Network Status Bar */}
           <div className="relative z-10 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] text-[#5A626E]">
             <div className="flex items-center gap-2">
-              <Zap className="w-3 h-3 text-[#0099FF]" />
+              <Zap className="w-3 h-3 text-[#B89A72]" />
               <span>DYNAMIC SYSTEM ASSEMBLY ACTIVE</span>
             </div>
             <span>SOLUTION TAILORED TO CLIENT ECONOMICS</span>
@@ -232,7 +232,7 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
         <div className="lg:col-span-5 space-y-5 bg-[#0A0D12] border border-white/10 rounded-[2px] p-5">
           <div>
             <div className="flex items-center justify-between mb-1">
-              <span className="font-mono text-[11px] text-[#0099FF] font-semibold tracking-wider">
+              <span className="font-mono text-[11px] text-[#B89A72] font-semibold tracking-wider">
                 {selectedCategory.numberLabel}
               </span>
               <span className="font-mono text-[10px] text-[#5A626E] border border-white/10 px-2 py-0.5 rounded-[2px]">
@@ -245,7 +245,7 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
             <p className="text-xs text-[#8D949E] mt-1 italic">
               "{selectedCategory.tagline}"
             </p>
-            <p className="text-xs text-[#F5F7FA] mt-2.5 leading-relaxed font-sans border-l-2 border-[#0099FF] pl-3 py-0.5">
+            <p className="text-xs text-[#F5F7FA] mt-2.5 leading-relaxed font-sans border-l-2 border-[#B89A72] pl-3 py-0.5">
               {selectedCategory.description}
             </p>
           </div>
@@ -275,7 +275,7 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
             <ul className="space-y-1 font-sans text-xs text-[#8D949E]">
               {selectedCategory.commonGrowthNeeds.slice(0, 4).map((need, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#0099FF] shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#B89A72] shrink-0 mt-0.5" />
                   <span className="text-[#F5F7FA]">{need}</span>
                 </li>
               ))}
@@ -312,7 +312,7 @@ export const IndustryNetworkExplorer: React.FC<IndustryNetworkExplorerProps> = (
                   key={i}
                   className="font-mono text-[10px] text-[#8D949E] bg-[#050608] border border-white/10 px-2 py-0.5 rounded-[2px] flex items-center gap-1"
                 >
-                  <span className="w-1 h-1 rounded-full bg-[#0099FF]" />
+                  <span className="w-1 h-1 rounded-full bg-[#B89A72]" />
                   <span>{p.name}</span>
                 </span>
               ))}

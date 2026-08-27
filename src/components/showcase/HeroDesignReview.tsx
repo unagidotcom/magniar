@@ -11,13 +11,13 @@ export const HeroDesignReview: React.FC = () => {
   return (
     <div className="space-y-10 py-6 max-w-5xl mx-auto">
       {/* Chapter 04 Revision Review Header */}
-      <div className="p-6 rounded-[2px] bg-[#0A0D12] border border-[#0099FF]/40 space-y-3">
+      <div className="p-6 rounded-[2px] bg-[#0A0D12] border border-[#B89A72]/40 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
-          <span className="text-[#0099FF] font-bold tracking-widest flex items-center gap-2">
-            <Terminal className="w-4 h-4 text-[#0099FF]" />
+          <span className="text-[#B89A72] font-bold tracking-widest flex items-center gap-2">
+            <Terminal className="w-4 h-4 text-[#B89A72]" />
             CHAPTER 04 REVISION — INTERACTIVE GROWTH NETWORK SPECIFICATION
           </span>
-          <span className="px-2 py-0.5 rounded bg-[#0099FF]/20 text-[#0099FF] text-[10px] font-semibold border border-[#0099FF]/40">
+          <span className="px-2 py-0.5 rounded bg-[#B89A72]/20 text-[#B89A72] text-[10px] font-semibold border border-[#B89A72]/40">
             STATUS: REVISION COMPLETE
           </span>
         </div>
@@ -28,8 +28,8 @@ export const HeroDesignReview: React.FC = () => {
 
       {/* Interactive Button & Motion State Inspector */}
       <div className="p-6 rounded-[2px] bg-[#07090D] border border-white/10 space-y-6">
-        <div className="font-mono text-xs text-[#0099FF] tracking-wider uppercase flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-[#0099FF]" />
+        <div className="font-mono text-xs text-[#B89A72] tracking-wider uppercase flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-[#B89A72]" />
           <span>HERO INTERACTION & MOTION STATE INSPECTOR</span>
         </div>
 
@@ -38,7 +38,7 @@ export const HeroDesignReview: React.FC = () => {
           <div className="p-4 rounded-[2px] bg-[#030508] border border-white/10 space-y-4">
             <div className="flex items-center justify-between font-mono text-xs text-[#F5F7FA]">
               <span>PRIMARY CTA: START A PROJECT →</span>
-              <span className="text-[#0099FF] uppercase font-bold">{primaryBtnState}</span>
+              <span className="text-[#B89A72] uppercase font-bold">{primaryBtnState}</span>
             </div>
 
             <div className="py-4 flex justify-center border border-white/5 rounded bg-[#050505]">
@@ -54,7 +54,7 @@ export const HeroDesignReview: React.FC = () => {
                   onClick={() => setPrimaryBtnState(state)}
                   className={`px-2.5 py-1 font-mono text-[10px] uppercase rounded-[2px] border cursor-pointer ${
                     primaryBtnState === state
-                      ? 'bg-[#0099FF] text-white border-[#0099FF]'
+                      ? 'bg-[#B89A72] text-white border-[#B89A72]'
                       : 'bg-[#0A0D12] text-[#8D949E] border-white/10 hover:text-white'
                   }`}
                 >
@@ -68,16 +68,16 @@ export const HeroDesignReview: React.FC = () => {
           <div className="p-4 rounded-[2px] bg-[#030508] border border-white/10 space-y-4">
             <div className="flex items-center justify-between font-mono text-xs text-[#F5F7FA]">
               <span>SECONDARY CTA: EXPLORE CAPABILITIES →</span>
-              <span className="text-[#0099FF] uppercase font-bold">{secondaryBtnState}</span>
+              <span className="text-[#B89A72] uppercase font-bold">{secondaryBtnState}</span>
             </div>
 
             <div className="py-4 flex justify-center border border-white/5 rounded bg-[#050505]">
               <a
                 href="#capabilities"
                 className={`font-mono text-xs tracking-widest uppercase flex items-center gap-2 transition-all ${
-                  secondaryBtnState === 'hover' ? 'text-[#0099FF] translate-x-1 font-bold' : 'text-[#8D949E]'
+                  secondaryBtnState === 'hover' ? 'text-[#B89A72] translate-x-1 font-bold' : 'text-[#8D949E]'
                 } ${secondaryBtnState === 'active' ? 'text-white' : ''} ${
-                  secondaryBtnState === 'focus' ? 'ring-2 ring-[#0099FF] px-2 py-1' : ''
+                  secondaryBtnState === 'focus' ? 'ring-2 ring-[#B89A72] px-2 py-1' : ''
                 }`}
               >
                 <span>EXPLORE CAPABILITIES</span>
@@ -92,7 +92,7 @@ export const HeroDesignReview: React.FC = () => {
                   onClick={() => setSecondaryBtnState(state)}
                   className={`px-2.5 py-1 font-mono text-[10px] uppercase rounded-[2px] border cursor-pointer ${
                     secondaryBtnState === state
-                      ? 'bg-[#0099FF] text-white border-[#0099FF]'
+                      ? 'bg-[#B89A72] text-white border-[#B89A72]'
                       : 'bg-[#0A0D12] text-[#8D949E] border-white/10 hover:text-white'
                   }`}
                 >
@@ -106,7 +106,7 @@ export const HeroDesignReview: React.FC = () => {
         {/* Network State Simulator Buttons */}
         <div className="pt-4 border-t border-white/10 space-y-3 font-mono text-xs">
           <div className="text-[#8D949E] uppercase tracking-wider font-semibold">
-            SIMULATED NETWORK INTERACTION STATE: <span className="text-[#0099FF]">{simulatedState}</span>
+            SIMULATED NETWORK INTERACTION STATE: <span className="text-[#B89A72]">{simulatedState}</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -125,7 +125,7 @@ export const HeroDesignReview: React.FC = () => {
                 onClick={() => setSimulatedState(st.id)}
                 className={`px-3 py-2 rounded-[2px] border text-left text-[11px] font-medium transition-all cursor-pointer ${
                   simulatedState === st.id
-                    ? 'bg-[#0099FF] text-white border-[#0099FF] font-bold shadow-[0_0_12px_rgba(0,153,255,0.4)]'
+                    ? 'bg-[#B89A72] text-white border-[#B89A72] font-bold shadow-[0_0_12px_rgba(184,154,114,0.4)]'
                     : 'bg-[#030508] text-[#8D949E] border-white/10 hover:text-white hover:border-white/30'
                 }`}
               >
@@ -140,7 +140,7 @@ export const HeroDesignReview: React.FC = () => {
       <div className="space-y-6">
         <div className="font-mono text-xs text-[#F5F7FA] tracking-wider uppercase border-b border-white/10 pb-2 flex items-center justify-between">
           <span>CHAPTER 04 REVISION DESIGN REVIEW — 8 MANDATORY RESPONSES</span>
-          <span className="text-[#0099FF]">VERIFIED</span>
+          <span className="text-[#B89A72]">VERIFIED</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -168,7 +168,7 @@ export const HeroDesignReview: React.FC = () => {
             {
               num: '05',
               q: 'How the blue signal is used',
-              a: 'Electric blue (#0099FF) is strictly reserved as "the signal". It illuminates active nodes, focused vector paths, and travelling pulse particles during interactions, keeping 85%+ of the network in calm, neutral whites and grays.'
+              a: 'Electric blue (#B89A72) is strictly reserved as "the signal". It illuminates active nodes, focused vector paths, and travelling pulse particles during interactions, keeping 85%+ of the network in calm, neutral whites and grays.'
             },
             {
               num: '06',
@@ -187,7 +187,7 @@ export const HeroDesignReview: React.FC = () => {
             }
           ].map((item, idx) => (
             <div key={idx} className="p-4 rounded-[2px] bg-[#07090D] border border-white/10 space-y-2">
-              <div className="font-mono text-xs text-[#0099FF] font-bold">
+              <div className="font-mono text-xs text-[#B89A72] font-bold">
                 {item.num} / {item.q}
               </div>
               <p className="text-xs text-[#8D949E] leading-relaxed font-sans">
@@ -201,28 +201,28 @@ export const HeroDesignReview: React.FC = () => {
       {/* Component Architecture Summary */}
       <div className="p-6 rounded-[2px] bg-[#0A0D12] border border-white/10 space-y-4">
         <div className="font-mono text-xs text-[#F5F7FA] font-bold tracking-wider uppercase flex items-center gap-2">
-          <Layers className="w-4 h-4 text-[#0099FF]" />
+          <Layers className="w-4 h-4 text-[#B89A72]" />
           <span>CHAPTER 04 REVISED NETWORK COMPONENT ARCHITECTURE</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-[11px]">
           <div className="p-2.5 rounded bg-[#05070A] border border-white/10 space-y-1">
-            <div className="text-[#0099FF] font-bold">GrowthSystemVisual</div>
+            <div className="text-[#B89A72] font-bold">GrowthSystemVisual</div>
             <div className="text-[10px] text-[#8D949E]">Root network graph canvas</div>
           </div>
 
           <div className="p-2.5 rounded bg-[#05070A] border border-white/10 space-y-1">
-            <div className="text-[#0099FF] font-bold">CategoryHub</div>
+            <div className="text-[#B89A72] font-bold">CategoryHub</div>
             <div className="text-[10px] text-[#8D949E]">Primary discipline node</div>
           </div>
 
           <div className="p-2.5 rounded bg-[#05070A] border border-white/10 space-y-1">
-            <div className="text-[#0099FF] font-bold">PlatformNode</div>
+            <div className="text-[#B89A72] font-bold">PlatformNode</div>
             <div className="text-[10px] text-[#8D949E]">Dot & text capability node</div>
           </div>
 
           <div className="p-2.5 rounded bg-[#05070A] border border-white/10 space-y-1">
-            <div className="text-[#0099FF] font-bold">SignalPulse</div>
+            <div className="text-[#B89A72] font-bold">SignalPulse</div>
             <div className="text-[10px] text-[#8D949E]">SVG vector pulse animator</div>
           </div>
         </div>

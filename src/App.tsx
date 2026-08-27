@@ -203,7 +203,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#F5F7FA] font-sans antialiased selection:bg-[#0099FF]/30 selection:text-white flex flex-col relative">
+    <div className="min-h-screen bg-[#0B0D0F] text-[#F5F7FA] font-sans antialiased selection:bg-[#B89A72]/30 selection:text-white flex flex-col relative">
       {siteView === 'admin-os' || activeTab === 'admin-os' ? (
         <AdminShell
           initialAuthStatus={adminAuthStatus}
@@ -217,7 +217,7 @@ export default function App() {
           }}
         />
       ) : (
-        <>
+        <div className="magniar-public-shell">
           {/* Production Navigation Header */}
           <Header
             onStartProject={handleStartProject}
@@ -353,7 +353,7 @@ export default function App() {
 
           {/* Production Footer */}
           <Footer onNavigate={handleNavigate} onStartProject={handleStartProject} />
-        </>
+        </div>
       )}
       <ThemeSwitcher />
     </div>

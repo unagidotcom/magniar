@@ -42,14 +42,14 @@ export function CaseStudyDetailPage({
         <div className="max-w-[960px] mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-8">
           <button
             onClick={onBackToWork}
-            className="inline-flex items-center gap-2 font-mono text-xs text-[#8D949E] hover:text-[#0099FF] transition-colors cursor-pointer uppercase tracking-wider"
+            className="inline-flex items-center gap-2 font-mono text-xs text-[#8D949E] hover:text-[#B89A72] transition-colors cursor-pointer uppercase tracking-wider"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>BACK TO WORK INDEX</span>
           </button>
 
           <div className="p-8 sm:p-10 bg-[#0A0C0F] border border-white/10 rounded-[2px] space-y-4">
-            <Layers className="w-10 h-10 text-[#0099FF]" />
+            <Layers className="w-10 h-10 text-[#B89A72]" />
             <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F5F7FA]">
               No published case study is available.
             </h1>
@@ -59,7 +59,7 @@ export function CaseStudyDetailPage({
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 onClick={onStartProject}
-                className="px-6 py-3 bg-[#0099FF] hover:bg-[#0088EE] text-white font-mono text-xs font-semibold rounded-[2px] transition-all cursor-pointer"
+                className="px-6 py-3 bg-[#B89A72] hover:bg-[#8F714D] text-white font-mono text-xs font-semibold rounded-[2px] transition-all cursor-pointer"
               >
                 START A PROJECT →
               </button>
@@ -96,7 +96,7 @@ export function CaseStudyDetailPage({
       case 'ONGOING':
         return 'bg-[#10B981]/10 text-[#10B981] border-[#10B981]/30';
       case 'COMPLETED':
-        return 'bg-[#0099FF]/10 text-[#0099FF] border-[#0099FF]/30';
+        return 'bg-[#B89A72]/10 text-[#B89A72] border-[#B89A72]/30';
       case 'SELECTED_PROJECT':
         return 'bg-[#8B5CF6]/10 text-[#8B5CF6] border-[#8B5CF6]/30';
       case 'PAST_CLIENT':
@@ -116,7 +116,7 @@ export function CaseStudyDetailPage({
               onClick={onBackToWork}
               className="hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              <ArrowLeft className="w-3.5 h-3.5 text-[#0099FF]" />
+              <ArrowLeft className="w-3.5 h-3.5 text-[#B89A72]" />
               <span>WORK</span>
             </button>
             <span>/</span>
@@ -124,7 +124,7 @@ export function CaseStudyDetailPage({
               {caseStudy.isConfidential ? 'CONFIDENTIAL CLIENT' : caseStudy.clientName}
             </span>
             <span>/</span>
-            <span className="text-[#0099FF] truncate max-w-[200px] sm:max-w-none">
+            <span className="text-[#B89A72] truncate max-w-[200px] sm:max-w-none">
               {caseStudy.slug}
             </span>
           </div>
@@ -144,12 +144,12 @@ export function CaseStudyDetailPage({
           {/* Status & Geography Badge Row */}
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-[2px] font-mono text-xs text-[#0099FF] uppercase tracking-wider font-semibold">
+              <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-[2px] font-mono text-xs text-[#B89A72] uppercase tracking-wider font-semibold">
                 {caseStudy.businessModel}
               </span>
               <span className="text-white/20">•</span>
               <span className="font-mono text-xs text-[#8D949E] flex items-center gap-1">
-                <Globe className="w-3.5 h-3.5 text-[#0099FF]" />
+                <Globe className="w-3.5 h-3.5 text-[#B89A72]" />
                 {caseStudy.geography}
               </span>
             </div>
@@ -185,7 +185,7 @@ export function CaseStudyDetailPage({
 
             <div>
               <span className="text-[#5A626E] block text-[10px] uppercase mb-1">MEDIA BUDGET</span>
-              <span className="text-[#0099FF] font-semibold flex items-center gap-1">
+              <span className="text-[#B89A72] font-semibold flex items-center gap-1">
                 <DollarSign className="w-3.5 h-3.5" />
                 {caseStudy.mediaBudgetDisplay}
               </span>
@@ -207,8 +207,8 @@ export function CaseStudyDetailPage({
       {/* Main Content Area */}
       <main className="py-12 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto space-y-16">
         {/* Verified Case Study Notice Banner */}
-        <div className="p-4 bg-[#0099FF]/10 border border-[#0099FF]/30 rounded-[2px] flex items-start gap-3 text-xs font-mono">
-          <Terminal className="w-4 h-4 text-[#0099FF] shrink-0 mt-0.5" />
+        <div className="p-4 bg-[#B89A72]/10 border border-[#B89A72]/30 rounded-[2px] flex items-start gap-3 text-xs font-mono">
+          <Terminal className="w-4 h-4 text-[#B89A72] shrink-0 mt-0.5" />
           <div className="space-y-1 text-[#8D949E]">
             <span className="text-[#F5F7FA] font-bold block uppercase">
               VERIFIED CLIENT WORK
@@ -221,7 +221,7 @@ export function CaseStudyDetailPage({
 
         {/* Section 01: About the Business */}
         <section className="space-y-4 border-b border-white/10 pb-12">
-          <div className="flex items-center gap-2 text-xs font-mono text-[#0099FF] uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-xs font-mono text-[#B89A72] uppercase tracking-widest">
             <span>01</span>
             <span>//</span>
             <span>ABOUT THE BUSINESS</span>
@@ -263,7 +263,7 @@ export function CaseStudyDetailPage({
 
         {/* Section 04: The Magniar Approach */}
         <section className="space-y-8 border-b border-white/10 pb-12">
-          <div className="flex items-center gap-2 text-xs font-mono text-[#0099FF] uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-xs font-mono text-[#B89A72] uppercase tracking-widest">
             <span>04</span>
             <span>//</span>
             <span>THE MAGNIAR APPROACH</span>
@@ -276,7 +276,7 @@ export function CaseStudyDetailPage({
                 key={step.stepNumber}
                 className="p-6 bg-[#0A0C0F] border border-white/10 rounded-[2px] space-y-3 relative"
               >
-                <span className="text-3xl font-mono font-bold text-[#0099FF]/40 block">
+                <span className="text-3xl font-mono font-bold text-[#B89A72]/40 block">
                   {step.stepNumber}
                 </span>
                 <h4 className="text-base font-bold text-[#F5F7FA]">{step.title}</h4>
@@ -289,7 +289,7 @@ export function CaseStudyDetailPage({
         {/* Section 05: What We Built / Services & Platforms */}
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 border-b border-white/10 pb-12">
           <div className="lg:col-span-2 space-y-6">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#0099FF] uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-xs font-mono text-[#B89A72] uppercase tracking-widest">
               <span>05</span>
               <span>//</span>
               <span>EXECUTION & WHAT WE BUILT</span>
@@ -302,7 +302,7 @@ export function CaseStudyDetailPage({
                   key={idx}
                   className="p-3.5 bg-[#0A0C0F] border border-white/10 rounded-[2px] text-[#F5F7FA] flex items-center gap-3"
                 >
-                  <CheckCircle2 className="w-4 h-4 text-[#0099FF] shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#B89A72] shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -320,7 +320,7 @@ export function CaseStudyDetailPage({
                     <button
                       key={svc}
                       onClick={onExploreCapabilities}
-                      className="px-2.5 py-1 bg-white/5 border border-white/10 hover:border-[#0099FF]/50 rounded-[2px] font-mono text-xs text-[#F5F7FA] hover:text-[#0099FF] transition-colors flex items-center gap-1 cursor-pointer"
+                      className="px-2.5 py-1 bg-white/5 border border-white/10 hover:border-[#B89A72]/50 rounded-[2px] font-mono text-xs text-[#F5F7FA] hover:text-[#B89A72] transition-colors flex items-center gap-1 cursor-pointer"
                     >
                       <span>{svc}</span>
                       <ExternalLink className="w-3 h-3 text-[#5A626E]" />
@@ -337,7 +337,7 @@ export function CaseStudyDetailPage({
                   {caseStudy.platforms.map((p) => (
                     <span
                       key={p}
-                      className="px-2.5 py-1 bg-[#0099FF]/10 text-[#0099FF] border border-[#0099FF]/30 rounded-[2px] font-mono text-xs font-semibold"
+                      className="px-2.5 py-1 bg-[#B89A72]/10 text-[#B89A72] border border-[#B89A72]/30 rounded-[2px] font-mono text-xs font-semibold"
                     >
                       {p}
                     </span>
@@ -351,7 +351,7 @@ export function CaseStudyDetailPage({
         {/* Section 06: Results & Metrics */}
         <section className="space-y-8 border-b border-white/10 pb-12">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-xs font-mono text-[#0099FF] uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-xs font-mono text-[#B89A72] uppercase tracking-widest">
               <span>06</span>
               <span>//</span>
               <span>RESULTS & IMPACT</span>
@@ -371,7 +371,7 @@ export function CaseStudyDetailPage({
                 <span className="font-mono text-[10px] text-[#8D949E] uppercase tracking-wider block">
                   {res.category}
                 </span>
-                <span className="text-3xl font-mono font-bold text-[#0099FF] block">
+                <span className="text-3xl font-mono font-bold text-[#B89A72] block">
                   {res.metric}
                 </span>
                 <span className="text-xs font-bold text-[#F5F7FA] block">{res.label}</span>
@@ -401,14 +401,14 @@ export function CaseStudyDetailPage({
                     key={idx}
                     className="grid grid-cols-1 md:grid-cols-3 p-4 border-b border-white/5 last:border-0 gap-3 font-mono text-xs"
                   >
-                    <div className="text-[#0099FF] font-semibold">{ba.dimension}</div>
+                    <div className="text-[#B89A72] font-semibold">{ba.dimension}</div>
                     <div className="text-[#8D949E] bg-white/5 p-2 rounded-[2px]">
                       <span className="text-[#EF4444] text-[10px] uppercase block font-bold mb-1">
                         BEFORE
                       </span>
                       {ba.before}
                     </div>
-                    <div className="text-[#F5F7FA] bg-[#0099FF]/10 border border-[#0099FF]/20 p-2 rounded-[2px]">
+                    <div className="text-[#F5F7FA] bg-[#B89A72]/10 border border-[#B89A72]/20 p-2 rounded-[2px]">
                       <span className="text-[#10B981] text-[10px] uppercase block font-bold mb-1">
                         AFTER
                       </span>
@@ -424,14 +424,14 @@ export function CaseStudyDetailPage({
         {/* Section 07: Client Quote / Testimonial */}
         {caseStudy.testimonial && (
           <section className="p-8 sm:p-12 bg-[#0A0C0F] border border-white/10 rounded-[2px] relative overflow-hidden space-y-6">
-            <Quote className="w-10 h-10 text-[#0099FF]/30 absolute top-6 right-6" />
+            <Quote className="w-10 h-10 text-[#B89A72]/30 absolute top-6 right-6" />
 
             <p className="text-lg sm:text-xl text-[#F5F7FA] italic leading-relaxed max-w-3xl">
               "{caseStudy.testimonial.quote}"
             </p>
 
             <div className="font-mono text-xs">
-              <span className="text-[#0099FF] font-bold block">
+              <span className="text-[#B89A72] font-bold block">
                 {caseStudy.testimonial.authorName}
               </span>
               <span className="text-[#8D949E]">
@@ -448,7 +448,7 @@ export function CaseStudyDetailPage({
               <h3 className="text-xl font-bold text-[#F5F7FA] font-mono">RELATED WORK</h3>
               <button
                 onClick={onBackToWork}
-                className="text-xs font-mono text-[#0099FF] hover:underline"
+                className="text-xs font-mono text-[#B89A72] hover:underline"
               >
                 VIEW ALL CASE STUDIES →
               </button>
@@ -471,14 +471,14 @@ export function CaseStudyDetailPage({
             <span className="text-[#5A626E] text-[10px] uppercase block mb-1">
               ← PREVIOUS CASE STUDY
             </span>
-            <span className="text-white font-bold group-hover:text-[#0099FF] transition-colors block">
+            <span className="text-white font-bold group-hover:text-[#B89A72] transition-colors block">
               {prevCaseStudy.clientName}
             </span>
           </button>
 
           <button
             onClick={onBackToWork}
-            className="px-4 py-2 border border-white/10 hover:border-[#0099FF] text-[#8D949E] hover:text-white rounded-[2px] text-xs font-mono"
+            className="px-4 py-2 border border-white/10 hover:border-[#B89A72] text-[#8D949E] hover:text-white rounded-[2px] text-xs font-mono"
           >
             ALL WORK INDEX
           </button>
@@ -490,14 +490,14 @@ export function CaseStudyDetailPage({
             <span className="text-[#5A626E] text-[10px] uppercase block mb-1">
               NEXT CASE STUDY →
             </span>
-            <span className="text-white font-bold group-hover:text-[#0099FF] transition-colors block">
+            <span className="text-white font-bold group-hover:text-[#B89A72] transition-colors block">
               {nextCaseStudy.clientName}
             </span>
           </button>
         </nav>
 
         {/* Section 10: Closing CTA */}
-        <section className="p-8 sm:p-12 bg-gradient-to-r from-[#0A0C0F] via-[#0D1015] to-[#0A0C0F] border border-[#0099FF]/30 rounded-[2px] text-center space-y-6">
+        <section className="p-8 sm:p-12 bg-gradient-to-r from-[#0A0C0F] via-[#0D1015] to-[#0A0C0F] border border-[#B89A72]/30 rounded-[2px] text-center space-y-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-[#F5F7FA]">
             YOUR BUSINESS COULD BE NEXT.
           </h2>
@@ -508,7 +508,7 @@ export function CaseStudyDetailPage({
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <button
               onClick={onStartProject}
-              className="px-6 py-3.5 bg-[#0099FF] hover:bg-[#0088EE] text-white font-mono text-xs font-semibold rounded-[2px] transition-all cursor-pointer shadow-lg shadow-[#0099FF]/20"
+              className="px-6 py-3.5 bg-[#B89A72] hover:bg-[#8F714D] text-white font-mono text-xs font-semibold rounded-[2px] transition-all cursor-pointer shadow-lg shadow-[#B89A72]/20"
             >
               START A PROJECT →
             </button>

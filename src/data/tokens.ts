@@ -82,17 +82,17 @@ export const COLOR_TOKENS: ColorToken[] = [
   {
     name: 'Active Border',
     variable: '--magniar-border-active',
-    hex: 'rgba(0, 153, 255, 0.40)',
-    rgb: '0, 153, 255, 0.40',
-    description: 'Electric blue border state for focus, active, or selected containers.',
+    hex: 'rgba(184, 154, 114, 0.40)',
+    rgb: '184, 154, 114, 0.40',
+    description: 'Champagne gold border state for focus, active, or selected containers.',
     category: 'border',
     usageRole: 'Input focus, active card border, selected tab indicator.'
   },
   {
-    name: 'Electric Blue Accent',
+    name: 'Champagne Gold Accent',
     variable: '--magniar-accent',
-    hex: '#0099FF',
-    rgb: '0, 153, 255',
+    hex: '#B89A72',
+    rgb: '184, 154, 114',
     description: 'High-precision performance signal color. Used strictly as a signal.',
     category: 'accent',
     contrastRatioOnBg: '6.2:1 (Passes WCAG AA)',
@@ -101,8 +101,8 @@ export const COLOR_TOKENS: ColorToken[] = [
   {
     name: 'Accent Glow / Muted',
     variable: '--magniar-accent-glow',
-    hex: 'rgba(0, 153, 255, 0.15)',
-    rgb: '0, 153, 255, 0.15',
+    hex: 'rgba(184, 154, 114, 0.15)',
+    rgb: '184, 154, 114, 0.15',
     description: 'Restrained volumetric aura around active elements and live badges.',
     category: 'accent',
     usageRole: 'Subtle glow behind active status dots, metric highlight halos.'
@@ -318,7 +318,7 @@ export const MICRO_TYPOGRAPHY_EXAMPLES: MicroTypographyItem[] = [
   },
   {
     category: 'Status Indicator',
-    codeSnippet: '<span class="font-mono text-[11px] text-[#0099FF] tracking-wider uppercase flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-[#0099FF] animate-magniar-pulse"></span>● OPERATIONAL</span>',
+    codeSnippet: '<span class="font-mono text-[11px] text-[#B89A72] tracking-wider uppercase flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-[#B89A72] animate-magniar-pulse"></span>● OPERATIONAL</span>',
     renderedText: '● OPERATIONAL',
     context: 'Indicates active API status or live data pipeline state.'
   },
@@ -341,7 +341,7 @@ export const SIGNAL_MOTIFS: SignalMotifItem[] = [
     id: 'signal-dot',
     title: 'Precision Pulse Dot',
     asciiVariant: '●',
-    description: 'Electric blue dot with subtle volumetric glow. Used to signify live data, operational system health, and active tabs.',
+    description: 'Champagne gold dot with subtle volumetric glow. Used to signify live data, operational system health, and active tabs.',
     componentType: 'dot'
   },
   {
@@ -371,11 +371,11 @@ export const DO_DONT_RULES: DoDontRule[] = [
   {
     id: 1,
     category: 'Color & FX',
-    ruleTitle: 'Restrained Electric Blue Signal',
-    doText: 'Use electric blue (#0099FF) exclusively as an active signal, focal accent, or status indicator on dark charcoal surfaces.',
-    dontText: 'Do not create giant blue or purple gradients, multi-colored neon glowing backgrounds, or vibrant blue canvas cards.',
-    doVisualNote: '#050505 surface with 1px hairline border + subtle 1.5px #0099FF status indicator dot.',
-    dontVisualNote: 'Purple-to-blue gradient background with bright cyan glowing drop-shadows.'
+    ruleTitle: 'Restrained Champagne Gold Signal',
+    doText: 'Use champagne gold (#B89A72) exclusively as an active signal, focal accent, or status indicator on dark charcoal surfaces.',
+    dontText: 'Do not create giant gold or purple gradients, multi-colored neon glowing backgrounds, or vibrant gold canvas cards.',
+    doVisualNote: '#050505 surface with 1px hairline border + subtle 1.5px #B89A72 status indicator dot.',
+    dontVisualNote: 'Purple-to-gold gradient background with bright neon glowing drop-shadows.'
   },
   {
     id: 2,

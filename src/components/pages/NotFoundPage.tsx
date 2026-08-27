@@ -16,9 +16,9 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({
     <div className="bg-[#050505] text-[#F5F7FA] font-sans min-h-[75vh] flex items-center justify-center py-20 px-4 sm:px-6 lg:px-12">
       <div className="max-w-lg w-full text-center space-y-8">
         <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0099FF]/10 border border-[#0099FF]/30 rounded-[2px]">
-            <AlertCircle className="w-3.5 h-3.5 text-[#0099FF]" />
-            <span className="font-mono text-xs text-[#0099FF] uppercase tracking-widest font-bold">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#B89A72]/10 border border-[#B89A72]/30 rounded-[2px]">
+            <AlertCircle className="w-3.5 h-3.5 text-[#B89A72]" />
+            <span className="font-mono text-xs text-[#B89A72] uppercase tracking-widest font-bold">
               ERROR 404 / PAGE NOT FOUND
             </span>
           </div>

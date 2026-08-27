@@ -19,11 +19,11 @@ export const ConnectedCapabilityMap: React.FC<ConnectedCapabilityMapProps> = ({
       {/* SECTION HEADER */}
       <div className="p-6 rounded-[2px] bg-[#0A0D12] border border-white/10 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
-          <span className="text-[#0099FF] font-bold tracking-widest flex items-center gap-2">
-            <RefreshCw className="w-4 h-4 text-[#0099FF] animate-spin-slow" />
+          <span className="text-[#B89A72] font-bold tracking-widest flex items-center gap-2">
+            <RefreshCw className="w-4 h-4 text-[#B89A72] animate-spin-slow" />
             07 / CONNECTED CAPABILITY MODEL
           </span>
-          <span className="px-2 py-0.5 rounded bg-[#0099FF]/20 text-[#0099FF] text-[10px] font-semibold border border-[#0099FF]/40">
+          <span className="px-2 py-0.5 rounded bg-[#B89A72]/20 text-[#B89A72] text-[10px] font-semibold border border-[#B89A72]/40">
             SYSTEM LOOP ARCHITECTURE
           </span>
         </div>
@@ -43,7 +43,7 @@ export const ConnectedCapabilityMap: React.FC<ConnectedCapabilityMapProps> = ({
         <div className="relative z-10 space-y-6">
           <div className="font-mono text-xs text-[#5A626E] uppercase tracking-widest flex items-center justify-between border-b border-white/10 pb-3">
             <span>THE MAGNIAR RECURSIVE GROWTH LOOP</span>
-            <span className="text-[#0099FF]">CONTINUOUS FEEDBACK ENGINE</span>
+            <span className="text-[#B89A72]">CONTINUOUS FEEDBACK ENGINE</span>
           </div>
 
           {/* Connected Steps Grid */}
@@ -61,13 +61,13 @@ export const ConnectedCapabilityMap: React.FC<ConnectedCapabilityMapProps> = ({
                   className={`
                     p-5 rounded-[2px] border transition-all cursor-pointer relative space-y-3
                     ${isHovered || isActivePillar
-                      ? 'bg-[#0A0D12] border-[#0099FF] shadow-[0_0_20px_rgba(0,153,255,0.2)]'
+                      ? 'bg-[#0A0D12] border-[#B89A72] shadow-[0_0_20px_rgba(184,154,114,0.2)]'
                       : 'bg-[#030508] border-white/10 hover:border-white/30'
                     }
                   `}
                 >
                   <div className="flex items-center justify-between font-mono text-xs">
-                    <span className="w-6 h-6 rounded-full bg-[#0099FF]/20 text-[#0099FF] flex items-center justify-center font-bold">
+                    <span className="w-6 h-6 rounded-full bg-[#B89A72]/20 text-[#B89A72] flex items-center justify-center font-bold">
                       {step.stepNumber}
                     </span>
                     <span className="text-[10px] text-[#8D949E] uppercase tracking-wider font-semibold">
@@ -87,16 +87,16 @@ export const ConnectedCapabilityMap: React.FC<ConnectedCapabilityMapProps> = ({
                     <div className="font-mono text-[9px] text-[#5A626E] uppercase tracking-widest">
                       SYSTEM OUTPUT SIGNAL:
                     </div>
-                    <div className="font-mono text-xs text-[#0099FF] font-semibold flex items-center gap-1.5">
-                      <Zap className="w-3.5 h-3.5 text-[#0099FF]" />
+                    <div className="font-mono text-xs text-[#B89A72] font-semibold flex items-center gap-1.5">
+                      <Zap className="w-3.5 h-3.5 text-[#B89A72]" />
                       <span>{step.outputSignal}</span>
                     </div>
                   </div>
 
                   {/* Flow Arrow to Next Step (Desktop) */}
                   {idx < CONNECTED_CAPABILITY_LOOP.length - 1 && (
-                    <div className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 z-20 text-[#0099FF]">
-                      <ArrowRight className="w-5 h-5 bg-[#05070A] rounded-full border border-[#0099FF]/40 p-0.5" />
+                    <div className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 z-20 text-[#B89A72]">
+                      <ArrowRight className="w-5 h-5 bg-[#05070A] rounded-full border border-[#B89A72]/40 p-0.5" />
                     </div>
                   )}
                 </div>
@@ -105,10 +105,10 @@ export const ConnectedCapabilityMap: React.FC<ConnectedCapabilityMapProps> = ({
           </div>
 
           {/* DEVELOPMENT FOUNDATION BASE BAR */}
-          <div className="p-4 rounded-[2px] bg-[#0A0D12] border border-[#0099FF]/40 space-y-2 relative">
+          <div className="p-4 rounded-[2px] bg-[#0A0D12] border border-[#B89A72]/40 space-y-2 relative">
             <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
-              <span className="text-[#0099FF] font-bold tracking-widest uppercase flex items-center gap-2">
-                <Cpu className="w-4 h-4 text-[#0099FF]" />
+              <span className="text-[#B89A72] font-bold tracking-widest uppercase flex items-center gap-2">
+                <Cpu className="w-4 h-4 text-[#B89A72]" />
                 DEVELOPMENT & INFRASTRUCTURE FOUNDATION
               </span>
               <span className="text-[#8D949E] text-[10px]">SUPPORTS ALL 4 STAGES</span>
@@ -124,10 +124,10 @@ export const ConnectedCapabilityMap: React.FC<ConnectedCapabilityMapProps> = ({
       <div className="p-6 sm:p-8 rounded-[2px] bg-[#07090D] border border-white/10 space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-white/10 pb-3">
           <span className="text-white font-bold tracking-wider uppercase flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#0099FF]" />
+            <ShieldCheck className="w-4 h-4 text-[#B89A72]" />
             08 / EXAMPLE CONNECTED SYSTEM IN PRACTICE
           </span>
-          <span className="text-[#0099FF]">{BUSINESS_JOURNEY_EXAMPLE.businessType}</span>
+          <span className="text-[#B89A72]">{BUSINESS_JOURNEY_EXAMPLE.businessType}</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-sans">
@@ -147,7 +147,7 @@ export const ConnectedCapabilityMap: React.FC<ConnectedCapabilityMapProps> = ({
             <ul className="space-y-2 text-xs text-[#F5F7FA] font-light">
               {BUSINESS_JOURNEY_EXAMPLE.componentsUsed.map((comp, i) => (
                 <li key={i} className="flex items-start gap-2 bg-[#030508] p-2.5 rounded-[2px] border border-white/5">
-                  <span className="text-[#0099FF] font-mono font-bold">0{i + 1}.</span>
+                  <span className="text-[#B89A72] font-mono font-bold">0{i + 1}.</span>
                   <span>{comp}</span>
                 </li>
               ))}
@@ -155,8 +155,8 @@ export const ConnectedCapabilityMap: React.FC<ConnectedCapabilityMapProps> = ({
           </div>
         </div>
 
-        <div className="p-4 rounded-[2px] bg-[#0A0D12] border border-[#0099FF]/30 font-mono text-xs space-y-1">
-          <div className="text-[#0099FF] font-bold uppercase tracking-wider">
+        <div className="p-4 rounded-[2px] bg-[#0A0D12] border border-[#B89A72]/30 font-mono text-xs space-y-1">
+          <div className="text-[#B89A72] font-bold uppercase tracking-wider">
             SYSTEM OUTCOME:
           </div>
           <p className="text-xs text-[#8D949E] font-sans font-light leading-relaxed">

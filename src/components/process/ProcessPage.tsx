@@ -26,8 +26,8 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
       <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-12 space-y-16">
         {/* 01 / HERO HEADER */}
         <section className="space-y-6 border-b border-white/10 pb-12 relative">
-          <div className="flex items-center gap-3 font-mono text-xs text-[#0099FF] font-semibold tracking-[0.2em] uppercase">
-            <span className="w-2 h-2 rounded-full bg-[#0099FF] shadow-[0_0_10px_#0099FF] animate-pulse" />
+          <div className="flex items-center gap-3 font-mono text-xs text-[#B89A72] font-semibold tracking-[0.2em] uppercase">
+            <span className="w-2 h-2 rounded-full bg-[#B89A72] shadow-[0_0_10px_#B89A72] animate-pulse" />
             <span>OPERATING METHODOLOGY</span>
           </div>
 
@@ -42,19 +42,19 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
           {/* QUICK HERO SUMMARY METRICS */}
           <div className="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl font-mono text-xs">
             <div className="p-3.5 bg-[#0A0D12] border border-white/10 rounded-[2px] space-y-1">
-              <span className="text-[#0099FF] font-bold block">8 STAGES</span>
+              <span className="text-[#B89A72] font-bold block">8 STAGES</span>
               <span className="text-[#8D949E] text-[11px]">Iterative Execution Loop</span>
             </div>
             <div className="p-3.5 bg-[#0A0D12] border border-white/10 rounded-[2px] space-y-1">
-              <span className="text-[#0099FF] font-bold block">0% GUESSWORK</span>
+              <span className="text-[#B89A72] font-bold block">0% GUESSWORK</span>
               <span className="text-[#8D949E] text-[11px]">Diagnostic & Data Driven</span>
             </div>
             <div className="p-3.5 bg-[#0A0D12] border border-white/10 rounded-[2px] space-y-1">
-              <span className="text-[#0099FF] font-bold block">COLLABORATIVE</span>
+              <span className="text-[#B89A72] font-bold block">COLLABORATIVE</span>
               <span className="text-[#8D949E] text-[11px]">Clear Client + Magniar Roles</span>
             </div>
             <div className="p-3.5 bg-[#0A0D12] border border-white/10 rounded-[2px] space-y-1">
-              <span className="text-[#0099FF] font-bold block">CONTINUOUS</span>
+              <span className="text-[#B89A72] font-bold block">CONTINUOUS</span>
               <span className="text-[#8D949E] text-[11px]">Scale Feeds to Discover</span>
             </div>
           </div>
@@ -64,7 +64,7 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
         <section className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <span className="font-mono text-xs text-[#0099FF] font-bold tracking-widest uppercase block">
+              <span className="font-mono text-xs text-[#B89A72] font-bold tracking-widest uppercase block">
                 02 / THE GROWTH LOOP ENGINE
               </span>
               <h2 className="font-mono text-2xl sm:text-3xl font-bold text-white tracking-tight">
@@ -93,7 +93,7 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
         {/* 04 / PROCESS + CAPABILITIES CONNECTION MAP */}
         <section className="bg-[#0A0D12] border border-white/10 rounded-[2px] p-6 sm:p-8 space-y-6">
           <div className="space-y-2 max-w-3xl">
-            <div className="flex items-center gap-2 font-mono text-xs text-[#0099FF] font-semibold tracking-widest uppercase">
+            <div className="flex items-center gap-2 font-mono text-xs text-[#B89A72] font-semibold tracking-widest uppercase">
               <Layers className="w-3.5 h-3.5" />
               <span>CAPABILITIES INTEGRATION MATRIX</span>
             </div>
@@ -133,7 +133,7 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
               },
             ].map((cap) => (
               <div key={cap.id} className="p-4 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
-                <div className="font-mono text-xs font-bold text-[#0099FF] tracking-wider uppercase">
+                <div className="font-mono text-xs font-bold text-[#B89A72] tracking-wider uppercase">
                   {cap.title}
                 </div>
                 <div className="font-mono text-[10px] text-[#8D949E] px-2 py-0.5 bg-white/5 border border-white/10 rounded-[2px] inline-block">
@@ -158,11 +158,11 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
         </section>
 
         {/* 07 / PROCESS CTA SECTION */}
-        <section className="bg-gradient-to-r from-[#0A0D12] via-[#080B10] to-[#0A0D12] border border-[#0099FF]/40 rounded-[2px] p-8 sm:p-12 text-center space-y-6 relative overflow-hidden shadow-2xl">
-          <div className="absolute inset-0 bg-[radial-gradient(#0099FF_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
+        <section className="bg-gradient-to-r from-[#0A0D12] via-[#080B10] to-[#0A0D12] border border-[#B89A72]/40 rounded-[2px] p-8 sm:p-12 text-center space-y-6 relative overflow-hidden shadow-2xl">
+          <div className="absolute inset-0 bg-[radial-gradient(#B89A72_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
 
           <div className="space-y-4 max-w-3xl mx-auto relative z-10">
-            <div className="font-mono text-xs text-[#0099FF] font-bold tracking-[0.2em] uppercase">
+            <div className="font-mono text-xs text-[#B89A72] font-bold tracking-[0.2em] uppercase">
               READY TO BUILD WHAT GROWS?
             </div>
             <h2 className="font-mono text-2xl sm:text-4xl font-bold text-white tracking-tight">
@@ -176,7 +176,7 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
           <div className="flex flex-wrap items-center justify-center gap-4 relative z-10 pt-2">
             <button
               onClick={onStartProject}
-              className="px-6 py-3.5 bg-[#0099FF] hover:bg-[#0088EE] text-white font-mono text-xs font-bold rounded-[2px] transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_25px_rgba(0,153,255,0.35)]"
+              className="px-6 py-3.5 bg-[#B89A72] hover:bg-[#8F714D] text-white font-mono text-xs font-bold rounded-[2px] transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_25px_rgba(184,154,114,0.35)]"
             >
               <span>START A PROJECT</span>
               <ArrowRight className="w-4 h-4" />

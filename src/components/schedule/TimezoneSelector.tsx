@@ -16,7 +16,7 @@ export const TimezoneSelector: React.FC<TimezoneSelectorProps> = ({
   return (
     <div className="space-y-2">
       <label htmlFor="tz-select" className="flex items-center gap-2 font-mono text-xs text-white uppercase font-bold">
-        <Globe className="w-3.5 h-3.5 text-[#0099FF]" />
+        <Globe className="w-3.5 h-3.5 text-[#B89A72]" />
         <span>TIMEZONE ({currentTzObj.offset})</span>
       </label>
 
@@ -25,7 +25,7 @@ export const TimezoneSelector: React.FC<TimezoneSelectorProps> = ({
           id="tz-select"
           value={selectedTimezone}
           onChange={(e) => onSelectTimezone(e.target.value)}
-          className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#0099FF] text-white text-xs sm:text-sm font-mono focus:outline-none transition-colors cursor-pointer appearance-none pr-10"
+          className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#B89A72] text-white text-xs sm:text-sm font-mono focus:outline-none transition-colors cursor-pointer appearance-none pr-10"
         >
           {TIMEZONE_OPTIONS.map((tz: TimezoneOption) => (
             <option key={tz.value} value={tz.value} className="bg-[#050505] text-white">

@@ -55,7 +55,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="mb-10 space-y-2">
-            <span className="font-mono text-xs text-[#0099FF] tracking-[0.2em] uppercase font-semibold block">
+            <span className="font-mono text-xs text-[#B89A72] tracking-[0.2em] uppercase font-semibold block">
               [ 01 — GENERAL CONTACT FORM ]
             </span>
             <h2 className="text-2xl sm:text-4xl font-bold text-white uppercase tracking-tight">
@@ -70,12 +70,12 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
           <div className="p-6 sm:p-10 bg-[#050505] border border-white/10 relative">
             {status === 'success' ? (
               <div className="py-12 text-center space-y-6">
-                <div className="w-16 h-16 bg-[#0099FF]/10 border border-[#0099FF]/40 rounded-full flex items-center justify-center mx-auto text-[#0099FF]">
+                <div className="w-16 h-16 bg-[#B89A72]/10 border border-[#B89A72]/40 rounded-full flex items-center justify-center mx-auto text-[#B89A72]">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
 
                 <div className="space-y-2">
-                  <span className="font-mono text-xs text-[#0099FF] uppercase tracking-widest font-bold">
+                  <span className="font-mono text-xs text-[#B89A72] uppercase tracking-widest font-bold">
                     [ SUBMISSION RECEIVED ]
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-black text-white uppercase">
@@ -112,7 +112,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label htmlFor="contact-name" className="block font-mono text-xs text-white uppercase font-semibold">
-                      NAME <span className="text-[#0099FF]">*</span>
+                      NAME <span className="text-[#B89A72]">*</span>
                     </label>
                     <input
                       id="contact-name"
@@ -121,13 +121,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
                       placeholder="e.g. Alex Mercer"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#0099FF] text-white text-sm focus:outline-none transition-colors font-sans"
+                      className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#B89A72] text-white text-sm focus:outline-none transition-colors font-sans"
                     />
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="contact-email" className="block font-mono text-xs text-white uppercase font-semibold">
-                      WORK EMAIL <span className="text-[#0099FF]">*</span>
+                      WORK EMAIL <span className="text-[#B89A72]">*</span>
                     </label>
                     <input
                       id="contact-email"
@@ -136,7 +136,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
                       placeholder="e.g. alex@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#0099FF] text-white text-sm focus:outline-none transition-colors font-sans"
+                      className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#B89A72] text-white text-sm focus:outline-none transition-colors font-sans"
                     />
                   </div>
                 </div>
@@ -153,7 +153,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
                       placeholder="e.g. Acme Corp"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#0099FF] text-white text-sm focus:outline-none transition-colors font-sans"
+                      className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#B89A72] text-white text-sm focus:outline-none transition-colors font-sans"
                     />
                   </div>
 
@@ -167,7 +167,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
                       placeholder="e.g. +1 (555) 019-2831"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#0099FF] text-white text-sm focus:outline-none transition-colors font-sans"
+                      className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#B89A72] text-white text-sm focus:outline-none transition-colors font-sans"
                     />
                   </div>
                 </div>
@@ -175,13 +175,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
                 {/* Subject Selector */}
                 <div className="space-y-2">
                   <label htmlFor="contact-subject" className="block font-mono text-xs text-white uppercase font-semibold">
-                    SUBJECT <span className="text-[#0099FF]">*</span>
+                    SUBJECT <span className="text-[#B89A72]">*</span>
                   </label>
                   <select
                     id="contact-subject"
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#0099FF] text-white text-sm focus:outline-none transition-colors font-mono cursor-pointer"
+                    className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#B89A72] text-white text-sm focus:outline-none transition-colors font-mono cursor-pointer"
                   >
                     {CONTACT_SUBJECTS.map((s) => (
                       <option key={s.id} value={s.id} className="bg-[#050505] text-white">
@@ -192,7 +192,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
 
                   {/* Existing Client Specific Notice */}
                   {selectedSubjectObj?.hintMessage && (
-                    <div className="mt-3 p-4 bg-[#0A0D12] border border-[#0099FF]/40 text-xs text-[#0099FF] font-mono flex items-start gap-3">
+                    <div className="mt-3 p-4 bg-[#0A0D12] border border-[#B89A72]/40 text-xs text-[#B89A72] font-mono flex items-start gap-3">
                       <Lock className="w-4 h-4 shrink-0 mt-0.5" />
                       <div className="space-y-1">
                         <p className="text-white font-bold">{selectedSubjectObj.hintMessage}</p>
@@ -200,7 +200,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
                           <button
                             type="button"
                             onClick={onGoToPortal}
-                            className="underline text-[#0099FF] hover:text-white inline-flex items-center gap-1 cursor-pointer"
+                            className="underline text-[#B89A72] hover:text-white inline-flex items-center gap-1 cursor-pointer"
                           >
                             <span>GO TO CLIENT PORTAL</span>
                             <ExternalLink className="w-3 h-3" />
@@ -214,7 +214,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
                 {/* Message Field */}
                 <div className="space-y-2">
                   <label htmlFor="contact-message" className="block font-mono text-xs text-white uppercase font-semibold">
-                    MESSAGE <span className="text-[#0099FF]">*</span>
+                    MESSAGE <span className="text-[#B89A72]">*</span>
                   </label>
                   <textarea
                     id="contact-message"
@@ -223,7 +223,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
                     placeholder="Describe what you would like to discuss..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#0099FF] text-white text-sm focus:outline-none transition-colors font-sans resize-y"
+                    className="w-full px-4 py-3 bg-[#080B10] border border-white/15 focus:border-[#B89A72] text-white text-sm focus:outline-none transition-colors font-sans resize-y"
                   />
                 </div>
 
@@ -237,7 +237,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onGoToPortal }) => {
                   <button
                     type="submit"
                     disabled={status === 'submitting'}
-                    className="w-full sm:w-auto px-8 py-4 bg-[#0099FF] text-white font-mono text-xs font-bold uppercase tracking-widest hover:bg-[#0088EE] disabled:opacity-50 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(0,153,255,0.25)]"
+                    className="w-full sm:w-auto px-8 py-4 bg-[#B89A72] text-white font-mono text-xs font-bold uppercase tracking-widest hover:bg-[#8F714D] disabled:opacity-50 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(184,154,114,0.25)]"
                   >
                     {status === 'submitting' ? (
                       <>
