@@ -1,5 +1,11 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
-import { WebsiteCheckIntervalMinutes, WebsiteInput, WebsiteRecord, WebsiteStatus } from '../types/websites';
+import {
+  WebsiteCheckIntervalMinutes,
+  WebsiteCheckInvocationResult,
+  WebsiteInput,
+  WebsiteRecord,
+  WebsiteStatus,
+} from '../types/websites';
 
 type WebsiteRow = {
   id: string;
@@ -87,7 +93,7 @@ const normalizeRow = (row: WebsiteRow): WebsiteRecord => ({
   current_status: row.current_status || 'UNKNOWN',
   last_http_status_code: row.last_http_status_code ?? undefined,
   last_response_time_ms: row.last_response_time_ms ?? undefined,
-  last_checked_at: formatTimestamp(row.last_checked_at),
+  last_checked_at: row.last_checked_at || undefined,
   internal_notes: row.internal_notes || undefined,
   created_at: formatTimestamp(row.created_at) || '',
   updated_at: formatTimestamp(row.updated_at) || '',
@@ -175,4 +181,22 @@ export async function deleteWebsite(id: string): Promise<void> {
   const db = requireSupabase();
   const { error } = await db.from('websites').delete().eq('id', id);
   if (error) throw error;
+}
+
+export async function checkWebsiteNow(id: string): Promise<WebsiteCheckInvocationResult> {
+  const db = requireSupabase();
+  const { data, error } = await db.functions.invoke<WebsiteCheckInvocationResult>('check-websites', {
+    body: { website_id: id },
+  });
+
+  if (error) throw error;
+  if (!data) {
+    throw new Error('Monitoring check returned no result.');
+  }
+
+  if (data.failures?.length) {
+    throw new Error(data.failures[0]?.error || 'Monitoring check failed.');
+  }
+
+  return data;
 }

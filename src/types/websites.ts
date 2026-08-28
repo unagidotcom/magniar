@@ -47,3 +47,22 @@ export interface WebsiteInput {
   check_interval_minutes: WebsiteCheckIntervalMinutes;
   internal_notes?: string;
 }
+
+export interface WebsiteCheckResult {
+  website_id: string;
+  checked_at: string;
+  status: Exclude<WebsiteStatus, 'UNKNOWN'>;
+  http_status_code: number | null;
+  response_time_ms: number | null;
+  error_message: string | null;
+}
+
+export interface WebsiteCheckInvocationResult {
+  checked: number;
+  skipped: number;
+  results: WebsiteCheckResult[];
+  failures: Array<{
+    website_id: string;
+    error: string;
+  }>;
+}

@@ -23,6 +23,7 @@ import {
 } from '../../../types/websites';
 import { clientService } from '../../../services/clientService';
 import {
+  checkWebsiteNow,
   createWebsite,
   deleteWebsite,
   listWebsites,
@@ -82,7 +83,31 @@ const formatCheckInterval = (minutes: number) => {
   return `Every ${minutes} minutes`;
 };
 
-const formatLastChecked = (value?: string) => value || 'Never';
+const formatLastChecked = (value?: string) => {
+  if (!value) return 'Never checked';
+
+  const checkedAt = new Date(value);
+  if (Number.isNaN(checkedAt.getTime())) return value;
+
+  const diffMs = Date.now() - checkedAt.getTime();
+  if (diffMs < 0) return 'Just now';
+
+  const diffMinutes = Math.floor(diffMs / 60_000);
+  if (diffMinutes < 1) return 'Just now';
+  if (diffMinutes < 60) return `${diffMinutes} min ago`;
+
+  const diffHours = Math.floor(diffMinutes / 60);
+  if (diffHours < 24) return `${diffHours} hr ago`;
+
+  const diffDays = Math.floor(diffHours / 24);
+  if (diffDays < 7) return `${diffDays} day${diffDays === 1 ? '' : 's'} ago`;
+
+  return checkedAt.toLocaleDateString('en-US', {
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+  });
+};
 
 const formatHttpValue = (value?: number) => (value === undefined || value === null ? <span>&mdash;</span> : value);
 
@@ -194,7 +219,7 @@ const WebsiteFormModal: React.FC<WebsiteFormModalProps> = ({
                 }`}
               />
               <p className={`mt-1 text-[10px] ${urlError ? 'text-rose-300' : 'text-white/35'}`}>
-                {urlError || 'URLs without a protocol will be saved as HTTPS. No live check is performed yet.'}
+                {urlError || 'URLs without a protocol are saved as HTTPS. Checks run server-side.'}
               </p>
             </div>
 
@@ -360,6 +385,7 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
   const [editingWebsite, setEditingWebsite] = useState<WebsiteRecord | null>(null);
   const [formOpen, setFormOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [checkingWebsiteId, setCheckingWebsiteId] = useState<string | null>(null);
   const [deletingWebsite, setDeletingWebsite] = useState<WebsiteRecord | null>(null);
 
   const loadData = async () => {
@@ -448,7 +474,7 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
       onTriggerToast(
         'success',
         editingWebsite ? 'Website Updated' : 'Website Added',
-        `${saved.name} is ready for future monitoring.`
+        `${saved.name} is ready for server-side monitoring.`
       );
     } catch (err: any) {
       console.error('Website save failed:', err);
@@ -473,6 +499,36 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
       onTriggerToast('error', 'Website Not Deleted', err?.message || 'Could not delete website.');
     } finally {
       setDeletingWebsite(null);
+    }
+  };
+
+  const handleCheckWebsite = async (website: WebsiteRecord) => {
+    setCheckingWebsiteId(website.id);
+    try {
+      const result = await checkWebsiteNow(website.id);
+      await loadData();
+
+      if (result.skipped > 0 || result.checked === 0) {
+        onTriggerToast('info', 'Website Not Checked', 'Monitoring is disabled for this website.');
+        return;
+      }
+
+      const latest = result.results[0];
+      if (!latest) {
+        onTriggerToast('info', 'Website Not Checked', 'No monitoring result was returned.');
+        return;
+      }
+
+      onTriggerToast(
+        latest.status === 'DOWN' || latest.status === 'ERROR' ? 'error' : 'success',
+        'Website Checked',
+        `${website.name}: ${latest.status}${latest.http_status_code ? ` / HTTP ${latest.http_status_code}` : ''}`
+      );
+    } catch (err: any) {
+      console.error('Website check failed:', err);
+      onTriggerToast('error', 'Website Check Failed', err?.message || 'Could not check website.');
+    } finally {
+      setCheckingWebsiteId(null);
     }
   };
 
@@ -691,7 +747,7 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
           title={websites.length === 0 ? 'No Website Records' : 'No Websites Match Filters'}
           description={
             websites.length === 0
-              ? 'Add your first client website record. Monitoring will be connected in a later phase.'
+              ? 'Add your first client website record. Monitoring checks can be run after deployment.'
               : 'Try clearing search or filter options.'
           }
           actionLabel={websites.length === 0 ? '+ Add Website' : 'Clear All Filters'}
@@ -784,6 +840,19 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
                           >
                             <Edit className="w-3.5 h-3.5" />
                             <span>Edit</span>
+                          </button>
+                          <button
+                            onClick={() => void handleCheckWebsite(website)}
+                            disabled={checkingWebsiteId === website.id || !website.monitoring_enabled}
+                            className="p-1.5 bg-[#0099FF]/10 hover:bg-[#0099FF]/20 disabled:opacity-40 disabled:cursor-not-allowed text-[#0099FF] rounded-[2px] border border-[#0099FF]/20 inline-flex items-center gap-1 text-[11px]"
+                            title={website.monitoring_enabled ? 'Run server-side HTTPS check' : 'Monitoring is disabled'}
+                          >
+                            <RefreshCw
+                              className={`w-3.5 h-3.5 ${
+                                checkingWebsiteId === website.id ? 'animate-spin' : ''
+                              }`}
+                            />
+                            <span>Check</span>
                           </button>
                           <button
                             onClick={() => setDeletingWebsite(website)}
@@ -916,7 +985,7 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
                 </>
               )}
               <p className="border-t border-white/10 pt-3 text-white/50 leading-relaxed">
-                Monitoring configuration is stored for the future server-side worker. The browser does not run checks.
+                Checks run through the server-side monitoring function. The browser does not fetch client websites.
               </p>
             </div>
 
@@ -961,6 +1030,18 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
 
             <div className="flex items-center justify-end gap-2">
               <button
+                onClick={() => void handleCheckWebsite(selectedWebsite)}
+                disabled={checkingWebsiteId === selectedWebsite.id || !selectedWebsite.monitoring_enabled}
+                className="px-3 py-2 bg-[#0099FF]/10 hover:bg-[#0099FF]/20 disabled:opacity-40 disabled:cursor-not-allowed text-[#0099FF] rounded-[2px] border border-[#0099FF]/20 inline-flex items-center gap-1.5"
+              >
+                <RefreshCw
+                  className={`w-3.5 h-3.5 ${
+                    checkingWebsiteId === selectedWebsite.id ? 'animate-spin' : ''
+                  }`}
+                />
+                <span>Check Now</span>
+              </button>
+              <button
                 onClick={() => openEditModal(selectedWebsite)}
                 className="px-3 py-2 bg-white/5 hover:bg-white/10 text-white rounded-[2px] border border-white/10 inline-flex items-center gap-1.5"
               >
@@ -985,7 +1066,7 @@ export const WebsitesPage: React.FC<WebsitesPageProps> = ({
         title="Delete Website Record"
         description={
           deletingWebsite
-            ? `Remove ${deletingWebsite.name} from the Websites module. Monitoring history is not implemented yet.`
+            ? `Remove ${deletingWebsite.name} from the Websites module. Its monitoring check history will also be removed.`
             : undefined
         }
         confirmLabel="Delete Website"
