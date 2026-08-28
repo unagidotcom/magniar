@@ -27,8 +27,8 @@ const corsHeaders = {
 };
 
 const CHECK_TIMEOUT_MS = 10_000;
-const DEFAULT_BATCH_LIMIT = 25;
-const MAX_BATCH_LIMIT = 50;
+const DEFAULT_BATCH_LIMIT = 500;
+const MAX_BATCH_LIMIT = 500;
 
 const jsonResponse = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {

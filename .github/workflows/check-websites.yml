@@ -2,7 +2,7 @@ name: Check Websites
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "17 3 * * *"
   workflow_dispatch:
 
 permissions:
@@ -40,7 +40,7 @@ jobs:
               --header "Authorization: Bearer ${MONITORING_CRON_SECRET}" \
               --header "x-monitoring-secret: ${MONITORING_CRON_SECRET}" \
               --header "Content-Type: application/json" \
-              --data '{"limit":25}' \
+              --data '{"limit":500}' \
               --output "${response_file}" \
               --write-out "%{http_code}"
           )"
