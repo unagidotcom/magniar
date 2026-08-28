@@ -38,7 +38,7 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({
       {/* Calendar Header */}
       <div className="flex items-center justify-between font-mono text-xs pb-3 border-b border-white/10">
         <span className="text-white font-bold flex items-center gap-2">
-          <CalendarIcon className="w-4 h-4 text-[#0099FF]" />
+          <CalendarIcon className="w-4 h-4 text-[#B89A72]" />
           <span>AUGUST 2026</span>
         </span>
         <div className="flex items-center gap-1 text-white/40">
@@ -49,7 +49,7 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <span className="text-[10px] text-[#0099FF]">UPCOMING 2 WEEKS</span>
+          <span className="text-[10px] text-[#B89A72]">UPCOMING 2 WEEKS</span>
           <button
             type="button"
             className="p-1 hover:text-white transition-colors cursor-pointer"
@@ -71,8 +71,8 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({
               onClick={() => onSelectDate(day.dateString)}
               className={`p-3 border text-left font-mono transition-all cursor-pointer flex flex-col justify-between h-20 ${
                 isSelected
-                  ? 'bg-[#0099FF] border-[#0099FF] text-white shadow-[0_0_20px_rgba(0,153,255,0.3)]'
-                  : 'bg-[#080B10] border-white/10 text-white hover:border-[#0099FF]/50 hover:bg-white/5'
+                  ? 'bg-[#B89A72] border-[#B89A72] text-white shadow-[0_0_20px_rgba(184,154,114,0.3)]'
+                  : 'bg-[#080B10] border-white/10 text-white hover:border-[#B89A72]/50 hover:bg-white/5'
               }`}
             >
               <div className="flex items-center justify-between text-[10px] opacity-80">

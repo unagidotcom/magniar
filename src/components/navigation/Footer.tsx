@@ -1,10 +1,6 @@
 import React from 'react';
-import { FOOTER_COLUMNS } from '../../data/navigationData';
-import { MagniarButton } from '../common/MagniarButton';
-import { SignalIndicator } from '../common/SignalIndicator';
-import { TechnicalLabel } from '../common/TechnicalLabel';
-import { ArrowIcon } from '../common/ArrowIcon';
-import { Globe, Lock } from 'lucide-react';
+import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react';
+import { BrandLogo } from '../common/BrandLogo';
 
 interface FooterProps {
   onNavigate?: (route: string) => void;
@@ -12,154 +8,172 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onStartProject }) => {
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  const handleLinkClick = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    event.preventDefault();
+
     if (href === '#start') {
-      if (onStartProject) onStartProject();
-      else if (onNavigate) onNavigate('start-project');
-    } else if (href === '#login' || href === '/portal' || href === '#portal') {
-      if (onNavigate) onNavigate('portal');
-    } else if (href === '/admin/login' || href === '/admin' || href === '#admin' || href === '#admin/login') {
-      if (onNavigate) onNavigate('admin-login');
-    } else if (href === '#privacy') {
-      if (onNavigate) onNavigate('privacy-page');
-    } else if (href === '#terms') {
-      if (onNavigate) onNavigate('terms-page');
-    } else if (href === '#contact') {
-      if (onNavigate) onNavigate('contact-page');
+      onStartProject?.();
+    } else if (href === '#home') {
+      onNavigate?.('homepage');
+    } else if (href === '#services') {
+      onNavigate?.('services');
     } else if (href === '#about') {
-      if (onNavigate) onNavigate('about-page');
-    } else if (href === '#capabilities') {
-      if (onNavigate) onNavigate('capabilities-page');
-    } else if (href === '#process') {
-      if (onNavigate) onNavigate('process-page');
+      onNavigate?.('about-page');
     } else if (href === '#work') {
-      if (onNavigate) onNavigate('work-page');
+      onNavigate?.('work-page');
     } else if (href === '#insights') {
-      if (onNavigate) onNavigate('insights-page');
-    } else if (onNavigate) {
-      onNavigate('homepage');
+      onNavigate?.('insights-page');
+    } else if (href === '#contact') {
+      onNavigate?.('contact-page');
+    } else if (href === '#privacy') {
+      onNavigate?.('privacy-page');
+    } else if (href === '#terms') {
+      onNavigate?.('terms-page');
+    } else if (href === '/portal') {
+      onNavigate?.('portal');
+    } else if (href === '/admin/login') {
+      onNavigate?.('admin-login');
     }
   };
+
+  const serviceLinks = ['Websites', 'eCommerce', 'Marketing', 'Maintenance'];
+  const companyLinks = [
+    { label: 'About', href: '#about' },
+    { label: 'Work', href: '#work' },
+    { label: 'Insights', href: '#insights' },
+    { label: 'Contact', href: '#contact' },
+  ];
+
   return (
-    <footer className="w-full bg-[#050505] text-[#F5F7FA] border-t border-white/10 relative overflow-hidden pt-16 pb-12">
-      {/* Background Grid Pattern */}
-      <div className="absolute inset-0 magniar-grid-pattern opacity-30 pointer-events-none" />
-
-      {/* Top Editorial Closing Statement CTA Block */}
-      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 pb-16 border-b border-white/10 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end justify-between">
-          <div className="lg:col-span-8 space-y-4">
-            <div className="flex items-center gap-3">
-              <TechnicalLabel variant="active" size="sm">
-                02 / GLOBAL GROWTH PARTNER
-              </TechnicalLabel>
-              <SignalIndicator label="ACCEPTING NEW CLIENTS" size="sm" />
-            </div>
-
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-light tracking-tight text-[#F5F7FA] leading-tight">
-              BUILD YOUR NEXT <br className="hidden sm:inline" />
-              <span className="font-extrabold text-white">GROWTH SYSTEM.</span>
-            </h2>
-
-            <p className="text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed">
-              Partner with Magniar to engineer predictable revenue across performance marketing, social commerce, custom web infrastructure, and AI strategy.
+    <footer className="w-full border-t border-[#D9DEE5] bg-[#FFFFFF] px-4 py-7 text-[#68717C] sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1320px] space-y-6">
+        <div className="grid grid-cols-1 gap-7 xl:grid-cols-[minmax(220px,1fr)_minmax(250px,1.25fr)_minmax(190px,0.9fr)_minmax(120px,0.65fr)_minmax(120px,0.65fr)_minmax(180px,0.85fr)]">
+          <div>
+            <a
+              href="#home"
+              onClick={(event) => handleLinkClick(event, '#home')}
+              className="inline-flex h-14 items-center transition-opacity hover:opacity-80"
+              aria-label="Magniar & Co home"
+            >
+              <BrandLogo variant="full" className="h-full w-[150px]" />
+            </a>
+            <p className="mt-3 max-w-xs text-sm leading-6">
+              Digital experiences built to grow your business.
             </p>
-          </div>
-
-          <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end items-start lg:items-end">
-            <a href="#start" className="w-full sm:w-auto">
-              <MagniarButton variant="primary" size="lg" fullWidth>
-                START A PROJECT
-              </MagniarButton>
-            </a>
-            <a href="/portal" onClick={(e) => handleLinkClick(e, '/portal')} className="w-full sm:w-auto">
-              <MagniarButton variant="utility" size="lg" fullWidth>
-                CLIENT PORTAL
-              </MagniarButton>
+            <a
+              href="#start"
+              onClick={(event) => handleLinkClick(event, '#start')}
+              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#B89A72] transition-colors hover:text-[#8F714D]"
+            >
+              Start a Project
+              <ArrowRight className="h-4 w-4" />
             </a>
           </div>
-        </div>
-      </div>
 
-      {/* Main Footer Links Grid */}
-      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12">
-          {/* Brand Info Column */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="space-y-3">
-              <a href="#" className="font-heading text-2xl font-extrabold tracking-[0.2em] text-[#F5F7FA] block">
-                MAGNIAR
+          <div className="space-y-3">
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B0D0F]">Contact</h3>
+            <div className="space-y-2 text-xs leading-5">
+              <p className="font-semibold text-[#0B0D0F]">Rain</p>
+              <a href="mailto:magniarventures@gmail.com" className="flex items-start gap-2 break-words transition-colors hover:text-[#0B0D0F]">
+                <Mail className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#B89A72]" />
+                <span>magniarventures@gmail.com</span>
               </a>
-              <p className="text-sm text-slate-300 leading-relaxed max-w-sm">
-                Global marketing, development, commerce, and AI strategy agency serving ambitious small-to-mid-sized businesses internationally.
+              <a href="tel:8798250520" className="flex items-center gap-2 transition-colors hover:text-[#0B0D0F]">
+                <Phone className="h-3.5 w-3.5 text-[#B89A72]" />
+                8798250520
+              </a>
+              <p className="flex items-start gap-2">
+                <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#B89A72]" />
+                Gurgaon, Haryana, India
               </p>
             </div>
+          </div>
 
-            <div className="p-5 bg-[#0A0C0F] border border-white/10 rounded-[2px] space-y-2">
-              <div className="flex items-center justify-between text-xs font-semibold text-[#0099FF] tracking-wider uppercase">
-                <span>GLOBAL DELIVERY ENGINE</span>
-                <Globe className="w-4 h-4" />
+          <div className="space-y-3">
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B0D0F]">Business</h3>
+            <div className="space-y-3 text-xs leading-5">
+              <div>
+                <span className="block uppercase tracking-[0.1em] text-[#68717C]">Udyam Registration No.</span>
+                <span className="font-medium text-[#0B0D0F]">UDYAM-HR-OS-0177833</span>
               </div>
-              <div className="text-xs text-slate-400 font-sans">
-                US • UK • EUROPE • APAC • LATAM
-              </div>
-              <div className="text-xs font-sans text-slate-300 pt-2 border-t border-white/5 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF] animate-pulse" />
-                <span>24/7 MULTI-CHANNEL CAMPAIGN MONITORING</span>
+              <div>
+                <span className="block uppercase tracking-[0.1em] text-[#68717C]">Enterprise Type</span>
+                <span className="font-medium text-[#0B0D0F]">Micro</span>
               </div>
             </div>
           </div>
 
-          {/* 4 Structured Link Columns */}
-          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-8">
-            {FOOTER_COLUMNS.map((col, idx) => (
-              <div key={idx} className="space-y-4">
-                <div className="pb-2 border-b border-white/10 font-heading text-xs font-bold text-[#F5F7FA] tracking-wider flex items-center justify-between uppercase">
-                  <span>{col.title}</span>
-                  {col.numberLabel && (
-                    <span className="text-xs text-[#0099FF] font-mono">{col.numberLabel}</span>
-                  )}
-                </div>
+          <div className="space-y-3">
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B0D0F]">Services</h3>
+            <ul className="space-y-2 text-xs">
+              {serviceLinks.map((label) => (
+                <li key={label}>
+                  <a href="#services" onClick={(event) => handleLinkClick(event, '#services')} className="transition-colors hover:text-[#B89A72]">
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-                <ul className="space-y-2 text-sm">
-                  {col.links.map((link, lIdx) => (
-                    <li key={lIdx}>
-                      <a
-                        href={link.href}
-                        onClick={(e) => handleLinkClick(e, link.href)}
-                        className="text-slate-300 hover:text-[#0099FF] transition-colors flex items-center justify-between group py-1 cursor-pointer"
-                      >
-                        <span>{link.label}</span>
-                        {link.badge ? (
-                          <span className="text-[10px] font-sans px-1.5 py-0.5 bg-[#0099FF]/10 text-[#0099FF] border border-[#0099FF]/30 rounded-[2px] uppercase">
-                            {link.badge}
-                          </span>
-                        ) : (
-                          <ArrowIcon size={12} className="opacity-0 group-hover:opacity-100 text-[#0099FF] transition-opacity" />
-                        )}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className="space-y-3">
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B0D0F]">Company</h3>
+            <ul className="space-y-2 text-xs">
+              {companyLinks.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} onClick={(event) => handleLinkClick(event, link.href)} className="transition-colors hover:text-[#B89A72]">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a href="/admin/login" onClick={(event) => handleLinkClick(event, '/admin/login')} className="transition-colors hover:text-[#B89A72]">
+                  Admin Login
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B0D0F]">Legal</h3>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <a href="#privacy" onClick={(event) => handleLinkClick(event, '#privacy')} className="transition-colors hover:text-[#B89A72]">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="#terms" onClick={(event) => handleLinkClick(event, '#terms')} className="transition-colors hover:text-[#B89A72]">
+                  Terms & Conditions
+                </a>
+              </li>
+              <li>
+                <span className="text-[#68717C]">Cancellation & Refund Policy</span>
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Legal Bar */}
-      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 pt-8 border-t border-white/10 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-xs text-slate-400">
-        <div className="flex flex-wrap items-center gap-4">
-          <span className="text-slate-300">© 2026 MAGNIAR AGENCY LLC. ALL RIGHTS RESERVED.</span>
-          <span>|</span>
-          <a href="#privacy" onClick={(e) => handleLinkClick(e, '#privacy')} className="hover:text-white transition-colors cursor-pointer">PRIVACY POLICY</a>
-          <a href="#terms" onClick={(e) => handleLinkClick(e, '#terms')} className="hover:text-white transition-colors cursor-pointer">TERMS OF SERVICE</a>
-        </div>
+        <div className="flex flex-col justify-between gap-3 border-t border-[#D9DEE5] pt-4 text-[11px] text-[#68717C] sm:flex-row sm:items-center">
+          <div className="flex flex-wrap gap-x-4 gap-y-2">
+            <span>2026 MAGNIAR. All rights reserved.</span>
+            <a href="#privacy" onClick={(event) => handleLinkClick(event, '#privacy')} className="transition-colors hover:text-[#0B0D0F]">
+              Privacy Policy
+            </a>
+            <a href="#terms" onClick={(event) => handleLinkClick(event, '#terms')} className="transition-colors hover:text-[#0B0D0F]">
+              Terms & Conditions
+            </a>
+            <span>Cancellation & Refund Policy</span>
+          </div>
 
-        <div className="flex items-center gap-3 text-slate-300">
-          <Lock className="w-3.5 h-3.5 text-[#0099FF]" />
-          <span>ENCRYPTED CLIENT WORKSPACE PORTAL</span>
+          <div className="flex flex-wrap gap-x-4 gap-y-2">
+            <a href="/portal" onClick={(event) => handleLinkClick(event, '/portal')} className="transition-colors hover:text-[#0B0D0F]">
+              Client Login
+            </a>
+            <a href="/admin/login" onClick={(event) => handleLinkClick(event, '/admin/login')} className="transition-colors hover:text-[#0B0D0F]">
+              Admin Login
+            </a>
+          </div>
         </div>
       </div>
     </footer>

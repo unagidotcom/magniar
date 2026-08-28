@@ -22,7 +22,7 @@ export const AboutYouStep: React.FC<AboutYouStepProps> = ({
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-3">
-        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#0099FF] uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#B89A72] uppercase tracking-wider">
           <User className="w-4 h-4" />
           <span>Step 02 / 08 — Contact Information</span>
         </div>
@@ -40,14 +40,14 @@ export const AboutYouStep: React.FC<AboutYouStepProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="block font-sans text-sm font-semibold text-slate-200">
-              First Name <span className="text-[#0099FF]">*</span>
+              First Name <span className="text-[#B89A72]">*</span>
             </label>
             <input
               type="text"
               value={formData.firstName}
               onChange={(e) => onChange({ firstName: e.target.value })}
               placeholder="e.g. Alexandra"
-              className={`w-full px-4 py-3.5 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all ${
+              className={`w-full px-4 py-3.5 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all ${
                 errors.firstName ? 'border-red-500/80 bg-red-950/20' : 'border-white/15'
               }`}
             />
@@ -60,14 +60,14 @@ export const AboutYouStep: React.FC<AboutYouStepProps> = ({
 
           <div className="space-y-2">
             <label className="block font-sans text-sm font-semibold text-slate-200">
-              Last Name <span className="text-[#0099FF]">*</span>
+              Last Name <span className="text-[#B89A72]">*</span>
             </label>
             <input
               type="text"
               value={formData.lastName}
               onChange={(e) => onChange({ lastName: e.target.value })}
               placeholder="e.g. Vance"
-              className={`w-full px-4 py-3.5 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all ${
+              className={`w-full px-4 py-3.5 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all ${
                 errors.lastName ? 'border-red-500/80 bg-red-950/20' : 'border-white/15'
               }`}
             />
@@ -84,7 +84,7 @@ export const AboutYouStep: React.FC<AboutYouStepProps> = ({
           <div className="space-y-2">
             <label className="block font-sans text-sm font-semibold text-slate-200 flex items-center justify-between">
               <span>
-                Work Email <span className="text-[#0099FF]">*</span>
+                Work Email <span className="text-[#B89A72]">*</span>
               </span>
               <Mail className="w-4 h-4 text-slate-400" />
             </label>
@@ -93,7 +93,7 @@ export const AboutYouStep: React.FC<AboutYouStepProps> = ({
               value={formData.email}
               onChange={(e) => onChange({ email: e.target.value })}
               placeholder="alexandra@company.com"
-              className={`w-full px-4 py-3.5 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all ${
+              className={`w-full px-4 py-3.5 bg-[#050505] border rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all ${
                 errors.email ? 'border-red-500/80 bg-red-950/20' : 'border-white/15'
               }`}
             />
@@ -118,7 +118,7 @@ export const AboutYouStep: React.FC<AboutYouStepProps> = ({
               value={formData.phone || ''}
               onChange={(e) => onChange({ phone: e.target.value })}
               placeholder="+1 (555) 000-0000"
-              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all"
+              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all"
             />
             <p className="font-sans text-xs text-slate-400">
               Optional. Helpful for scheduling quick context syncs.
@@ -131,7 +131,7 @@ export const AboutYouStep: React.FC<AboutYouStepProps> = ({
           <div className="space-y-2">
             <label className="block font-sans text-sm font-semibold text-slate-200 flex items-center justify-between">
               <span>
-                Country / Primary Region <span className="text-[#0099FF]">*</span>
+                Country / Primary Region <span className="text-[#B89A72]">*</span>
               </span>
               <Globe className="w-4 h-4 text-slate-400" />
             </label>
@@ -140,18 +140,18 @@ export const AboutYouStep: React.FC<AboutYouStepProps> = ({
               value={formData.country}
               onChange={(e) => onChange({ country: e.target.value })}
               placeholder="e.g. United States, United Kingdom, Singapore"
-              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all"
+              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white placeholder-slate-500 focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all"
             />
           </div>
 
           <div className="space-y-2">
             <label className="block font-sans text-sm font-semibold text-slate-200">
-              Your Role in the Organization <span className="text-[#0099FF]">*</span>
+              Your Role in the Organization <span className="text-[#B89A72]">*</span>
             </label>
             <select
               value={formData.role}
               onChange={(e) => onChange({ role: e.target.value })}
-              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white focus:outline-none focus:border-[#0099FF] focus:ring-1 focus:ring-[#0099FF] transition-all cursor-pointer"
+              className="w-full px-4 py-3.5 bg-[#050505] border border-white/15 rounded-lg font-sans text-base text-white focus:outline-none focus:border-[#B89A72] focus:ring-1 focus:ring-[#B89A72] transition-all cursor-pointer"
             >
               {ROLE_OPTIONS.map((r) => (
                 <option key={r} value={r} className="bg-[#080A0D] text-white">
@@ -165,7 +165,7 @@ export const AboutYouStep: React.FC<AboutYouStepProps> = ({
 
       {/* Security Privacy Reassurance */}
       <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 flex items-center gap-3 font-sans text-xs sm:text-sm text-slate-300">
-        <Shield className="w-4 h-4 text-[#0099FF] flex-shrink-0" />
+        <Shield className="w-4 h-4 text-[#B89A72] flex-shrink-0" />
         <span>Your contact details are strictly confidential and will never be shared or used for unsolicited marketing.</span>
       </div>
 
@@ -187,7 +187,7 @@ export const AboutYouStep: React.FC<AboutYouStepProps> = ({
         <button
           type="button"
           onClick={onNext}
-          className="px-8 py-4 rounded-lg bg-[#0099FF] hover:bg-[#0088EE] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(0,153,255,0.35)] hover:shadow-[0_0_30px_rgba(0,153,255,0.5)]"
+          className="px-8 py-4 rounded-lg bg-[#B89A72] hover:bg-[#8F714D] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(184,154,114,0.35)] hover:shadow-[0_0_30px_rgba(184,154,114,0.5)]"
         >
           <span>Continue to Company Details</span>
           <ArrowRight className="w-4 h-4" />

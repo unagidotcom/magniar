@@ -17,14 +17,14 @@ export const AboutCTA: React.FC<AboutCTAProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <div className="max-w-4xl mx-auto space-y-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0099FF]/10 text-[#0099FF] border border-[#0099FF]/30 font-mono text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#B89A72]/10 text-[#B89A72] border border-[#B89A72]/30 font-mono text-xs font-semibold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
             <span>DISCOVERY INTAKE READY</span>
           </div>
 
           <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white uppercase tracking-tight leading-[0.95]">
             READY TO BUILD <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#0099FF] to-[#0099FF]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#B89A72] to-[#B89A72]">
               WHAT'S NEXT?
             </span>
           </h2>
@@ -36,7 +36,7 @@ export const AboutCTA: React.FC<AboutCTAProps> = ({
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <button
               onClick={onStartProject}
-              className="px-8 py-4 bg-[#0099FF] text-white font-mono text-xs font-bold uppercase tracking-widest hover:bg-[#0088EE] transition-all flex items-center gap-2 shadow-[0_0_30px_rgba(0,153,255,0.3)] cursor-pointer group"
+              className="px-8 py-4 bg-[#B89A72] text-white font-mono text-xs font-bold uppercase tracking-widest hover:bg-[#8F714D] transition-all flex items-center gap-2 shadow-[0_0_30px_rgba(184,154,114,0.3)] cursor-pointer group"
             >
               <span>START A PROJECT</span>
               <ArrowDownRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform" />

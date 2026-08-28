@@ -8,7 +8,7 @@ export const GridLayoutSection: React.FC = () => {
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-2">
-        <div className="font-mono text-xs uppercase tracking-wider text-[#0099FF] flex items-center gap-2">
+        <div className="font-mono text-xs uppercase tracking-wider text-[#B89A72] flex items-center gap-2">
           <span>03 / GRID, LAYOUT & CONTAINER SYSTEM</span>
           <span className="h-[1px] flex-1 bg-white/10" />
         </div>
@@ -24,14 +24,14 @@ export const GridLayoutSection: React.FC = () => {
       <div className="rounded-xl border border-white/10 bg-[#0A0C0F] p-6 space-y-4">
         <div className="flex items-center justify-between font-mono text-xs text-[#8D949E]">
           <span className="flex items-center gap-2 text-white">
-            <Maximize className="h-4 w-4 text-[#0099FF]" />
+            <Maximize className="h-4 w-4 text-[#B89A72]" />
             1440PX CONTAINER SPECIFICATION VISUALIZER
           </span>
-          <span className="text-[#0099FF]">MAX_WIDTH: 1440PX</span>
+          <span className="text-[#B89A72]">MAX_WIDTH: 1440PX</span>
         </div>
 
         {/* Container Graphic Box */}
-        <div className="relative overflow-hidden rounded-lg border border-[#0099FF]/30 bg-[#050505] p-4 text-center">
+        <div className="relative overflow-hidden rounded-lg border border-[#B89A72]/30 bg-[#050505] p-4 text-center">
           {/* Simulated Grid Overlay Inside Graphic Box */}
           {selectedGridStyle !== 'none' && (
             <div className={`absolute inset-0 opacity-40 pointer-events-none ${
@@ -39,8 +39,8 @@ export const GridLayoutSection: React.FC = () => {
             }`} />
           )}
 
-          <div className="relative z-10 mx-auto max-w-[1440px] rounded border border-dashed border-[#0099FF]/60 bg-[#0A0C0F]/80 p-8 space-y-2">
-            <div className="font-mono text-xs text-[#0099FF] font-semibold">
+          <div className="relative z-10 mx-auto max-w-[1440px] rounded border border-dashed border-[#B89A72]/60 bg-[#0A0C0F]/80 p-8 space-y-2">
+            <div className="font-mono text-xs text-[#B89A72] font-semibold">
               MAX CONTENT CONTAINER BOUNDARY (1440px)
             </div>
             <p className="text-xs text-[#8D949E] max-w-xl mx-auto">
@@ -56,8 +56,8 @@ export const GridLayoutSection: React.FC = () => {
             <button
               onClick={() => setSelectedGridStyle('standard')}
               className={`px-3 py-1 rounded text-xs font-mono border transition-colors ${
-                selectedGridStyle === 'standard' 
-                  ? 'bg-[#0099FF]/20 text-[#0099FF] border-[#0099FF]/40' 
+                selectedGridStyle === 'standard'
+                  ? 'bg-[#B89A72]/20 text-[#B89A72] border-[#B89A72]/40'
                   : 'bg-[#050505] text-[#8D949E] border-white/10'
               }`}
             >
@@ -66,8 +66,8 @@ export const GridLayoutSection: React.FC = () => {
             <button
               onClick={() => setSelectedGridStyle('dense')}
               className={`px-3 py-1 rounded text-xs font-mono border transition-colors ${
-                selectedGridStyle === 'dense' 
-                  ? 'bg-[#0099FF]/20 text-[#0099FF] border-[#0099FF]/40' 
+                selectedGridStyle === 'dense'
+                  ? 'bg-[#B89A72]/20 text-[#B89A72] border-[#B89A72]/40'
                   : 'bg-[#050505] text-[#8D949E] border-white/10'
               }`}
             >
@@ -76,8 +76,8 @@ export const GridLayoutSection: React.FC = () => {
             <button
               onClick={() => setSelectedGridStyle('none')}
               className={`px-3 py-1 rounded text-xs font-mono border transition-colors ${
-                selectedGridStyle === 'none' 
-                  ? 'bg-[#0099FF]/20 text-[#0099FF] border-[#0099FF]/40' 
+                selectedGridStyle === 'none'
+                  ? 'bg-[#B89A72]/20 text-[#B89A72] border-[#B89A72]/40'
                   : 'bg-[#050505] text-[#8D949E] border-white/10'
               }`}
             >
@@ -96,7 +96,7 @@ export const GridLayoutSection: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="rounded-xl border border-white/10 bg-[#0A0C0F] p-4 space-y-2">
             <div className="flex items-center justify-between font-mono text-xs text-[#8D949E]">
-              <span className="flex items-center gap-1.5"><Smartphone className="h-4 w-4 text-[#0099FF]" /> Mobile</span>
+              <span className="flex items-center gap-1.5"><Smartphone className="h-4 w-4 text-[#B89A72]" /> Mobile</span>
               <span className="text-white">375px+</span>
             </div>
             <div className="text-xs text-[#8D949E] font-mono">Padding: 16px (1.0rem)</div>
@@ -105,7 +105,7 @@ export const GridLayoutSection: React.FC = () => {
 
           <div className="rounded-xl border border-white/10 bg-[#0A0C0F] p-4 space-y-2">
             <div className="flex items-center justify-between font-mono text-xs text-[#8D949E]">
-              <span className="flex items-center gap-1.5"><Tablet className="h-4 w-4 text-[#0099FF]" /> Tablet</span>
+              <span className="flex items-center gap-1.5"><Tablet className="h-4 w-4 text-[#B89A72]" /> Tablet</span>
               <span className="text-white">768px+</span>
             </div>
             <div className="text-xs text-[#8D949E] font-mono">Padding: 32px (2.0rem)</div>
@@ -114,15 +114,15 @@ export const GridLayoutSection: React.FC = () => {
 
           <div className="rounded-xl border border-white/10 bg-[#0A0C0F] p-4 space-y-2">
             <div className="flex items-center justify-between font-mono text-xs text-[#8D949E]">
-              <span className="flex items-center gap-1.5"><Monitor className="h-4 w-4 text-[#0099FF]" /> Laptop</span>
+              <span className="flex items-center gap-1.5"><Monitor className="h-4 w-4 text-[#B89A72]" /> Laptop</span>
               <span className="text-white">1024px+</span>
             </div>
             <div className="text-xs text-[#8D949E] font-mono">Padding: 48px (3.0rem)</div>
             <p className="text-[11px] text-[#5A626E]">3-column grid layouts, persistent sidebars.</p>
           </div>
 
-          <div className="rounded-xl border border-[#0099FF]/30 bg-[#0A0C0F] p-4 space-y-2">
-            <div className="flex items-center justify-between font-mono text-xs text-[#0099FF]">
+          <div className="rounded-xl border border-[#B89A72]/30 bg-[#0A0C0F] p-4 space-y-2">
+            <div className="flex items-center justify-between font-mono text-xs text-[#B89A72]">
               <span className="flex items-center gap-1.5"><Monitor className="h-4 w-4" /> Desktop Target</span>
               <span className="text-white font-bold">1440px</span>
             </div>

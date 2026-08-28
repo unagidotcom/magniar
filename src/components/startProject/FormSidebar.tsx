@@ -12,10 +12,10 @@ export const FormSidebar: React.FC<FormSidebarProps> = ({ currentStep }) => {
       <div className="bg-[#080A0D] border border-white/10 p-6 rounded-xl space-y-5 shadow-xl">
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-2.5 font-sans text-sm font-bold text-white tracking-wide">
-            <Clock className="w-4 h-4 text-[#0099FF]" />
+            <Clock className="w-4 h-4 text-[#B89A72]" />
             <span>Consultation Process</span>
           </div>
-          <span className="font-sans text-[11px] font-semibold text-[#0099FF] bg-[#0099FF]/10 px-2.5 py-1 rounded-full border border-[#0099FF]/25">
+          <span className="font-sans text-[11px] font-semibold text-[#B89A72] bg-[#B89A72]/10 px-2.5 py-1 rounded-full border border-[#B89A72]/25">
             4-Step Guide
           </span>
         </div>
@@ -28,7 +28,7 @@ export const FormSidebar: React.FC<FormSidebarProps> = ({ currentStep }) => {
         <div className="space-y-3 font-sans text-xs">
           {/* Step 01 */}
           <div className="flex items-start gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/5">
-            <span className="font-bold text-[#0099FF] bg-[#0099FF]/10 px-2 py-0.5 rounded text-xs flex-shrink-0">
+            <span className="font-bold text-[#B89A72] bg-[#B89A72]/10 px-2 py-0.5 rounded text-xs flex-shrink-0">
               01
             </span>
             <div className="space-y-0.5">
@@ -41,7 +41,7 @@ export const FormSidebar: React.FC<FormSidebarProps> = ({ currentStep }) => {
 
           {/* Step 02 */}
           <div className="flex items-start gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/5">
-            <span className="font-bold text-[#0099FF] bg-[#0099FF]/10 px-2 py-0.5 rounded text-xs flex-shrink-0">
+            <span className="font-bold text-[#B89A72] bg-[#B89A72]/10 px-2 py-0.5 rounded text-xs flex-shrink-0">
               02
             </span>
             <div className="space-y-0.5">
@@ -54,7 +54,7 @@ export const FormSidebar: React.FC<FormSidebarProps> = ({ currentStep }) => {
 
           {/* Step 03 */}
           <div className="flex items-start gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/5">
-            <span className="font-bold text-[#0099FF] bg-[#0099FF]/10 px-2 py-0.5 rounded text-xs flex-shrink-0">
+            <span className="font-bold text-[#B89A72] bg-[#B89A72]/10 px-2 py-0.5 rounded text-xs flex-shrink-0">
               03
             </span>
             <div className="space-y-0.5">
@@ -67,7 +67,7 @@ export const FormSidebar: React.FC<FormSidebarProps> = ({ currentStep }) => {
 
           {/* Step 04 */}
           <div className="flex items-start gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/5">
-            <span className="font-bold text-[#0099FF] bg-[#0099FF]/10 px-2 py-0.5 rounded text-xs flex-shrink-0">
+            <span className="font-bold text-[#B89A72] bg-[#B89A72]/10 px-2 py-0.5 rounded text-xs flex-shrink-0">
               04
             </span>
             <div className="space-y-0.5">
@@ -81,7 +81,7 @@ export const FormSidebar: React.FC<FormSidebarProps> = ({ currentStep }) => {
 
         {/* Guarantee */}
         <div className="pt-2 border-t border-white/10 flex items-center gap-2 text-xs font-sans text-slate-300">
-          <CheckCircle2 className="w-4 h-4 text-[#0099FF] flex-shrink-0" />
+          <CheckCircle2 className="w-4 h-4 text-[#B89A72] flex-shrink-0" />
           <span>No automated sales pitch. Direct partner attention.</span>
         </div>
       </div>
@@ -89,7 +89,7 @@ export const FormSidebar: React.FC<FormSidebarProps> = ({ currentStep }) => {
       {/* PRIVACY & DATA SECURITY CARD */}
       <div className="bg-[#080A0D] border border-white/10 p-5 rounded-xl space-y-2.5 font-sans text-xs">
         <div className="flex items-center gap-2 text-white font-semibold">
-          <Lock className="w-4 h-4 text-[#0099FF]" />
+          <Lock className="w-4 h-4 text-[#B89A72]" />
           <span>Data Privacy & Confidentiality</span>
         </div>
         <p className="text-slate-400 leading-relaxed text-xs">

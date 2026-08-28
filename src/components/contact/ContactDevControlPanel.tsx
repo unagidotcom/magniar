@@ -22,7 +22,7 @@ export const ContactDevControlPanel: React.FC<ContactDevControlPanelProps> = ({
   return (
     <div className="bg-[#0A0D12] border-b border-white/10 p-3 text-xs font-mono text-[#8D949E] flex flex-wrap items-center justify-between gap-4">
       <div className="flex items-center gap-3">
-        <span className="text-[#0099FF] font-bold flex items-center gap-1.5">
+        <span className="text-[#B89A72] font-bold flex items-center gap-1.5">
           <Sparkles className="w-3.5 h-3.5" />
           CH 12 CONVERSION DEV CONTROL
         </span>
@@ -33,7 +33,7 @@ export const ContactDevControlPanel: React.FC<ContactDevControlPanelProps> = ({
           <button
             onClick={() => onViewChange('contact')}
             className={`px-2.5 py-1 rounded-[2px] transition-colors cursor-pointer ${
-              activeView === 'contact' ? 'bg-[#0099FF] text-white font-bold' : 'hover:text-white'
+              activeView === 'contact' ? 'bg-[#B89A72] text-white font-bold' : 'hover:text-white'
             }`}
           >
             /contact
@@ -41,7 +41,7 @@ export const ContactDevControlPanel: React.FC<ContactDevControlPanelProps> = ({
           <button
             onClick={() => onViewChange('schedule')}
             className={`px-2.5 py-1 rounded-[2px] transition-colors cursor-pointer ${
-              activeView === 'schedule' ? 'bg-[#0099FF] text-white font-bold' : 'hover:text-white'
+              activeView === 'schedule' ? 'bg-[#B89A72] text-white font-bold' : 'hover:text-white'
             }`}
           >
             /schedule/demo
@@ -49,7 +49,7 @@ export const ContactDevControlPanel: React.FC<ContactDevControlPanelProps> = ({
           <button
             onClick={() => onViewChange('ch12-review')}
             className={`px-2.5 py-1 rounded-[2px] transition-colors cursor-pointer ${
-              activeView === 'ch12-review' ? 'bg-[#0099FF] text-white font-bold' : 'hover:text-white'
+              activeView === 'ch12-review' ? 'bg-[#B89A72] text-white font-bold' : 'hover:text-white'
             }`}
           >
             CH 12 Review
@@ -77,7 +77,7 @@ export const ContactDevControlPanel: React.FC<ContactDevControlPanelProps> = ({
         <button
           onClick={() => onViewportChange('1440px')}
           className={`px-2 py-0.5 rounded-[2px] transition-colors ${
-            currentViewport === '1440px' ? 'bg-[#0099FF] text-white font-bold' : 'hover:text-white'
+            currentViewport === '1440px' ? 'bg-[#B89A72] text-white font-bold' : 'hover:text-white'
           }`}
         >
           <Monitor className="w-3 h-3 inline mr-1" />
@@ -86,7 +86,7 @@ export const ContactDevControlPanel: React.FC<ContactDevControlPanelProps> = ({
         <button
           onClick={() => onViewportChange('1280px')}
           className={`px-2 py-0.5 rounded-[2px] transition-colors ${
-            currentViewport === '1280px' ? 'bg-[#0099FF] text-white font-bold' : 'hover:text-white'
+            currentViewport === '1280px' ? 'bg-[#B89A72] text-white font-bold' : 'hover:text-white'
           }`}
         >
           1280
@@ -94,7 +94,7 @@ export const ContactDevControlPanel: React.FC<ContactDevControlPanelProps> = ({
         <button
           onClick={() => onViewportChange('1024px')}
           className={`px-2 py-0.5 rounded-[2px] transition-colors ${
-            currentViewport === '1024px' ? 'bg-[#0099FF] text-white font-bold' : 'hover:text-white'
+            currentViewport === '1024px' ? 'bg-[#B89A72] text-white font-bold' : 'hover:text-white'
           }`}
         >
           1024
@@ -102,7 +102,7 @@ export const ContactDevControlPanel: React.FC<ContactDevControlPanelProps> = ({
         <button
           onClick={() => onViewportChange('768px')}
           className={`px-2 py-0.5 rounded-[2px] transition-colors ${
-            currentViewport === '768px' ? 'bg-[#0099FF] text-white font-bold' : 'hover:text-white'
+            currentViewport === '768px' ? 'bg-[#B89A72] text-white font-bold' : 'hover:text-white'
           }`}
         >
           <Tablet className="w-3 h-3 inline mr-1" />
@@ -111,7 +111,7 @@ export const ContactDevControlPanel: React.FC<ContactDevControlPanelProps> = ({
         <button
           onClick={() => onViewportChange('390px')}
           className={`px-2 py-0.5 rounded-[2px] transition-colors ${
-            currentViewport === '390px' ? 'bg-[#0099FF] text-white font-bold' : 'hover:text-white'
+            currentViewport === '390px' ? 'bg-[#B89A72] text-white font-bold' : 'hover:text-white'
           }`}
         >
           <Smartphone className="w-3 h-3 inline mr-1" />

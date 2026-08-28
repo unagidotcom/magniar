@@ -9,7 +9,7 @@ export const SignalMotifsSection: React.FC = () => {
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-2">
-        <div className="font-mono text-xs uppercase tracking-wider text-[#0099FF] flex items-center gap-2">
+        <div className="font-mono text-xs uppercase tracking-wider text-[#B89A72] flex items-center gap-2">
           <span>07 / MAGNIAR SIGNAL MOTIF VARIATIONS</span>
           <span className="h-[1px] flex-1 bg-white/10" />
         </div>
@@ -29,13 +29,13 @@ export const SignalMotifsSection: React.FC = () => {
             onClick={() => setActiveMotif(motif.id)}
             className={`cursor-pointer rounded-xl border p-5 space-y-4 transition-all duration-200 ${
               activeMotif === motif.id
-                ? 'bg-[#0A0C0F] border-[#0099FF] shadow-[0_0_20px_rgba(0,153,255,0.15)]'
+                ? 'bg-[#0A0C0F] border-[#B89A72] shadow-[0_0_20px_rgba(184,154,114,0.15)]'
                 : 'bg-[#0A0C0F] border-white/10 hover:border-white/20'
             }`}
           >
             <div className="flex items-center justify-between font-mono text-xs">
               <span className="text-white font-medium">{motif.title}</span>
-              <span className="text-[#0099FF] bg-[#0099FF]/10 px-2 py-0.5 rounded border border-[#0099FF]/20">
+              <span className="text-[#B89A72] bg-[#B89A72]/10 px-2 py-0.5 rounded border border-[#B89A72]/20">
                 {motif.asciiVariant}
               </span>
             </div>
@@ -46,7 +46,7 @@ export const SignalMotifsSection: React.FC = () => {
             <div className="p-4 rounded-lg bg-[#050505] border border-white/10 flex items-center justify-center min-h-[64px] relative overflow-hidden">
               {motif.componentType === 'dot' && (
                 <div className="flex items-center gap-2 font-mono text-xs text-white">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#0099FF] animate-magniar-pulse" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#B89A72] animate-magniar-pulse" />
                   <span>● OPERATIONAL SYSTEM NODE</span>
                 </div>
               )}
@@ -54,15 +54,15 @@ export const SignalMotifsSection: React.FC = () => {
               {motif.componentType === 'line' && (
                 <div className="w-full flex items-center gap-2 font-mono text-xs text-[#8D949E]">
                   <span className="text-white/20">┄┄┄┄</span>
-                  <span className="w-2 h-2 rounded-full bg-[#0099FF] animate-magniar-pulse" />
-                  <span className="h-[1px] flex-1 bg-[#0099FF]/40" />
-                  <span className="text-[#0099FF] text-[10px]">LIVE REVENUE PIPELINE</span>
+                  <span className="w-2 h-2 rounded-full bg-[#B89A72] animate-magniar-pulse" />
+                  <span className="h-[1px] flex-1 bg-[#B89A72]/40" />
+                  <span className="text-[#B89A72] text-[10px]">LIVE REVENUE PIPELINE</span>
                 </div>
               )}
 
               {motif.componentType === 'badge' && (
-                <div className="inline-flex items-center gap-2 rounded border border-[#0099FF]/40 bg-[#0099FF]/10 px-3 py-1 font-mono text-xs text-[#0099FF]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF] animate-magniar-pulse" />
+                <div className="inline-flex items-center gap-2 rounded border border-[#B89A72]/40 bg-[#B89A72]/10 px-3 py-1 font-mono text-xs text-[#B89A72]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72] animate-magniar-pulse" />
                   <span>[ SYSTEM / LIVE INTEL ]</span>
                 </div>
               )}
@@ -70,11 +70,11 @@ export const SignalMotifsSection: React.FC = () => {
               {motif.componentType === 'scan' && (
                 <div className="w-full space-y-1">
                   <div className="h-1 w-full bg-[#0A0C0F] rounded overflow-hidden relative">
-                    <div className="absolute top-0 bottom-0 w-1/3 bg-gradient-to-r from-transparent via-[#0099FF] to-transparent animate-signal-scan" />
+                    <div className="absolute top-0 bottom-0 w-1/3 bg-gradient-to-r from-transparent via-[#B89A72] to-transparent animate-signal-scan" />
                   </div>
                   <div className="flex justify-between font-mono text-[10px] text-[#5A626E]">
                     <span>RECALCULATING ATTRIBUTION</span>
-                    <span className="text-[#0099FF]">SYNC_BEAM_ACTIVE</span>
+                    <span className="text-[#B89A72]">SYNC_BEAM_ACTIVE</span>
                   </div>
                 </div>
               )}

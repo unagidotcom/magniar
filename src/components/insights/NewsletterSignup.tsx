@@ -15,12 +15,12 @@ export function NewsletterSignup() {
   return (
     <div className="bg-[#0A0C0F] border border-white/10 rounded-[2px] p-8 sm:p-12 relative overflow-hidden my-12">
       {/* Background Accent Lines */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-[#0099FF]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-64 h-64 bg-[#B89A72]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-3xl mx-auto space-y-6 relative z-10 text-center sm:text-left">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
           <div className="space-y-1">
-            <span className="px-2.5 py-0.5 bg-[#0099FF]/10 text-[#0099FF] border border-[#0099FF]/30 font-mono text-[10px] font-semibold rounded-[2px] uppercase tracking-wider inline-flex items-center gap-1.5">
+            <span className="px-2.5 py-0.5 bg-[#B89A72]/10 text-[#B89A72] border border-[#B89A72]/30 font-mono text-[10px] font-semibold rounded-[2px] uppercase tracking-wider inline-flex items-center gap-1.5">
               <Mail className="w-3 h-3" />
               EDITORIAL DISPATCH
             </span>
@@ -47,11 +47,11 @@ export function NewsletterSignup() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="ENTER YOUR WORK EMAIL ADDRESS..."
               required
-              className="flex-1 bg-[#050505] border border-white/15 focus:border-[#0099FF] text-[#F5F7FA] placeholder-[#5A626E] font-mono text-xs px-4 py-3 rounded-[2px] focus:outline-none transition-colors"
+              className="flex-1 bg-[#050505] border border-white/15 focus:border-[#B89A72] text-[#F5F7FA] placeholder-[#5A626E] font-mono text-xs px-4 py-3 rounded-[2px] focus:outline-none transition-colors"
             />
             <button
               type="submit"
-              className="px-6 py-3 bg-[#0099FF] hover:bg-[#0088EE] text-white font-mono text-xs font-semibold rounded-[2px] transition-colors flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wider"
+              className="px-6 py-3 bg-[#B89A72] hover:bg-[#8F714D] text-white font-mono text-xs font-semibold rounded-[2px] transition-colors flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wider"
             >
               <span>SUBSCRIBE</span>
               <ArrowRight className="w-3.5 h-3.5" />

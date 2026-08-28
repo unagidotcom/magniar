@@ -21,10 +21,10 @@ export const CapabilitiesDevControlPanel: React.FC<CapabilitiesDevControlPanelPr
   onPillarFilterChange,
 }) => {
   return (
-    <div className="p-4 rounded-[2px] bg-[#0A0D12] border border-[#0099FF]/40 text-xs font-mono space-y-4 shadow-xl">
+    <div className="p-4 rounded-[2px] bg-[#0A0D12] border border-[#B89A72]/40 text-xs font-mono space-y-4 shadow-xl">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
-        <div className="flex items-center gap-2 text-[#0099FF] font-bold tracking-wider">
-          <Sliders className="w-4 h-4 text-[#0099FF]" />
+        <div className="flex items-center gap-2 text-[#B89A72] font-bold tracking-wider">
+          <Sliders className="w-4 h-4 text-[#B89A72]" />
           <span>CHAPTER 05 CAPABILITIES DEV & VIEW CONTROL PANEL</span>
         </div>
         <div className="text-[10px] text-[#8D949E]">
@@ -43,7 +43,7 @@ export const CapabilitiesDevControlPanel: React.FC<CapabilitiesDevControlPanelPr
               onClick={() => onViewModeChange('homepage')}
               className={`flex-1 py-1.5 px-2 rounded-[2px] border text-[11px] font-bold cursor-pointer transition-all ${
                 activeViewMode === 'homepage'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF]'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72]'
                   : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
               }`}
             >
@@ -53,7 +53,7 @@ export const CapabilitiesDevControlPanel: React.FC<CapabilitiesDevControlPanelPr
               onClick={() => onViewModeChange('capabilities-page')}
               className={`flex-1 py-1.5 px-2 rounded-[2px] border text-[11px] font-bold cursor-pointer transition-all ${
                 activeViewMode === 'capabilities-page'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF]'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72]'
                   : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
               }`}
             >
@@ -80,7 +80,7 @@ export const CapabilitiesDevControlPanel: React.FC<CapabilitiesDevControlPanelPr
                 onClick={() => onViewportChange(vp.id as ViewportMode)}
                 className={`py-1 px-2 rounded-[2px] border text-[10px] cursor-pointer ${
                   currentViewport === vp.id
-                    ? 'bg-[#0099FF] text-white border-[#0099FF] font-bold'
+                    ? 'bg-[#B89A72] text-white border-[#B89A72] font-bold'
                     : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
                 }`}
               >
@@ -102,7 +102,7 @@ export const CapabilitiesDevControlPanel: React.FC<CapabilitiesDevControlPanelPr
                 onClick={() => onPillarFilterChange(p as CapabilityPillarId | 'all')}
                 className={`py-1 px-2 rounded-[2px] border text-[10px] uppercase cursor-pointer ${
                   activePillarFilter === p
-                    ? 'bg-[#0099FF] text-white border-[#0099FF] font-bold'
+                    ? 'bg-[#B89A72] text-white border-[#B89A72] font-bold'
                     : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
                 }`}
               >

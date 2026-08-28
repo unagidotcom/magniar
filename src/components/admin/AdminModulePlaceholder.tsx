@@ -183,6 +183,10 @@ export const AdminModulePlaceholder: React.FC<AdminModulePlaceholderProps> = ({
     primaryLabel = 'Save Configuration';
   }
 
+  if (route !== 'requests') {
+    primaryLabel = '';
+  }
+
   // Filtered records rendering for table views
   const renderTableContent = () => {
     if (route === 'requests') {
@@ -262,6 +266,13 @@ export const AdminModulePlaceholder: React.FC<AdminModulePlaceholderProps> = ({
         </div>
       );
     }
+
+    return (
+      <AdminEmptyState
+        title={`${routeFormatted} Not Migrated Yet`}
+        description="This module is not connected to a production database workflow yet."
+      />
+    );
 
     if (route === 'prospects') {
       return (

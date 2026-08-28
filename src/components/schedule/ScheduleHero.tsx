@@ -9,13 +9,13 @@ export const ScheduleHero: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-4xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0099FF]/10 border border-[#0099FF]/30 text-[#0099FF] font-mono text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#B89A72]/10 border border-[#B89A72]/30 text-[#B89A72] font-mono text-xs font-semibold uppercase tracking-wider">
             <Calendar className="w-3.5 h-3.5" />
             <span>QUALIFIED PROSPECT SCHEDULING INVITATION</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-[0.95]">
-            LET'S FIND <span className="text-[#0099FF]">A TIME.</span>
+            LET'S FIND <span className="text-[#B89A72]">A TIME.</span>
           </h1>
 
           <p className="text-lg sm:text-2xl text-[#8D949E] font-light leading-relaxed max-w-3xl">
@@ -25,7 +25,7 @@ export const ScheduleHero: React.FC = () => {
           {/* Call Details Card */}
           <div className="p-6 bg-[#080B10] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-2">
-              <div className="flex items-center gap-3 font-mono text-xs text-[#0099FF] font-bold">
+              <div className="flex items-center gap-3 font-mono text-xs text-[#B89A72] font-bold">
                 <Clock className="w-4 h-4" />
                 <span>DISCOVERY CALL • 30 MINUTES</span>
               </div>
@@ -35,7 +35,7 @@ export const ScheduleHero: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-2 font-mono text-[11px] text-[#8D949E] shrink-0 border-t md:border-t-0 md:border-l border-white/10 pt-3 md:pt-0 md:pl-6">
-              <ShieldCheck className="w-4 h-4 text-[#0099FF]" />
+              <ShieldCheck className="w-4 h-4 text-[#B89A72]" />
               <span>INVITATION ONLY PROTOCOL</span>
             </div>
           </div>

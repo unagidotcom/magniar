@@ -3,20 +3,13 @@ import {
   LayoutDashboard,
   Inbox,
   Users,
-  Briefcase,
-  Compass,
+  Globe,
   FileText,
-  DollarSign,
-  BarChart3,
-  Layers,
-  Shield,
   Settings,
   LogOut,
   X,
-  Sparkles,
-  UserCheck,
-  Radio,
 } from 'lucide-react';
+import { AdminDisplayProfile, initialsForName } from '../../services/adminProfileService';
 
 interface AdminSidebarProps {
   currentRoute: string;
@@ -25,6 +18,7 @@ interface AdminSidebarProps {
   onSignOut: () => void;
   mobileOpen: boolean;
   onMobileClose: () => void;
+  adminProfile: AdminDisplayProfile;
 }
 
 export const AdminSidebar: React.FC<AdminSidebarProps> = ({
@@ -34,6 +28,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   onSignOut,
   mobileOpen,
   onMobileClose,
+  adminProfile,
 }) => {
   const sections = [
     {
@@ -52,27 +47,14 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           badge: openRequestsCount > 0 ? `${openRequestsCount} NEW` : undefined,
           badgeColor: 'bg-[#0099FF]/20 text-[#0099FF]',
         },
-        { id: 'prospects', label: 'Prospects CRM', icon: UserCheck },
         { id: 'clients', label: 'Clients Directory', icon: Users },
-        { id: 'projects', label: 'Active Projects', icon: Briefcase },
-        { id: 'campaigns', label: 'Campaigns & Channels', icon: Radio },
+        { id: 'websites', label: 'Websites', icon: Globe },
       ],
     },
     {
-      groupLabel: 'FINANCE & OPS',
+      groupLabel: 'FINANCE',
       items: [
-        { id: 'strategies', label: 'Strategies & Plans', icon: Compass },
-        { id: 'proposals', label: 'Proposals', icon: Layers },
         { id: 'invoices', label: 'Invoices & Billing', icon: FileText },
-        { id: 'payments', label: 'Payments Ledger', icon: DollarSign },
-      ],
-    },
-    {
-      groupLabel: 'INTELLIGENCE',
-      items: [
-        { id: 'reports', label: 'Reports & Analytics', icon: BarChart3 },
-        { id: 'content', label: 'Content CMS', icon: Sparkles },
-        { id: 'team', label: 'Team Directory', icon: Shield },
       ],
     },
     {
@@ -163,14 +145,14 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="w-8 h-8 rounded-full bg-[#0099FF]/20 border border-[#0099FF]/40 flex items-center justify-center font-mono text-xs font-bold text-[#0099FF] shrink-0">
-              KV
+              {initialsForName(adminProfile.displayName)}
             </div>
             <div className="min-w-0 space-y-0.5">
               <div className="font-display text-xs font-semibold text-white truncate">
-                Kaelen Voss
+                {adminProfile.displayName}
               </div>
               <div className="font-mono text-[10px] text-white/40 truncate">
-                Super Admin
+                {adminProfile.roleLabel}
               </div>
             </div>
           </div>
@@ -190,7 +172,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:block lg:w-64 shrink-0 border-r border-white/10 h-screen sticky top-0 z-30">
+      <aside className="hidden lg:block lg:w-64 shrink-0 border-r border-white/10 h-screen sticky top-0 self-start z-30">
         {sidebarContent}
       </aside>
 

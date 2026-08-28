@@ -14,13 +14,13 @@ export const CapabilitiesDesignReview: React.FC = () => {
   return (
     <div className="space-y-10 py-6 max-w-5xl mx-auto">
       {/* Chapter 05 Specification Review Header */}
-      <div className="p-6 rounded-[2px] bg-[#0A0D12] border border-[#0099FF]/40 space-y-3">
+      <div className="p-6 rounded-[2px] bg-[#0A0D12] border border-[#B89A72]/40 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
-          <span className="text-[#0099FF] font-bold tracking-widest flex items-center gap-2">
-            <Terminal className="w-4 h-4 text-[#0099FF]" />
+          <span className="text-[#B89A72] font-bold tracking-widest flex items-center gap-2">
+            <Terminal className="w-4 h-4 text-[#B89A72]" />
             CHAPTER 05 REVISION — CAPABILITIES & SERVICES ARCHITECTURE
           </span>
-          <span className="px-2 py-0.5 rounded bg-[#0099FF]/20 text-[#0099FF] text-[10px] font-semibold border border-[#0099FF]/40">
+          <span className="px-2 py-0.5 rounded bg-[#B89A72]/20 text-[#B89A72] text-[10px] font-semibold border border-[#B89A72]/40">
             SPECIFICATION VERIFIED
           </span>
         </div>
@@ -31,8 +31,8 @@ export const CapabilitiesDesignReview: React.FC = () => {
 
       {/* Interactive Capabilities Data & Service Inspector */}
       <div className="p-6 rounded-[2px] bg-[#07090D] border border-white/10 space-y-6">
-        <div className="font-mono text-xs text-[#0099FF] tracking-wider uppercase flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-[#0099FF]" />
+        <div className="font-mono text-xs text-[#B89A72] tracking-wider uppercase flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-[#B89A72]" />
           <span>CAPABILITIES DATA & SERVICE CARD INSPECTOR</span>
         </div>
 
@@ -47,7 +47,7 @@ export const CapabilitiesDesignReview: React.FC = () => {
               }}
               className={`p-3 rounded-[2px] border text-left cursor-pointer transition-all ${
                 activeInspectorPillar === p.id
-                  ? 'bg-[#0099FF] text-white border-[#0099FF] font-bold shadow-[0_0_12px_rgba(0,153,255,0.4)]'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72] font-bold shadow-[0_0_12px_rgba(184,154,114,0.4)]'
                   : 'bg-[#030508] text-[#8D949E] border-white/10 hover:text-white'
               }`}
             >
@@ -61,7 +61,7 @@ export const CapabilitiesDesignReview: React.FC = () => {
         <div className="p-4 rounded-[2px] bg-[#030508] border border-white/10 space-y-4">
           <div className="font-mono text-xs text-[#5A626E] uppercase tracking-wider flex justify-between">
             <span>INSPECTING SERVICE ITEM FROM [{activePillar.title}]</span>
-            <span className="text-[#0099FF] font-bold">STATUS: {activeService.status}</span>
+            <span className="text-[#B89A72] font-bold">STATUS: {activeService.status}</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
@@ -74,7 +74,7 @@ export const CapabilitiesDesignReview: React.FC = () => {
                     onClick={() => setSelectedServiceId(svc.id)}
                     className={`w-full text-left px-2.5 py-1.5 rounded-[2px] border text-[11px] transition-all cursor-pointer ${
                       activeService.id === svc.id
-                        ? 'bg-[#0099FF]/20 text-[#0099FF] border-[#0099FF]'
+                        ? 'bg-[#B89A72]/20 text-[#B89A72] border-[#B89A72]'
                         : 'bg-[#0A0D12] text-[#8D949E] border-white/5 hover:text-white'
                     }`}
                   >
@@ -86,7 +86,7 @@ export const CapabilitiesDesignReview: React.FC = () => {
 
             <div className="md:col-span-2 p-4 rounded bg-[#05070A] border border-white/10 space-y-3 font-sans text-xs">
               <div className="flex items-center justify-between font-mono text-xs">
-                <span className="text-[#0099FF] font-bold">{activeService.title}</span>
+                <span className="text-[#B89A72] font-bold">{activeService.title}</span>
                 <span className="text-[10px] text-[#8D949E]">ID: {activeService.id}</span>
               </div>
 
@@ -100,7 +100,7 @@ export const CapabilitiesDesignReview: React.FC = () => {
 
               <div className="pt-2 border-t border-white/10 flex justify-between items-center font-mono text-xs">
                 <span className="text-[#5A626E]">CTA: {activeService.ctaText}</span>
-                <button className="px-3 py-1 bg-[#0099FF] text-white rounded-[2px] font-bold uppercase text-[10px]">
+                <button className="px-3 py-1 bg-[#B89A72] text-white rounded-[2px] font-bold uppercase text-[10px]">
                   SIMULATE CLICK →
                 </button>
               </div>
@@ -113,7 +113,7 @@ export const CapabilitiesDesignReview: React.FC = () => {
       <div className="space-y-6">
         <div className="font-mono text-xs text-[#F5F7FA] tracking-wider uppercase border-b border-white/10 pb-2 flex items-center justify-between">
           <span>CHAPTER 05 DESIGN REVIEW — 8 MANDATORY RESPONSES</span>
-          <span className="text-[#0099FF]">VERIFIED</span>
+          <span className="text-[#B89A72]">VERIFIED</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -160,7 +160,7 @@ export const CapabilitiesDesignReview: React.FC = () => {
             }
           ].map((item, idx) => (
             <div key={idx} className="p-4 rounded-[2px] bg-[#07090D] border border-white/10 space-y-2">
-              <div className="font-mono text-xs text-[#0099FF] font-bold">
+              <div className="font-mono text-xs text-[#B89A72] font-bold">
                 {item.num} / {item.q}
               </div>
               <p className="text-xs text-[#8D949E] leading-relaxed font-sans">
@@ -174,28 +174,28 @@ export const CapabilitiesDesignReview: React.FC = () => {
       {/* Component Architecture & CMS Mapping Summary */}
       <div className="p-6 rounded-[2px] bg-[#0A0D12] border border-white/10 space-y-4">
         <div className="font-mono text-xs text-[#F5F7FA] font-bold tracking-wider uppercase flex items-center gap-2">
-          <Database className="w-4 h-4 text-[#0099FF]" />
+          <Database className="w-4 h-4 text-[#B89A72]" />
           <span>CHAPTER 05 COMPONENT ARCHITECTURE & CMS READY DATA MAP</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-[11px]">
           <div className="p-2.5 rounded bg-[#05070A] border border-white/10 space-y-1">
-            <div className="text-[#0099FF] font-bold">CapabilitiesSection</div>
+            <div className="text-[#B89A72] font-bold">CapabilitiesSection</div>
             <div className="text-[10px] text-[#8D949E]">Homepage interactive bento</div>
           </div>
 
           <div className="p-2.5 rounded bg-[#05070A] border border-white/10 space-y-1">
-            <div className="text-[#0099FF] font-bold">CapabilitiesPage</div>
+            <div className="text-[#B89A72] font-bold">CapabilitiesPage</div>
             <div className="text-[10px] text-[#8D949E]">Full /capabilities architecture</div>
           </div>
 
           <div className="p-2.5 rounded bg-[#05070A] border border-white/10 space-y-1">
-            <div className="text-[#0099FF] font-bold">ServiceDetailCard</div>
+            <div className="text-[#B89A72] font-bold">ServiceDetailCard</div>
             <div className="text-[10px] text-[#8D949E]">Reusable service card component</div>
           </div>
 
           <div className="p-2.5 rounded bg-[#05070A] border border-white/10 space-y-1">
-            <div className="text-[#0099FF] font-bold">ConnectedCapabilityMap</div>
+            <div className="text-[#B89A72] font-bold">ConnectedCapabilityMap</div>
             <div className="text-[10px] text-[#8D949E]">Interactive growth loop visual</div>
           </div>
         </div>

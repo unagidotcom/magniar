@@ -36,13 +36,14 @@ export const ActivityFeed: React.FC<ActivityFeedProps> = ({
           </h3>
         </div>
 
-        <span className="font-mono text-[9px] text-amber-400 bg-amber-400/10 border border-amber-400/20 px-1.5 py-0.5 rounded-[2px] uppercase">
-          DEMO DATA
-        </span>
       </div>
 
       <div className="space-y-2 divide-y divide-white/[0.04]">
-        {activities.map((act) => (
+        {activities.length === 0 ? (
+          <div className="p-4 text-xs font-mono text-white/50">
+            No recent live activity yet.
+          </div>
+        ) : activities.map((act) => (
           <div
             key={act.id}
             onClick={() => onActivityClick(act)}

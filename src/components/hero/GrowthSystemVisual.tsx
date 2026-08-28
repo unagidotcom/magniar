@@ -223,7 +223,7 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
     >
       {/* Subtle Proximity Radial Ambient Signal Field */}
       <div
-        className={`absolute w-80 h-80 rounded-full bg-[#0099FF]/15 blur-[100px] pointer-events-none transition-all duration-500 ${
+        className={`absolute w-80 h-80 rounded-full bg-[#B89A72]/15 blur-[100px] pointer-events-none transition-all duration-500 ${
           isHovering || activeCategory ? 'opacity-100 scale-100' : 'opacity-20 scale-75'
         }`}
         style={{
@@ -236,22 +236,22 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
       {/* Top Technical Role Signal Indicator (Clean, non-SaaS inline text) */}
       <div className="h-8 mb-2 flex items-center justify-between text-xs px-2 font-sans rounded bg-[#0A0D12]/80 border border-white/5 backdrop-blur-sm">
         {hoveredNode ? (
-          <div className="flex items-center gap-2 text-[#0099FF] animate-fadeIn">
-            <span className="w-2 h-2 rounded-full bg-[#0099FF] animate-ping" />
+          <div className="flex items-center gap-2 text-[#B89A72] animate-fadeIn">
+            <span className="w-2 h-2 rounded-full bg-[#B89A72] animate-ping" />
             <span className="font-heading font-bold tracking-wider text-xs uppercase">{hoveredNode.name}</span>
             <span className="text-slate-600">•</span>
             <span className="text-slate-200 font-sans font-medium text-xs">{hoveredNode.technicalRole}</span>
           </div>
         ) : activeCategory ? (
-          <div className="flex items-center gap-2 text-[#0099FF]">
-            <span className="w-2 h-2 rounded-full bg-[#0099FF]" />
+          <div className="flex items-center gap-2 text-[#B89A72]">
+            <span className="w-2 h-2 rounded-full bg-[#B89A72]" />
             <span className="font-heading font-bold tracking-wider text-xs uppercase">CATEGORY FOCUS: {activeCategory.toUpperCase()}</span>
             <span className="text-slate-600">•</span>
             <span className="text-slate-300 font-sans text-xs">CONNECTED TO MAGNIAR GROWTH SYSTEM</span>
           </div>
         ) : (
           <div className="flex items-center gap-2 text-slate-400">
-            <span className="w-2 h-2 rounded-full bg-[#0099FF]/60 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-[#B89A72]/60 animate-pulse" />
             <span className="font-sans font-semibold tracking-wider uppercase text-xs">INTERACTIVE SYSTEM NETWORK — HOVER / MOVE CURSOR</span>
           </div>
         )}
@@ -280,9 +280,9 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
             
             {/* Signal Pulse Gradient */}
             <linearGradient id="signal-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#0099FF" stopOpacity="0.2" />
-              <stop offset="50%" stopColor="#0099FF" stopOpacity="1" />
-              <stop offset="100%" stopColor="#0099FF" stopOpacity="0.2" />
+              <stop offset="0%" stopColor="#B89A72" stopOpacity="0.2" />
+              <stop offset="50%" stopColor="#B89A72" stopOpacity="1" />
+              <stop offset="100%" stopColor="#B89A72" stopOpacity="0.2" />
             </linearGradient>
           </defs>
 
@@ -301,7 +301,7 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
                   y1={`${catPos.y}%`}
                   x2={`${centerPos.x}%`}
                   y2={`${centerPos.y}%`}
-                  stroke={isActive ? '#0099FF' : 'rgba(255, 255, 255, 0.15)'}
+                  stroke={isActive ? '#B89A72' : 'rgba(255, 255, 255, 0.15)'}
                   strokeWidth={isActive ? 2 : 1}
                   strokeDasharray={isActive ? 'none' : '3 3'}
                   opacity={isDimmed ? 0.2 : 1}
@@ -313,7 +313,7 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
                 {config.motionActive && !config.reducedMotion && (isActive || signalStep === (cat === 'performance' ? 0 : cat === 'commerce' ? 1 : cat === 'development' ? 2 : 3)) && (
                   <circle
                     r="3"
-                    fill="#0099FF"
+                    fill="#B89A72"
                     filter="url(#blue-glow)"
                     className="animate-pulse"
                   >
@@ -345,7 +345,7 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
                 y1={`${nodePos.y}%`}
                 x2={`${catPos.x}%`}
                 y2={`${catPos.y}%`}
-                stroke={isNodeHovered || isCatActive ? '#0099FF' : 'rgba(255, 255, 255, 0.1)'}
+                stroke={isNodeHovered || isCatActive ? '#B89A72' : 'rgba(255, 255, 255, 0.1)'}
                 strokeWidth={isNodeHovered ? 2 : 1}
                 opacity={isDimmed ? 0.15 : isNodeHovered ? 1 : 0.6}
                 className="transition-all duration-300"
@@ -370,14 +370,14 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
         >
           {/* Subtle Central Crosshair Pulse */}
           <div className="relative inline-flex items-center justify-center p-3">
-            <span className={`absolute w-4 h-4 rounded-full bg-[#0099FF] ${config.motionActive && !config.reducedMotion ? 'animate-ping opacity-50' : 'opacity-0'}`} />
-            <span className="w-3 h-3 rounded-full bg-[#0099FF] shadow-[0_0_16px_#0099FF]" />
+            <span className={`absolute w-4 h-4 rounded-full bg-[#B89A72] ${config.motionActive && !config.reducedMotion ? 'animate-ping opacity-50' : 'opacity-0'}`} />
+            <span className="w-3 h-3 rounded-full bg-[#B89A72] shadow-[0_0_16px_#B89A72]" />
           </div>
 
-          <div className="mt-1 font-heading font-extrabold tracking-[0.2em] text-base sm:text-lg text-white uppercase group-hover:text-[#0099FF] transition-colors">
+          <div className="mt-1 font-heading font-extrabold tracking-[0.2em] text-base sm:text-lg text-white uppercase group-hover:text-[#B89A72] transition-colors">
             MAGNIAR
           </div>
-          <div className="font-sans text-[10px] tracking-[0.25em] text-[#0099FF] uppercase font-bold">
+          <div className="font-sans text-[10px] tracking-[0.25em] text-[#B89A72] uppercase font-bold">
             GROWTH SYSTEM
           </div>
         </div>
@@ -411,13 +411,13 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
               <div
                 className={`font-heading text-xs sm:text-sm font-extrabold tracking-[0.18em] uppercase transition-all duration-300 flex items-center gap-2 ${
                   isActive
-                    ? 'text-[#0099FF] scale-110 shadow-[0_0_20px_rgba(0,153,255,0.4)]'
+                    ? 'text-[#B89A72] scale-110 shadow-[0_0_20px_rgba(184,154,114,0.4)]'
                     : isDimmed
                     ? 'text-slate-600 opacity-35'
-                    : 'text-slate-100 hover:text-[#0099FF]'
+                    : 'text-slate-100 hover:text-[#B89A72]'
                 }`}
               >
-                <span className={`w-2 h-2 rounded-full transition-all ${isActive ? 'bg-[#0099FF] shadow-[0_0_8px_#0099FF]' : 'bg-white/40'}`} />
+                <span className={`w-2 h-2 rounded-full transition-all ${isActive ? 'bg-[#B89A72] shadow-[0_0_8px_#B89A72]' : 'bg-white/40'}`} />
                 <span>{cat.label}</span>
               </div>
             </div>
@@ -458,9 +458,9 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
               <span
                 className={`w-2 h-2 rounded-full transition-all duration-200 ${
                   isHovered
-                    ? 'bg-[#0099FF] scale-150 shadow-[0_0_12px_#0099FF]'
+                    ? 'bg-[#B89A72] scale-150 shadow-[0_0_12px_#B89A72]'
                     : isCatActive
-                    ? 'bg-[#0099FF]'
+                    ? 'bg-[#B89A72]'
                     : 'bg-white/60'
                 }`}
               />
@@ -469,7 +469,7 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
               <span
                 className={`font-sans text-xs tracking-wider transition-all duration-200 whitespace-nowrap ${
                   isHovered
-                    ? 'text-[#0099FF] font-bold text-xs scale-105'
+                    ? 'text-[#B89A72] font-bold text-xs scale-105'
                     : isCatActive
                     ? 'text-white font-semibold'
                     : 'text-slate-400 hover:text-white'
@@ -495,13 +495,13 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
             onClick={() => setActiveCategory(activeCategory === 'intelligence' ? null : 'intelligence')}
             className={`p-3 rounded-[2px] border transition-all cursor-pointer ${
               activeCategory === 'intelligence'
-                ? 'border-[#0099FF] bg-[#0099FF]/10 text-white'
+                ? 'border-[#B89A72] bg-[#B89A72]/10 text-white'
                 : 'border-white/10 bg-[#07090D] text-[#8D949E]'
             }`}
           >
-            <div className="flex items-center justify-between text-[#0099FF] font-bold tracking-wider uppercase mb-1.5">
+            <div className="flex items-center justify-between text-[#B89A72] font-bold tracking-wider uppercase mb-1.5">
               <span>● INTELLIGENCE</span>
-              {activeCategory === 'intelligence' && <span className="text-[9px] text-[#0099FF]">FOCUSED</span>}
+              {activeCategory === 'intelligence' && <span className="text-[9px] text-[#B89A72]">FOCUSED</span>}
             </div>
             <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-white/80">
               <span>AI STRATEGY</span>
@@ -513,7 +513,7 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
           </div>
 
           <div className="flex justify-center">
-            <span className="text-[#0099FF] text-xs">↓</span>
+            <span className="text-[#B89A72] text-xs">↓</span>
           </div>
 
           {/* 2. PERFORMANCE */}
@@ -521,13 +521,13 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
             onClick={() => setActiveCategory(activeCategory === 'performance' ? null : 'performance')}
             className={`p-3 rounded-[2px] border transition-all cursor-pointer ${
               activeCategory === 'performance'
-                ? 'border-[#0099FF] bg-[#0099FF]/10 text-white'
+                ? 'border-[#B89A72] bg-[#B89A72]/10 text-white'
                 : 'border-white/10 bg-[#07090D] text-[#8D949E]'
             }`}
           >
-            <div className="flex items-center justify-between text-[#0099FF] font-bold tracking-wider uppercase mb-1.5">
+            <div className="flex items-center justify-between text-[#B89A72] font-bold tracking-wider uppercase mb-1.5">
               <span>● PERFORMANCE</span>
-              {activeCategory === 'performance' && <span className="text-[9px] text-[#0099FF]">FOCUSED</span>}
+              {activeCategory === 'performance' && <span className="text-[9px] text-[#B89A72]">FOCUSED</span>}
             </div>
             <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-white/80">
               <span>GOOGLE</span>
@@ -541,17 +541,17 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
           </div>
 
           <div className="flex justify-center">
-            <span className="text-[#0099FF] text-xs">↓</span>
+            <span className="text-[#B89A72] text-xs">↓</span>
           </div>
 
           {/* CENTRAL MAGNIAR HUB MOBILE */}
-          <div className="p-3 rounded-[2px] border border-[#0099FF]/40 bg-[#0099FF]/10 text-center space-y-0.5">
+          <div className="p-3 rounded-[2px] border border-[#B89A72]/40 bg-[#B89A72]/10 text-center space-y-0.5">
             <div className="font-bold text-white tracking-widest text-sm uppercase">MAGNIAR</div>
-            <div className="text-[10px] text-[#0099FF] font-semibold tracking-widest uppercase">GROWTH SYSTEM</div>
+            <div className="text-[10px] text-[#B89A72] font-semibold tracking-widest uppercase">GROWTH SYSTEM</div>
           </div>
 
           <div className="flex justify-center">
-            <span className="text-[#0099FF] text-xs">↓</span>
+            <span className="text-[#B89A72] text-xs">↓</span>
           </div>
 
           {/* 3. COMMERCE */}
@@ -559,13 +559,13 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
             onClick={() => setActiveCategory(activeCategory === 'commerce' ? null : 'commerce')}
             className={`p-3 rounded-[2px] border transition-all cursor-pointer ${
               activeCategory === 'commerce'
-                ? 'border-[#0099FF] bg-[#0099FF]/10 text-white'
+                ? 'border-[#B89A72] bg-[#B89A72]/10 text-white'
                 : 'border-white/10 bg-[#07090D] text-[#8D949E]'
             }`}
           >
-            <div className="flex items-center justify-between text-[#0099FF] font-bold tracking-wider uppercase mb-1.5">
+            <div className="flex items-center justify-between text-[#B89A72] font-bold tracking-wider uppercase mb-1.5">
               <span>● COMMERCE</span>
-              {activeCategory === 'commerce' && <span className="text-[9px] text-[#0099FF]">FOCUSED</span>}
+              {activeCategory === 'commerce' && <span className="text-[9px] text-[#B89A72]">FOCUSED</span>}
             </div>
             <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-white/80">
               <span>SHOPIFY</span>
@@ -579,7 +579,7 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
           </div>
 
           <div className="flex justify-center">
-            <span className="text-[#0099FF] text-xs">↓</span>
+            <span className="text-[#B89A72] text-xs">↓</span>
           </div>
 
           {/* 4. DEVELOPMENT */}
@@ -587,13 +587,13 @@ export const GrowthSystemVisual: React.FC<GrowthSystemVisualProps> = ({
             onClick={() => setActiveCategory(activeCategory === 'development' ? null : 'development')}
             className={`p-3 rounded-[2px] border transition-all cursor-pointer ${
               activeCategory === 'development'
-                ? 'border-[#0099FF] bg-[#0099FF]/10 text-white'
+                ? 'border-[#B89A72] bg-[#B89A72]/10 text-white'
                 : 'border-white/10 bg-[#07090D] text-[#8D949E]'
             }`}
           >
-            <div className="flex items-center justify-between text-[#0099FF] font-bold tracking-wider uppercase mb-1.5">
+            <div className="flex items-center justify-between text-[#B89A72] font-bold tracking-wider uppercase mb-1.5">
               <span>● DEVELOPMENT</span>
-              {activeCategory === 'development' && <span className="text-[9px] text-[#0099FF]">FOCUSED</span>}
+              {activeCategory === 'development' && <span className="text-[9px] text-[#B89A72]">FOCUSED</span>}
             </div>
             <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-white/80">
               <span>WEBSITES & APPS</span>

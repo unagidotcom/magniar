@@ -75,7 +75,7 @@ export interface CaseStudy {
   };
   heroPlaceholderLabel: string;
   featured: boolean;
-  isDemoData: boolean; // Explicit flag indicating prototype mock data
+  isDemoData: boolean; // Legacy/content-safety flag. Real published records should set this to false.
 }
 
 export interface WorkFilterState {

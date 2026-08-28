@@ -24,7 +24,7 @@ export const SharedUiPlayground: React.FC = () => {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
-          <div className="flex items-center gap-2 font-mono text-[10px] text-[#0099FF] tracking-widest uppercase mb-1">
+          <div className="flex items-center gap-2 font-mono text-[10px] text-[#B89A72] tracking-widest uppercase mb-1">
             <Terminal className="w-3.5 h-3.5" />
             <span>CHAPTER 02 — GLOBAL COMPONENT SPECIFICATION</span>
           </div>
@@ -44,7 +44,7 @@ export const SharedUiPlayground: React.FC = () => {
               onClick={() => setSelectedState(st.id)}
               className={`px-2.5 py-1 rounded-[2px] transition-colors cursor-pointer ${
                 selectedState === st.id
-                  ? 'bg-[#0099FF] text-white font-semibold'
+                  ? 'bg-[#B89A72] text-white font-semibold'
                   : 'text-[#8D949E] hover:text-white'
               }`}
             >
@@ -58,7 +58,7 @@ export const SharedUiPlayground: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column - Button Family Inspector */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="font-mono text-xs text-[#0099FF] tracking-wider uppercase font-semibold flex items-center gap-2">
+          <div className="font-mono text-xs text-[#B89A72] tracking-wider uppercase font-semibold flex items-center gap-2">
             <Layers className="w-4 h-4" />
             <span>01 / GLOBAL BUTTON FAMILY (SIMULATED: {selectedState.toUpperCase()})</span>
           </div>
@@ -68,7 +68,7 @@ export const SharedUiPlayground: React.FC = () => {
             <div className="p-4 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
               <div className="flex items-center justify-between text-[10px] font-mono text-[#8D949E]">
                 <span>PRIMARY CTA</span>
-                <span className="text-[#0099FF]">HIGH CONTRAST</span>
+                <span className="text-[#B89A72]">HIGH CONTRAST</span>
               </div>
               <div className="py-2">
                 <MagniarButton variant="primary" buttonState={selectedState} fullWidth>
@@ -132,7 +132,7 @@ export const SharedUiPlayground: React.FC = () => {
 
         {/* Right Column - Micro Technical UI Elements */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="font-mono text-xs text-[#0099FF] tracking-wider uppercase font-semibold flex items-center gap-2">
+          <div className="font-mono text-xs text-[#B89A72] tracking-wider uppercase font-semibold flex items-center gap-2">
             <Sliders className="w-4 h-4" />
             <span>02 / TECHNICAL LABELS & SIGNAL MOTIFS</span>
           </div>
@@ -168,7 +168,7 @@ export const SharedUiPlayground: React.FC = () => {
               <div className="text-[10px] font-mono text-[#8D949E] uppercase">DIRECTIONAL ARROW MOTIF</div>
               <div className="p-3 bg-[#0A0C0F] border border-white/5 rounded-[2px] flex items-center justify-between text-xs font-mono text-[#F5F7FA]">
                 <span>STANDARD DIRECTIONAL RESPONSE</span>
-                <div className="flex items-center gap-2 text-[#0099FF]">
+                <div className="flex items-center gap-2 text-[#B89A72]">
                   <span>HOVER TEST</span>
                   <ArrowIcon size={16} className="translate-x-1" />
                 </div>

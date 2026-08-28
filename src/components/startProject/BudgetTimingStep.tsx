@@ -27,7 +27,7 @@ export const BudgetTimingStep: React.FC<BudgetTimingStepProps> = ({
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-3">
-        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#0099FF] uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#B89A72] uppercase tracking-wider">
           <DollarSign className="w-4 h-4" />
           <span>Step 06 / 08 — Scope & Timeline</span>
         </div>
@@ -41,7 +41,7 @@ export const BudgetTimingStep: React.FC<BudgetTimingStepProps> = ({
 
       {/* Helpful Distinction Callout */}
       <div className="p-5 rounded-xl bg-[#080A0D] border border-white/10 flex items-start gap-3.5 shadow-lg">
-        <Info className="w-5 h-5 text-[#0099FF] flex-shrink-0 mt-0.5" />
+        <Info className="w-5 h-5 text-[#B89A72] flex-shrink-0 mt-0.5" />
         <p className="font-sans text-xs sm:text-sm text-slate-300 leading-relaxed">
           <span className="text-white font-semibold">Good to know:</span> Media ad spend is paid directly to platforms like Google, Meta, or TikTok. Service budget represents Magniar strategy, management, and engineering scope.
         </p>
@@ -55,7 +55,7 @@ export const BudgetTimingStep: React.FC<BudgetTimingStepProps> = ({
             <label className="block font-sans text-sm sm:text-base font-semibold text-white">
               Estimated Monthly Paid Media Spend
             </label>
-            <span className="font-sans text-xs text-[#0099FF] font-medium">Paid to ad networks</span>
+            <span className="font-sans text-xs text-[#B89A72] font-medium">Paid to ad networks</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -69,7 +69,7 @@ export const BudgetTimingStep: React.FC<BudgetTimingStepProps> = ({
                   onClick={() => onChange({ monthlyMediaAdSpend: spend })}
                   className={`px-4 py-3.5 rounded-lg border font-sans text-xs sm:text-sm text-center transition-all cursor-pointer font-medium ${
                     isSelected
-                      ? 'bg-[#0099FF]/15 border-[#0099FF] text-white font-bold ring-1 ring-[#0099FF] shadow-[0_0_15px_rgba(0,153,255,0.2)]'
+                      ? 'bg-[#B89A72]/15 border-[#B89A72] text-white font-bold ring-1 ring-[#B89A72] shadow-[0_0_15px_rgba(184,154,114,0.2)]'
                       : 'bg-[#050505] border-white/15 text-slate-300 hover:text-white hover:border-white/30'
                   }`}
                 >
@@ -100,7 +100,7 @@ export const BudgetTimingStep: React.FC<BudgetTimingStepProps> = ({
                   onClick={() => onChange({ projectServiceBudget: projB })}
                   className={`px-4 py-3.5 rounded-lg border font-sans text-xs sm:text-sm text-center transition-all cursor-pointer font-medium ${
                     isSelected
-                      ? 'bg-[#0099FF]/15 border-[#0099FF] text-white font-bold ring-1 ring-[#0099FF] shadow-[0_0_15px_rgba(0,153,255,0.2)]'
+                      ? 'bg-[#B89A72]/15 border-[#B89A72] text-white font-bold ring-1 ring-[#B89A72] shadow-[0_0_15px_rgba(184,154,114,0.2)]'
                       : 'bg-[#050505] border-white/15 text-slate-300 hover:text-white hover:border-white/30'
                   }`}
                 >
@@ -114,8 +114,8 @@ export const BudgetTimingStep: React.FC<BudgetTimingStepProps> = ({
         {/* 03: TIMING / START DATE */}
         <div className="space-y-3">
           <label className="block font-sans text-sm sm:text-base font-semibold text-white flex items-center justify-between">
-            <span>When are you looking to get started? <span className="text-[#0099FF]">*</span></span>
-            <Clock className="w-4 h-4 text-[#0099FF]" />
+            <span>When are you looking to get started? <span className="text-[#B89A72]">*</span></span>
+            <Clock className="w-4 h-4 text-[#B89A72]" />
           </label>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -129,7 +129,7 @@ export const BudgetTimingStep: React.FC<BudgetTimingStepProps> = ({
                   onClick={() => onChange({ timeline: timeOpt })}
                   className={`px-4 py-3.5 rounded-lg border font-sans text-xs sm:text-sm text-center transition-all cursor-pointer font-medium ${
                     isSelected
-                      ? 'bg-[#0099FF] border-[#0099FF] text-white font-bold shadow-[0_0_15px_rgba(0,153,255,0.35)]'
+                      ? 'bg-[#B89A72] border-[#B89A72] text-white font-bold shadow-[0_0_15px_rgba(184,154,114,0.35)]'
                       : 'bg-[#050505] border-white/15 text-slate-300 hover:text-white hover:border-white/30'
                   }`}
                 >
@@ -158,7 +158,7 @@ export const BudgetTimingStep: React.FC<BudgetTimingStepProps> = ({
                   onClick={() => onChange({ engagementType: eng })}
                   className={`p-4 rounded-lg border font-sans text-xs sm:text-sm text-left transition-all cursor-pointer font-medium ${
                     isSelected
-                      ? 'bg-[#0099FF]/15 border-[#0099FF] text-white font-bold ring-1 ring-[#0099FF]'
+                      ? 'bg-[#B89A72]/15 border-[#B89A72] text-white font-bold ring-1 ring-[#B89A72]'
                       : 'bg-[#050505] border-white/15 text-slate-300 hover:text-white hover:border-white/30'
                   }`}
                 >
@@ -184,7 +184,7 @@ export const BudgetTimingStep: React.FC<BudgetTimingStepProps> = ({
         <button
           type="button"
           onClick={onNext}
-          className="px-8 py-4 rounded-lg bg-[#0099FF] hover:bg-[#0088EE] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(0,153,255,0.35)] hover:shadow-[0_0_30px_rgba(0,153,255,0.5)]"
+          className="px-8 py-4 rounded-lg bg-[#B89A72] hover:bg-[#8F714D] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(184,154,114,0.35)] hover:shadow-[0_0_30px_rgba(184,154,114,0.5)]"
         >
           <span>Continue to Final Details</span>
           <ArrowRight className="w-4 h-4" />

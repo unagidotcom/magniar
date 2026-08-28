@@ -85,26 +85,26 @@ export interface ContactInfoField {
 export const CONTACT_OTHER_WAYS: ContactInfoField[] = [
   {
     label: 'GENERAL EMAIL',
-    value: 'contact@magniar.com',
+    value: 'magniarventures@gmail.com',
     subValue: 'Response time: Within 1-2 business days',
     iconName: 'Mail',
   },
   {
     label: 'BUSINESS HOURS',
-    value: '09:00 - 18:00 UTC',
+    value: '09:00 - 18:00 IST',
     subValue: 'Monday through Friday',
     iconName: 'Clock',
   },
   {
-    label: 'GLOBAL DELIVERY',
-    value: 'Americas • EMEA • APAC',
-    subValue: 'Distributed technical team',
+    label: 'LOCATION',
+    value: 'Gurgaon, Haryana, India',
+    subValue: 'Digital services business',
     iconName: 'Globe',
   },
   {
-    label: 'SECURE PORTAL',
-    value: 'portal.magniar.com',
-    subValue: 'For active accounts & client requests',
-    iconName: 'Lock',
+    label: 'PHONE',
+    value: '8798250520',
+    subValue: 'For business inquiries',
+    iconName: 'Phone',
   },
 ];

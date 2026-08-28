@@ -37,7 +37,7 @@ export const AboutDesignReview: React.FC<AboutDesignReviewProps> = ({
     {
       num: '06',
       title: 'CONNECTION TO CASE STUDIES',
-      desc: 'Links to Chapter 08 Case Studies via "SEE THE SYSTEM IN PRACTICE" featuring live client cards (e.g. Solaris Apparel) and direct detail view callbacks.',
+      desc: 'Links to Chapter 08 Case Studies are retained, but public cards are hidden until verified client work is published from the Admin OS.',
     },
     {
       num: '07',
@@ -65,10 +65,10 @@ export const AboutDesignReview: React.FC<AboutDesignReviewProps> = ({
     <div className="min-h-screen bg-[#050505] text-[#F5F7FA] font-sans pt-24 pb-20 border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Header Bar */}
-        <div className="p-8 bg-[#080B10] border border-[#0099FF]/40 space-y-4">
+        <div className="p-8 bg-[#080B10] border border-[#B89A72]/40 space-y-4">
           <div className="flex items-center justify-between font-mono text-xs">
-            <span className="text-[#0099FF] font-bold flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#0099FF]" />
+            <span className="text-[#B89A72] font-bold flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#B89A72]" />
               CHAPTER 11 — DESIGN & SPECIFICATION REVIEW
             </span>
             <span className="text-white/40">MAGNIAR AGENCY PLATFORM</span>
@@ -76,7 +76,7 @@ export const AboutDesignReview: React.FC<AboutDesignReviewProps> = ({
 
           <h1 className="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">
             ABOUT MAGNIAR <br />
-            <span className="text-[#0099FF]">DESIGN SPECIFICATION VERIFIED</span>
+            <span className="text-[#B89A72]">DESIGN SPECIFICATION VERIFIED</span>
           </h1>
 
           <p className="text-sm sm:text-base text-[#8D949E] max-w-3xl leading-relaxed">
@@ -86,7 +86,7 @@ export const AboutDesignReview: React.FC<AboutDesignReviewProps> = ({
           {onReturnToAbout && (
             <button
               onClick={onReturnToAbout}
-              className="px-5 py-2.5 bg-[#0099FF] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#0088EE] transition-all inline-flex items-center gap-2 cursor-pointer"
+              className="px-5 py-2.5 bg-[#B89A72] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#8F714D] transition-all inline-flex items-center gap-2 cursor-pointer"
             >
               <span>RETURN TO FULL /ABOUT PAGE</span>
               <ArrowRight className="w-4 h-4" />
@@ -99,11 +99,11 @@ export const AboutDesignReview: React.FC<AboutDesignReviewProps> = ({
           {reviewPoints.map((point) => (
             <div
               key={point.num}
-              className="p-6 bg-[#080B10] border border-white/10 space-y-3 relative group hover:border-[#0099FF]/50 transition-colors"
+              className="p-6 bg-[#080B10] border border-white/10 space-y-3 relative group hover:border-[#B89A72]/50 transition-colors"
             >
               <div className="flex items-center justify-between font-mono text-xs">
-                <span className="text-[#0099FF] font-bold">{point.num} / SPEC EVALUATION</span>
-                <CheckCircle2 className="w-4 h-4 text-[#0099FF]" />
+                <span className="text-[#B89A72] font-bold">{point.num} / SPEC EVALUATION</span>
+                <CheckCircle2 className="w-4 h-4 text-[#B89A72]" />
               </div>
 
               <h3 className="text-base font-bold text-white uppercase font-mono">
@@ -120,7 +120,7 @@ export const AboutDesignReview: React.FC<AboutDesignReviewProps> = ({
         {/* Summary Footer */}
         <div className="p-6 bg-[#0A0D12] border border-white/10 flex items-center justify-between font-mono text-xs text-[#8D949E]">
           <span className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#0099FF]" />
+            <ShieldCheck className="w-4 h-4 text-[#B89A72]" />
             SPECIFICATION COMPLIANCE: 100% COMPLETE
           </span>
           <span>CHAPTER 11 AUDIT PASSED</span>

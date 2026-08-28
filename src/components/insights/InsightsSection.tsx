@@ -26,15 +26,15 @@ export function InsightsSection({
           <div className="space-y-4 max-w-3xl">
             <div className="flex items-center gap-3">
               <TechnicalLabel text="STRATEGIC INSIGHTS" />
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72]" />
               <span className="font-sans text-xs text-slate-400 uppercase tracking-wider font-semibold">
                 MAGNIAR INTELLIGENCE
               </span>
             </div>
 
-            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-              MAGNIAR INTELLIGENCE. <br />
-              <span className="text-[#0099FF]">WHAT WE'RE THINKING ABOUT.</span>
+            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+              Magniar intelligence. <br />
+              <span className="text-[#B89A72]">What we're thinking about.</span>
             </h2>
 
             <p className="text-lg text-slate-300 font-normal leading-relaxed">
@@ -59,7 +59,7 @@ export function InsightsSection({
         <div className="space-y-6">
           <div className="flex items-center justify-between font-sans text-xs text-slate-300 border-b border-white/10 pb-3">
             <span className="text-white font-heading font-bold uppercase tracking-wider flex items-center gap-2 text-sm">
-              <BookOpen className="w-4 h-4 text-[#0099FF]" />
+              <BookOpen className="w-4 h-4 text-[#B89A72]" />
               RECENT EDITORIAL DISPATCHES
             </span>
             <span className="text-slate-400 font-medium">SHOWING 3 OF {INSIGHTS_ARTICLES_DATA.length} ARTICLES</span>
@@ -81,7 +81,7 @@ export function InsightsSection({
         <div className="pt-4 text-center">
           <button
             onClick={onExploreFullInsights}
-            className="inline-flex items-center gap-2 font-sans text-xs text-[#0099FF] hover:text-white transition-colors cursor-pointer tracking-wider uppercase font-semibold border-b border-[#0099FF]/40 pb-1"
+            className="inline-flex items-center gap-2 font-sans text-xs text-[#B89A72] hover:text-white transition-colors cursor-pointer tracking-wider uppercase font-semibold border-b border-[#B89A72]/40 pb-1"
           >
             <span>EXPLORE MAGNIAR INTELLIGENCE INDEX →</span>
           </button>
@@ -90,4 +90,3 @@ export function InsightsSection({
     </section>
   );
 }
-

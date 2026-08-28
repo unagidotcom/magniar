@@ -4,6 +4,7 @@ import { CommandPalette } from './CommandPalette';
 import { NotificationCenter } from './NotificationCenter';
 import { AdminUserMenu } from './AdminUserMenu';
 import { MockNotification } from '../../data/adminMockData';
+import { AdminDisplayProfile, initialsForName } from '../../services/adminProfileService';
 
 interface AdminHeaderProps {
   currentRoute: string;
@@ -14,6 +15,7 @@ interface AdminHeaderProps {
   onNotificationClick: (notif: MockNotification) => void;
   onSignOut: () => void;
   onReturnToPublicSite?: () => void;
+  adminProfile: AdminDisplayProfile;
 }
 
 export const AdminHeader: React.FC<AdminHeaderProps> = ({
@@ -25,6 +27,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
   onNotificationClick,
   onSignOut,
   onReturnToPublicSite,
+  adminProfile,
 }) => {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -35,9 +38,9 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
   const routeFormatted = currentRoute.toUpperCase().replace(/-/g, ' ');
 
   return (
-    <header className="h-16 border-b border-white/10 bg-[#050505] sticky top-0 z-20 px-4 md:px-8 flex items-center justify-between gap-4">
+    <header className="min-h-16 border-b border-white/10 bg-[#050505] sticky top-0 z-20 px-4 md:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
       {/* Left Breadcrumbs & Mobile Menu */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 min-w-0">
         <button
           onClick={onMobileMenuToggle}
           className="p-2 text-white/60 hover:text-white lg:hidden border border-white/10 rounded-[2px]"
@@ -45,17 +48,17 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
           <Menu className="w-5 h-5" />
         </button>
 
-        <div className="flex items-center gap-2 font-mono text-xs text-white/50">
+        <div className="flex items-center gap-2 font-mono text-xs text-white/50 min-w-0">
           <span className="text-[#0099FF] font-medium">ADMIN</span>
           <ChevronRight className="w-3.5 h-3.5 text-white/30" />
-          <span className="text-white font-medium tracking-wide">
+          <span className="text-white font-medium tracking-wide truncate">
             {routeFormatted}
           </span>
         </div>
       </div>
 
       {/* Right Tools & Menus */}
-      <div className="flex items-center gap-3 relative">
+      <div className="flex items-center justify-end gap-2 sm:gap-3 relative min-w-0 flex-1">
         {/* Public Website Switcher */}
         {onReturnToPublicSite && (
           <button
@@ -71,10 +74,10 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
         {/* Command Palette Trigger */}
         <button
           onClick={() => setCommandPaletteOpen(true)}
-          className="hidden md:flex items-center gap-3 px-3 py-1.5 bg-white/[0.03] hover:bg-white/[0.08] text-white/50 hover:text-white border border-white/10 rounded-[2px] font-mono text-xs transition-colors"
+          className="hidden md:flex items-center gap-3 px-3 py-1.5 bg-white/[0.03] hover:bg-white/[0.08] text-white/50 hover:text-white border border-white/10 rounded-[2px] font-mono text-xs transition-colors max-w-[300px]"
         >
           <Search className="w-3.5 h-3.5 text-white/40" />
-          <span>Quick command search...</span>
+          <span className="truncate">Quick command search...</span>
           <span className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded-[2px] text-white/40">
             Ctrl+K
           </span>
@@ -128,10 +131,10 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
             className="flex items-center gap-2 pl-2 pr-2.5 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-[2px] transition-colors"
           >
             <div className="w-6 h-6 rounded-full bg-[#0099FF]/20 border border-[#0099FF]/40 text-[#0099FF] font-mono text-[10px] font-bold flex items-center justify-center">
-              KV
+              {initialsForName(adminProfile.displayName)}
             </div>
             <span className="hidden sm:inline-block font-mono text-xs text-white/80">
-              KVoss
+              {adminProfile.displayName}
             </span>
           </button>
 
@@ -140,6 +143,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
             onClose={() => setUserMenuOpen(false)}
             onSignOut={onSignOut}
             onOpenSettings={() => onNavigate('settings')}
+            adminProfile={adminProfile}
           />
         </div>
       </div>

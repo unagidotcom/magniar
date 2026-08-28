@@ -18,8 +18,8 @@ export const StartProjectHero: React.FC<StartProjectHeroProps> = ({
       <div className="relative mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         <div className="max-w-4xl space-y-6">
           {/* Eyebrow badge */}
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#0099FF]/10 border border-[#0099FF]/30 font-sans text-xs font-semibold text-[#0099FF] tracking-wider uppercase">
-            <Sparkles className="w-3.5 h-3.5 text-[#0099FF]" />
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#B89A72]/10 border border-[#B89A72]/30 font-sans text-xs font-semibold text-[#B89A72] tracking-wider uppercase">
+            <Sparkles className="w-3.5 h-3.5 text-[#B89A72]" />
             <span>STRATEGIC CONSULTATION & INTAKE</span>
           </div>
 
@@ -27,7 +27,7 @@ export const StartProjectHero: React.FC<StartProjectHeroProps> = ({
           <div className="space-y-2">
             <h1 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
               LET'S FIGURE OUT <br />
-              <span className="text-[#0099FF] drop-shadow-[0_0_25px_rgba(0,153,255,0.35)]">
+              <span className="text-[#B89A72] drop-shadow-[0_0_25px_rgba(184,154,114,0.35)]">
                 WHAT GROWTH LOOKS LIKE.
               </span>
             </h1>
@@ -41,12 +41,12 @@ export const StartProjectHero: React.FC<StartProjectHeroProps> = ({
           {/* Trust callout pills */}
           <div className="pt-2 flex flex-wrap items-center gap-4 sm:gap-6 font-sans text-xs sm:text-sm text-slate-400 font-medium">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#0099FF]" />
+              <ShieldCheck className="w-4 h-4 text-[#B89A72]" />
               <span>Strict Data Confidentiality</span>
             </div>
             <span className="hidden sm:inline text-white/20">•</span>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#0099FF]" />
+              <CheckCircle2 className="w-4 h-4 text-[#B89A72]" />
               <span>Direct Partner Evaluation</span>
             </div>
             <span className="hidden sm:inline text-white/20">•</span>

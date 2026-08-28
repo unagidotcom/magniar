@@ -2,15 +2,51 @@ import React, { useState, useEffect } from 'react';
 import { AdminSidebar } from './AdminSidebar';
 import { AdminHeader } from './AdminHeader';
 import { DashboardPage } from './dashboard/DashboardPage';
-import { ProspectsPage } from './prospects/ProspectsPage';
 import { ClientsPage } from './clients/ClientsPage';
-import { ProjectsPage } from './projects/ProjectsPage';
-import { CampaignsPage } from './campaigns/CampaignsPage';
+import { InvoicesPage } from './invoices/InvoicesPage';
+import { SettingsPage } from './settings/SettingsPage';
+import { WebsitesPage } from './websites/WebsitesPage';
 import { AdminModulePlaceholder } from './AdminModulePlaceholder';
 import { AdminLogin } from './AdminLogin';
 import { AdminToast, ToastMessage } from './AdminToast';
-import { MOCK_NOTIFICATIONS, MockNotification } from '../../data/adminMockData';
+import { MockNotification } from '../../data/adminMockData';
 import { supabase, isSupabaseConfigured, checkIsUserAdmin } from '../../lib/supabase';
+import { listProjectRequests } from '../../services/projectRequestService';
+import {
+  AdminDisplayProfile,
+  defaultAdminDisplayProfile,
+  getCurrentAdminDisplayProfile,
+} from '../../services/adminProfileService';
+
+const ADMIN_ROUTES = new Set([
+  'dashboard',
+  'requests',
+  'prospects',
+  'clients',
+  'websites',
+  'projects',
+  'campaigns',
+  'strategies',
+  'proposals',
+  'invoices',
+  'payments',
+  'reports',
+  'content',
+  'team',
+  'settings',
+]);
+
+const routeFromAdminPath = (fallback = 'dashboard') => {
+  if (typeof window === 'undefined') return fallback;
+
+  const [, adminSegment, routeSegment] = window.location.pathname.split('/');
+  if (adminSegment !== 'admin') return fallback;
+  if (!routeSegment || routeSegment === 'login') return fallback;
+
+  return ADMIN_ROUTES.has(routeSegment) ? routeSegment : fallback;
+};
+
+const pathForAdminRoute = (route: string) => (route === 'dashboard' ? '/admin' : `/admin/${route}`);
 
 interface AdminShellProps {
   onReturnToPublicSite?: () => void;
@@ -27,10 +63,13 @@ export const AdminShell: React.FC<AdminShellProps> = ({
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAuthStatus);
   const [isCheckingSession, setIsCheckingSession] = useState<boolean>(isSupabaseConfigured);
-  const [currentRoute, setCurrentRoute] = useState<string>(initialRoute);
+  const [currentRoute, setCurrentRoute] = useState<string>(() => routeFromAdminPath(initialRoute));
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState<boolean>(false);
-  const [notifications, setNotifications] = useState<MockNotification[]>(MOCK_NOTIFICATIONS);
+  const [notifications, setNotifications] = useState<MockNotification[]>([]);
+  const [openRequestsCount, setOpenRequestsCount] = useState<number>(0);
+  const [adminProfile, setAdminProfile] = useState<AdminDisplayProfile>(defaultAdminDisplayProfile);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const [adminDataRevision, setAdminDataRevision] = useState<number>(0);
 
   // Check Supabase session on mount & subscribe to auth changes
   useEffect(() => {
@@ -55,6 +94,9 @@ export const AdminShell: React.FC<AdminShellProps> = ({
             if (isMounted) {
               setIsAuthenticated(isAdmin);
               setIsCheckingSession(false);
+              if (!isAdmin) {
+                void supabase.auth.signOut();
+              }
             }
           })
           .catch(() => {
@@ -84,6 +126,9 @@ export const AdminShell: React.FC<AdminShellProps> = ({
             if (isMounted) {
               setIsAuthenticated(isAdmin);
               setIsCheckingSession(false);
+              if (!isAdmin) {
+                void supabase.auth.signOut();
+              }
             }
           }
         );
@@ -102,23 +147,43 @@ export const AdminShell: React.FC<AdminShellProps> = ({
   }, []);
 
   useEffect(() => {
-    setCurrentRoute(initialRoute);
+    setCurrentRoute(routeFromAdminPath(initialRoute));
   }, [initialRoute]);
 
-  // Sync URL history state
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (isAuthenticated) {
-        if (!window.location.pathname.startsWith('/admin') || window.location.pathname === '/admin/login') {
-          window.history.pushState({}, '', '/admin');
-        }
-      } else {
-        if (window.location.pathname.startsWith('/admin') && window.location.pathname !== '/admin/login') {
-          window.history.pushState({}, '', '/admin/login');
-        }
+    const handleAdminPopState = () => {
+      if (window.location.pathname.startsWith('/admin')) {
+        setCurrentRoute(routeFromAdminPath('dashboard'));
       }
+    };
+
+    window.addEventListener('popstate', handleAdminPopState);
+    return () => window.removeEventListener('popstate', handleAdminPopState);
+  }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setOpenRequestsCount(0);
+      setAdminProfile(defaultAdminDisplayProfile);
+      return;
     }
-  }, [isAuthenticated]);
+
+    listProjectRequests()
+      .then((rows) => {
+        setOpenRequestsCount(rows.filter((row) => row.status === 'NEW').length);
+      })
+      .catch((err) => {
+        console.error('Open request count load failed:', err);
+        setOpenRequestsCount(0);
+      });
+
+    getCurrentAdminDisplayProfile()
+      .then(setAdminProfile)
+      .catch((err) => {
+        console.error('Admin display profile load failed:', err);
+        setAdminProfile(defaultAdminDisplayProfile);
+      });
+  }, [isAuthenticated, currentRoute]);
 
   // Toast trigger helper
   const triggerToast = (type: 'success' | 'info' | 'error', title: string, message?: string) => {
@@ -140,8 +205,20 @@ export const AdminShell: React.FC<AdminShellProps> = ({
     triggerToast('info', 'Notifications Read', 'All system notifications marked as read.');
   };
 
+  const handleNavigate = (route: string) => {
+    const nextRoute = ADMIN_ROUTES.has(route) ? route : 'dashboard';
+    setCurrentRoute(nextRoute);
+
+    if (typeof window !== 'undefined' && isAuthenticated) {
+      const nextPath = pathForAdminRoute(nextRoute);
+      if (window.location.pathname !== nextPath) {
+        window.history.pushState({}, '', nextPath);
+      }
+    }
+  };
+
   const handleNotificationClick = (notif: MockNotification) => {
-    setCurrentRoute(notif.route_target);
+    handleNavigate(notif.route_target);
     setNotifications((prev) =>
       prev.map((n) => (n.id === notif.id ? { ...n, is_read: true } : n))
     );
@@ -159,10 +236,29 @@ export const AdminShell: React.FC<AdminShellProps> = ({
     }
   };
 
+  const handleAdminDataChanged = () => {
+    setAdminDataRevision((revision) => revision + 1);
+  };
+
+  // Sync URL history state
+  useEffect(() => {
+    if (isCheckingSession) return;
+
+    if (typeof window !== 'undefined') {
+      if (isAuthenticated) {
+        if (!window.location.pathname.startsWith('/admin') || window.location.pathname === '/admin/login') {
+          window.history.replaceState({}, '', pathForAdminRoute(currentRoute));
+        }
+      } else if (window.location.pathname.startsWith('/admin') && window.location.pathname !== '/admin/login') {
+        window.history.replaceState({}, '', '/admin/login');
+      }
+    }
+  }, [isAuthenticated, currentRoute, isCheckingSession]);
+
   // Loading indicator during session check
   if (isCheckingSession) {
     return (
-      <div className="min-h-screen bg-[#050505] text-[#F5F7FA] flex items-center justify-center font-mono text-xs">
+      <div className="magniar-admin-shell min-h-screen bg-[#050505] text-[#F5F7FA] flex items-center justify-center text-xs">
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full bg-[#0099FF] animate-ping" />
           <span className="text-[#8D949E] uppercase tracking-widest">
@@ -179,9 +275,10 @@ export const AdminShell: React.FC<AdminShellProps> = ({
       <AdminLogin
         onLoginSuccess={() => {
           setIsAuthenticated(true);
-          setCurrentRoute('dashboard');
+          const routeAfterLogin = routeFromAdminPath('dashboard');
+          setCurrentRoute(routeAfterLogin);
           if (typeof window !== 'undefined') {
-            window.history.pushState({}, '', '/admin');
+            window.history.replaceState({}, '', pathForAdminRoute(routeAfterLogin));
           }
           triggerToast('success', 'Authenticated Successfully', 'Welcome to Magniar Operating System.');
         }}
@@ -190,18 +287,17 @@ export const AdminShell: React.FC<AdminShellProps> = ({
     );
   }
 
-  const openRequestsCount = notifications.filter((n) => !n.is_read && n.type === 'REQUEST').length + 5;
-
   return (
-    <div className="min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row antialiased selection:bg-[#0099FF] selection:text-white font-mono">
+    <div className="magniar-admin-shell min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row antialiased selection:bg-[#0099FF] selection:text-white">
       {/* Sidebar */}
       <AdminSidebar
         currentRoute={currentRoute}
-        onNavigate={(r) => setCurrentRoute(r)}
+        onNavigate={handleNavigate}
         openRequestsCount={openRequestsCount}
         onSignOut={handleSignOut}
         mobileOpen={mobileSidebarOpen}
         onMobileClose={() => setMobileSidebarOpen(false)}
+        adminProfile={adminProfile}
       />
 
       {/* Main App Content Area */}
@@ -209,51 +305,55 @@ export const AdminShell: React.FC<AdminShellProps> = ({
         {/* Header */}
         <AdminHeader
           currentRoute={currentRoute}
-          onNavigate={(r) => setCurrentRoute(r)}
+          onNavigate={handleNavigate}
           onMobileMenuToggle={() => setMobileSidebarOpen(true)}
           notifications={notifications}
           onMarkAllNotificationsRead={handleMarkAllNotificationsRead}
           onNotificationClick={handleNotificationClick}
           onSignOut={handleSignOut}
           onReturnToPublicSite={onReturnToPublicSite}
+          adminProfile={adminProfile}
         />
 
         {/* View Content */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-8">
+        <main className="flex-1 min-w-0 overflow-x-hidden p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-8">
           {currentRoute === 'dashboard' ? (
             <DashboardPage
-              onNavigate={(r) => setCurrentRoute(r)}
+              onNavigate={handleNavigate}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
-            />
-          ) : currentRoute === 'prospects' ? (
-            <ProspectsPage
-              onNavigate={(r) => setCurrentRoute(r)}
-              onTriggerToast={triggerToast}
-              simulatedState={simulatedState}
+              refreshKey={adminDataRevision}
             />
           ) : currentRoute === 'clients' ? (
             <ClientsPage
-              onNavigate={(r) => setCurrentRoute(r)}
+              onNavigate={handleNavigate}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
             />
-          ) : currentRoute === 'projects' ? (
-            <ProjectsPage
-              onNavigate={(r) => setCurrentRoute(r)}
+          ) : currentRoute === 'websites' ? (
+            <WebsitesPage
+              onNavigate={handleNavigate}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
             />
-          ) : currentRoute === 'campaigns' ? (
-            <CampaignsPage
-              onNavigate={(r) => setCurrentRoute(r)}
+          ) : currentRoute === 'invoices' ? (
+            <InvoicesPage
+              onNavigate={handleNavigate}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
+              onLedgerChange={handleAdminDataChanged}
+            />
+          ) : currentRoute === 'settings' ? (
+            <SettingsPage
+              onTriggerToast={triggerToast}
+              simulatedState={simulatedState}
+              adminProfile={adminProfile}
+              onAdminProfileChange={setAdminProfile}
             />
           ) : (
             <AdminModulePlaceholder
               route={currentRoute}
-              onNavigate={(r) => setCurrentRoute(r)}
+              onNavigate={handleNavigate}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}
             />

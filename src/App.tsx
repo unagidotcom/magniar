@@ -1,46 +1,60 @@
 import React, { useState } from 'react';
 import { Header } from './components/navigation/Header';
 import { Footer } from './components/navigation/Footer';
-import { HeroSection } from './components/hero/HeroSection';
-import { CapabilitiesSection } from './components/sections/CapabilitiesSection';
 import { CapabilitiesPage } from './components/capabilities/CapabilitiesPage';
-import { ProcessSection } from './components/process/ProcessSection';
 import { ProcessPage } from './components/process/ProcessPage';
-import { IndustriesSection } from './components/industries/IndustriesSection';
 import { IndustriesPage } from './components/industries/IndustriesPage';
-import { WorkSection } from './components/work/WorkSection';
 import { WorkPage } from './components/work/WorkPage';
 import { CaseStudyDetailPage } from './components/work/CaseStudyDetailPage';
-import { InsightsSection } from './components/insights/InsightsSection';
 import { InsightsPage } from './components/insights/InsightsPage';
 import { ArticleDetailPage } from './components/insights/ArticleDetailPage';
 import { StartProjectPage } from './components/startProject/StartProjectPage';
 import { AboutPage } from './components/about/AboutPage';
 import { AdminShell } from './components/admin/AdminShell';
 import { ContactPage } from './components/contact/ContactPage';
-import { ClientTrustStrip } from './components/common/ClientTrustStrip';
-import { EcommerceSection } from './components/sections/EcommerceSection';
-import { TestimonialsSection } from './components/common/TestimonialsSection';
-import { FAQSection } from './components/common/FAQSection';
-import { CTASection } from './components/common/CTASection';
+import { ThemeSwitcher } from './components/common/ThemeSwitcher';
 import { PrivacyPage } from './components/pages/PrivacyPage';
 import { TermsPage } from './components/pages/TermsPage';
 import { ClientLoginPage } from './components/pages/ClientLoginPage';
-import { TechnicalLabel } from './components/common/TechnicalLabel';
+import { HomePage } from './components/home/HomePage';
 import { StartProjectStep, ProjectRequestFormData } from './types/startProject';
-import { HeroInteractionConfig } from './types/heroInteraction';
 
-const DEFAULT_INTERACTION_CONFIG: HeroInteractionConfig = {
-  motionActive: true,
-  reducedMotion: false,
-  density: 'MEDIUM',
-  signalActivity: 'MEDIUM',
-  cursorResponse: true,
-  simulatedPreset: 'IDLE_1440',
+const getInitialSiteView = ():
+  | 'homepage'
+  | 'about-page'
+  | 'start-project'
+  | 'capabilities-page'
+  | 'process-page'
+  | 'industries-page'
+  | 'work-page'
+  | 'work-detail'
+  | 'insights-page'
+  | 'insights-detail'
+  | 'contact-page'
+  | 'privacy-page'
+  | 'terms-page'
+  | 'login-page'
+  | 'admin-os' => {
+  if (typeof window === 'undefined') return 'homepage';
+
+  const path = window.location.pathname;
+  if (path === '/admin' || path === '/admin/login' || path.startsWith('/admin/')) {
+    return 'admin-os';
+  }
+  if (path === '/portal' || path === '/portal/login' || path.startsWith('/portal/') || path === '/client-login') {
+    return 'login-page';
+  }
+
+  return 'homepage';
+};
+
+const getInitialActiveTab = () => {
+  if (typeof window === 'undefined') return 'shell';
+  return window.location.pathname.startsWith('/admin') ? 'admin-os' : 'shell';
 };
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>('shell');
+  const [activeTab, setActiveTab] = useState<string>(() => getInitialActiveTab());
 
   const [siteView, setSiteView] = useState<
     | 'homepage'
@@ -58,7 +72,7 @@ export default function App() {
     | 'terms-page'
     | 'login-page'
     | 'admin-os'
-  >('homepage');
+  >(() => getInitialSiteView());
 
   // Admin OS States
   const [adminAuthStatus] = useState<boolean>(false);
@@ -92,13 +106,6 @@ export default function App() {
     'real-cost-of-scaling-paid-acquisition-too-early'
   );
 
-  const [interactionConfig, setInteractionConfig] =
-    useState<HeroInteractionConfig>(DEFAULT_INTERACTION_CONFIG);
-
-  const handleConfigChange = (newConfig: Partial<HeroInteractionConfig>) => {
-    setInteractionConfig((prev) => ({ ...prev, ...newConfig }));
-  };
-
   const handleSelectCaseStudy = (slug: string) => {
     setActiveCaseStudySlug(slug);
     setSiteView('work-detail');
@@ -128,6 +135,15 @@ export default function App() {
   const handleNavigate = (route: string) => {
     if (route === 'start-project') {
       handleStartProject();
+    } else if (route === 'services') {
+      setSiteView('homepage');
+      setActiveTab('services');
+      if (typeof window !== 'undefined') {
+        window.history.pushState({}, '', '/');
+        window.setTimeout(() => {
+          document.getElementById('services')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 0);
+      }
     } else if (route === 'login-page' || route === 'portal' || route === 'portal-page' || route === 'client-portal') {
       setSiteView('login-page');
       setActiveTab('shell');
@@ -187,7 +203,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#F5F7FA] font-sans antialiased selection:bg-[#0099FF]/30 selection:text-white flex flex-col relative">
+    <div className="min-h-screen bg-[#0B0D0F] text-[#F5F7FA] font-sans antialiased selection:bg-[#B89A72]/30 selection:text-white flex flex-col relative">
       {siteView === 'admin-os' || activeTab === 'admin-os' ? (
         <AdminShell
           initialAuthStatus={adminAuthStatus}
@@ -201,7 +217,7 @@ export default function App() {
           }}
         />
       ) : (
-        <>
+        <div className="magniar-public-shell">
           {/* Production Navigation Header */}
           <Header
             onStartProject={handleStartProject}
@@ -211,6 +227,8 @@ export default function App() {
                 ? 'about'
                 : siteView === 'start-project'
                 ? 'start-project'
+                : activeTab === 'services'
+                ? 'services'
                 : siteView === 'capabilities-page'
                 ? 'capabilities'
                 : siteView === 'process-page'
@@ -224,13 +242,15 @@ export default function App() {
                 : 'homepage'
             }
             setActiveTab={(tab) => {
-              if (tab === 'about') handleAboutPage();
+              if (tab === 'services') handleNavigate('services');
+              else if (tab === 'about') handleAboutPage();
               else if (tab === 'start-project') handleStartProject();
               else if (tab === 'capabilities') handleNavigate('capabilities-page');
               else if (tab === 'process') handleNavigate('process-page');
               else if (tab === 'industries') handleNavigate('industries-page');
               else if (tab === 'work') handleNavigate('work-page');
               else if (tab === 'insights') handleNavigate('insights-page');
+              else if (tab === 'contact') handleNavigate('contact-page');
               else handleNavigate('homepage');
             }}
           />
@@ -238,110 +258,10 @@ export default function App() {
           {/* Main Website Canvas */}
           <main className="flex-1 w-full">
             {siteView === 'homepage' ? (
-              <div className="space-y-0">
-                {/* SECTION 1: HOMEPAGE HERO */}
-                <HeroSection
-                  interactionConfig={interactionConfig}
-                  onInteractionConfigChange={handleConfigChange}
-                  onStartProject={handleStartProject}
-                  onExploreCapabilities={() => handleNavigate('capabilities-page')}
-                />
-
-                {/* SECTION 2: POSITIONING STATEMENT */}
-                <div className="py-24 sm:py-32 px-4 sm:px-6 lg:px-12 bg-[#030508] border-t border-white/10 relative overflow-hidden">
-                  <div className="max-w-[1440px] mx-auto space-y-16">
-                    <div className="max-w-3xl space-y-6">
-                      <div className="flex items-center gap-3">
-                        <TechnicalLabel text="OUR APPROACH" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
-                        <span className="font-sans text-xs text-slate-400 font-semibold uppercase tracking-wider">
-                          INTEGRATED GROWTH PARTNER
-                        </span>
-                      </div>
-
-                      <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-                        ONE GROWTH PARTNER. <br />
-                        <span className="text-[#0099FF]">FROM STRATEGY TO SCALE.</span>
-                      </h2>
-
-                      <p className="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed">
-                        Magniar connects performance marketing, social commerce, custom development and AI strategy into a single growth engine built around what your business actually needs.
-                      </p>
-                    </div>
-
-                    {/* 4 Core Disciplines Bar */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-10 border-t border-white/10">
-                      <div className="p-6 bg-[#080B10] border border-white/10 rounded-[2px] space-y-3 hover:border-[#0099FF]/40 transition-all">
-                        <span className="font-heading text-xs font-bold text-[#0099FF] tracking-wider uppercase block">01 PERFORMANCE</span>
-                        <p className="text-sm text-slate-300 font-sans font-normal leading-relaxed">Paid acquisition, media buying & demand generation.</p>
-                      </div>
-                      <div className="p-6 bg-[#080B10] border border-white/10 rounded-[2px] space-y-3 hover:border-[#0099FF]/40 transition-all">
-                        <span className="font-heading text-xs font-bold text-[#0099FF] tracking-wider uppercase block">02 COMMERCE</span>
-                        <p className="text-sm text-slate-300 font-sans font-normal leading-relaxed">Digital storefronts, social commerce & marketplaces.</p>
-                      </div>
-                      <div className="p-6 bg-[#080B10] border border-white/10 rounded-[2px] space-y-3 hover:border-[#0099FF]/40 transition-all">
-                        <span className="font-heading text-xs font-bold text-[#0099FF] tracking-wider uppercase block">03 DEVELOPMENT</span>
-                        <p className="text-sm text-slate-300 font-sans font-normal leading-relaxed">Web applications & custom web infrastructure.</p>
-                      </div>
-                      <div className="p-6 bg-[#080B10] border border-white/10 rounded-[2px] space-y-3 hover:border-[#0099FF]/40 transition-all">
-                        <span className="font-heading text-xs font-bold text-[#0099FF] tracking-wider uppercase block">04 INTELLIGENCE</span>
-                        <p className="text-sm text-slate-300 font-sans font-normal leading-relaxed">AI decision engines, predictive data & automation.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* CLIENT TRUST STRIP */}
-                <ClientTrustStrip />
-
-                {/* SECTION 3: CAPABILITIES */}
-                <CapabilitiesSection
-                  onExploreFullCapabilities={() => handleNavigate('capabilities-page')}
-                />
-
-                {/* SECTION 4: ECOMMERCE & MULTI-CHANNEL RETAIL HIGHLIGHT */}
-                <EcommerceSection
-                  onStartProject={handleStartProject}
-                  onExploreCapabilities={() => handleNavigate('capabilities-page')}
-                />
-
-                {/* SECTION 5: PROCESS */}
-                <ProcessSection
-                  onExploreFullProcess={() => handleNavigate('process-page')}
-                  onStartProject={handleStartProject}
-                />
-
-                {/* SECTION 6: INDUSTRIES */}
-                <IndustriesSection
-                  onExploreFullIndustries={() => handleNavigate('industries-page')}
-                  onStartProject={handleStartProject}
-                  onSeeProcess={() => handleNavigate('process-page')}
-                />
-
-                {/* SECTION 7: WORK */}
-                <WorkSection
-                  onExploreFullWork={() => handleNavigate('work-page')}
-                  onSelectCaseStudy={handleSelectCaseStudy}
-                />
-
-                {/* SECTION 8: TESTIMONIALS */}
-                <TestimonialsSection />
-
-                {/* SECTION 9: INSIGHTS */}
-                <InsightsSection
-                  onExploreFullInsights={() => handleNavigate('insights-page')}
-                  onSelectArticle={handleSelectArticle}
-                />
-
-                {/* SECTION 10: FAQ */}
-                <FAQSection />
-
-                {/* SECTION 11: FINAL CTA */}
-                <CTASection
-                  onStartProject={handleStartProject}
-                  onBookConversation={handleStartProject}
-                />
-              </div>
+              <HomePage
+                onStartProject={handleStartProject}
+                onNavigate={handleNavigate}
+              />
             ) : siteView === 'privacy-page' ? (
               <PrivacyPage
                 onReturnHome={() => handleNavigate('homepage')}
@@ -433,8 +353,9 @@ export default function App() {
 
           {/* Production Footer */}
           <Footer onNavigate={handleNavigate} onStartProject={handleStartProject} />
-        </>
+        </div>
       )}
+      <ThemeSwitcher />
     </div>
   );
 }

@@ -42,14 +42,14 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
 
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 relative z-10 space-y-8">
           <div className="space-y-4 max-w-4xl">
-            <div className="flex items-center gap-2 font-mono text-xs text-[#0099FF] tracking-widest uppercase">
-              <span className="w-2 h-2 rounded-full bg-[#0099FF] animate-pulse" />
+            <div className="flex items-center gap-2 font-mono text-xs text-[#B89A72] tracking-widest uppercase">
+              <span className="w-2 h-2 rounded-full bg-[#B89A72] animate-pulse" />
               <span>TARGET INDUSTRIES & BUSINESS TYPES</span>
             </div>
 
             <h1 className="font-mono text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#F5F7FA] leading-[1.08]">
               GROWTH LOOKS DIFFERENT <br />
-              <span className="text-[#0099FF]">FROM BUSINESS TO BUSINESS.</span>
+              <span className="text-[#B89A72]">FROM BUSINESS TO BUSINESS.</span>
             </h1>
 
             <p className="text-base sm:text-xl text-[#8D949E] leading-relaxed font-sans max-w-3xl">
@@ -60,7 +60,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
           {/* Positioning Highlights */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-white/10 max-w-4xl font-mono text-xs text-[#8D949E]">
             <div className="flex items-start gap-2 bg-[#0A0D12] border border-white/10 p-4 rounded-[2px]">
-              <Globe className="w-4 h-4 text-[#0099FF] shrink-0 mt-0.5" />
+              <Globe className="w-4 h-4 text-[#B89A72] shrink-0 mt-0.5" />
               <div>
                 <span className="text-white font-bold block mb-1">GLOBAL REACH</span>
                 <span>Small to mid-sized ambitious businesses worldwide.</span>
@@ -68,7 +68,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
             </div>
 
             <div className="flex items-start gap-2 bg-[#0A0D12] border border-white/10 p-4 rounded-[2px]">
-              <TrendingUp className="w-4 h-4 text-[#0099FF] shrink-0 mt-0.5" />
+              <TrendingUp className="w-4 h-4 text-[#B89A72] shrink-0 mt-0.5" />
               <div>
                 <span className="text-white font-bold block mb-1">NO PRE-REQUISITE KNOWLEDGE</span>
                 <span>You don't need to know which exact service you need first.</span>
@@ -76,7 +76,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
             </div>
 
             <div className="flex items-start gap-2 bg-[#0A0D12] border border-white/10 p-4 rounded-[2px]">
-              <Building className="w-4 h-4 text-[#0099FF] shrink-0 mt-0.5" />
+              <Building className="w-4 h-4 text-[#B89A72] shrink-0 mt-0.5" />
               <div>
                 <span className="text-white font-bold block mb-1">SYSTEM ASSEMBLY</span>
                 <span>Adapting performance, commerce, tech & AI to your model.</span>
@@ -91,7 +91,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <span className="font-mono text-xs text-[#0099FF] tracking-widest uppercase block mb-1">
+              <span className="font-mono text-xs text-[#B89A72] tracking-widest uppercase block mb-1">
                 SECTION 02 / INTERACTIVE ECOSYSTEM
               </span>
               <h2 className="font-mono text-2xl sm:text-3xl font-bold text-white">
@@ -114,7 +114,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
       <section className="py-16 sm:py-24 border-b border-white/10 bg-[#080A0D]">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 space-y-16">
           <div className="space-y-2 border-b border-white/10 pb-6">
-            <span className="font-mono text-xs text-[#0099FF] tracking-widest uppercase block">
+            <span className="font-mono text-xs text-[#B89A72] tracking-widest uppercase block">
               SECTIONS 03–11 / ARCHITECTURAL DEEP-DIVES
             </span>
             <h2 className="font-mono text-3xl sm:text-4xl font-bold text-white">
@@ -137,7 +137,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/10 pb-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-3">
-                      <span className="font-mono text-xs text-[#0099FF] font-bold">
+                      <span className="font-mono text-xs text-[#B89A72] font-bold">
                         SECTION 0{idx + 3} / {cat.numberLabel}
                       </span>
                       <span className="font-mono text-[10px] text-[#5A626E] border border-white/10 px-2 py-0.5 rounded-[2px]">
@@ -187,7 +187,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-sans text-[#8D949E]">
                         {cat.commonGrowthNeeds.map((need, i) => (
                           <div key={i} className="flex items-center gap-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[#0099FF] shrink-0" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#B89A72] shrink-0" />
                             <span className="text-[#F5F7FA]">{need}</span>
                           </div>
                         ))}
@@ -222,7 +222,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
                   <div className="flex items-center gap-3">
                     <button
                       onClick={onStartProject}
-                      className="text-[#0099FF] hover:underline flex items-center gap-1 font-semibold cursor-pointer"
+                      className="text-[#B89A72] hover:underline flex items-center gap-1 font-semibold cursor-pointer"
                     >
                       <span>EXPLORE {cat.title.toUpperCase()} GROWTH →</span>
                     </button>
@@ -238,7 +238,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
       <section className="py-16 sm:py-20 border-b border-white/10 bg-[#050505]">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 space-y-8">
           <div className="space-y-2">
-            <span className="font-mono text-xs text-[#0099FF] tracking-widest uppercase block">
+            <span className="font-mono text-xs text-[#B89A72] tracking-widest uppercase block">
               SECTION 12 / ADAPTATION ARCHITECTURE
             </span>
             <h2 className="font-mono text-2xl sm:text-3xl font-bold text-white">
@@ -262,11 +262,11 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
                     <div key={i} className="space-y-1">
                       <div className="flex justify-between text-[11px]">
                         <span className="text-white font-semibold">{m.pillar}</span>
-                        <span className="text-[#0099FF] font-bold">{m.weight}</span>
+                        <span className="text-[#B89A72] font-bold">{m.weight}</span>
                       </div>
                       <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-[#0099FF]"
+                          className="h-full bg-[#B89A72]"
                           style={{ width: m.weight }}
                         />
                       </div>
@@ -284,7 +284,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
       <section className="py-16 sm:py-20 border-b border-white/10 bg-[#080A0D]">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 space-y-8">
           <div className="space-y-2 border-b border-white/10 pb-6">
-            <span className="font-mono text-xs text-[#0099FF] tracking-widest uppercase block">
+            <span className="font-mono text-xs text-[#B89A72] tracking-widest uppercase block">
               SECTION 13 / CASE STUDY CONNECTION ARCHITECTURE
             </span>
             <h2 className="font-mono text-2xl sm:text-3xl font-bold text-white">
@@ -297,8 +297,8 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
 
           {/* Filter Architecture Preview */}
           <div className="bg-[#050608] border border-white/10 p-6 rounded-[2px] space-y-6 font-mono text-xs">
-            <div className="flex items-center gap-2 text-[#0099FF] font-bold">
-              <Sliders className="w-4 h-4 text-[#0099FF]" />
+            <div className="flex items-center gap-2 text-[#B89A72] font-bold">
+              <Sliders className="w-4 h-4 text-[#B89A72]" />
               <span>SCHEMA ARCHITECTURE PREVIEW (FUTURE RELATIONAL INDEX)</span>
             </div>
 
@@ -339,7 +339,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
 
             {/* Notice regarding zero synthetic data */}
             <div className="bg-[#0A0D12] border border-white/10 p-4 rounded-[2px] flex items-start gap-3 text-[#8D949E] font-sans">
-              <Info className="w-5 h-5 text-[#0099FF] shrink-0 mt-0.5" />
+              <Info className="w-5 h-5 text-[#B89A72] shrink-0 mt-0.5" />
               <div>
                 <span className="text-white font-semibold font-mono text-xs block">
                   AUTHENTIC DATA STANDARDS: NO SYNTHETIC CASE STUDIES
@@ -357,13 +357,13 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({
       <section className="py-20 lg:py-28 bg-[#050505]">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
           <div className="bg-[#0A0D12] border border-white/10 rounded-[2px] p-8 lg:p-16 space-y-8 text-center max-w-4xl mx-auto">
-            <span className="font-mono text-xs text-[#0099FF] tracking-widest uppercase font-semibold block">
+            <span className="font-mono text-xs text-[#B89A72] tracking-widest uppercase font-semibold block">
               SECTION 14 / INITIATE DISCOVERY
             </span>
 
             <h2 className="font-mono text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
               IF YOU DON'T SEE YOUR <br />
-              <span className="text-[#0099FF]">EXACT BUSINESS TYPE HERE</span>
+              <span className="text-[#B89A72]">EXACT BUSINESS TYPE HERE</span>
             </h2>
 
             <p className="text-base sm:text-lg text-[#8D949E] font-sans max-w-2xl mx-auto">

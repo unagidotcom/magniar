@@ -3,15 +3,15 @@ import { BookOpen, CheckCircle2, RefreshCw, Layers, ShieldCheck, Database, Smart
 
 export const ProcessDesignReview: React.FC = () => {
   return (
-    <div className="bg-[#0A0D12] border border-[#0099FF]/40 rounded-[2px] p-6 sm:p-10 space-y-10 text-xs font-mono text-[#8D949E] relative overflow-hidden shadow-2xl">
+    <div className="bg-[#0A0D12] border border-[#B89A72]/40 rounded-[2px] p-6 sm:p-10 space-y-10 text-xs font-mono text-[#8D949E] relative overflow-hidden shadow-2xl">
       {/* HEADER */}
       <div className="border-b border-white/10 pb-6 space-y-3">
         <div className="flex items-center gap-3">
-          <BookOpen className="w-5 h-5 text-[#0099FF]" />
-          <span className="text-[#0099FF] font-bold tracking-widest text-sm uppercase">
+          <BookOpen className="w-5 h-5 text-[#B89A72]" />
+          <span className="text-[#B89A72] font-bold tracking-widest text-sm uppercase">
             CHAPTER 06 DESIGN & ARCHITECTURE REVIEW
           </span>
-          <span className="px-2 py-0.5 bg-[#0099FF]/10 text-[#0099FF] border border-[#0099FF]/30 text-[10px] rounded-[2px]">
+          <span className="px-2 py-0.5 bg-[#B89A72]/10 text-[#B89A72] border border-[#B89A72]/30 text-[10px] rounded-[2px]">
             SPECIFICATION VERIFIED
           </span>
         </div>
@@ -29,7 +29,7 @@ export const ProcessDesignReview: React.FC = () => {
       <div className="space-y-8">
         {/* Q1: NOT A GENERIC AGENCY TIMELINE */}
         <div className="p-5 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
-          <div className="flex items-center gap-2 text-[#0099FF] font-bold text-sm">
+          <div className="flex items-center gap-2 text-[#B89A72] font-bold text-sm">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>1. WHY THIS IS NOT A GENERIC AGENCY TIMELINE</span>
           </div>
@@ -40,7 +40,7 @@ export const ProcessDesignReview: React.FC = () => {
 
         {/* Q2: STRATEGIC APPROACH */}
         <div className="p-5 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
-          <div className="flex items-center gap-2 text-[#0099FF] font-bold text-sm">
+          <div className="flex items-center gap-2 text-[#B89A72] font-bold text-sm">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>2. HOW THE PROCESS COMMUNICATES MAGNIAR'S STRATEGIC APPROACH</span>
           </div>
@@ -51,7 +51,7 @@ export const ProcessDesignReview: React.FC = () => {
 
         {/* Q3: CONNECTION WITH THE FOUR CAPABILITIES */}
         <div className="p-5 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
-          <div className="flex items-center gap-2 text-[#0099FF] font-bold text-sm">
+          <div className="flex items-center gap-2 text-[#B89A72] font-bold text-sm">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>3. HOW THE PROCESS CONNECTS WITH THE FOUR CAPABILITIES</span>
           </div>
@@ -62,8 +62,8 @@ export const ProcessDesignReview: React.FC = () => {
 
         {/* Q4: CONTINUOUS OPTIMIZATION LOOP */}
         <div className="p-5 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
-          <div className="flex items-center gap-2 text-[#0099FF] font-bold text-sm">
-            <RefreshCw className="w-4 h-4 shrink-0 text-[#0099FF]" />
+          <div className="flex items-center gap-2 text-[#B89A72] font-bold text-sm">
+            <RefreshCw className="w-4 h-4 shrink-0 text-[#B89A72]" />
             <span>4. HOW THE LOOP COMMUNICATES CONTINUOUS OPTIMIZATION</span>
           </div>
           <p className="text-xs text-[#F5F7FA] font-sans leading-relaxed">
@@ -73,7 +73,7 @@ export const ProcessDesignReview: React.FC = () => {
 
         {/* Q5: CLIENT PARTICIPATION */}
         <div className="p-5 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
-          <div className="flex items-center gap-2 text-[#0099FF] font-bold text-sm">
+          <div className="flex items-center gap-2 text-[#B89A72] font-bold text-sm">
             <Users className="w-4 h-4 shrink-0" />
             <span>5. HOW CLIENTS PARTICIPATE (COLLABORATIVE MODEL)</span>
           </div>
@@ -84,7 +84,7 @@ export const ProcessDesignReview: React.FC = () => {
 
         {/* Q6: ENGAGEMENT MODELS */}
         <div className="p-5 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
-          <div className="flex items-center gap-2 text-[#0099FF] font-bold text-sm">
+          <div className="flex items-center gap-2 text-[#B89A72] font-bold text-sm">
             <ShieldCheck className="w-4 h-4 shrink-0" />
             <span>6. HOW ENGAGEMENT MODELS FIT INTO THE PROCESS</span>
           </div>
@@ -95,7 +95,7 @@ export const ProcessDesignReview: React.FC = () => {
 
         {/* Q7: MOBILE RESPONSIVENESS & INTERACTION */}
         <div className="p-5 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
-          <div className="flex items-center gap-2 text-[#0099FF] font-bold text-sm">
+          <div className="flex items-center gap-2 text-[#B89A72] font-bold text-sm">
             <Smartphone className="w-4 h-4 shrink-0" />
             <span>7. HOW THE EXPERIENCE WORKS ON MOBILE (390px)</span>
           </div>
@@ -106,7 +106,7 @@ export const ProcessDesignReview: React.FC = () => {
 
         {/* Q8: CLIENT PORTAL & FUTURE CMS INTEGRATION */}
         <div className="p-5 bg-[#050505] border border-white/10 rounded-[2px] space-y-3">
-          <div className="flex items-center gap-2 text-[#0099FF] font-bold text-sm">
+          <div className="flex items-center gap-2 text-[#B89A72] font-bold text-sm">
             <Database className="w-4 h-4 shrink-0" />
             <span>8. HOW THE PROCESS CONNECTS TO FUTURE CLIENT PORTAL / CMS</span>
           </div>

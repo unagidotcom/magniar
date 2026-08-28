@@ -1,12 +1,25 @@
 import React from 'react';
 import { Inbox, Eye, ArrowRight } from 'lucide-react';
-import { MockRequest } from '../../../data/adminMockData';
 import { AdminStatusBadge } from '../AdminStatusBadge';
 
+export interface DashboardRequest {
+  id: string;
+  code: string;
+  company: string;
+  client_name: string;
+  email: string;
+  industry: string;
+  subject: string;
+  status: string;
+  created_at: string;
+  budget_tier?: string;
+  summary?: string;
+}
+
 interface RecentRequestsTableProps {
-  requests: MockRequest[];
+  requests: DashboardRequest[];
   selectedStage: string | null;
-  onInspectRequest: (req: MockRequest) => void;
+  onInspectRequest: (req: DashboardRequest) => void;
   onNavigateToRequests: () => void;
 }
 

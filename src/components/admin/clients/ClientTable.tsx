@@ -1,6 +1,7 @@
 import React from 'react';
 import { Client } from '../../../types/clients';
-import { Building2, ExternalLink, ArrowUpRight, ShieldCheck, Clock, Users, ChevronRight } from 'lucide-react';
+import { Clock, ChevronRight } from 'lucide-react';
+import { ClientLogo } from '../../common/ClientLogo';
 
 interface ClientTableProps {
   clients: Client[];
@@ -96,8 +97,14 @@ export const ClientTable: React.FC<ClientTableProps> = ({
                         </span>
                       )}
                     </div>
-                    <div className="font-bold text-white text-sm group-hover:text-[#0099FF] transition-colors flex items-center gap-1.5">
-                      <span>{client.business_name}</span>
+                    <div className="font-bold text-white text-sm group-hover:text-[#0099FF] transition-colors flex items-center gap-2 min-w-[220px]">
+                      <ClientLogo
+                        name={client.business_name}
+                        logoUrl={client.logo_url}
+                        className="h-9 w-12 shrink-0 flex items-center justify-center bg-[#050505] border border-white/10 rounded-[2px] px-1.5"
+                        imageClassName="max-h-6 max-w-full object-contain"
+                      />
+                      <span className="truncate">{client.business_name}</span>
                     </div>
                     {primaryContact && (
                       <div className="text-[11px] text-white/50">

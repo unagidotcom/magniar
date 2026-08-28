@@ -112,6 +112,7 @@ export interface Client {
   primary_market: string;
   markets_served: string;
   website: string;
+  logo_url?: string;
   description: string;
   primary_objective: string;
 
@@ -142,6 +143,9 @@ export interface Client {
   // Client Portal Integration
   portal_status: PortalStatus;
   portal_invited_at?: string;
+  show_on_homepage?: boolean;
+  homepage_label?: string;
+  homepage_order?: number;
 
   // Metadata
   created_at: string;

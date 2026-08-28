@@ -34,7 +34,7 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
     <div className="space-y-8 animate-fadeIn">
       {/* Header */}
       <div className="space-y-3">
-        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#0099FF] uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#B89A72] uppercase tracking-wider">
           <FileText className="w-4 h-4" />
           <span>Step 08 / 08 — Review & Confirm</span>
         </div>
@@ -52,13 +52,13 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
         <div className="bg-[#080A0D] border border-white/10 p-6 rounded-xl space-y-4 shadow-lg">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="flex items-center gap-2.5 font-heading text-base font-bold text-white">
-              <Target className="w-4 h-4 text-[#0099FF]" />
+              <Target className="w-4 h-4 text-[#B89A72]" />
               <span>01 / Primary Strategic Focus</span>
             </div>
             <button
               type="button"
               onClick={() => onEditStep(0)}
-              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#0099FF] hover:text-white bg-[#0099FF]/10 hover:bg-[#0099FF]/20 border border-[#0099FF]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
+              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#B89A72] hover:text-white bg-[#B89A72]/10 hover:bg-[#B89A72]/20 border border-[#B89A72]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
             >
               <Edit2 className="w-3.5 h-3.5" />
               <span>Edit</span>
@@ -75,13 +75,13 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
         <div className="bg-[#080A0D] border border-white/10 p-6 rounded-xl space-y-4 shadow-lg">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="flex items-center gap-2.5 font-heading text-base font-bold text-white">
-              <User className="w-4 h-4 text-[#0099FF]" />
+              <User className="w-4 h-4 text-[#B89A72]" />
               <span>02 / Contact Information</span>
             </div>
             <button
               type="button"
               onClick={() => onEditStep(1)}
-              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#0099FF] hover:text-white bg-[#0099FF]/10 hover:bg-[#0099FF]/20 border border-[#0099FF]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
+              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#B89A72] hover:text-white bg-[#B89A72]/10 hover:bg-[#B89A72]/20 border border-[#B89A72]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
             >
               <Edit2 className="w-3.5 h-3.5" />
               <span>Edit</span>
@@ -98,7 +98,7 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
 
             <div>
               <span className="text-slate-400 text-xs block font-medium">Work Email</span>
-              <span className="text-[#0099FF] font-semibold">{formData.email}</span>
+              <span className="text-[#B89A72] font-semibold">{formData.email}</span>
             </div>
 
             <div>
@@ -114,13 +114,13 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
         <div className="bg-[#080A0D] border border-white/10 p-6 rounded-xl space-y-4 shadow-lg">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="flex items-center gap-2.5 font-heading text-base font-bold text-white">
-              <Building2 className="w-4 h-4 text-[#0099FF]" />
+              <Building2 className="w-4 h-4 text-[#B89A72]" />
               <span>03 / Business Details</span>
             </div>
             <button
               type="button"
               onClick={() => onEditStep(2)}
-              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#0099FF] hover:text-white bg-[#0099FF]/10 hover:bg-[#0099FF]/20 border border-[#0099FF]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
+              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#B89A72] hover:text-white bg-[#B89A72]/10 hover:bg-[#B89A72]/20 border border-[#B89A72]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
             >
               <Edit2 className="w-3.5 h-3.5" />
               <span>Edit</span>
@@ -135,7 +135,7 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
                 href={formData.website}
                 target="_blank"
                 rel="noreferrer"
-                className="text-[#0099FF] hover:underline text-xs"
+                className="text-[#B89A72] hover:underline text-xs"
               >
                 {formData.website}
               </a>
@@ -161,13 +161,13 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
         <div className="bg-[#080A0D] border border-white/10 p-6 rounded-xl space-y-4 shadow-lg">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="flex items-center gap-2.5 font-heading text-base font-bold text-white">
-              <Layers className="w-4 h-4 text-[#0099FF]" />
+              <Layers className="w-4 h-4 text-[#B89A72]" />
               <span>04 / Capabilities & Support</span>
             </div>
             <button
               type="button"
               onClick={() => onEditStep(3)}
-              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#0099FF] hover:text-white bg-[#0099FF]/10 hover:bg-[#0099FF]/20 border border-[#0099FF]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
+              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#B89A72] hover:text-white bg-[#B89A72]/10 hover:bg-[#B89A72]/20 border border-[#B89A72]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
             >
               <Edit2 className="w-3.5 h-3.5" />
               <span>Edit</span>
@@ -175,7 +175,7 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
           </div>
 
           {formData.isNotSureNeeds ? (
-            <div className="p-3.5 bg-[#0099FF]/10 border border-[#0099FF]/30 rounded-lg font-sans text-sm text-[#0099FF] font-medium">
+            <div className="p-3.5 bg-[#B89A72]/10 border border-[#B89A72]/30 rounded-lg font-sans text-sm text-[#B89A72] font-medium">
               <span>Strategic Diagnosis Requested ("Not Sure Yet" path selected)</span>
             </div>
           ) : (
@@ -212,13 +212,13 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
         <div className="bg-[#080A0D] border border-white/10 p-6 rounded-xl space-y-4 shadow-lg">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="flex items-center gap-2.5 font-heading text-base font-bold text-white">
-              <Compass className="w-4 h-4 text-[#0099FF]" />
+              <Compass className="w-4 h-4 text-[#B89A72]" />
               <span>05 / Current Infrastructure & Bottlenecks</span>
             </div>
             <button
               type="button"
               onClick={() => onEditStep(4)}
-              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#0099FF] hover:text-white bg-[#0099FF]/10 hover:bg-[#0099FF]/20 border border-[#0099FF]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
+              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#B89A72] hover:text-white bg-[#B89A72]/10 hover:bg-[#B89A72]/20 border border-[#B89A72]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
             >
               <Edit2 className="w-3.5 h-3.5" />
               <span>Edit</span>
@@ -252,13 +252,13 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
         <div className="bg-[#080A0D] border border-white/10 p-6 rounded-xl space-y-4 shadow-lg">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="flex items-center gap-2.5 font-heading text-base font-bold text-white">
-              <DollarSign className="w-4 h-4 text-[#0099FF]" />
+              <DollarSign className="w-4 h-4 text-[#B89A72]" />
               <span>06 / Scope, Investment & Timeline</span>
             </div>
             <button
               type="button"
               onClick={() => onEditStep(5)}
-              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#0099FF] hover:text-white bg-[#0099FF]/10 hover:bg-[#0099FF]/20 border border-[#0099FF]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
+              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#B89A72] hover:text-white bg-[#B89A72]/10 hover:bg-[#B89A72]/20 border border-[#B89A72]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
             >
               <Edit2 className="w-3.5 h-3.5" />
               <span>Edit</span>
@@ -268,7 +268,7 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-sans text-sm">
             <div>
               <span className="text-slate-400 text-xs block font-medium">Monthly Media Spend</span>
-              <span className="text-[#0099FF] font-bold">{formData.monthlyMediaAdSpend}</span>
+              <span className="text-[#B89A72] font-bold">{formData.monthlyMediaAdSpend}</span>
             </div>
 
             <div>
@@ -287,13 +287,13 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
         <div className="bg-[#080A0D] border border-white/10 p-6 rounded-xl space-y-4 shadow-lg">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="flex items-center gap-2.5 font-heading text-base font-bold text-white">
-              <MessageSquare className="w-4 h-4 text-[#0099FF]" />
+              <MessageSquare className="w-4 h-4 text-[#B89A72]" />
               <span>07 / Referral & Attachments</span>
             </div>
             <button
               type="button"
               onClick={() => onEditStep(6)}
-              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#0099FF] hover:text-white bg-[#0099FF]/10 hover:bg-[#0099FF]/20 border border-[#0099FF]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
+              className="px-3 py-1.5 text-xs font-sans font-semibold text-[#B89A72] hover:text-white bg-[#B89A72]/10 hover:bg-[#B89A72]/20 border border-[#B89A72]/30 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors"
             >
               <Edit2 className="w-3.5 h-3.5" />
               <span>Edit</span>
@@ -308,7 +308,7 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
 
             <div>
               <span className="text-slate-400 text-xs block font-medium">Attached Brief</span>
-              <span className="text-[#0099FF] font-medium">
+              <span className="text-[#B89A72] font-medium">
                 {formData.attachmentName || 'No file attached'}
               </span>
             </div>
@@ -318,7 +318,7 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
 
       {/* Confirmation Statement */}
       <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 flex items-center gap-3 font-sans text-xs sm:text-sm text-slate-300">
-        <ShieldCheck className="w-5 h-5 text-[#0099FF] flex-shrink-0" />
+        <ShieldCheck className="w-5 h-5 text-[#B89A72] flex-shrink-0" />
         <span>Submitting initiates a direct evaluation with a Magniar lead partner. No financial commitment required.</span>
       </div>
 
@@ -344,7 +344,7 @@ export const ReviewSummaryStep: React.FC<ReviewSummaryStepProps> = ({
           type="button"
           onClick={onSubmit}
           disabled={isSubmitting}
-          className="w-full sm:w-auto px-8 py-4 rounded-lg bg-[#0099FF] hover:bg-[#0088EE] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_25px_rgba(0,153,255,0.4)] hover:shadow-[0_0_35px_rgba(0,153,255,0.6)] disabled:opacity-50"
+          className="w-full sm:w-auto px-8 py-4 rounded-lg bg-[#B89A72] hover:bg-[#8F714D] text-white font-sans text-sm font-bold tracking-wide transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_25px_rgba(184,154,114,0.4)] hover:shadow-[0_0_35px_rgba(184,154,114,0.6)] disabled:opacity-50"
         >
           {isSubmitting ? (
             <>

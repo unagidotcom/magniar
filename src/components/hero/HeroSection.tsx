@@ -31,7 +31,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none opacity-30" />
 
       {/* Subtle Restrained Ambient Depth Glow */}
-      <div className="absolute top-1/4 left-10 w-96 h-96 rounded-full bg-[#0099FF]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-10 w-96 h-96 rounded-full bg-[#B89A72]/5 blur-[120px] pointer-events-none" />
 
       {/* Main Asymmetric Hero Content Grid */}
       <div className="relative z-10 my-auto w-full max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -42,7 +42,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Technical Label */}
           <div className="flex items-center gap-3">
             <TechnicalLabel>01 / GROWTH SYSTEMS</TechnicalLabel>
-            <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
+            <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-[#B89A72]" />
             <span className="hidden sm:inline-block font-sans text-xs text-slate-400 tracking-wider uppercase font-medium">
               AGENCY & GROWTH PARTNER
             </span>
@@ -50,9 +50,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Primary Dominant Headline */}
           <h1 className="font-heading text-4xl sm:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.05] select-none">
-            MARKETING. <br />
-            DEVELOPMENT. <br />
-            <span className="text-[#0099FF]">AI STRATEGY.</span>
+            Marketing, development, <br />
+            and <span className="text-[#B89A72]">AI strategy</span> for growth.
           </h1>
 
           {/* Supporting Positioning Statement */}
@@ -73,10 +72,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <a
               href="#work"
               onClick={onExploreCapabilities}
-              className="group font-sans text-sm font-semibold text-slate-300 hover:text-[#0099FF] transition-colors tracking-wide uppercase flex items-center gap-2 py-2 cursor-pointer"
+              className="group font-sans text-sm font-semibold text-slate-300 hover:text-[#B89A72] transition-colors tracking-wide uppercase flex items-center gap-2 py-2 cursor-pointer"
             >
               <span>SEE OUR WORK</span>
-              <ArrowRight className="w-4 h-4 text-[#0099FF] group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 text-[#B89A72] group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
 
@@ -93,7 +92,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <span className="text-white/20">•</span>
             <span className="text-[#F5F7FA] font-medium">AMAZON</span>
             <span className="text-white/20">•</span>
-            <span className="text-[#0099FF] font-semibold">AI STRATEGY</span>
+            <span className="text-[#B89A72] font-semibold">AI STRATEGY</span>
           </div>
         </div>
 
@@ -110,7 +109,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="relative z-10 pt-8 mt-8 border-t border-white/10 w-full max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-xs text-slate-300">
         <div className="flex flex-wrap items-center gap-4 sm:gap-6">
           <div className="flex items-center gap-2 text-white font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72]" />
             <span>MARKETING × DEVELOPMENT × AI</span>
           </div>
           <span className="text-white/20 hidden sm:inline">•</span>
@@ -125,7 +124,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           className="group flex items-center gap-2 text-slate-300 hover:text-white transition-colors cursor-pointer text-xs font-semibold uppercase tracking-wider"
         >
           <span>EXPLORE SYSTEM</span>
-          <ArrowDown className="w-3.5 h-3.5 text-[#0099FF] group-hover:translate-y-0.5 transition-transform" />
+          <ArrowDown className="w-3.5 h-3.5 text-[#B89A72] group-hover:translate-y-0.5 transition-transform" />
         </a>
       </div>
     </section>

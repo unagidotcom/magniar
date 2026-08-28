@@ -61,7 +61,7 @@ export function InsightFilters({
               onFilterChange({ ...filterState, searchQuery: e.target.value })
             }
             placeholder="SEARCH INSIGHTS, TOPICS, OR KEYWORDS..."
-            className="w-full bg-[#050505] border border-white/15 focus:border-[#0099FF] text-[#F5F7FA] placeholder-[#5A626E] text-xs pl-9 pr-3 py-2.5 rounded-[2px] focus:outline-none transition-colors"
+            className="w-full bg-[#050505] border border-white/15 focus:border-[#B89A72] text-[#F5F7FA] placeholder-[#5A626E] text-xs pl-9 pr-3 py-2.5 rounded-[2px] focus:outline-none transition-colors"
           />
           {filterState.searchQuery && (
             <button
@@ -76,7 +76,7 @@ export function InsightFilters({
         {/* Content Type Selector & Reset */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2">
-            <SlidersHorizontal className="w-3.5 h-3.5 text-[#0099FF]" />
+            <SlidersHorizontal className="w-3.5 h-3.5 text-[#B89A72]" />
             <span className="text-[10px] text-[#8D949E] uppercase">TYPE:</span>
             <select
               value={filterState.contentType}
@@ -86,7 +86,7 @@ export function InsightFilters({
                   contentType: e.target.value as InsightContentTypeFilter,
                 })
               }
-              className="bg-[#050505] border border-white/15 text-white text-xs px-3 py-2 rounded-[2px] focus:outline-none focus:border-[#0099FF]"
+              className="bg-[#050505] border border-white/15 text-white text-xs px-3 py-2 rounded-[2px] focus:outline-none focus:border-[#B89A72]"
             >
               {contentTypes.map((ct) => (
                 <option key={ct.id} value={ct.id}>
@@ -127,7 +127,7 @@ export function InsightFilters({
               }
               className={`px-3 py-1.5 rounded-[2px] text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
                 isActive
-                  ? 'bg-[#0099FF] text-white font-semibold shadow-sm'
+                  ? 'bg-[#B89A72] text-white font-semibold shadow-sm'
                   : 'bg-[#050505] text-[#8D949E] hover:text-white border border-white/10 hover:border-white/30'
               }`}
             >

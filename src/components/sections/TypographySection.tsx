@@ -17,7 +17,7 @@ export const TypographySection: React.FC = () => {
     <div className="space-y-8 animate-fadeIn">
       {/* Section Header */}
       <div className="space-y-2">
-        <div className="font-mono text-xs uppercase tracking-wider text-[#0099FF] flex items-center gap-2">
+        <div className="font-mono text-xs uppercase tracking-wider text-[#B89A72] flex items-center gap-2">
           <span>02 / TYPOGRAPHY & MICRO-LANGUAGE</span>
           <span className="h-[1px] flex-1 bg-white/10" />
         </div>
@@ -33,12 +33,12 @@ export const TypographySection: React.FC = () => {
       <div className="rounded-xl border border-white/10 bg-[#0A0C0F] p-4 sm:p-6 space-y-3">
         <div className="flex items-center justify-between">
           <label className="font-mono text-xs text-[#8D949E] flex items-center gap-2">
-            <Type className="h-3.5 w-3.5 text-[#0099FF]" />
+            <Type className="h-3.5 w-3.5 text-[#B89A72]" />
             TEST CUSTOM TEXT ACCROSS TYPOGRAPHY SCALE:
           </label>
           <button
             onClick={() => setCustomText('Growth Engineered.')}
-            className="font-mono text-[10px] text-[#5A626E] hover:text-[#0099FF] flex items-center gap-1"
+            className="font-mono text-[10px] text-[#5A626E] hover:text-[#B89A72] flex items-center gap-1"
           >
             <RefreshCw className="h-3 w-3" /> RESET DEFAULT
           </button>
@@ -47,7 +47,7 @@ export const TypographySection: React.FC = () => {
           type="text"
           value={customText}
           onChange={(e) => setCustomText(e.target.value)}
-          className="w-full rounded-lg bg-[#050505] border border-white/10 px-4 py-2.5 text-white font-medium focus:border-[#0099FF] focus:outline-none transition-colors"
+          className="w-full rounded-lg bg-[#050505] border border-white/10 px-4 py-2.5 text-white font-medium focus:border-[#B89A72] focus:outline-none transition-colors"
           placeholder="Enter custom preview text..."
         />
       </div>
@@ -66,7 +66,7 @@ export const TypographySection: React.FC = () => {
             {/* Header Token Info */}
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/5 pb-3">
               <div className="flex items-center gap-3">
-                <span className="font-mono text-xs text-[#0099FF] bg-[#0099FF]/10 px-2 py-0.5 rounded border border-[#0099FF]/20">
+                <span className="font-mono text-xs text-[#B89A72] bg-[#B89A72]/10 px-2 py-0.5 rounded border border-[#B89A72]/20">
                   {item.token}
                 </span>
                 <h3 className="text-sm font-medium text-white">{item.name}</h3>
@@ -100,7 +100,7 @@ export const TypographySection: React.FC = () => {
 
       {/* Micro Typography Technical Language */}
       <div className="space-y-4 pt-4">
-        <div className="font-mono text-xs text-[#0099FF] uppercase tracking-wider flex items-center gap-2">
+        <div className="font-mono text-xs text-[#B89A72] uppercase tracking-wider flex items-center gap-2">
           <span>MICRO TECHNICAL TYPOGRAPHY LANGUAGE (GEIST MONO)</span>
           <span className="h-[1px] flex-1 bg-white/10" />
         </div>
@@ -115,7 +115,7 @@ export const TypographySection: React.FC = () => {
                 <span>{micro.category}</span>
                 <button
                   onClick={() => handleCopySnippet(micro.codeSnippet, idx)}
-                  className="text-[#8D949E] hover:text-[#0099FF] flex items-center gap-1 text-[11px]"
+                  className="text-[#8D949E] hover:text-[#B89A72] flex items-center gap-1 text-[11px]"
                 >
                   {copiedIndex === idx ? (
                     <Check className="h-3.5 w-3.5 text-emerald-400" />

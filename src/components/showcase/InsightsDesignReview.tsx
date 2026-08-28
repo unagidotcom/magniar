@@ -31,7 +31,7 @@ export function InsightsDesignReview() {
       num: '05',
       question: 'How articles connect to case studies',
       answer:
-        'Articles link directly to relevant proof of execution in Chapter 08. For example, an article on Paid Acquisition scaling links directly to the Solaris Apparel Case Study, creating an interconnected proof network between theory and real-world results.',
+        'Articles can link directly to relevant proof of execution in Chapter 08 once verified case studies are published from the Admin OS, creating an interconnected proof network between theory and real-world results.',
     },
     {
       num: '06',
@@ -76,7 +76,7 @@ export function InsightsDesignReview() {
       {/* Header */}
       <div className="border-b border-white/10 pb-6 space-y-3">
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1 bg-[#0099FF]/10 text-[#0099FF] border border-[#0099FF]/30 font-mono text-xs font-semibold rounded-[2px] uppercase tracking-wider flex items-center gap-1.5">
+          <span className="px-3 py-1 bg-[#B89A72]/10 text-[#B89A72] border border-[#B89A72]/30 font-mono text-xs font-semibold rounded-[2px] uppercase tracking-wider flex items-center gap-1.5">
             <BookOpen className="w-3.5 h-3.5" />
             CHAPTER 09 DESIGN REVIEW
           </span>
@@ -104,7 +104,7 @@ export function InsightsDesignReview() {
           >
             <div>
               <div className="flex items-center justify-between gap-2 mb-2 font-mono text-xs">
-                <span className="text-[#0099FF] font-bold">ITEM {r.num}</span>
+                <span className="text-[#B89A72] font-bold">ITEM {r.num}</span>
                 <span className="text-[#10B981] text-[10px] bg-[#10B981]/10 px-2 py-0.5 border border-[#10B981]/20 rounded-[2px]">
                   VERIFIED
                 </span>

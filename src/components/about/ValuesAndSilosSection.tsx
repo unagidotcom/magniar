@@ -7,20 +7,20 @@ export const ValuesAndSilosSection: React.FC = () => {
     <section className="py-20 sm:py-28 border-b border-white/10 bg-[#080B10] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* MAJOR EDITORIAL HERO: SYSTEMS OVER SILOS */}
-        <div className="p-8 sm:p-14 bg-[#050505] border-2 border-[#0099FF] relative overflow-hidden mb-20 shadow-[0_0_50px_rgba(0,153,255,0.15)]">
+        <div className="p-8 sm:p-14 bg-[#050505] border-2 border-[#B89A72] relative overflow-hidden mb-20 shadow-[0_0_50px_rgba(184,154,114,0.15)]">
           <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-            <Network className="w-80 h-80 text-[#0099FF]" />
+            <Network className="w-80 h-80 text-[#B89A72]" />
           </div>
 
           <div className="max-w-4xl space-y-6 relative z-10">
-            <span className="font-mono text-xs text-[#0099FF] tracking-[0.2em] uppercase font-bold block flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#0099FF] animate-ping" />
+            <span className="font-mono text-xs text-[#B89A72] tracking-[0.2em] uppercase font-bold block flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#B89A72] animate-ping" />
               [ 11 — CORE DIFFERENTIATING BELIEF ]
             </span>
 
             <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white uppercase tracking-tight leading-[0.95]">
               SYSTEMS <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0099FF] via-white to-[#0099FF]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B89A72] via-white to-[#B89A72]">
                 OVER SILOS.
               </span>
             </h2>
@@ -31,7 +31,7 @@ export const ValuesAndSilosSection: React.FC = () => {
 
             <div className="pt-6 border-t border-white/15 flex flex-wrap items-center gap-6 font-mono text-xs text-[#8D949E]">
               <span className="flex items-center gap-2 text-white font-bold">
-                <ShieldCheck className="w-4 h-4 text-[#0099FF]" />
+                <ShieldCheck className="w-4 h-4 text-[#B89A72]" />
                 ONE CONNECTED TEAM
               </span>
               <span>•</span>
@@ -45,7 +45,7 @@ export const ValuesAndSilosSection: React.FC = () => {
         {/* VALUES & PRINCIPLES GRID */}
         <div className="space-y-8">
           <div className="max-w-2xl space-y-2">
-            <span className="font-mono text-xs text-[#0099FF] tracking-[0.2em] uppercase font-semibold block">
+            <span className="font-mono text-xs text-[#B89A72] tracking-[0.2em] uppercase font-semibold block">
               [ OPERATING VALUES ]
             </span>
             <h3 className="text-2xl sm:text-4xl font-bold text-white uppercase">
@@ -57,16 +57,16 @@ export const ValuesAndSilosSection: React.FC = () => {
             {VALUE_PRINCIPLES.map((value, i) => (
               <div
                 key={value.id}
-                className="p-6 bg-[#050505] border border-white/10 hover:border-[#0099FF]/50 transition-colors group space-y-3"
+                className="p-6 bg-[#050505] border border-white/10 hover:border-[#B89A72]/50 transition-colors group space-y-3"
               >
                 <div className="flex items-center justify-between font-mono text-xs">
-                  <span className="text-[#0099FF] font-bold">0{i + 1} / VALUE</span>
+                  <span className="text-[#B89A72] font-bold">0{i + 1} / VALUE</span>
                   <span className="text-white/20">MAGNIAR</span>
                 </div>
-                <h4 className="text-lg font-bold text-white uppercase group-hover:text-[#0099FF] transition-colors">
+                <h4 className="text-lg font-bold text-white uppercase group-hover:text-[#B89A72] transition-colors">
                   {value.title}
                 </h4>
-                <p className="text-xs font-mono text-[#0099FF] uppercase">
+                <p className="text-xs font-mono text-[#B89A72] uppercase">
                   {value.subtitle}
                 </p>
                 <p className="text-xs text-[#8D949E] leading-relaxed pt-2 border-t border-white/5">

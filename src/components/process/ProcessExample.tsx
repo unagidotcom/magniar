@@ -14,7 +14,7 @@ export const ProcessExample: React.FC = () => {
 
       {/* HEADER */}
       <div className="space-y-3 max-w-3xl">
-        <div className="flex items-center gap-2 font-mono text-xs text-[#0099FF] font-semibold tracking-widest uppercase">
+        <div className="flex items-center gap-2 font-mono text-xs text-[#B89A72] font-semibold tracking-widest uppercase">
           <FileText className="w-3.5 h-3.5" />
           <span>IN ACTION: CASE ILLUSTRATION</span>
         </div>
@@ -33,7 +33,7 @@ export const ProcessExample: React.FC = () => {
 
       {/* INTERACTIVE STAGE STEPPERS */}
       <div className="space-y-4">
-        <div className="font-mono text-xs text-[#0099FF] font-bold tracking-widest uppercase">
+        <div className="font-mono text-xs text-[#B89A72] font-bold tracking-widest uppercase">
           STEP-BY-STEP SYSTEM EXECUTION PATH:
         </div>
 
@@ -48,7 +48,7 @@ export const ProcessExample: React.FC = () => {
                 className={`
                   p-2.5 rounded-[2px] border text-left font-mono text-xs cursor-pointer transition-all duration-200
                   ${isActive
-                    ? 'bg-[#0099FF] text-white font-bold border-[#0099FF] shadow-[0_0_15px_rgba(0,153,255,0.4)]'
+                    ? 'bg-[#B89A72] text-white font-bold border-[#B89A72] shadow-[0_0_15px_rgba(184,154,114,0.4)]'
                     : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white hover:border-white/20'
                   }
                 `}
@@ -65,9 +65,9 @@ export const ProcessExample: React.FC = () => {
       {(() => {
         const step = REAL_EXAMPLE_JOURNEY.steps[activeStepIndex];
         return (
-          <div className="bg-[#050505] border border-[#0099FF]/40 rounded-[2px] p-5 space-y-4">
+          <div className="bg-[#050505] border border-[#B89A72]/40 rounded-[2px] p-5 space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <span className="font-mono text-sm font-bold text-[#0099FF] tracking-wider">
+              <span className="font-mono text-sm font-bold text-[#B89A72] tracking-wider">
                 {step.stageName} — ACTION & OUTCOME
               </span>
               <span className="font-mono text-[10px] text-[#8D949E]">
@@ -86,7 +86,7 @@ export const ProcessExample: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <span className="font-mono text-[10px] text-[#0099FF] uppercase tracking-wider block">
+                <span className="font-mono text-[10px] text-[#B89A72] uppercase tracking-wider block">
                   VERIFIED OUTCOME:
                 </span>
                 <p className="text-[#F5F7FA] leading-relaxed font-semibold">

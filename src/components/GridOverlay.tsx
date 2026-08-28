@@ -33,12 +33,12 @@ export const GridOverlay: React.FC<GridOverlayProps> = ({ enabled, dense }) => {
       />
 
       {/* Center Guideline */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-[#0099FF]/10 pointer-events-none" />
+      <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-[#B89A72]/10 pointer-events-none" />
 
       {/* Coordinate HUD Tag */}
       <div className="fixed bottom-4 right-4 z-50 bg-[#0A0C0F]/90 border border-white/10 px-3 py-1.5 rounded-md text-[10px] font-mono text-[#8D949E] backdrop-blur-md flex items-center gap-3">
-        <span className="flex items-center gap-1.5 text-[#0099FF]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF] animate-magniar-pulse" />
+        <span className="flex items-center gap-1.5 text-[#B89A72]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72] animate-magniar-pulse" />
           GRID_ACTIVE
         </span>
         <span className="text-white/20">|</span>

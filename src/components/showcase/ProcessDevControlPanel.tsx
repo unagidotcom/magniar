@@ -25,10 +25,10 @@ export const ProcessDevControlPanel: React.FC<ProcessDevControlPanelProps> = ({
   onMotionToggle,
 }) => {
   return (
-    <div className="p-4 rounded-[2px] bg-[#0A0D12] border border-[#0099FF]/40 text-xs font-mono space-y-4 shadow-xl">
+    <div className="p-4 rounded-[2px] bg-[#0A0D12] border border-[#B89A72]/40 text-xs font-mono space-y-4 shadow-xl">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
-        <div className="flex items-center gap-2 text-[#0099FF] font-bold tracking-wider">
-          <Sliders className="w-4 h-4 text-[#0099FF]" />
+        <div className="flex items-center gap-2 text-[#B89A72] font-bold tracking-wider">
+          <Sliders className="w-4 h-4 text-[#B89A72]" />
           <span>CHAPTER 06 PROCESS DEV & CONTROL PANEL</span>
         </div>
         <div className="text-[10px] text-[#8D949E]">
@@ -47,7 +47,7 @@ export const ProcessDevControlPanel: React.FC<ProcessDevControlPanelProps> = ({
               onClick={() => onViewModeChange('homepage')}
               className={`flex-1 py-1.5 px-2 rounded-[2px] border text-[10px] font-bold cursor-pointer transition-all ${
                 activeViewMode === 'homepage'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF]'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72]'
                   : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
               }`}
             >
@@ -57,7 +57,7 @@ export const ProcessDevControlPanel: React.FC<ProcessDevControlPanelProps> = ({
               onClick={() => onViewModeChange('process-page')}
               className={`flex-1 py-1.5 px-2 rounded-[2px] border text-[10px] font-bold cursor-pointer transition-all ${
                 activeViewMode === 'process-page'
-                  ? 'bg-[#0099FF] text-white border-[#0099FF]'
+                  ? 'bg-[#B89A72] text-white border-[#B89A72]'
                   : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
               }`}
             >
@@ -84,7 +84,7 @@ export const ProcessDevControlPanel: React.FC<ProcessDevControlPanelProps> = ({
                 onClick={() => onViewportChange(vp.id as ViewportMode)}
                 className={`py-1 px-2 rounded-[2px] border text-[10px] cursor-pointer ${
                   currentViewport === vp.id
-                    ? 'bg-[#0099FF] text-white border-[#0099FF] font-bold'
+                    ? 'bg-[#B89A72] text-white border-[#B89A72] font-bold'
                     : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
                 }`}
               >
@@ -106,7 +106,7 @@ export const ProcessDevControlPanel: React.FC<ProcessDevControlPanelProps> = ({
                 onClick={() => onStageSelect(stg as ProcessStageId)}
                 className={`py-1 px-1.5 rounded-[2px] border text-[9px] uppercase cursor-pointer ${
                   activeStageId === stg
-                    ? 'bg-[#0099FF] text-white border-[#0099FF] font-bold'
+                    ? 'bg-[#B89A72] text-white border-[#B89A72] font-bold'
                     : 'bg-[#050505] text-[#8D949E] border-white/10 hover:text-white'
                 }`}
               >
@@ -125,7 +125,7 @@ export const ProcessDevControlPanel: React.FC<ProcessDevControlPanelProps> = ({
             onClick={onMotionToggle}
             className={`w-full py-1.5 px-2 rounded-[2px] border text-[10px] font-bold cursor-pointer transition-all flex items-center justify-center gap-1.5 ${
               motionActive
-                ? 'bg-[#0099FF]/20 text-[#0099FF] border-[#0099FF]'
+                ? 'bg-[#B89A72]/20 text-[#B89A72] border-[#B89A72]'
                 : 'bg-[#050505] text-[#8D949E] border-white/10'
             }`}
           >

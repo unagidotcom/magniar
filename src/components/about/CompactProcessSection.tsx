@@ -15,17 +15,17 @@ export const CompactProcessSection: React.FC<CompactProcessSectionProps> = ({
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <span className="font-mono text-xs text-[#0099FF] tracking-[0.2em] uppercase font-semibold block mb-2">
+            <span className="font-mono text-xs text-[#B89A72] tracking-[0.2em] uppercase font-semibold block mb-2">
               [ 09 — OPERATIONAL CADENCE ]
             </span>
             <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#F5F7FA] uppercase">
-              HOW WE <span className="text-[#0099FF]">WORK</span>
+              HOW WE <span className="text-[#B89A72]">WORK</span>
             </h2>
           </div>
 
           <button
             onClick={onSeeProcess}
-            className="inline-flex items-center gap-2 px-5 py-3 bg-[#0099FF] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#0088EE] transition-all cursor-pointer self-start md:self-auto"
+            className="inline-flex items-center gap-2 px-5 py-3 bg-[#B89A72] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#8F714D] transition-all cursor-pointer self-start md:self-auto"
           >
             <span>SEE FULL PROCESS METHODOLOGY</span>
             <ArrowRight className="w-4 h-4" />
@@ -37,11 +37,11 @@ export const CompactProcessSection: React.FC<CompactProcessSectionProps> = ({
           {COMPACT_PROCESS_STEPS.map((step) => (
             <div
               key={step.step}
-              className="p-5 bg-[#050505] border border-white/10 hover:border-[#0099FF]/40 transition-colors flex flex-col justify-between"
+              className="p-5 bg-[#050505] border border-white/10 hover:border-[#B89A72]/40 transition-colors flex flex-col justify-between"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between font-mono text-xs">
-                  <span className="text-[#0099FF] font-bold">{step.step}</span>
+                  <span className="text-[#B89A72] font-bold">{step.step}</span>
                   <Workflow className="w-3.5 h-3.5 text-white/20" />
                 </div>
                 <h3 className="text-base font-bold text-white uppercase font-mono">

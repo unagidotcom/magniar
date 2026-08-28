@@ -1,11 +1,13 @@
 import React from 'react';
 import { User, LogOut, ShieldCheck, Key, Settings, X } from 'lucide-react';
+import { AdminDisplayProfile } from '../../services/adminProfileService';
 
 interface AdminUserMenuProps {
   isOpen: boolean;
   onClose: () => void;
   onSignOut: () => void;
   onOpenSettings: () => void;
+  adminProfile: AdminDisplayProfile;
 }
 
 export const AdminUserMenu: React.FC<AdminUserMenuProps> = ({
@@ -13,6 +15,7 @@ export const AdminUserMenu: React.FC<AdminUserMenuProps> = ({
   onClose,
   onSignOut,
   onOpenSettings,
+  adminProfile,
 }) => {
   if (!isOpen) return null;
 
@@ -25,7 +28,7 @@ export const AdminUserMenu: React.FC<AdminUserMenuProps> = ({
       <div className="p-4 bg-[#050505] border-b border-white/10 space-y-2">
         <div className="flex items-center justify-between">
           <span className="font-mono text-[10px] text-[#0099FF] bg-[#0099FF]/10 border border-[#0099FF]/20 px-1.5 py-0.5 rounded-[2px]">
-            SUPER ADMIN
+            {adminProfile.roleLabel.toUpperCase()}
           </span>
           <button onClick={onClose} className="text-white/40 hover:text-white">
             <X className="w-3.5 h-3.5" />
@@ -33,10 +36,10 @@ export const AdminUserMenu: React.FC<AdminUserMenuProps> = ({
         </div>
         <div>
           <h4 className="text-sm font-display font-semibold text-white">
-            Kaelen Voss
+            {adminProfile.displayName}
           </h4>
           <p className="text-xs font-mono text-white/50 truncate">
-            admin@magniar.com
+            {adminProfile.displayEmail}
           </p>
         </div>
       </div>

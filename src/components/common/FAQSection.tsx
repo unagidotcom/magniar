@@ -1,72 +1,59 @@
 import React, { useState } from 'react';
 import { FAQ_ITEMS } from '../../data/faqData';
-import { TechnicalLabel } from './TechnicalLabel';
 import { ChevronDown } from 'lucide-react';
 
 export const FAQSection: React.FC = () => {
-  const [openId, setOpenId] = useState<string | null>('business-size');
+  const [openId, setOpenId] = useState<string | null>('services');
 
   const toggleItem = (id: string) => {
     setOpenId(openId === id ? null : id);
   };
 
   return (
-    <section id="faq" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-12 bg-[#050505] text-[#F5F7FA] border-t border-white/10 relative">
-      <div className="max-w-[1440px] mx-auto space-y-12">
-        {/* Section Header */}
-        <div className="max-w-3xl space-y-4">
-          <div className="flex items-center gap-3">
-            <TechnicalLabel text="FREQUENTLY ASKED QUESTIONS" />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
-            <span className="font-sans text-xs text-slate-400 uppercase tracking-wider font-semibold">
-              AGENCY & ENGAGEMENT FAQs
-            </span>
-          </div>
-
-          <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-            FREQUENTLY ASKED <span className="text-[#0099FF]">QUESTIONS.</span>
+    <section id="faq" className="bg-[#F5F7FA] px-4 py-10 text-[#0B0D0F] sm:px-6 sm:py-12 lg:px-12">
+      <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#B89A72]">
+            Frequently asked questions
+          </span>
+          <h2 className="mt-3 max-w-[390px] font-heading text-[1.45rem] font-semibold leading-tight text-[#0B0D0F] sm:text-[1.8rem]">
+            Small answers before a bigger conversation.
           </h2>
-
-          <p className="text-lg text-slate-300 font-normal leading-relaxed">
-            Concise answers regarding our capabilities, international scope, platform support, and how we engage with growth-focused businesses.
+          <p className="mt-4 max-w-[360px] text-[13px] leading-6 text-[#68717C]">
+            Concise answers about services, locations, platforms, pricing, and how to start a project with Magniar.
           </p>
         </div>
 
-        {/* FAQ Accordion Grid */}
-        <div className="max-w-4xl space-y-3">
+        <div className="space-y-2 lg:col-span-8">
           {FAQ_ITEMS.map((item, idx) => {
             const isOpen = openId === item.id;
 
             return (
               <div
                 key={item.id}
-                className={`
-                  border transition-all rounded-[2px] overflow-hidden
-                  ${isOpen 
-                    ? 'bg-[#080B10] border-[#0099FF]/60 shadow-[0_0_20px_rgba(0,153,255,0.1)]' 
-                    : 'bg-[#030508] border-white/10 hover:border-white/20'
-                  }
-                `}
+                className={`overflow-hidden rounded-[8px] border transition-colors ${
+                  isOpen ? 'border-[#D9DEE5] bg-[#FFFFFF]' : 'border-[#D9DEE5] bg-[#F4EFE8] hover:bg-[#FFFFFF]'
+                }`}
               >
                 <button
                   onClick={() => toggleItem(item.id)}
-                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer font-sans"
+                  className="flex w-full items-center justify-between gap-4 p-4 text-left"
                   aria-expanded={isOpen}
                 >
-                  <div className="flex items-center gap-3.5 font-heading text-base sm:text-lg font-bold text-white">
-                    <span className="text-[#0099FF] text-sm font-bold">0{idx + 1}.</span>
-                    <span>{item.question}</span>
+                  <div className="flex items-start gap-3">
+                    <span className="pt-0.5 text-[11px] font-bold text-[#B89A72]">0{idx + 1}</span>
+                    <span className="text-[0.92rem] font-semibold leading-6 text-[#0B0D0F]">{item.question}</span>
                   </div>
 
                   <ChevronDown
-                    className={`w-5 h-5 text-[#0099FF] shrink-0 transition-transform duration-200 ${
+                    className={`h-4 w-4 shrink-0 text-[#68717C] transition-transform duration-200 ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-6 sm:px-6 sm:pb-6 font-sans text-base text-slate-300 leading-relaxed border-t border-white/5 pt-4">
+                  <div className="border-t border-[#D9DEE5] px-4 pb-4 pt-3 text-[13px] leading-6 text-[#68717C] sm:pl-12">
                     {item.answer}
                   </div>
                 )}
@@ -78,4 +65,3 @@ export const FAQSection: React.FC = () => {
     </section>
   );
 };
-

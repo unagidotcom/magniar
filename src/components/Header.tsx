@@ -32,8 +32,8 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setActiveTab('overview')}
             className="flex items-center gap-2.5 text-left group focus:outline-none"
           >
-            <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-[#0A0C0F] border border-white/10 group-hover:border-[#0099FF]/50 transition-colors">
-              <span className="h-2 w-2 rounded-full bg-[#0099FF] animate-magniar-pulse" />
+            <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-[#0A0C0F] border border-white/10 group-hover:border-[#B89A72]/50 transition-colors">
+              <span className="h-2 w-2 rounded-full bg-[#B89A72] animate-magniar-pulse" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -56,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setGridEnabled(!gridEnabled)}
             className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 font-mono text-xs transition-all border ${
               gridEnabled
-                ? 'bg-[#0099FF]/10 text-[#0099FF] border-[#0099FF]/40 shadow-[0_0_12px_rgba(0,153,255,0.2)]'
+                ? 'bg-[#B89A72]/10 text-[#B89A72] border-[#B89A72]/40 shadow-[0_0_12px_rgba(184,154,114,0.2)]'
                 : 'bg-[#0A0C0F] text-[#8D949E] border-white/10 hover:text-white hover:border-white/20'
             }`}
             title="Toggle Technical Grid Background Overlay"
@@ -85,7 +85,7 @@ export const Header: React.FC<HeaderProps> = ({
                 : 'bg-[#0A0C0F] text-[#8D949E] border-white/10 hover:text-white'
             }`}
           >
-            <FileText className="h-3.5 w-3.5 text-[#0099FF]" />
+            <FileText className="h-3.5 w-3.5 text-[#B89A72]" />
             <span className="hidden md:inline">SPEC DOC</span>
           </button>
 
@@ -98,14 +98,14 @@ export const Header: React.FC<HeaderProps> = ({
                 : 'bg-[#0A0C0F] text-[#8D949E] border-white/10 hover:text-white'
             }`}
           >
-            <Code2 className="h-3.5 w-3.5 text-[#0099FF]" />
+            <Code2 className="h-3.5 w-3.5 text-[#B89A72]" />
             <span className="hidden md:inline">JSON TOKENS</span>
           </button>
 
           {/* Quick Copy Tokens Button */}
           <button
             onClick={onCopyTokens}
-            className="flex items-center gap-1.5 rounded-md bg-[#0099FF] px-3 py-1.5 text-xs font-medium text-black transition-all hover:bg-[#33AFFF] active:scale-95 shadow-[0_0_15px_rgba(0,153,255,0.3)]"
+            className="flex items-center gap-1.5 rounded-md bg-[#B89A72] px-3 py-1.5 text-xs font-medium text-black transition-all hover:bg-[#C8AA82] active:scale-95 shadow-[0_0_15px_rgba(184,154,114,0.3)]"
           >
             {copied ? (
               <>

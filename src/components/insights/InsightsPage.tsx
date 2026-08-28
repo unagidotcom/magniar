@@ -69,7 +69,7 @@ export function InsightsPage({
         {/* Page Hero Header */}
         <div className="border-b border-white/10 pb-8 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="px-3 py-1 bg-[#0099FF]/10 border border-[#0099FF]/30 text-[#0099FF] text-xs font-mono font-semibold rounded-[2px] uppercase tracking-wider flex items-center gap-1.5">
+            <span className="px-3 py-1 bg-[#B89A72]/10 border border-[#B89A72]/30 text-[#B89A72] text-xs font-mono font-semibold rounded-[2px] uppercase tracking-wider flex items-center gap-1.5">
               <Terminal className="w-3.5 h-3.5" />
               MAGNIAR INTELLIGENCE & KNOWLEDGE SYSTEM
             </span>
@@ -100,7 +100,7 @@ export function InsightsPage({
           filterState.searchQuery === '' && (
             <div className="space-y-3">
               <div className="flex items-center gap-2 font-mono text-xs text-[#8D949E]">
-                <Sparkles className="w-3.5 h-3.5 text-[#0099FF]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#B89A72]" />
                 <span className="text-[#F5F7FA] font-bold uppercase tracking-wider">
                   FEATURED DISPATCH
                 </span>
@@ -125,7 +125,7 @@ export function InsightsPage({
           <div className="space-y-6">
             <div className="flex items-center justify-between font-mono text-xs text-[#8D949E] border-b border-white/10 pb-2">
               <span className="text-[#F5F7FA] font-bold uppercase tracking-wider flex items-center gap-2">
-                <BookOpen className="w-3.5 h-3.5 text-[#0099FF]" />
+                <BookOpen className="w-3.5 h-3.5 text-[#B89A72]" />
                 EDITORIAL INDEX ({filteredArticles.length})
               </span>
             </div>
@@ -144,7 +144,7 @@ export function InsightsPage({
         ) : (
           /* Empty State */
           <div className="p-12 text-center bg-[#0A0C0F] border border-white/10 rounded-[2px] space-y-4">
-            <Layers className="w-10 h-10 text-[#0099FF] mx-auto" />
+            <Layers className="w-10 h-10 text-[#B89A72] mx-auto" />
             <h3 className="text-xl font-bold text-[#F5F7FA] font-mono">
               NO EDITORIAL PIECES MATCH YOUR FILTER SELECTION
             </h3>
@@ -153,7 +153,7 @@ export function InsightsPage({
             </p>
             <button
               onClick={handleResetFilters}
-              className="px-4 py-2 bg-[#0099FF] text-white text-xs font-mono font-semibold rounded-[2px] inline-flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2 bg-[#B89A72] text-white text-xs font-mono font-semibold rounded-[2px] inline-flex items-center gap-2 cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>RESET FILTERS</span>
@@ -182,7 +182,7 @@ export function InsightsPage({
               <button
                 key={topic}
                 onClick={() => setFilterState({ ...filterState, searchQuery: topic })}
-                className="px-3 py-1 bg-[#050505] hover:bg-[#0E1116] border border-white/10 hover:border-[#0099FF]/40 text-[#8D949E] hover:text-white rounded-[2px] text-xs transition-colors cursor-pointer"
+                className="px-3 py-1 bg-[#050505] hover:bg-[#0E1116] border border-white/10 hover:border-[#B89A72]/40 text-[#8D949E] hover:text-white rounded-[2px] text-xs transition-colors cursor-pointer"
               >
                 #{topic}
               </button>
@@ -207,7 +207,7 @@ export function InsightsPage({
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={onStartProject}
-              className="px-6 py-3 bg-[#0099FF] hover:bg-[#0088EE] text-white font-mono text-xs font-semibold rounded-[2px] transition-all cursor-pointer uppercase tracking-wider"
+              className="px-6 py-3 bg-[#B89A72] hover:bg-[#8F714D] text-white font-mono text-xs font-semibold rounded-[2px] transition-all cursor-pointer uppercase tracking-wider"
             >
               START A PROJECT →
             </button>

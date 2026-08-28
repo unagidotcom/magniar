@@ -5,7 +5,7 @@ import { X, Building2, UserPlus, Layers } from 'lucide-react';
 interface NewClientModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (clientData: Partial<Client>) => void;
+  onSubmit: (clientData: Partial<Client>) => void | Promise<void>;
 }
 
 export const NewClientModal: React.FC<NewClientModalProps> = ({ isOpen, onClose, onSubmit }) => {
@@ -15,6 +15,7 @@ export const NewClientModal: React.FC<NewClientModalProps> = ({ isOpen, onClose,
   const [companySize, setCompanySize] = useState('10-50 employees');
   const [primaryMarket, setPrimaryMarket] = useState('North America');
   const [website, setWebsite] = useState('');
+  const [logoUrl, setLogoUrl] = useState('');
   const [contactName, setContactName] = useState('');
   const [contactRole, setContactRole] = useState('Founder');
   const [contactEmail, setContactEmail] = useState('');
@@ -23,37 +24,46 @@ export const NewClientModal: React.FC<NewClientModalProps> = ({ isOpen, onClose,
   const [status, setStatus] = useState<ClientStatus>('ONBOARDING');
   const [description, setDescription] = useState('');
   const [objective, setObjective] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!businessName.trim() || !contactName.trim() || !contactEmail.trim()) return;
 
-    onSubmit({
-      business_name: businessName,
-      industry,
-      business_model: businessModel,
-      company_size: companySize,
-      primary_market: primaryMarket,
-      website: website || 'https://example.com',
-      account_owner: accountOwner,
-      status,
-      description,
-      primary_objective: objective,
-      contacts: [
-        {
-          id: `cnt-${Date.now()}`,
-          name: contactName,
-          role: contactRole,
-          email: contactEmail,
-          phone: contactPhone,
-          is_primary: true,
-        },
-      ],
-    });
+    setIsSubmitting(true);
+    try {
+      await onSubmit({
+        business_name: businessName,
+        industry,
+        business_model: businessModel,
+        company_size: companySize,
+        primary_market: primaryMarket,
+        website: website || '',
+        logo_url: logoUrl || '',
+        account_owner: accountOwner,
+        status,
+        description,
+        primary_objective: objective,
+        contacts: [
+          {
+            id: `cnt-${Date.now()}`,
+            name: contactName,
+            role: contactRole,
+            email: contactEmail,
+            phone: contactPhone,
+            is_primary: true,
+          },
+        ],
+      });
 
-    onClose();
+      onClose();
+    } catch (err) {
+      console.error('New client form submission failed:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -145,6 +155,19 @@ export const NewClientModal: React.FC<NewClientModalProps> = ({ isOpen, onClose,
                 />
               </div>
 
+              <div>
+                <label className="block text-[10px] text-white/40 uppercase mb-1">Logo URL</label>
+                <input
+                  type="url"
+                  value={logoUrl}
+                  onChange={(e) => setLogoUrl(e.target.value)}
+                  placeholder="https://client-domain.com/logo.png"
+                  className="w-full bg-[#050505] border border-white/10 rounded-[2px] px-3 py-2 text-white focus:outline-none focus:border-[#0099FF]"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-[10px] text-white/40 uppercase mb-1">Magniar Account Owner</label>
                 <input
@@ -250,9 +273,10 @@ export const NewClientModal: React.FC<NewClientModalProps> = ({ isOpen, onClose,
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-[#0099FF] hover:bg-[#0099FF]/80 text-white font-bold rounded-[2px]"
+              disabled={isSubmitting}
+              className="px-4 py-2 bg-[#0099FF] hover:bg-[#0099FF]/80 disabled:opacity-50 text-white font-bold rounded-[2px]"
             >
-              Register Client Record
+              {isSubmitting ? 'Saving...' : 'Register Client Record'}
             </button>
           </div>
         </form>

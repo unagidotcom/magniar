@@ -101,7 +101,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row font-mono">
+    <div className="magniar-admin-shell min-h-screen bg-[#050505] text-[#F5F7FA] flex flex-col lg:flex-row">
       {/* Left Branding Panel */}
       <div className="lg:w-1/2 p-8 lg:p-16 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/10 bg-[radial-gradient(ellipse_at_top_left,rgba(0,153,255,0.08),transparent_70%)] relative overflow-hidden">
         <div className="space-y-8 relative z-10">
@@ -185,7 +185,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
               <ol className="list-decimal list-inside text-xs text-[#8D949E] space-y-1 pl-1">
                 <li>Add <code className="text-white bg-white/10 px-1 py-0.5 rounded">VITE_SUPABASE_URL</code> and <code className="text-white bg-white/10 px-1 py-0.5 rounded">VITE_SUPABASE_ANON_KEY</code> to your environment variables (<code className="text-white bg-white/10 px-1 py-0.5 rounded">.env</code>).</li>
                 <li>In Supabase Auth dashboard, create an administrator user account.</li>
-                <li>Set <code className="text-white bg-white/10 px-1 py-0.5 rounded">role: "admin"</code> in user metadata or add a record to the <code className="text-white bg-white/10 px-1 py-0.5 rounded">profiles</code> table with <code className="text-white bg-white/10 px-1 py-0.5 rounded">role = 'admin'</code> or <code className="text-white bg-white/10 px-1 py-0.5 rounded">is_admin = true</code>.</li>
+                <li>Set <code className="text-white bg-white/10 px-1 py-0.5 rounded">role: "admin"</code> and <code className="text-white bg-white/10 px-1 py-0.5 rounded">is_admin: true</code> in the user's app metadata.</li>
               </ol>
             </div>
           )}

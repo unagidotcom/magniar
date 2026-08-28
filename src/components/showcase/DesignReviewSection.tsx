@@ -51,7 +51,7 @@ export const DesignReviewSection: React.FC = () => {
       num: '08',
       title: 'ELECTRIC BLUE SIGNAL',
       question: 'How the electric blue signal is being controlled',
-      answer: 'Electric blue (#0099FF) behaves strictly as a functional signal—indicating active selections, live system status, and focused interactions. It never floods backgrounds or forms oversized gradients.'
+      answer: 'Electric blue (#B89A72) behaves strictly as a functional signal—indicating active selections, live system status, and focused interactions. It never floods backgrounds or forms oversized gradients.'
     },
     {
       num: '09',
@@ -65,7 +65,7 @@ export const DesignReviewSection: React.FC = () => {
     <div className="bg-[#0A0C0F] border border-white/10 rounded-[2px] p-6 lg:p-8 space-y-8">
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
-          <div className="flex items-center gap-2 font-mono text-[10px] text-[#0099FF] tracking-widest uppercase mb-1">
+          <div className="flex items-center gap-2 font-mono text-[10px] text-[#B89A72] tracking-widest uppercase mb-1">
             <Compass className="w-3.5 h-3.5" />
             <span>CHAPTER 02 — ARCHITECTURAL EVALUATION</span>
           </div>
@@ -86,13 +86,13 @@ export const DesignReviewSection: React.FC = () => {
         {reviews.map((rev) => (
           <div
             key={rev.num}
-            className="p-5 bg-[#050505] border border-white/10 rounded-[2px] space-y-3 relative group hover:border-[#0099FF]/40 transition-colors"
+            className="p-5 bg-[#050505] border border-white/10 rounded-[2px] space-y-3 relative group hover:border-[#B89A72]/40 transition-colors"
           >
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs font-semibold text-[#0099FF]">
+              <span className="font-mono text-xs font-semibold text-[#B89A72]">
                 {rev.num} / {rev.title}
               </span>
-              <CheckCircle2 className="w-4 h-4 text-[#0099FF] opacity-60 group-hover:opacity-100 transition-opacity" />
+              <CheckCircle2 className="w-4 h-4 text-[#B89A72] opacity-60 group-hover:opacity-100 transition-opacity" />
             </div>
 
             <h4 className="text-sm font-medium text-[#F5F7FA]">

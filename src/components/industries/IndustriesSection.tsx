@@ -32,15 +32,15 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
           <div className="space-y-4 max-w-3xl">
             <div className="flex items-center gap-3">
               <TechnicalLabel text="WHO WE WORK WITH" />
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#B89A72]" />
               <span className="font-sans text-xs text-slate-400 uppercase tracking-wider font-semibold">
                 INDUSTRIES & SECTORS
               </span>
             </div>
 
-            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white uppercase leading-[1.08]">
-              BUILT AROUND <br />
-              <span className="text-[#0099FF]">THE BUSINESS.</span>
+            <h2 className="font-heading text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.08]">
+              Built around <br />
+              <span className="text-[#B89A72]">the business.</span>
             </h2>
 
             <p className="text-lg text-slate-300 font-normal leading-relaxed">
@@ -51,10 +51,10 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
           <div className="flex flex-col items-start lg:items-end gap-2 font-sans text-xs text-slate-300 shrink-0">
             <button
               onClick={onExploreFullIndustries}
-              className="text-white hover:text-[#0099FF] cursor-pointer flex items-center gap-2 transition-colors font-semibold uppercase tracking-wider text-xs"
+              className="text-white hover:text-[#B89A72] cursor-pointer flex items-center gap-2 transition-colors font-semibold uppercase tracking-wider text-xs"
             >
               <span>EXPLORE ALL INDUSTRIES</span>
-              <ArrowRight className="w-4 h-4 text-[#0099FF]" />
+              <ArrowRight className="w-4 h-4 text-[#B89A72]" />
             </button>
           </div>
         </div>
@@ -78,7 +78,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                       px-4 py-2.5 rounded-[2px] font-sans text-xs tracking-wider transition-all cursor-pointer flex items-center gap-2 border select-none
                       ${
                         isActive
-                          ? 'bg-[#0099FF] text-white border-[#0099FF] font-semibold shadow-[0_0_12px_rgba(0,153,255,0.3)]'
+                          ? 'bg-[#B89A72] text-white border-[#B89A72] font-semibold shadow-[0_0_12px_rgba(184,154,114,0.3)]'
                           : 'bg-[#050505] text-slate-300 hover:text-white border-white/10'
                       }
                     `}
@@ -95,8 +95,8 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#050608] border border-white/10 p-8 rounded-[2px]">
             {/* Left: Business Context & Needs */}
             <div className="lg:col-span-6 space-y-5">
-              <div className="flex items-center gap-2 font-sans text-xs text-[#0099FF] font-semibold uppercase">
-                <Cpu className="w-4 h-4 text-[#0099FF]" />
+              <div className="flex items-center gap-2 font-sans text-xs text-[#B89A72] font-semibold uppercase">
+                <Cpu className="w-4 h-4 text-[#B89A72]" />
                 <span>TAILORED GROWTH SYSTEM</span>
               </div>
 
@@ -116,7 +116,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-sans text-[#F5F7FA]">
                   {selectedCategory.commonGrowthNeeds.slice(0, 4).map((need, i) => (
                     <div key={i} className="flex items-center gap-2.5 bg-[#0A0D12] border border-white/10 p-3 rounded-[2px]">
-                      <CheckCircle2 className="w-4 h-4 text-[#0099FF] shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-[#B89A72] shrink-0" />
                       <span className="text-slate-200 font-medium truncate">{need}</span>
                     </div>
                   ))}
@@ -134,7 +134,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
                   {selectedCategory.primaryCapabilities.map((pillar) => (
                     <span
                       key={pillar}
-                      className="font-heading text-xs px-3.5 py-1.5 rounded-[2px] border border-[#0099FF]/40 text-[#0099FF] bg-[#0099FF]/10 font-bold uppercase tracking-wider"
+                      className="font-heading text-xs px-3.5 py-1.5 rounded-[2px] border border-[#B89A72]/40 text-[#B89A72] bg-[#B89A72]/10 font-bold uppercase tracking-wider"
                     >
                       {pillar}
                     </span>
@@ -160,7 +160,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
 
               <div className="border-t border-white/10 pt-4 flex items-center justify-between text-xs font-sans text-slate-400">
                 <span>METHODOLOGY: DISCOVER → SCALE</span>
-                <span className="text-[#0099FF] font-semibold">CUSTOM TAILORED</span>
+                <span className="text-[#B89A72] font-semibold">CUSTOM TAILORED</span>
               </div>
             </div>
           </div>
@@ -169,12 +169,12 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
         {/* HOMEPAGE CLOSING STATEMENT & CTA BAR */}
         <div className="bg-[#0A0D12] border border-white/10 rounded-[2px] p-8 lg:p-12 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
           <div className="space-y-3 max-w-2xl">
-            <span className="font-sans text-xs text-[#0099FF] tracking-wider uppercase font-semibold">
+            <span className="font-sans text-xs text-[#B89A72] tracking-wider uppercase font-semibold">
               THE MAGNIAR APPROACH
             </span>
             <h3 className="font-heading text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-              YOUR BUSINESS DOESN'T FIT A TEMPLATE. <br />
-              <span className="text-slate-400 font-normal">NEITHER SHOULD YOUR GROWTH STRATEGY.</span>
+              Your business doesn't fit a template. <br />
+              <span className="text-slate-400 font-normal">Neither should your growth strategy.</span>
             </h3>
             <p className="text-base text-slate-300 font-sans leading-relaxed">
               Whether you are a DTC brand, B2B firm, or multi-marketplace seller, we assemble the exact architecture required for your unit economics.
@@ -203,4 +203,3 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({
     </section>
   );
 };
-

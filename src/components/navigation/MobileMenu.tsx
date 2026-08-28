@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { MOBILE_NAV_LINKS, CAPABILITY_GROUPS } from '../../data/navigationData';
 import { MagniarButton } from '../common/MagniarButton';
-import { X, ChevronDown } from 'lucide-react';
+import { BrandLogo } from '../common/BrandLogo';
+import { ChevronDown, X } from 'lucide-react';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -27,88 +28,79 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
     if (setActiveTab) {
       setActiveTab(id);
     } else if (onNavigate) {
-      if (id === 'capabilities') onNavigate('capabilities-page');
+      if (id === 'services') onNavigate('services');
       else if (id === 'process') onNavigate('process-page');
       else if (id === 'industries') onNavigate('industries-page');
       else if (id === 'work') onNavigate('work-page');
       else if (id === 'insights') onNavigate('insights-page');
       else if (id === 'about') onNavigate('about-page');
+      else if (id === 'contact') onNavigate('contact-page');
       else onNavigate('homepage');
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#050505]/98 backdrop-blur-2xl flex flex-col justify-between overflow-y-auto p-5 sm:p-8 transition-all duration-300">
-      {/* Top Bar */}
-      <div className="flex items-center justify-between pb-5 border-b border-white/10">
-        <div className="flex items-center gap-3">
-          <span className="font-mono text-base font-bold text-[#F5F7FA] tracking-[0.2em] uppercase">
-            MAGNIAR
-          </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#0099FF] shadow-[0_0_8px_#0099FF]" />
-        </div>
+    <div className="fixed inset-0 z-50 flex flex-col justify-between overflow-y-auto bg-[#F5F7FA] p-5 text-[#0B0D0F] transition-all duration-300 sm:p-8">
+      <div className="flex items-center justify-between border-b border-[#D9DEE5] pb-5">
+        <BrandLogo variant="wordmark" className="h-8 w-[164px]" />
 
         <button
           onClick={onClose}
-          className="p-2 text-[#8D949E] hover:text-white border border-white/10 rounded-[2px] bg-white/[0.02] cursor-pointer"
+          className="rounded-[5px] border border-[#D9DEE5] bg-[#FFFFFF] p-2 text-[#68717C] transition-colors hover:text-[#0B0D0F]"
           aria-label="Close menu"
         >
-          <X className="w-5 h-5" />
+          <X className="h-5 w-5" />
         </button>
       </div>
 
-      {/* Main Navigation Links */}
-      <div className="py-8 space-y-6">
-        <div className="font-mono text-[10px] text-[#0099FF] tracking-[0.2em] uppercase mb-4">
-          MAGNIAR NAVIGATION
+      <div className="py-8">
+        <div className="mb-5 text-[11px] font-bold uppercase tracking-[0.16em] text-[#68717C]">
+          Navigation
         </div>
 
-        <nav className="space-y-4">
+        <nav className="space-y-3">
           {MOBILE_NAV_LINKS.map((link, idx) => {
             const num = `0${idx + 1}`;
             if (link.hasMegaMenu) {
               return (
-                <div key={link.id} className="border-b border-white/10 pb-4">
-                  <div className="flex items-center justify-between py-2">
+                <div key={link.id} className="rounded-[6px] border border-[#D9DEE5] bg-[#FFFFFF] p-4">
+                  <div className="flex items-center justify-between">
                     <button
                       onClick={() => handleLinkClick(link.id)}
-                      className="flex items-center gap-3 group text-left cursor-pointer"
+                      className="flex items-center gap-3 text-left"
                     >
-                      <span className="font-mono text-xs text-[#0099FF]">{num}</span>
-                      <span className="text-xl font-light text-[#F5F7FA] group-hover:text-white">
-                        {link.label}
-                      </span>
+                      <span className="text-xs font-bold text-[#B89A72]">{num}</span>
+                      <span className="font-heading text-2xl font-semibold">{link.label}</span>
                     </button>
 
                     <button
                       onClick={() => setCapabilitiesExpanded(!capabilitiesExpanded)}
-                      className="p-2 text-[#8D949E] hover:text-white cursor-pointer"
-                      aria-label="Toggle capabilities submenu"
+                      className="rounded-[5px] bg-[#F5F7FA] p-2 text-[#68717C]"
+                      aria-label="Toggle services submenu"
                     >
                       <ChevronDown
-                        className={`w-5 h-5 text-[#8D949E] transition-transform duration-200 ${
-                          capabilitiesExpanded ? 'rotate-180 text-[#0099FF]' : ''
+                        className={`h-5 w-5 transition-transform duration-200 ${
+                          capabilitiesExpanded ? 'rotate-180 text-[#B89A72]' : ''
                         }`}
                       />
                     </button>
                   </div>
 
-                  {/* Expandable Capabilities on Mobile */}
                   {capabilitiesExpanded && (
-                    <div className="mt-4 pl-6 space-y-5 border-l border-[#0099FF]/30 py-2 animate-in fade-in duration-200">
+                    <div className="mt-5 space-y-4 border-t border-[#D9DEE5] pt-5">
                       {CAPABILITY_GROUPS.map((group) => (
                         <div key={group.id} className="space-y-2">
-                          <div className="font-mono text-[10px] text-[#0099FF] font-semibold tracking-wider">
-                            {group.numberLabel} — {group.title}
+                          <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#B89A72]">
+                            {group.numberLabel} / {group.title}
                           </div>
-                          <div className="grid grid-cols-1 gap-1.5 text-xs text-[#8D949E]">
-                            {group.items.slice(0, 3).map((item, i) => (
+                          <div className="grid grid-cols-1 gap-1.5 text-sm text-[#68717C]">
+                            {group.items.slice(0, 3).map((item) => (
                               <button
-                                key={i}
-                                onClick={() => handleLinkClick('capabilities')}
-                                className="hover:text-[#F5F7FA] transition-colors py-0.5 block text-left"
+                                key={item.name}
+                                onClick={() => handleLinkClick('services')}
+                                className="block rounded-[5px] px-2 py-1.5 text-left transition-colors hover:bg-[#F5F7FA] hover:text-[#0B0D0F]"
                               >
-                                • {item.name}
+                                {item.name}
                               </button>
                             ))}
                           </div>
@@ -121,36 +113,37 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
             }
 
             return (
-              <div key={link.id} className="border-b border-white/10 pb-4">
-                <button
-                  onClick={() => handleLinkClick(link.id)}
-                  className="w-full flex items-center justify-between py-2 group text-left cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs text-[#0099FF]">{num}</span>
-                    <span className="text-xl font-light text-[#F5F7FA] group-hover:text-white">
-                      {link.label}
-                    </span>
-                  </div>
-                </button>
-              </div>
+              <button
+                key={link.id}
+                onClick={() => handleLinkClick(link.id)}
+                className="flex w-full items-center justify-between rounded-[6px] border border-[#D9DEE5] bg-[#FFFFFF] p-4 text-left transition-colors hover:bg-white"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-bold text-[#B89A72]">{num}</span>
+                  <span className="font-heading text-2xl font-semibold">{link.label}</span>
+                </div>
+              </button>
             );
           })}
         </nav>
       </div>
 
-      {/* Bottom Actions Area */}
-      <div className="pt-6 border-t border-white/10 space-y-4">
+      <div className="space-y-4 border-t border-[#D9DEE5] pt-6">
         <div className="grid grid-cols-1 gap-3">
           <button
             onClick={() => {
               onClose();
-              if (onNavigate) onNavigate('portal');
+              onNavigate?.('portal');
             }}
-            className="block w-full text-left cursor-pointer"
+            className="block w-full text-left"
           >
-            <MagniarButton variant="utility" fullWidth size="md">
-              CLIENT LOGIN →
+            <MagniarButton
+              variant="utility"
+              fullWidth
+              size="md"
+              className="rounded-[5px] border-[#D9DEE5] bg-[#FFFFFF] text-[#0B0D0F] hover:bg-white"
+            >
+              CLIENT LOGIN
             </MagniarButton>
           </button>
 
@@ -158,19 +151,24 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
             onClick={() => {
               onClose();
               if (onStartProject) onStartProject();
-              else if (onNavigate) onNavigate('start-project');
+              else onNavigate?.('start-project');
             }}
             className="block w-full text-left"
           >
-            <MagniarButton variant="primary" fullWidth size="lg">
-              START A PROJECT →
+            <MagniarButton
+              variant="primary"
+              fullWidth
+              size="lg"
+              className="rounded-[5px] !border-[#B89A72] !bg-[#B89A72] !text-[#FFFFFF] hover:!bg-[#8F714D] hover:shadow-none"
+            >
+              START A PROJECT
             </MagniarButton>
           </button>
         </div>
 
-        <div className="flex items-center justify-between text-[10px] font-mono text-[#5A626E] pt-2">
-          <span>© 2026 MAGNIAR</span>
-          <span className="text-[#0099FF]">GLOBAL GROWTH OPERATING SYSTEM</span>
+        <div className="flex items-center justify-between pt-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#68717C]">
+          <span>2026 MAGNIAR</span>
+          <span>Digital services</span>
         </div>
       </div>
     </div>
