@@ -27,9 +27,17 @@ contains the existing admin claim.
 
 GitHub Actions is the only scheduler for website monitoring.
 
-Run `.github/workflows/check-websites.yml` once per day. The GitHub Action only triggers this
-Edge Function; this function decides which websites are due using `monitoring_enabled`,
-`last_checked_at`, and `check_interval_minutes`.
+Run `.github/workflows/check-websites.yml` approximately every 5 minutes. The GitHub Action only
+triggers this Edge Function; this function claims and checks only websites that are due using
+`monitoring_enabled`, `last_checked_at`, and `check_interval_minutes`.
+
+Per-site intervals remain:
+
+- 5 minutes
+- 10 minutes
+- 15 minutes
+- 30 minutes
+- 60 minutes
 
 Required GitHub repository secrets:
 

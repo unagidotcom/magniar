@@ -58,8 +58,12 @@ export interface WebsiteCheckResult {
 }
 
 export interface WebsiteCheckInvocationResult {
+  success?: boolean;
+  total?: number;
   checked: number;
   skipped: number;
+  online?: number;
+  failed?: number;
   results: WebsiteCheckResult[];
   failures: Array<{
     website_id: string;

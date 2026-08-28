@@ -104,19 +104,8 @@ const normalizeHttpsUrl = (value: string | null | undefined) => {
   return parsed.href.replace(/\/$/, '') || parsed.origin;
 };
 
-const isDue = (website: WebsiteRow, now: Date) => {
-  if (!website.monitoring_enabled) return false;
-  if (!website.last_checked_at) return true;
-
-  const intervalMinutes = website.check_interval_minutes || 10;
-  const lastChecked = new Date(website.last_checked_at);
-  if (Number.isNaN(lastChecked.getTime())) return true;
-
-  return lastChecked.getTime() + intervalMinutes * 60_000 <= now.getTime();
-};
-
 const checkWebsite = async (website: WebsiteRow): Promise<CheckResult> => {
-  const checkedAt = new Date().toISOString();
+  const checkedAt = website.last_checked_at || new Date().toISOString();
   let targetUrl: string;
 
   try {
@@ -177,25 +166,34 @@ const loadWebsites = async (
   websiteId: string | null,
   limit: number
 ) => {
-  let query = db
-    .from('websites')
-    .select('id,url,normalized_url,monitoring_enabled,check_interval_minutes,last_checked_at')
-    .eq('monitoring_enabled', true)
-    .order('last_checked_at', { ascending: true, nullsFirst: true })
-    .limit(Math.min(Math.max(limit, 1), MAX_BATCH_LIMIT));
+  const safeLimit = Math.min(Math.max(limit, 1), MAX_BATCH_LIMIT);
+  const { data, error } = await db.rpc('claim_due_websites', {
+    p_website_id: websiteId,
+    p_limit: safeLimit,
+  });
 
-  if (websiteId) {
-    query = query.eq('id', websiteId).limit(1);
-  }
-
-  const { data, error } = await query;
   if (error) throw error;
 
-  const rows = (data || []) as WebsiteRow[];
-  if (websiteId) return rows;
+  return (data || []) as WebsiteRow[];
+};
 
-  const now = new Date();
-  return rows.filter((website) => isDue(website, now));
+const countMonitorableWebsites = async (
+  db: ReturnType<typeof createClient>,
+  websiteId: string | null
+) => {
+  let query = db
+    .from('websites')
+    .select('id', { count: 'exact', head: true })
+    .eq('monitoring_enabled', true);
+
+  if (websiteId) {
+    query = query.eq('id', websiteId);
+  }
+
+  const { count, error } = await query;
+  if (error) throw error;
+
+  return count || 0;
 };
 
 const persistResult = async (db: ReturnType<typeof createClient>, result: CheckResult) => {
@@ -268,6 +266,7 @@ Deno.serve(async (request) => {
   const limit = Number.isFinite(body.limit) ? Number(body.limit) : DEFAULT_BATCH_LIMIT;
 
   try {
+    const total = await countMonitorableWebsites(db, websiteId);
     const websites = await loadWebsites(db, websiteId, limit);
     const results: CheckResult[] = [];
     const failures: Array<{ website_id: string; error: string }> = [];
@@ -285,9 +284,15 @@ Deno.serve(async (request) => {
       }
     }
 
+    const failedChecks = results.filter((result) => result.status !== 'ONLINE').length + failures.length;
+
     return jsonResponse({
+      success: failures.length === 0,
+      total,
       checked: results.length,
-      skipped: websiteId && websites.length === 0 ? 1 : 0,
+      skipped: Math.max(0, total - results.length - failures.length),
+      online: results.filter((result) => result.status === 'ONLINE').length,
+      failed: failedChecks,
       results,
       failures,
     });
