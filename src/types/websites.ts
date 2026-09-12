@@ -130,4 +130,11 @@ export interface WebsiteCheckInvocationResult {
     website_id: string;
     error: string;
   }>;
+  alerts?: {
+    configured: boolean;
+    claimed: number;
+    sent: number;
+    failed: number;
+    warning?: string;
+  };
 }

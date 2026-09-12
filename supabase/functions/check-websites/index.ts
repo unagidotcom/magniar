@@ -1,14 +1,23 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { sendWebsiteAlertEmail } from './email.ts';
+import type { WebsiteAlertNotification } from './email.ts';
 
 type WebsiteStatus = 'ONLINE' | 'DOWN' | 'ERROR';
 
 type WebsiteRow = {
   id: string;
+  name: string;
   url: string | null;
   normalized_url: string | null;
   monitoring_enabled: boolean;
   check_interval_minutes: number | null;
   last_checked_at: string | null;
+  current_status: WebsiteStatus | 'UNKNOWN';
+  monitoring_consecutive_failures: number;
+  monitoring_incident_started_at: string | null;
+  monitoring_incident_notified_at: string | null;
+  monitoring_last_alert_sent_at: string | null;
+  monitoring_last_reminder_at: string | null;
 };
 
 type CheckResult = {
@@ -20,6 +29,14 @@ type CheckResult = {
   error_message: string | null;
 };
 
+type AlertDeliverySummary = {
+  configured: boolean;
+  claimed: number;
+  sent: number;
+  failed: number;
+  warning?: string;
+};
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-monitoring-secret',
@@ -29,6 +46,7 @@ const corsHeaders = {
 const CHECK_TIMEOUT_MS = 10_000;
 const DEFAULT_BATCH_LIMIT = 500;
 const MAX_BATCH_LIMIT = 500;
+const ALERT_BATCH_LIMIT = 25;
 
 const jsonResponse = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -137,7 +155,7 @@ const checkWebsite = async (website: WebsiteRow): Promise<CheckResult> => {
     });
 
     const responseTimeMs = Math.max(0, Math.round(performance.now() - startedAt));
-    const status: WebsiteStatus = response.status >= 500 ? 'ERROR' : 'ONLINE';
+    const status: WebsiteStatus = response.status >= 400 ? 'ERROR' : 'ONLINE';
 
     return {
       website_id: website.id,
@@ -196,21 +214,82 @@ const countMonitorableWebsites = async (
   return count || 0;
 };
 
-const persistResult = async (db: ReturnType<typeof createClient>, result: CheckResult) => {
-  const { error: insertError } = await db.from('website_checks').insert(result);
-  if (insertError) throw insertError;
+const persistResult = async (
+  db: ReturnType<typeof createClient>,
+  result: CheckResult,
+  alertRecipient: string
+) => {
+  const { error } = await db.rpc('record_website_check', {
+    p_website_id: result.website_id,
+    p_checked_at: result.checked_at,
+    p_status: result.status,
+    p_http_status_code: result.http_status_code,
+    p_response_time_ms: result.response_time_ms,
+    p_error_message: result.error_message,
+    p_alert_recipient: alertRecipient,
+  });
 
-  const { error: updateError } = await db
-    .from('websites')
-    .update({
-      current_status: result.status,
-      last_http_status_code: result.http_status_code,
-      last_response_time_ms: result.response_time_ms,
-      last_checked_at: result.checked_at,
-    })
-    .eq('id', result.website_id);
+  if (error) throw error;
+};
 
-  if (updateError) throw updateError;
+const emptyAlertSummary = (configured: boolean, warning?: string): AlertDeliverySummary => ({
+  configured,
+  claimed: 0,
+  sent: 0,
+  failed: 0,
+  ...(warning ? { warning } : {}),
+});
+
+const deliverPendingAlerts = async (
+  db: ReturnType<typeof createClient>,
+  config: { apiKey: string; fromEmail: string; recipient: string }
+): Promise<AlertDeliverySummary> => {
+  if (!config.apiKey || !config.fromEmail || !config.recipient) {
+    return emptyAlertSummary(
+      false,
+      'Email alerts require RESEND_API_KEY, MONITORING_FROM_EMAIL, and MONITORING_ALERT_EMAIL.'
+    );
+  }
+
+  const { data, error } = await db.rpc('claim_pending_website_alerts', {
+    p_limit: ALERT_BATCH_LIMIT,
+  });
+  if (error) throw error;
+
+  const notifications = (data || []) as WebsiteAlertNotification[];
+  const summary = emptyAlertSummary(true);
+  summary.claimed = notifications.length;
+
+  for (const notification of notifications) {
+    try {
+      const providerMessageId = await sendWebsiteAlertEmail(notification, {
+        apiKey: config.apiKey,
+        fromEmail: config.fromEmail,
+      });
+      const { error: deliveryError } = await db.rpc('mark_website_alert_delivery', {
+        p_notification_id: notification.id,
+        p_succeeded: true,
+        p_provider_message_id: providerMessageId,
+        p_delivery_error: null,
+      });
+      if (deliveryError) throw deliveryError;
+      summary.sent += 1;
+    } catch (error) {
+      const safeError = sanitizeError(error);
+      const { error: markError } = await db.rpc('mark_website_alert_delivery', {
+        p_notification_id: notification.id,
+        p_succeeded: false,
+        p_provider_message_id: null,
+        p_delivery_error: safeError,
+      });
+      if (markError) {
+        console.error('Could not record email delivery failure.', sanitizeError(markError));
+      }
+      summary.failed += 1;
+    }
+  }
+
+  return summary;
 };
 
 Deno.serve(async (request) => {
@@ -225,6 +304,9 @@ Deno.serve(async (request) => {
   const supabaseUrl = Deno.env.get('SUPABASE_URL');
   const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
   const cronSecret = Deno.env.get('MONITORING_CRON_SECRET');
+  const resendApiKey = Deno.env.get('RESEND_API_KEY') || '';
+  const monitoringFromEmail = Deno.env.get('MONITORING_FROM_EMAIL') || '';
+  const monitoringAlertEmail = Deno.env.get('MONITORING_ALERT_EMAIL') || '';
 
   if (!supabaseUrl || !serviceRoleKey) {
     return jsonResponse({ error: 'Monitoring function is not configured.' }, 500);
@@ -266,6 +348,12 @@ Deno.serve(async (request) => {
   const limit = Number.isFinite(body.limit) ? Number(body.limit) : DEFAULT_BATCH_LIMIT;
 
   try {
+    const emailConfig = {
+      apiKey: resendApiKey,
+      fromEmail: monitoringFromEmail,
+      recipient: monitoringAlertEmail,
+    };
+    const alertsBeforeChecks = await deliverPendingAlerts(db, emailConfig);
     const total = await countMonitorableWebsites(db, websiteId);
     const websites = await loadWebsites(db, websiteId, limit);
     const results: CheckResult[] = [];
@@ -274,7 +362,7 @@ Deno.serve(async (request) => {
     for (const website of websites) {
       try {
         const result = await checkWebsite(website);
-        await persistResult(db, result);
+        await persistResult(db, result, monitoringAlertEmail);
         results.push(result);
       } catch (error) {
         failures.push({
@@ -285,6 +373,16 @@ Deno.serve(async (request) => {
     }
 
     const failedChecks = results.filter((result) => result.status !== 'ONLINE').length + failures.length;
+    const alertsAfterChecks = await deliverPendingAlerts(db, emailConfig);
+    const alerts: AlertDeliverySummary = {
+      configured: alertsBeforeChecks.configured && alertsAfterChecks.configured,
+      claimed: alertsBeforeChecks.claimed + alertsAfterChecks.claimed,
+      sent: alertsBeforeChecks.sent + alertsAfterChecks.sent,
+      failed: alertsBeforeChecks.failed + alertsAfterChecks.failed,
+      ...(alertsAfterChecks.warning || alertsBeforeChecks.warning
+        ? { warning: alertsAfterChecks.warning || alertsBeforeChecks.warning }
+        : {}),
+    };
 
     return jsonResponse({
       success: failures.length === 0,
@@ -295,6 +393,7 @@ Deno.serve(async (request) => {
       failed: failedChecks,
       results,
       failures,
+      alerts,
     });
   } catch (error) {
     return jsonResponse({ error: sanitizeError(error) }, 500);

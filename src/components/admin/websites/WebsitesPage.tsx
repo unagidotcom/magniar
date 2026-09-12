@@ -73,7 +73,7 @@ const emptyForm = (clientId = ''): WebsiteInput => ({
   platform: 'Auto Detect',
   hosting_provider: '',
   monitoring_enabled: true,
-  check_interval_minutes: 10,
+  check_interval_minutes: 30,
   internal_notes: '',
 });
 

@@ -7,6 +7,9 @@ Server-side HTTPS availability monitor for `public.websites`.
 - `SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `MONITORING_CRON_SECRET` for scheduled runs
+- `RESEND_API_KEY` for alert delivery
+- `MONITORING_FROM_EMAIL` using a sender on a verified Resend domain
+- `MONITORING_ALERT_EMAIL` for the alert recipient
 
 Do not expose the service-role key to Vite or React.
 
@@ -27,11 +30,13 @@ contains the existing admin claim.
 
 GitHub Actions is the only scheduler for website monitoring.
 
-Run `.github/workflows/check-websites.yml` approximately every 5 minutes. The GitHub Action only
+Run `.github/workflows/check-websites.yml` approximately every 30 minutes. The GitHub Action only
 triggers this Edge Function; this function claims and checks only websites that are due using
 `monitoring_enabled`, `last_checked_at`, and `check_interval_minutes`.
 
-Per-site intervals remain:
+The automated scheduler runs every 30 minutes. New websites default to 30 minutes, and the alert
+migration normalizes existing monitored websites to 30 minutes. The existing per-site choices remain
+available for future flexibility:
 
 - 5 minutes
 - 10 minutes
@@ -56,3 +61,16 @@ GitHub Actions requests using `MONITORING_CRON_SECRET`. Manual Admin OS checks s
 valid Supabase admin user token unless the monitoring secret is supplied.
 
 Scheduling is not live until this Edge Function is deployed and the GitHub repository secrets exist.
+
+## Email alert behavior
+
+- Two consecutive `DOWN` or `ERROR` checks confirm an incident before the first email is sent.
+- HTTP 400-599 responses are treated as errors. Network failures and timeouts are treated as down.
+- One recovery email is sent after a confirmed incident returns online.
+- One reminder may be sent after each 24 hours that a confirmed incident remains active.
+- Delivery uses a durable database outbox and an idempotency key so retries do not create a new
+  alert for every scheduler run.
+
+`RESEND_API_KEY`, `MONITORING_FROM_EMAIL`, and `MONITORING_ALERT_EMAIL` belong in Supabase Edge
+Function secrets, not GitHub and not Vite environment files. GitHub only stores the function URL and
+the existing scheduler secret.

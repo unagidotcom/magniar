@@ -133,7 +133,7 @@ const normalizeRow = (row: WebsiteRow): WebsiteRecord => ({
   platform: row.platform,
   hosting_provider: row.hosting_provider || undefined,
   monitoring_enabled: row.monitoring_enabled,
-  check_interval_minutes: row.check_interval_minutes || 10,
+  check_interval_minutes: row.check_interval_minutes || 30,
   current_status: row.current_status || 'UNKNOWN',
   last_http_status_code: row.last_http_status_code ?? undefined,
   last_response_time_ms: row.last_response_time_ms ?? undefined,
@@ -183,7 +183,7 @@ const normalizeWordPressReportRow = (row: WordPressSiteReportRow): WordPressSite
 
 const normalizeCheckInterval = (value: WebsiteInput['check_interval_minutes']) => {
   const allowed = [5, 10, 15, 30, 60];
-  return allowed.includes(value) ? value : 10;
+  return allowed.includes(value) ? value : 30;
 };
 
 const rangeStartForHistory = (timeRange: WebsiteHistoryRange) => {
