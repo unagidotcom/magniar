@@ -21,9 +21,14 @@ const baseNotification: WebsiteAlertNotification = {
 
 const outageEmail = renderWebsiteAlertEmail(baseNotification);
 assert.match(outageEmail.subject, /Client Store is down/);
-assert.match(outageEmail.text, /Two consecutive checks failed/);
+assert.match(outageEmail.text, /Two consecutive availability checks failed/);
 assert.match(outageEmail.text, /magniar/i);
 assert.match(outageEmail.html, /Example Client/);
+assert.match(outageEmail.html, /OPERATIONS \/ WEBSITE MONITOR/);
+assert.match(outageEmail.html, /ACTION REQUIRED/);
+assert.match(outageEmail.html, /OPEN WEBSITE IN ADMIN OS/);
+assert.match(outageEmail.html, /MON-6DAF5F0E/);
+assert.match(outageEmail.html, /30 MIN WATCH/);
 
 const recoveryEmail = renderWebsiteAlertEmail({
   ...baseNotification,
@@ -35,7 +40,9 @@ const recoveryEmail = renderWebsiteAlertEmail({
 });
 assert.match(recoveryEmail.subject, /Recovery/);
 assert.match(recoveryEmail.subject, /back online/);
-assert.match(recoveryEmail.text, /responded successfully/);
+assert.match(recoveryEmail.text, /returned to normal operation/);
+assert.match(recoveryEmail.html, /RECOVERY CONFIRMED/);
+assert.match(recoveryEmail.html, /#22D38B/);
 
 const escapedEmail = renderWebsiteAlertEmail({
   ...baseNotification,
