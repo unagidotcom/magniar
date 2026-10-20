@@ -9,6 +9,7 @@ import {
   WebsiteInput,
   WebsiteRecord,
   WebsiteStatus,
+  ShopifyConnection,
   WordPressSiteReport,
   WordPressTrackerKeyResult,
 } from '../types/websites';
@@ -544,4 +545,52 @@ export async function regenerateWordPressTrackerKey(websiteId: string): Promise<
 export function getWordPressReportEndpoint() {
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
   return supabaseUrl ? `${supabaseUrl.replace(/\/$/, '')}/functions/v1/receive-wordpress-report` : '';
+}
+
+type ShopifyAdminResponse = {
+  connection?: ShopifyConnection | null;
+  authorize_url?: string;
+  error?: string;
+};
+
+const invokeShopifyAdmin = async (body: Record<string, unknown>) => {
+  const db = requireSupabase();
+  const { data, error } = await db.functions.invoke<ShopifyAdminResponse>('shopify-admin', { body });
+
+  if (error) {
+    let message = error.message || 'Shopify request failed.';
+    const context = (error as { context?: unknown }).context;
+    if (context instanceof Response) {
+      try {
+        const payload = await context.clone().json() as { error?: string };
+        if (payload.error) message = payload.error;
+      } catch {
+        // Keep the SDK error when the function did not return JSON.
+      }
+    }
+    throw new Error(message);
+  }
+  if (data?.error) throw new Error(data.error);
+  return data || {};
+};
+
+export async function getShopifyConnection(websiteId: string): Promise<ShopifyConnection | null> {
+  const data = await invokeShopifyAdmin({ action: 'status', website_id: websiteId });
+  return data.connection || null;
+}
+
+export async function startShopifyConnection(websiteId: string, shopDomain: string): Promise<string> {
+  const data = await invokeShopifyAdmin({
+    action: 'connect',
+    website_id: websiteId,
+    shop_domain: shopDomain,
+  });
+  if (!data.authorize_url) throw new Error('Shopify did not return an authorization URL.');
+  return data.authorize_url;
+}
+
+export async function syncShopifyConnection(websiteId: string): Promise<ShopifyConnection> {
+  const data = await invokeShopifyAdmin({ action: 'sync', website_id: websiteId });
+  if (!data.connection) throw new Error('Shopify did not return connection details.');
+  return data.connection;
 }

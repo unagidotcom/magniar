@@ -118,6 +118,33 @@ export interface WordPressTrackerKeyResult {
   rotated_at: string;
 }
 
+export type ShopifyConnectionStatus =
+  | 'CONNECTED'
+  | 'REAUTH_REQUIRED'
+  | 'DISCONNECTED'
+  | 'ERROR';
+
+export interface ShopifyConnection {
+  website_id: string;
+  shop_domain: string;
+  shopify_shop_id?: string | null;
+  shop_name?: string | null;
+  primary_domain?: string | null;
+  plan_display_name?: string | null;
+  currency_code?: string | null;
+  iana_timezone?: string | null;
+  published_theme_id?: string | null;
+  published_theme_name?: string | null;
+  published_theme_updated_at?: string | null;
+  granted_scopes: string[];
+  connection_status: ShopifyConnectionStatus;
+  installed_at: string;
+  last_synced_at?: string | null;
+  last_error?: string | null;
+  uninstalled_at?: string | null;
+  updated_at: string;
+}
+
 export interface WebsiteCheckInvocationResult {
   success?: boolean;
   total?: number;

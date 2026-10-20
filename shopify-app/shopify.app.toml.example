@@ -1,0 +1,24 @@
+name = "Magniar Store Tracker"
+client_id = "REPLACE_WITH_SHOPIFY_CLIENT_ID"
+application_url = "https://magniar.com/admin/websites"
+embedded = false
+handle = "magniar-store-tracker"
+
+[access_scopes]
+scopes = "read_themes"
+
+[auth]
+redirect_urls = [
+  "https://smgvuxpemrglntzvchwi.supabase.co/functions/v1/shopify-oauth-callback"
+]
+
+[webhooks]
+api_version = "2026-10"
+
+[[webhooks.subscriptions]]
+topics = ["app/uninstalled", "app/scopes_update", "shop/update", "domains/update", "themes/publish"]
+uri = "https://smgvuxpemrglntzvchwi.supabase.co/functions/v1/shopify-webhooks"
+
+[[webhooks.subscriptions]]
+compliance_topics = ["customers/data_request", "customers/redact", "shop/redact"]
+uri = "https://smgvuxpemrglntzvchwi.supabase.co/functions/v1/shopify-webhooks"

@@ -13,6 +13,8 @@ import {
   Palette,
   RefreshCw,
   Shield,
+  ShoppingBag,
+  Store,
 } from 'lucide-react';
 import {
   WebsiteCheckRecord,
@@ -20,16 +22,20 @@ import {
   WebsiteHistoryRange,
   WebsiteHistoryStatusFilter,
   WebsiteRecord,
+  ShopifyConnection,
   WordPressSiteReport,
 } from '../../../types/websites';
 import {
   checkWebsiteNow,
   getWebsiteById,
   getWebsiteCheckSummary,
+  getShopifyConnection,
   getLatestWordPressSiteReport,
   getWordPressReportEndpoint,
   listWebsiteChecks,
   regenerateWordPressTrackerKey,
+  startShopifyConnection,
+  syncShopifyConnection,
 } from '../../../services/websiteService';
 import { AdminEmptyState } from '../AdminEmptyState';
 import { AdminErrorState } from '../AdminErrorState';
@@ -365,6 +371,183 @@ const WordPressTrackerPanel: React.FC<WordPressTrackerPanelProps> = ({
   );
 };
 
+interface ShopifyTrackerPanelProps {
+  website: WebsiteRecord;
+  connection: ShopifyConnection | null;
+  error: string | null;
+  isLoading: boolean;
+  isConnecting: boolean;
+  isSyncing: boolean;
+  onConnect: (shopDomain: string) => void;
+  onSync: () => void;
+}
+
+const ShopifyTrackerPanel: React.FC<ShopifyTrackerPanelProps> = ({
+  website,
+  connection,
+  error,
+  isLoading,
+  isConnecting,
+  isSyncing,
+  onConnect,
+  onSync,
+}) => {
+  const websiteHost = formatUrlHost(website.normalized_url);
+  const initialShopDomain = websiteHost.endsWith('.myshopify.com') ? websiteHost : '';
+  const [shopDomain, setShopDomain] = useState(connection?.shop_domain || initialShopDomain);
+
+  useEffect(() => {
+    if (connection?.shop_domain) setShopDomain(connection.shop_domain);
+  }, [connection?.shop_domain]);
+
+  const connected = connection?.connection_status === 'CONNECTED';
+  const statusTone = connected
+    ? 'border-emerald-400/20 bg-emerald-400/10 text-emerald-200'
+    : connection?.connection_status === 'ERROR' || connection?.connection_status === 'REAUTH_REQUIRED'
+      ? 'border-rose-400/20 bg-rose-400/10 text-rose-200'
+      : 'border-amber-400/20 bg-amber-400/10 text-amber-200';
+
+  return (
+    <section className="overflow-hidden rounded-2xl border border-sky-400/15 bg-slate-950 shadow-xl shadow-black/20">
+      <div className="grid grid-cols-1 xl:grid-cols-[340px_minmax(0,1fr)]">
+        <div className="border-b border-white/10 p-5 sm:p-6 xl:border-b-0 xl:border-r">
+          <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-sky-300">
+            <ShoppingBag className="h-3.5 w-3.5" />
+            Shopify Connection
+          </div>
+          <h2 className="mt-3 text-xl font-display font-semibold text-white">Store intelligence panel</h2>
+          <p className="mt-3 text-sm leading-6 text-slate-300">
+            Connect the store securely to view operational details and the currently published theme.
+          </p>
+
+          <div className="mt-5 space-y-3 text-xs">
+            <div className="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-slate-900/70 p-3">
+              <span className="text-white/40 uppercase">Access</span>
+              <span className="text-sky-200">Read only</span>
+            </div>
+            <div className="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-slate-900/70 p-3">
+              <span className="text-white/40 uppercase">Connection</span>
+              <span className={`inline-flex rounded-full border px-2 py-1 text-[10px] ${statusTone}`}>
+                {isLoading ? 'Loading' : connection?.connection_status?.replaceAll('_', ' ') || 'Not connected'}
+              </span>
+            </div>
+
+            {!connected && (
+              <div className="space-y-2 rounded-lg border border-white/10 bg-slate-900/70 p-3">
+                <label htmlFor="shopify-shop-domain" className="block text-[10px] uppercase text-white/40">
+                  Permanent Shopify domain
+                </label>
+                <input
+                  id="shopify-shop-domain"
+                  value={shopDomain}
+                  onChange={(event) => setShopDomain(event.target.value)}
+                  placeholder="store-name.myshopify.com"
+                  autoComplete="off"
+                  spellCheck={false}
+                  className="w-full rounded-lg border border-white/10 bg-slate-950 px-3 py-2 text-white placeholder:text-white/25 focus:border-[#0099FF] focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => onConnect(shopDomain)}
+                  disabled={isConnecting || !shopDomain.trim()}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#0099FF]/25 bg-[#0099FF]/10 px-3 py-2 font-bold text-[#0099FF] hover:bg-[#0099FF]/20 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  {isConnecting ? 'Opening Shopify' : connection ? 'Reconnect Store' : 'Connect Store'}
+                </button>
+              </div>
+            )}
+
+            {connected && (
+              <button
+                type="button"
+                onClick={onSync}
+                disabled={isSyncing}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#0099FF]/25 bg-[#0099FF]/10 px-3 py-2 font-bold text-[#0099FF] hover:bg-[#0099FF]/20 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <RefreshCw className={`h-3.5 w-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
+                {isSyncing ? 'Syncing Store' : 'Sync Store Details'}
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="p-5 sm:p-6">
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div className="text-[10px] font-bold uppercase tracking-wider text-[#0099FF]">Shopify Admin API</div>
+              <div className="mt-1 text-white/55">
+                {connection?.last_synced_at
+                  ? `Store details synced ${formatRelativeTime(connection.last_synced_at)}.`
+                  : 'Connect the store to begin secure read-only synchronization.'}
+              </div>
+            </div>
+            {connection?.primary_domain && (
+              <a
+                href={`https://${connection.primary_domain}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-[#0099FF] hover:text-white"
+              >
+                Open storefront
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+            )}
+          </div>
+
+          {error && (
+            <div className="mb-4 rounded-xl border border-rose-400/20 bg-rose-400/10 p-3 text-rose-100">
+              {error}
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {trackerCard(
+              'Store',
+              connection?.shop_name || 'Waiting',
+              connection?.shop_domain || 'Permanent Shopify domain will appear here.',
+              <Store className="h-4 w-4" />
+            )}
+            {trackerCard(
+              'Published Theme',
+              connection?.published_theme_name || 'Waiting',
+              connection?.published_theme_updated_at
+                ? `Updated ${formatRelativeTime(connection.published_theme_updated_at)}`
+                : 'The live theme will appear after connection.',
+              <Palette className="h-4 w-4" />
+            )}
+            {trackerCard(
+              'Plan',
+              connection?.plan_display_name || 'Waiting',
+              'Shopify plan reported by the store.',
+              <ShoppingBag className="h-4 w-4" />
+            )}
+            {trackerCard(
+              'Currency',
+              connection?.currency_code || 'Waiting',
+              'Store currency. No payment data is requested.',
+              <Database className="h-4 w-4" />
+            )}
+            {trackerCard(
+              'Timezone',
+              connection?.iana_timezone || 'Waiting',
+              'Used to interpret store activity accurately.',
+              <Clock3 className="h-4 w-4" />
+            )}
+            {trackerCard(
+              'Permissions',
+              connection?.granted_scopes?.length ? connection.granted_scopes.join(', ') : 'read_themes',
+              'Limited to the published-theme scope.',
+              <Shield className="h-4 w-4" />,
+              'text-sky-200'
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const MonitoringChart: React.FC<{ checks: WebsiteCheckRecord[] }> = ({ checks }) => {
   const plottedChecks = checks
     .filter((check) => typeof check.response_time_ms === 'number')
@@ -525,6 +708,8 @@ export const WebsiteDetailPage: React.FC<WebsiteDetailPageProps> = ({
   const [history, setHistory] = useState<WebsiteCheckRecord[]>([]);
   const [summary, setSummary] = useState<WebsiteCheckSummary | null>(null);
   const [wordpressReport, setWordpressReport] = useState<WordPressSiteReport | null>(null);
+  const [shopifyConnection, setShopifyConnection] = useState<ShopifyConnection | null>(null);
+  const [shopifyError, setShopifyError] = useState<string | null>(null);
   const [generatedTrackerKey, setGeneratedTrackerKey] = useState<string | null>(null);
   const [timeRange, setTimeRange] = useState<WebsiteHistoryRange>('24H');
   const [statusFilter, setStatusFilter] = useState<WebsiteHistoryStatusFilter>('ALL');
@@ -532,6 +717,9 @@ export const WebsiteDetailPage: React.FC<WebsiteDetailPageProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(false);
   const [isGeneratingTrackerKey, setIsGeneratingTrackerKey] = useState(false);
+  const [isLoadingShopify, setIsLoadingShopify] = useState(false);
+  const [isConnectingShopify, setIsConnectingShopify] = useState(false);
+  const [isSyncingShopify, setIsSyncingShopify] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const loadDetail = async (options?: { background?: boolean }) => {
@@ -554,6 +742,22 @@ export const WebsiteDetailPage: React.FC<WebsiteDetailPageProps> = ({
       setHistory(historyRows);
       setSummary(summaryRow);
       setWordpressReport(wordpressReportRow);
+
+      if (websiteRow && String(websiteRow.platform || '').toLowerCase().includes('shopify')) {
+        setIsLoadingShopify(true);
+        try {
+          setShopifyConnection(await getShopifyConnection(websiteId));
+          setShopifyError(null);
+        } catch (shopifyLoadError: any) {
+          console.error('Shopify connection load failed:', shopifyLoadError);
+          setShopifyError(shopifyLoadError?.message || 'Unable to load the Shopify connection.');
+        } finally {
+          setIsLoadingShopify(false);
+        }
+      } else {
+        setShopifyConnection(null);
+        setShopifyError(null);
+      }
     } catch (err: any) {
       console.error('Website monitoring detail load failed:', err);
       setLoadError('Unable to load website monitoring details.');
@@ -575,6 +779,20 @@ export const WebsiteDetailPage: React.FC<WebsiteDetailPageProps> = ({
 
     return () => window.clearInterval(refreshTimer);
   }, [websiteId, timeRange, statusFilter, historyLimit, refreshKey]);
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const shopifyResult = url.searchParams.get('shopify');
+    if (!shopifyResult) return;
+
+    if (shopifyResult === 'connected') {
+      onTriggerToast('success', 'Shopify Store Connected', 'The secure store connection is ready.');
+    } else {
+      onTriggerToast('error', 'Shopify Connection Failed', 'The store could not be connected. Try again or review the app configuration.');
+    }
+    url.searchParams.delete('shopify');
+    window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+  }, [onTriggerToast]);
 
   const currentError = useMemo(
     () => history.find((check) => check.status === 'DOWN' || check.status === 'ERROR')?.error_message || null,
@@ -635,6 +853,46 @@ export const WebsiteDetailPage: React.FC<WebsiteDetailPageProps> = ({
     }
   };
 
+  const handleConnectShopify = async (shopDomain: string) => {
+    if (!website) return;
+
+    setIsConnectingShopify(true);
+    setShopifyError(null);
+    try {
+      const authorizeUrl = await startShopifyConnection(website.id, shopDomain);
+      const parsedUrl = new URL(authorizeUrl);
+      if (parsedUrl.protocol !== 'https:' || !parsedUrl.hostname.endsWith('.myshopify.com')) {
+        throw new Error('Shopify returned an invalid authorization URL.');
+      }
+      window.location.assign(parsedUrl.toString());
+    } catch (err: any) {
+      console.error('Shopify connection start failed:', err);
+      const message = err?.message || 'Could not start Shopify authorization.';
+      setShopifyError(message);
+      onTriggerToast('error', 'Shopify Not Connected', message);
+      setIsConnectingShopify(false);
+    }
+  };
+
+  const handleSyncShopify = async () => {
+    if (!website) return;
+
+    setIsSyncingShopify(true);
+    setShopifyError(null);
+    try {
+      const connection = await syncShopifyConnection(website.id);
+      setShopifyConnection(connection);
+      onTriggerToast('success', 'Shopify Store Synced', 'The latest store and theme details are now visible.');
+    } catch (err: any) {
+      console.error('Shopify sync failed:', err);
+      const message = err?.message || 'Could not sync Shopify store details.';
+      setShopifyError(message);
+      onTriggerToast('error', 'Shopify Sync Failed', message);
+    } finally {
+      setIsSyncingShopify(false);
+    }
+  };
+
   if (isLoading && !website) {
     return (
       <div className="space-y-6 animate-pulse font-mono">
@@ -685,6 +943,8 @@ export const WebsiteDetailPage: React.FC<WebsiteDetailPageProps> = ({
   }
 
   const stale = isOverdue(website);
+  const isWordPress = String(website.platform || '').toLowerCase().includes('wordpress');
+  const isShopify = String(website.platform || '').toLowerCase().includes('shopify');
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300 font-mono text-xs">
@@ -846,14 +1106,29 @@ export const WebsiteDetailPage: React.FC<WebsiteDetailPageProps> = ({
         {metricCard('Uptime', summary?.uptime_percentage === null ? 'Not enough data' : `${summary?.uptime_percentage ?? 0}%`, 'Check-based')}
       </div>
 
-      <WordPressTrackerPanel
-        website={website}
-        report={wordpressReport}
-        generatedTrackerKey={generatedTrackerKey}
-        isGeneratingTrackerKey={isGeneratingTrackerKey}
-        onGenerateTrackerKey={handleGenerateTrackerKey}
-        onCopy={copyTrackerValue}
-      />
+      {isWordPress && (
+        <WordPressTrackerPanel
+          website={website}
+          report={wordpressReport}
+          generatedTrackerKey={generatedTrackerKey}
+          isGeneratingTrackerKey={isGeneratingTrackerKey}
+          onGenerateTrackerKey={handleGenerateTrackerKey}
+          onCopy={copyTrackerValue}
+        />
+      )}
+
+      {isShopify && (
+        <ShopifyTrackerPanel
+          website={website}
+          connection={shopifyConnection}
+          error={shopifyError}
+          isLoading={isLoadingShopify}
+          isConnecting={isConnectingShopify}
+          isSyncing={isSyncingShopify}
+          onConnect={handleConnectShopify}
+          onSync={handleSyncShopify}
+        />
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <section className="bg-slate-950/80 border border-white/10 rounded-xl p-4 space-y-3 shadow-lg shadow-black/10">
