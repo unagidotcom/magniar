@@ -1,7 +1,8 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import {
-  decryptShopifyToken,
   fetchShopifySnapshot,
+  getShopifyAccessToken,
+  isShopifyReauthenticationError,
   normalizeShopDomain,
   sanitizeShopifyError,
   verifyShopifyWebhookHmac,
@@ -10,8 +11,13 @@ import {
 type InstallationTokenRow = {
   website_id: string;
   shop_domain: string;
+  granted_scopes: string[];
   access_token_ciphertext: string | null;
   access_token_iv: string | null;
+  refresh_token_ciphertext: string | null;
+  refresh_token_iv: string | null;
+  access_token_expires_at: string | null;
+  refresh_token_expires_at: string | null;
 };
 
 const textResponse = (message: string, status = 200) =>
@@ -81,6 +87,10 @@ Deno.serve(async (request) => {
           connection_status: 'DISCONNECTED',
           access_token_ciphertext: null,
           access_token_iv: null,
+          refresh_token_ciphertext: null,
+          refresh_token_iv: null,
+          access_token_expires_at: null,
+          refresh_token_expires_at: null,
           uninstalled_at: new Date().toISOString(),
           last_error: null,
         })
@@ -106,29 +116,70 @@ Deno.serve(async (request) => {
     } else if (['shop/update', 'domains/update', 'themes/publish'].includes(topic)) {
       const { data, error } = await db
         .from('shopify_installations')
-        .select('website_id,shop_domain,access_token_ciphertext,access_token_iv')
+        .select(`
+          website_id,
+          shop_domain,
+          granted_scopes,
+          access_token_ciphertext,
+          access_token_iv,
+          refresh_token_ciphertext,
+          refresh_token_iv,
+          access_token_expires_at,
+          refresh_token_expires_at
+        `)
         .eq('shop_domain', shopDomain)
         .maybeSingle();
       if (error) throw error;
 
       const installation = data as InstallationTokenRow | null;
-      if (installation?.access_token_ciphertext && installation.access_token_iv) {
-        const token = await decryptShopifyToken(
-          installation.access_token_ciphertext,
-          installation.access_token_iv,
-          tokenEncryptionKey
-        );
-        const snapshot = await fetchShopifySnapshot(shopDomain, token);
-        const { error: updateError } = await db
-          .from('shopify_installations')
-          .update({
-            ...snapshot,
-            connection_status: 'CONNECTED',
-            last_synced_at: new Date().toISOString(),
-            last_error: null,
-          })
-          .eq('website_id', installation.website_id);
-        if (updateError) throw updateError;
+      if (installation) {
+        try {
+          const apiKey = Deno.env.get('SHOPIFY_API_KEY');
+          if (!apiKey) throw new Error('Shopify API key is not configured.');
+
+          const token = await getShopifyAccessToken({
+            installation,
+            apiKey,
+            apiSecret,
+            encryptionKey: tokenEncryptionKey,
+            persistRotatedCredentials: async (credentials) => {
+              const { error: rotationError } = await db
+                .from('shopify_installations')
+                .update({
+                  ...credentials,
+                  granted_scopes: credentials.granted_scopes.length
+                    ? credentials.granted_scopes
+                    : installation.granted_scopes,
+                  connection_status: 'CONNECTED',
+                  last_error: null,
+                })
+                .eq('website_id', installation.website_id);
+              if (rotationError) throw rotationError;
+            },
+          });
+          const snapshot = await fetchShopifySnapshot(shopDomain, token);
+          const { error: updateError } = await db
+            .from('shopify_installations')
+            .update({
+              ...snapshot,
+              connection_status: 'CONNECTED',
+              last_synced_at: new Date().toISOString(),
+              last_error: null,
+            })
+            .eq('website_id', installation.website_id);
+          if (updateError) throw updateError;
+        } catch (error) {
+          if (!isShopifyReauthenticationError(error)) throw error;
+
+          const { error: reauthUpdateError } = await db
+            .from('shopify_installations')
+            .update({
+              connection_status: 'REAUTH_REQUIRED',
+              last_error: sanitizeShopifyError(error),
+            })
+            .eq('website_id', installation.website_id);
+          if (reauthUpdateError) throw reauthUpdateError;
+        }
       }
     }
 

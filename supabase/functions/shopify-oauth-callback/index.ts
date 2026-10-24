@@ -1,9 +1,11 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import {
   encryptShopifyToken,
+  exchangeShopifyAuthorizationCode,
   fetchShopifySnapshot,
   normalizeShopDomain,
   sanitizeShopifyError,
+  shopifyTokenExpiry,
   verifyShopifyOAuthHmac,
   verifyShopifyState,
 } from '../_shared/shopify.ts';
@@ -46,18 +48,12 @@ Deno.serve(async (request) => {
     websiteId = state.website_id;
     if (state.shop !== shop) throw new Error('Shopify OAuth store does not match the request.');
 
-    const tokenResponse = await fetch(`https://${shop}/admin/oauth/access_token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ client_id: apiKey, client_secret: apiSecret, code }),
+    const tokens = await exchangeShopifyAuthorizationCode({
+      shop,
+      apiKey,
+      apiSecret,
+      code,
     });
-    const tokenPayload = await tokenResponse.json().catch(() => ({})) as {
-      access_token?: string;
-      scope?: string;
-    };
-    if (!tokenResponse.ok || !tokenPayload.access_token) {
-      throw new Error(`Shopify token exchange failed with HTTP ${tokenResponse.status}.`);
-    }
 
     const db = createClient(supabaseUrl, serviceRoleKey, {
       auth: { persistSession: false, autoRefreshToken: false },
@@ -72,12 +68,16 @@ Deno.serve(async (request) => {
       throw new Error('The destination website is not a Shopify website.');
     }
 
-    const snapshot = await fetchShopifySnapshot(shop, tokenPayload.access_token);
-    const encryptedToken = await encryptShopifyToken(tokenPayload.access_token, tokenEncryptionKey);
-    const now = new Date().toISOString();
+    const snapshot = await fetchShopifySnapshot(shop, tokens.access_token);
+    const [encryptedAccessToken, encryptedRefreshToken] = await Promise.all([
+      encryptShopifyToken(tokens.access_token, tokenEncryptionKey),
+      encryptShopifyToken(tokens.refresh_token, tokenEncryptionKey),
+    ]);
+    const nowMs = Date.now();
+    const now = new Date(nowMs).toISOString();
     const grantedScopes = snapshot.granted_scopes.length
       ? snapshot.granted_scopes
-      : String(tokenPayload.scope || '').split(',').map((scope) => scope.trim()).filter(Boolean);
+      : tokens.scope.split(',').map((scope) => scope.trim()).filter(Boolean);
 
     const { error: upsertError } = await db
       .from('shopify_installations')
@@ -85,8 +85,12 @@ Deno.serve(async (request) => {
         website_id: websiteId,
         ...snapshot,
         granted_scopes: grantedScopes,
-        access_token_ciphertext: encryptedToken.ciphertext,
-        access_token_iv: encryptedToken.iv,
+        access_token_ciphertext: encryptedAccessToken.ciphertext,
+        access_token_iv: encryptedAccessToken.iv,
+        refresh_token_ciphertext: encryptedRefreshToken.ciphertext,
+        refresh_token_iv: encryptedRefreshToken.iv,
+        access_token_expires_at: shopifyTokenExpiry(tokens.expires_in, nowMs),
+        refresh_token_expires_at: shopifyTokenExpiry(tokens.refresh_token_expires_in, nowMs),
         connection_status: 'CONNECTED',
         installed_at: now,
         last_synced_at: now,

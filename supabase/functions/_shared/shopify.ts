@@ -22,6 +22,34 @@ export type ShopifyStoreSnapshot = {
   granted_scopes: string[];
 };
 
+export type ShopifyOAuthTokens = {
+  access_token: string;
+  refresh_token: string;
+  scope: string;
+  expires_in: number;
+  refresh_token_expires_in: number;
+};
+
+export type ShopifyStoredCredentials = {
+  shop_domain: string;
+  access_token_ciphertext: string | null;
+  access_token_iv: string | null;
+  refresh_token_ciphertext: string | null;
+  refresh_token_iv: string | null;
+  access_token_expires_at: string | null;
+  refresh_token_expires_at: string | null;
+};
+
+export type ShopifyRotatedCredentials = {
+  access_token_ciphertext: string;
+  access_token_iv: string;
+  refresh_token_ciphertext: string;
+  refresh_token_iv: string;
+  access_token_expires_at: string;
+  refresh_token_expires_at: string;
+  granted_scopes: string[];
+};
+
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
@@ -190,6 +218,167 @@ export const decryptShopifyToken = async (
   return decoder.decode(plaintext);
 };
 
+const requestShopifyTokens = async (
+  shopDomain: string,
+  parameters: Record<string, string>
+): Promise<ShopifyOAuthTokens> => {
+  const shop = normalizeShopDomain(shopDomain);
+  const response = await fetch(`https://${shop}/admin/oauth/access_token`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams(parameters),
+  });
+  const payload = await response.json().catch(() => ({})) as {
+    access_token?: unknown;
+    refresh_token?: unknown;
+    scope?: unknown;
+    expires_in?: unknown;
+    refresh_token_expires_in?: unknown;
+    error?: unknown;
+    error_description?: unknown;
+  };
+
+  const expiresIn = Number(payload.expires_in);
+  const refreshExpiresIn = Number(payload.refresh_token_expires_in);
+  if (
+    !response.ok ||
+    typeof payload.access_token !== 'string' ||
+    typeof payload.refresh_token !== 'string' ||
+    !Number.isFinite(expiresIn) ||
+    expiresIn <= 0 ||
+    !Number.isFinite(refreshExpiresIn) ||
+    refreshExpiresIn <= 0
+  ) {
+    const reason = String(payload.error_description || payload.error || '').replace(/\s+/g, ' ').slice(0, 160);
+    throw new Error(`Shopify token request failed with HTTP ${response.status}${reason ? `: ${reason}` : ''}.`);
+  }
+
+  return {
+    access_token: payload.access_token,
+    refresh_token: payload.refresh_token,
+    scope: typeof payload.scope === 'string' ? payload.scope : '',
+    expires_in: Math.floor(expiresIn),
+    refresh_token_expires_in: Math.floor(refreshExpiresIn),
+  };
+};
+
+export const exchangeShopifyAuthorizationCode = async (options: {
+  shop: string;
+  apiKey: string;
+  apiSecret: string;
+  code: string;
+}) => requestShopifyTokens(options.shop, {
+  client_id: options.apiKey,
+  client_secret: options.apiSecret,
+  code: options.code,
+  expiring: '1',
+});
+
+export const refreshShopifyOfflineToken = async (options: {
+  shop: string;
+  apiKey: string;
+  apiSecret: string;
+  refreshToken: string;
+}) => requestShopifyTokens(options.shop, {
+  client_id: options.apiKey,
+  client_secret: options.apiSecret,
+  grant_type: 'refresh_token',
+  refresh_token: options.refreshToken,
+});
+
+export const shopifyTokenExpiry = (expiresInSeconds: number, nowMs = Date.now()) =>
+  new Date(nowMs + Math.max(0, expiresInSeconds) * 1000).toISOString();
+
+export const shouldRefreshShopifyToken = (
+  expiresAt: string | null | undefined,
+  nowMs = Date.now(),
+  bufferMs = 5 * 60 * 1000
+) => {
+  if (!expiresAt) return true;
+  const expiresAtMs = new Date(expiresAt).getTime();
+  return !Number.isFinite(expiresAtMs) || expiresAtMs <= nowMs + bufferMs;
+};
+
+export const getShopifyAccessToken = async (options: {
+  installation: ShopifyStoredCredentials;
+  apiKey: string;
+  apiSecret: string;
+  encryptionKey: string;
+  persistRotatedCredentials: (credentials: ShopifyRotatedCredentials) => Promise<void>;
+}) => {
+  const { installation } = options;
+  const hasAccessToken = Boolean(
+    installation.access_token_ciphertext && installation.access_token_iv
+  );
+  const hasRefreshToken = Boolean(
+    installation.refresh_token_ciphertext && installation.refresh_token_iv
+  );
+
+  // Existing installations created before expiring tokens remain usable until Shopify
+  // requires them to reconnect. Every new installation stores both token expiries.
+  const isLegacyNonExpiringToken = hasAccessToken &&
+    !installation.access_token_expires_at &&
+    !hasRefreshToken;
+
+  if (
+    hasAccessToken &&
+    (isLegacyNonExpiringToken || !shouldRefreshShopifyToken(installation.access_token_expires_at))
+  ) {
+    return decryptShopifyToken(
+      installation.access_token_ciphertext!,
+      installation.access_token_iv!,
+      options.encryptionKey
+    );
+  }
+
+  if (!hasRefreshToken) {
+    throw new Error('Shopify authorization has expired. Reconnect the store to continue.');
+  }
+
+  const refreshExpiry = installation.refresh_token_expires_at
+    ? new Date(installation.refresh_token_expires_at).getTime()
+    : Number.NaN;
+  if (Number.isFinite(refreshExpiry) && refreshExpiry <= Date.now()) {
+    throw new Error('Shopify refresh token has expired. Reconnect the store to continue.');
+  }
+
+  const refreshToken = await decryptShopifyToken(
+    installation.refresh_token_ciphertext!,
+    installation.refresh_token_iv!,
+    options.encryptionKey
+  );
+  const tokens = await refreshShopifyOfflineToken({
+    shop: installation.shop_domain,
+    apiKey: options.apiKey,
+    apiSecret: options.apiSecret,
+    refreshToken,
+  });
+  const [encryptedAccessToken, encryptedRefreshToken] = await Promise.all([
+    encryptShopifyToken(tokens.access_token, options.encryptionKey),
+    encryptShopifyToken(tokens.refresh_token, options.encryptionKey),
+  ]);
+  const now = Date.now();
+
+  await options.persistRotatedCredentials({
+    access_token_ciphertext: encryptedAccessToken.ciphertext,
+    access_token_iv: encryptedAccessToken.iv,
+    refresh_token_ciphertext: encryptedRefreshToken.ciphertext,
+    refresh_token_iv: encryptedRefreshToken.iv,
+    access_token_expires_at: shopifyTokenExpiry(tokens.expires_in, now),
+    refresh_token_expires_at: shopifyTokenExpiry(tokens.refresh_token_expires_in, now),
+    granted_scopes: tokens.scope.split(',').map((scope) => scope.trim()).filter(Boolean),
+  });
+
+  return tokens.access_token;
+};
+
+export const isShopifyReauthenticationError = (error: unknown) =>
+  /401|403|invalid[_ ](?:grant|request|token)|access token|authorization has expired|refresh token has expired|reconnect the store/i
+    .test(sanitizeShopifyError(error));
+
 export const fetchShopifySnapshot = async (
   shopDomain: string,
   accessToken: string
@@ -265,5 +454,9 @@ export const fetchShopifySnapshot = async (
 
 export const sanitizeShopifyError = (error: unknown) => {
   const message = error instanceof Error ? error.message : String(error || 'Shopify request failed.');
-  return message.replace(/shpat_[A-Za-z0-9_-]+/g, '[redacted]').replace(/\s+/g, ' ').slice(0, 500);
+  return message
+    .replace(/shpat_[A-Za-z0-9_-]+/g, '[redacted]')
+    .replace(/shprt_[A-Za-z0-9_-]+/g, '[redacted]')
+    .replace(/\s+/g, ' ')
+    .slice(0, 500);
 };

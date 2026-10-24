@@ -2,8 +2,9 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import {
   buildShopifyAuthorizationUrl,
   createShopifyState,
-  decryptShopifyToken,
   fetchShopifySnapshot,
+  getShopifyAccessToken,
+  isShopifyReauthenticationError,
   normalizeShopDomain,
   sanitizeShopifyError,
 } from '../_shared/shopify.ts';
@@ -29,6 +30,10 @@ type InstallationRow = {
   granted_scopes: string[];
   access_token_ciphertext: string | null;
   access_token_iv: string | null;
+  refresh_token_ciphertext: string | null;
+  refresh_token_iv: string | null;
+  access_token_expires_at: string | null;
+  refresh_token_expires_at: string | null;
   connection_status: string;
   installed_at: string;
   last_synced_at: string | null;
@@ -68,6 +73,8 @@ const safeInstallation = (row: InstallationRow | null) => {
   const {
     access_token_ciphertext: _ciphertext,
     access_token_iv: _iv,
+    refresh_token_ciphertext: _refreshCiphertext,
+    refresh_token_iv: _refreshIv,
     ...safeFields
   } = row;
   return safeFields;
@@ -88,6 +95,10 @@ const installationSelect = `
   granted_scopes,
   access_token_ciphertext,
   access_token_iv,
+  refresh_token_ciphertext,
+  refresh_token_iv,
+  access_token_expires_at,
+  refresh_token_expires_at,
   connection_status,
   installed_at,
   last_synced_at,
@@ -172,9 +183,11 @@ Deno.serve(async (request) => {
     }
 
     if (action === 'sync') {
+      const apiKey = Deno.env.get('SHOPIFY_API_KEY');
+      const apiSecret = Deno.env.get('SHOPIFY_API_SECRET');
       const tokenEncryptionKey = Deno.env.get('SHOPIFY_TOKEN_ENCRYPTION_KEY');
-      if (!tokenEncryptionKey) {
-        return jsonResponse({ error: 'Shopify token encryption is not configured.' }, 503);
+      if (!apiKey || !apiSecret || !tokenEncryptionKey) {
+        return jsonResponse({ error: 'Shopify server credentials have not been configured.' }, 503);
       }
 
       const { data, error } = await db
@@ -190,11 +203,26 @@ Deno.serve(async (request) => {
       }
 
       try {
-        const accessToken = await decryptShopifyToken(
-          installation.access_token_ciphertext,
-          installation.access_token_iv,
-          tokenEncryptionKey
-        );
+        const accessToken = await getShopifyAccessToken({
+          installation,
+          apiKey,
+          apiSecret,
+          encryptionKey: tokenEncryptionKey,
+          persistRotatedCredentials: async (credentials) => {
+            const { error: rotationError } = await db
+              .from('shopify_installations')
+              .update({
+                ...credentials,
+                granted_scopes: credentials.granted_scopes.length
+                  ? credentials.granted_scopes
+                  : installation.granted_scopes,
+                connection_status: 'CONNECTED',
+                last_error: null,
+              })
+              .eq('website_id', websiteId);
+            if (rotationError) throw rotationError;
+          },
+        });
         const snapshot = await fetchShopifySnapshot(installation.shop_domain, accessToken);
         const now = new Date().toISOString();
         const { data: updated, error: updateError } = await db
@@ -213,7 +241,7 @@ Deno.serve(async (request) => {
         return jsonResponse({ connection: safeInstallation(updated as InstallationRow) });
       } catch (error) {
         const safeError = sanitizeShopifyError(error);
-        const shouldReauthenticate = /401|403|unauth|access token|invalid api key/i.test(safeError);
+        const shouldReauthenticate = isShopifyReauthenticationError(error);
         await db
           .from('shopify_installations')
           .update({

@@ -6,6 +6,7 @@ handle = "magniar-store-tracker"
 
 [access_scopes]
 scopes = "read_themes"
+use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [

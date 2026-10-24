@@ -9,7 +9,11 @@ const {
   createShopifyState,
   decryptShopifyToken,
   encryptShopifyToken,
+  exchangeShopifyAuthorizationCode,
   normalizeShopDomain,
+  refreshShopifyOfflineToken,
+  shopifyTokenExpiry,
+  shouldRefreshShopifyToken,
   verifyShopifyOAuthHmac,
   verifyShopifyState,
   verifyShopifyWebhookHmac,
@@ -57,5 +61,71 @@ const encrypted = await encryptShopifyToken('shpat_test_token', encryptionKey);
 assert.notEqual(encrypted.ciphertext, 'shpat_test_token');
 assert.equal(await decryptShopifyToken(encrypted.ciphertext, encrypted.iv, encryptionKey), 'shpat_test_token');
 await assert.rejects(() => decryptShopifyToken(`${encrypted.ciphertext.slice(0, -4)}AAAA`, encrypted.iv, encryptionKey));
+
+const tokenRequests: Array<{ url: string; contentType: string | null; body: string }> = [];
+const originalFetch = globalThis.fetch;
+const tokenPayloads = [
+  {
+    access_token: 'shpat_access_1',
+    refresh_token: 'shprt_refresh_1',
+    scope: 'read_themes',
+    expires_in: 3600,
+    refresh_token_expires_in: 7776000,
+  },
+  {
+    access_token: 'shpat_access_2',
+    refresh_token: 'shprt_refresh_2',
+    scope: 'read_themes',
+    expires_in: 3600,
+    refresh_token_expires_in: 7776000,
+  },
+];
+
+globalThis.fetch = (async (input, init) => {
+  const headers = new Headers(init?.headers);
+  tokenRequests.push({
+    url: String(input),
+    contentType: headers.get('Content-Type'),
+    body: String(init?.body || ''),
+  });
+  const payload = tokenPayloads[tokenRequests.length - 1];
+  return new Response(JSON.stringify(payload), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}) as typeof fetch;
+
+try {
+  const exchangedTokens = await exchangeShopifyAuthorizationCode({
+    shop: 'example-store.myshopify.com',
+    apiKey: 'test-client-id',
+    apiSecret: 'test-client-secret',
+    code: 'test-authorization-code',
+  });
+  assert.equal(exchangedTokens.refresh_token, 'shprt_refresh_1');
+  assert.equal(tokenRequests[0].contentType, 'application/x-www-form-urlencoded');
+  const exchangeBody = new URLSearchParams(tokenRequests[0].body);
+  assert.equal(exchangeBody.get('code'), 'test-authorization-code');
+  assert.equal(exchangeBody.get('expiring'), '1');
+  assert.equal(exchangeBody.get('client_secret'), 'test-client-secret');
+
+  const refreshedTokens = await refreshShopifyOfflineToken({
+    shop: 'example-store.myshopify.com',
+    apiKey: 'test-client-id',
+    apiSecret: 'test-client-secret',
+    refreshToken: 'shprt_refresh_1',
+  });
+  assert.equal(refreshedTokens.access_token, 'shpat_access_2');
+  const refreshBody = new URLSearchParams(tokenRequests[1].body);
+  assert.equal(refreshBody.get('grant_type'), 'refresh_token');
+  assert.equal(refreshBody.get('refresh_token'), 'shprt_refresh_1');
+} finally {
+  globalThis.fetch = originalFetch;
+}
+
+const expiryOrigin = Date.parse('2026-10-25T00:00:00.000Z');
+assert.equal(shopifyTokenExpiry(3600, expiryOrigin), '2026-10-25T01:00:00.000Z');
+assert.equal(shouldRefreshShopifyToken('2026-10-25T00:04:59.000Z', expiryOrigin), true);
+assert.equal(shouldRefreshShopifyToken('2026-10-25T00:05:01.000Z', expiryOrigin), false);
 
 console.log('Shopify integration security tests passed.');

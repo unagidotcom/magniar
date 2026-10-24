@@ -6,16 +6,17 @@ This integration connects a Shopify store to an existing Shopify website record 
 
 The app requests only `read_themes`. It reads basic shop identity and configuration exposed by Shopify, the current app scopes, and the published theme. It does not request or store customers, orders, products, payments, or checkout data.
 
-OAuth access tokens are encrypted with AES-256-GCM inside Supabase Edge Functions before storage. Tokens are never returned to the browser. Direct browser access to the installation and webhook tables is revoked.
+OAuth access and refresh tokens are encrypted with AES-256-GCM inside Supabase Edge Functions before storage. New installations use Shopify's required expiring offline tokens, which are renewed server-side shortly before expiry. Tokens are never returned to the browser. Direct browser access to the installation and webhook tables is revoked.
 
 ## Shopify app setup
 
 1. Create a public app in the Shopify Dev Dashboard and choose limited visibility when distributing it.
-2. Copy `shopify.app.toml.example` to your Shopify CLI app configuration and replace the client ID.
-3. Set the app URL, callback URL, scopes, and webhook URL exactly as shown in the example.
-4. Deploy the Shopify app configuration so Shopify registers the webhook subscriptions.
-5. Add the server-only Supabase secrets below.
-6. Open a website whose platform is `Shopify` in Magniar Admin OS and connect its permanent `*.myshopify.com` domain.
+2. Copy `shopify.app.toml.example` to `shopify.app.toml` and replace the client ID.
+3. Keep `use_legacy_install_flow = true`. Magniar is a standalone, non-embedded app that starts the authorization-code installation from Admin OS.
+4. Set the app URL, callback URL, scopes, and webhook URL exactly as shown in the example.
+5. Run `shopify app deploy` so Shopify registers the installation mode and webhook subscriptions.
+6. Add the server-only Supabase secrets below.
+7. Open a website whose platform is `Shopify` in Magniar Admin OS and connect its permanent `*.myshopify.com` domain.
 
 ## Required Supabase secrets
 
@@ -36,7 +37,7 @@ The callback and webhook functions must be deployed without Supabase JWT verific
 
 ## Required deployment order
 
-1. Apply `supabase/migrations/202610200001_shopify_monitoring.sql`.
+1. Apply `supabase/migrations/202610200001_shopify_monitoring.sql` and `supabase/migrations/202610250001_shopify_expiring_tokens.sql`.
 2. Set the four Supabase secrets.
 3. Deploy `shopify-admin` with JWT verification.
 4. Deploy `shopify-oauth-callback` and `shopify-webhooks` with `--no-verify-jwt`.
