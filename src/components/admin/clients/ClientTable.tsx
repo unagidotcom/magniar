@@ -103,6 +103,7 @@ export const ClientTable: React.FC<ClientTableProps> = ({
                         logoUrl={client.logo_url}
                         className="h-9 w-12 shrink-0 flex items-center justify-center bg-[#050505] border border-white/10 rounded-[2px] px-1.5"
                         imageClassName="max-h-6 max-w-full object-contain"
+                        wordmarkClassName="text-[7px]"
                       />
                       <span className="truncate">{client.business_name}</span>
                     </div>

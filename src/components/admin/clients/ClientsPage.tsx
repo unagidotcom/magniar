@@ -201,6 +201,23 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({
     }
   };
 
+  const handleUpdateBusinessProfile = async (id: string, updates: Partial<Client>) => {
+    try {
+      const updated = await clientService.updateBusinessProfile(id, updates);
+      setSelectedClient(updated);
+      await refreshData();
+      onTriggerToast(
+        'success',
+        'Business Profile Updated',
+        `${updated.business_name} and its homepage brand settings were saved.`
+      );
+    } catch (err: any) {
+      console.error('Client business profile update failed:', err);
+      onTriggerToast('error', 'Profile Not Updated', err?.message || 'Could not update client business details.');
+      throw err;
+    }
+  };
+
   const handleAddContact = async (clientId: string, contact: Omit<ClientContact, 'id'>) => {
     try {
       await clientService.addContact(clientId, contact);
@@ -261,6 +278,7 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({
           onAddContact={handleAddContact}
           onAddNote={handleAddNote}
           onInvitePortal={handleInvitePortal}
+          onUpdateBusinessProfile={handleUpdateBusinessProfile}
           onOpenSourceRequest={handleOpenSourceRequest}
           onOpenSourceProspect={handleOpenSourceProspect}
           onTriggerToast={onTriggerToast}

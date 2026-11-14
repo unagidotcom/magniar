@@ -127,6 +127,22 @@ const isMissingLogoUrlColumnError = (error: unknown) => {
   return message.includes("'logo_url'") && message.includes("'clients'");
 };
 
+const normalizeOptionalUrl = (value: unknown, fieldName: string) => {
+  const input = String(value || '').trim();
+  if (!input) return null;
+
+  const withProtocol = /^https?:\/\//i.test(input) ? input : `https://${input}`;
+  try {
+    const parsed = new URL(withProtocol);
+    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
+      throw new Error();
+    }
+    return parsed.toString();
+  } catch {
+    throw new Error(`${fieldName} must be a valid HTTP or HTTPS URL.`);
+  }
+};
+
 class ClientService {
   public async getClients(): Promise<Client[]> {
     const db = requireSupabase();
@@ -180,7 +196,7 @@ class ClientService {
       company_size: newClientData.company_size || '10-50 employees',
       primary_market: newClientData.primary_market || 'North America',
       markets_served: newClientData.markets_served || 'US',
-      website: newClientData.website || null,
+      website: normalizeOptionalUrl(newClientData.website, 'Website URL'),
       description: newClientData.description || '',
       primary_objective: newClientData.primary_objective || '',
       account_owner: accountOwner,
@@ -220,7 +236,7 @@ class ClientService {
     };
 
     if (typeof newClientData.logo_url === 'string' && newClientData.logo_url.trim()) {
-      payload.logo_url = newClientData.logo_url.trim();
+      payload.logo_url = normalizeOptionalUrl(newClientData.logo_url, 'Logo URL');
     }
 
     let { data, error } = await db.from('clients').insert(payload).select('*').single();
@@ -232,6 +248,61 @@ class ClientService {
       data = fallbackResult.data;
       error = fallbackResult.error;
     }
+
+    if (error) throw error;
+    return normalizeClient(data as ClientRow);
+  }
+
+  public async updateBusinessProfile(
+    id: string,
+    updates: Partial<Client>
+  ): Promise<Client> {
+    const current = await this.getClient(id);
+    if (!current) throw new Error('Client record was not found.');
+
+    const businessName = String(updates.business_name ?? current.business_name).trim();
+    if (!businessName) throw new Error('Business name is required.');
+
+    const homepageOrder = Number(updates.homepage_order ?? current.homepage_order ?? 100);
+    if (!Number.isFinite(homepageOrder) || homepageOrder < 0) {
+      throw new Error('Homepage order must be zero or a positive number.');
+    }
+
+    const payload = {
+      business_name: businessName,
+      industry: String(updates.industry ?? current.industry).trim(),
+      business_model: String(updates.business_model ?? current.business_model).trim(),
+      company_size: String(updates.company_size ?? current.company_size).trim(),
+      primary_market: String(updates.primary_market ?? current.primary_market).trim(),
+      markets_served: String(updates.markets_served ?? current.markets_served).trim(),
+      website: normalizeOptionalUrl(updates.website ?? current.website, 'Website URL'),
+      logo_url: normalizeOptionalUrl(
+        updates.logo_url !== undefined ? updates.logo_url : current.logo_url,
+        'Logo URL'
+      ),
+      description: String(updates.description ?? current.description).trim(),
+      primary_objective: String(updates.primary_objective ?? current.primary_objective).trim(),
+      account_owner: String(updates.account_owner ?? current.account_owner).trim(),
+      show_on_homepage: updates.show_on_homepage ?? current.show_on_homepage ?? true,
+      homepage_label: String(updates.homepage_label ?? current.homepage_label ?? '').trim() || null,
+      homepage_order: Math.floor(homepageOrder),
+      activities: [
+        buildActivity(
+          'NOTE',
+          'Business Profile Updated',
+          'Business identity, website, logo, or homepage showcase settings were updated.'
+        ),
+        ...current.activities,
+      ],
+    };
+
+    const db = requireSupabase();
+    const { data, error } = await db
+      .from('clients')
+      .update(payload)
+      .eq('id', id)
+      .select('*')
+      .single();
 
     if (error) throw error;
     return normalizeClient(data as ClientRow);

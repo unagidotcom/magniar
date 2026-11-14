@@ -72,6 +72,7 @@ export const ClientCard: React.FC<ClientCardProps> = ({ client, onOpenClient }) 
           logoUrl={client.logo_url}
           className="h-12 w-16 shrink-0 flex items-center justify-center bg-[#050505] border border-white/10 rounded-[2px] px-2"
           imageClassName="max-h-8 max-w-full object-contain"
+          wordmarkClassName="text-[8px]"
         />
         <div className="min-w-0">
           <h3 className="text-base font-bold text-white hover:text-[#0099FF] transition-colors truncate">

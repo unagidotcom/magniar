@@ -10,7 +10,9 @@ import { ClientNotes } from './ClientNotes';
 import { ClientPortalPreview } from './ClientPortalPreview';
 import { PauseClientModal } from './PauseClientModal';
 import { ArchiveClientModal } from './ArchiveClientModal';
-import { ArrowLeft, Building2, UserPlus, Briefcase, ShieldCheck, PauseCircle, Archive, CheckCircle2, AlertTriangle, ExternalLink } from 'lucide-react';
+import { EditClientBusinessModal } from './EditClientBusinessModal';
+import { ClientLogo } from '../../common/ClientLogo';
+import { ArrowLeft, UserPlus, ShieldCheck, PauseCircle, Archive, Pencil } from 'lucide-react';
 
 interface ClientDetailProps {
   client: Client;
@@ -19,6 +21,7 @@ interface ClientDetailProps {
   onAddContact: (clientId: string, contact: Omit<ClientContact, 'id'>) => void;
   onAddNote: (clientId: string, text: string) => void;
   onInvitePortal: (clientId: string) => void;
+  onUpdateBusinessProfile: (clientId: string, updates: Partial<Client>) => void | Promise<void>;
   onOpenSourceRequest?: (requestCode: string) => void;
   onOpenSourceProspect?: (prospectId: string) => void;
   onTriggerToast: (type: 'success' | 'info' | 'error', title: string, message?: string) => void;
@@ -33,6 +36,7 @@ export const ClientDetail: React.FC<ClientDetailProps> = ({
   onAddContact,
   onAddNote,
   onInvitePortal,
+  onUpdateBusinessProfile,
   onOpenSourceRequest,
   onOpenSourceProspect,
   onTriggerToast,
@@ -40,6 +44,7 @@ export const ClientDetail: React.FC<ClientDetailProps> = ({
   const [activeTab, setActiveTab] = useState<TabType>('OVERVIEW');
   const [pauseModalOpen, setPauseModalOpen] = useState(false);
   const [archiveModalOpen, setArchiveModalOpen] = useState(false);
+  const [businessModalOpen, setBusinessModalOpen] = useState(false);
 
   const primaryContact = client.contacts.find((c) => c.is_primary) || client.contacts[0];
 
@@ -114,7 +119,15 @@ export const ClientDetail: React.FC<ClientDetailProps> = ({
         {/* Client Record Header Box */}
         <div className="p-5 bg-[#0A0A0C] border border-white/10 rounded-[2px] space-y-4">
           <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="space-y-1.5">
+            <div className="flex min-w-0 items-start gap-4">
+              <ClientLogo
+                name={client.business_name}
+                logoUrl={client.logo_url}
+                className="flex h-16 w-24 shrink-0 items-center justify-center rounded-[3px] border border-white/10 bg-white px-3"
+                imageClassName="max-h-11 max-w-full object-contain"
+                fallbackClassName="w-full text-[#0B0D0F]"
+              />
+              <div className="min-w-0 space-y-1.5">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-bold text-[#0099FF] bg-[#0099FF]/10 px-2 py-0.5 rounded-[2px] border border-[#0099FF]/30">
                   {client.id}
@@ -143,10 +156,19 @@ export const ClientDetail: React.FC<ClientDetailProps> = ({
                 <span>•</span>
                 <span>Client Since: <strong className="text-white">{client.client_since}</strong></span>
               </div>
+              </div>
             </div>
 
             {/* Quick Action Buttons */}
             <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => setBusinessModalOpen(true)}
+                className="flex items-center gap-1.5 rounded-[2px] border border-[#0099FF]/30 bg-[#0099FF]/10 px-3 py-2 font-bold text-[#0099FF] transition-colors hover:bg-[#0099FF]/20"
+              >
+                <Pencil className="h-3.5 w-3.5" />
+                <span>Business & Logo</span>
+              </button>
+
               <button
                 onClick={() => setActiveTab('CONTACTS')}
                 className="px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-[2px] flex items-center gap-1.5 transition-colors"
@@ -274,6 +296,13 @@ export const ClientDetail: React.FC<ClientDetailProps> = ({
         onClose={() => setArchiveModalOpen(false)}
         onConfirmArchive={handleArchiveConfirm}
         clientBusinessName={client.business_name}
+      />
+
+      <EditClientBusinessModal
+        client={client}
+        isOpen={businessModalOpen}
+        onClose={() => setBusinessModalOpen(false)}
+        onSubmit={(updates) => onUpdateBusinessProfile(client.id, updates)}
       />
     </div>
   );

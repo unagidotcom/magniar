@@ -44,7 +44,7 @@ export const ClientTrustStrip: React.FC = () => {
                     logoUrl={item.logo_url}
                     className="flex h-full w-full items-center justify-center px-3"
                     imageClassName="max-h-12 max-w-full object-contain opacity-90 [filter:brightness(0)]"
-                    fallbackClassName="flex items-center gap-2 text-[#0B0D0F]"
+                    fallbackClassName="w-full text-[#0B0D0F]"
                   />
                 </a>
               ))}
