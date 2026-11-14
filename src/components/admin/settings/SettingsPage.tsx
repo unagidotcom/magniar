@@ -238,6 +238,17 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
           </div>
         </div>
 
+        <div className="pt-4 border-t border-white/10">
+          <label className="block text-[10px] text-white/40 uppercase mb-1">Fallback Razorpay Payment Page</label>
+          <input
+            type="url"
+            value={settings.razorpay_payment_page_url || ''}
+            onChange={(event) => updateField('razorpay_payment_page_url', event.target.value)}
+            className={inputClass}
+            placeholder="https://razorpay.me/@your-payment-page"
+          />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-white/10">
           <div>
             <label className="block text-[10px] text-white/40 uppercase mb-1">Address Line 1</label>

@@ -18,6 +18,8 @@ export interface BusinessSettings {
   default_currency: string;
   payment_instructions?: string | null;
   invoice_footer?: string | null;
+  razorpay_payment_page_url?: string | null;
+  razorpay_static_qr_url?: string | null;
   created_at?: string;
   updated_at?: string;
 }
@@ -40,6 +42,8 @@ export const defaultBusinessSettings: BusinessSettings = {
   default_currency: 'USD',
   payment_instructions: '',
   invoice_footer: '',
+  razorpay_payment_page_url: 'https://razorpay.me/@magniarpay',
+  razorpay_static_qr_url: '/payments/magniar-razorpay-upi-qr.jpg',
 };
 
 const requireSupabase = () => {

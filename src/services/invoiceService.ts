@@ -1,8 +1,11 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import QRCode from 'qrcode';
 import { Client } from '../types/clients';
 import { BusinessSettings, defaultBusinessSettings } from './businessSettingsService';
 
-export type InvoiceStatus = 'DRAFT' | 'SENT' | 'PAID' | 'OVERDUE' | 'VOID' | 'ARCHIVED';
+export type InvoiceStatus = 'DRAFT' | 'SENT' | 'UNPAID' | 'PAID' | 'OVERDUE' | 'VOID' | 'ARCHIVED';
+
+export type PaymentLinkStatus = 'CREATED' | 'PAID' | 'EXPIRED' | 'CANCELLED' | 'FAILED';
 
 export interface InvoiceLineItem {
   description: string;
@@ -29,8 +32,27 @@ export interface Invoice {
   notes?: string | null;
   sent_at?: string | null;
   downloaded_at?: string | null;
+  payment_provider?: 'RAZORPAY' | 'MANUAL' | null;
+  payment_link_id?: string | null;
+  payment_link_url?: string | null;
+  payment_link_status?: PaymentLinkStatus | null;
+  payment_link_expires_at?: string | null;
+  amount_paid_cents?: number;
+  paid_at?: string | null;
+  provider_payment_id?: string | null;
+  payment_method?: string | null;
   created_at: string;
   updated_at: string;
+}
+
+interface RazorpayPaymentLinkResponse {
+  payment_link?: {
+    id: string;
+    short_url: string;
+    status: string;
+  };
+  reused?: boolean;
+  error?: string;
 }
 
 export interface CreateInvoiceInput {
@@ -121,12 +143,42 @@ export async function updateInvoiceStatus(
   const db = requireSupabase();
   const patch: Record<string, unknown> = { status };
 
+  const { data: currentInvoice, error: currentInvoiceError } = await db
+    .from('invoices')
+    .select('total_cents, payment_provider, payment_link_status')
+    .eq('id', invoiceId)
+    .single();
+
+  if (currentInvoiceError) throw currentInvoiceError;
+
+  if (
+    status !== 'PAID' &&
+    currentInvoice.payment_provider === 'RAZORPAY' &&
+    currentInvoice.payment_link_status === 'PAID'
+  ) {
+    throw new Error('A captured Razorpay payment cannot be marked unpaid. Refund or reconcile it in Razorpay first.');
+  }
+
+  if (status === 'PAID' && currentInvoice.payment_link_status === 'CREATED') {
+    throw new Error('Cancel the active Razorpay Payment Link before recording a manual payment.');
+  }
+
   if (status === 'SENT') {
     patch.sent_at = new Date().toISOString();
   }
 
   if (status === 'DRAFT') {
     patch.sent_at = null;
+  }
+
+  if (status === 'PAID') {
+    patch.payment_provider = 'MANUAL';
+    patch.amount_paid_cents = currentInvoice.total_cents;
+    patch.paid_at = new Date().toISOString();
+  } else if (currentInvoice.payment_provider === 'MANUAL') {
+    patch.payment_provider = null;
+    patch.amount_paid_cents = 0;
+    patch.paid_at = null;
   }
 
   const { data, error } = await db
@@ -199,6 +251,20 @@ export async function updateInvoice(
 
 export async function deleteInvoice(invoiceId: string): Promise<void> {
   const db = requireSupabase();
+  const { data: invoice, error: lookupError } = await db
+    .from('invoices')
+    .select('payment_link_id, payment_link_status, status')
+    .eq('id', invoiceId)
+    .single();
+
+  if (lookupError) throw lookupError;
+  if (invoice.status === 'PAID') {
+    throw new Error('Paid invoices must be archived, not deleted.');
+  }
+  if (invoice.payment_link_id && invoice.payment_link_status === 'CREATED') {
+    throw new Error('Cancel the active Razorpay Payment Link before deleting this invoice.');
+  }
+
   const { data, error } = await db
     .from('invoices')
     .delete()
@@ -222,6 +288,67 @@ export async function markInvoiceDownloaded(invoiceId: string): Promise<void> {
   if (error) throw error;
 }
 
+const functionErrorMessage = async (error: any, fallback: string) => {
+  try {
+    const payload = await error?.context?.json?.();
+    return payload?.error || error?.message || fallback;
+  } catch {
+    return error?.message || fallback;
+  }
+};
+
+export async function createRazorpayPaymentLink(invoiceId: string): Promise<Invoice> {
+  const db = requireSupabase();
+  const { error } = await db.functions.invoke<RazorpayPaymentLinkResponse>('razorpay-payments', {
+    body: {
+      action: 'create_link',
+      invoice_id: invoiceId,
+    },
+  });
+
+  if (error) {
+    throw new Error(await functionErrorMessage(error, 'Could not create the Razorpay Payment Link.'));
+  }
+
+  const { data: invoice, error: invoiceError } = await db
+    .from('invoices')
+    .select('*')
+    .eq('id', invoiceId)
+    .single();
+  if (invoiceError) throw invoiceError;
+  return invoice as Invoice;
+}
+
+export async function cancelRazorpayPaymentLink(invoiceId: string): Promise<Invoice> {
+  const db = requireSupabase();
+  const { error } = await db.functions.invoke<RazorpayPaymentLinkResponse>('razorpay-payments', {
+    body: { action: 'cancel_link', invoice_id: invoiceId },
+  });
+
+  if (error) {
+    throw new Error(await functionErrorMessage(error, 'Could not cancel the Razorpay Payment Link.'));
+  }
+
+  const { data: invoice, error: invoiceError } = await db
+    .from('invoices')
+    .select('*')
+    .eq('id', invoiceId)
+    .single();
+  if (invoiceError) throw invoiceError;
+  return invoice as Invoice;
+}
+
+export async function sendRazorpayPaymentLinkEmail(invoiceId: string): Promise<void> {
+  const db = requireSupabase();
+  const { error } = await db.functions.invoke<RazorpayPaymentLinkResponse>('razorpay-payments', {
+    body: { action: 'send_email', invoice_id: invoiceId },
+  });
+
+  if (error) {
+    throw new Error(await functionErrorMessage(error, 'Could not email the Razorpay Payment Link.'));
+  }
+}
+
 const formatMoney = (cents: number, currency: string) =>
   new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -238,6 +365,31 @@ const escapeHtml = (value: string) =>
 
 const formatTextBlock = (value?: string | null) =>
   escapeHtml(value || '').replace(/\r?\n/g, '<br />');
+
+const safePaymentUrl = (value?: string | null) => {
+  const candidate = String(value || '').trim();
+  if (!candidate) return '';
+  try {
+    const parsed = new URL(candidate, window.location.origin);
+    return parsed.protocol === 'https:' || parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1'
+      ? parsed.toString()
+      : '';
+  } catch {
+    return '';
+  }
+};
+
+const imageUrlToDataUrl = async (url: string) => {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error('Could not load the fallback payment QR image.');
+  const blob = await response.blob();
+  return await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ''));
+    reader.onerror = () => reject(reader.error || new Error('Could not read the fallback payment QR image.'));
+    reader.readAsDataURL(blob);
+  });
+};
 
 const currencyLabels: Record<string, { singular: string; plural: string }> = {
   INR: { singular: 'Rupee', plural: 'Rupees' },
@@ -314,7 +466,8 @@ const compactLines = (lines: Array<string | null | undefined>) =>
 
 export function buildInvoiceTemplate(
   invoice: Invoice,
-  businessSettings: BusinessSettings = defaultBusinessSettings
+  businessSettings: BusinessSettings = defaultBusinessSettings,
+  paymentQrDataUrl?: string | null
 ): string {
   const rows = invoice.line_items
     .map(
@@ -356,6 +509,30 @@ export function buildInvoiceTemplate(
     month: 'short',
     year: 'numeric',
   });
+  const providerPaymentUrl = safePaymentUrl(invoice.payment_link_url);
+  const fallbackPaymentUrl = safePaymentUrl(businessSettings.razorpay_payment_page_url);
+  const paymentUrl = providerPaymentUrl || fallbackPaymentUrl;
+  const usesFallbackPayment = Boolean(!providerPaymentUrl && fallbackPaymentUrl);
+  const isPaid = invoice.status === 'PAID' || invoice.payment_link_status === 'PAID';
+  const paymentSection = paymentUrl
+    ? `
+    <section class="payment-panel ${isPaid ? 'paid' : ''}">
+      <div class="payment-copy">
+        <div class="label">${isPaid ? 'Payment Received' : 'Secure Online Payment'}</div>
+        <h2>${isPaid ? 'This invoice has been paid.' : `Pay ${escapeHtml(formatMoney(invoice.total_cents, invoice.currency))}`}</h2>
+        <p>${
+          isPaid
+            ? `Payment reference: ${escapeHtml(invoice.provider_payment_id || 'Recorded in the payment ledger')}`
+            : usesFallbackPayment
+              ? `Open the fallback Razorpay page and enter ${escapeHtml(invoice.invoice_number)} as the payment reference. This payment requires manual confirmation.`
+              : `Use the secure button or scan the QR code. The payment is tied to ${escapeHtml(invoice.invoice_number)} and will be reconciled automatically.`
+        }</p>
+        ${!isPaid ? `<a class="pay-button" href="${escapeHtml(paymentUrl)}" target="_blank" rel="noopener noreferrer">Pay securely with Razorpay</a>` : ''}
+        ${!isPaid ? `<div class="payment-url">${escapeHtml(paymentUrl)}</div>` : ''}
+      </div>
+      ${!isPaid && paymentQrDataUrl ? `<div class="payment-qr"><img src="${escapeHtml(paymentQrDataUrl)}" alt="QR code to pay ${escapeHtml(invoice.invoice_number)}" /><span>Scan to pay</span></div>` : ''}
+    </section>`
+    : '';
 
   return `<!doctype html>
 <html>
@@ -392,6 +569,15 @@ export function buildInvoiceTemplate(
     .amount-words { margin-top: 24px; border: 1px solid #d9e1ec; background: #f8fafc; border-radius: 4px; padding: 11px 14px; }
     .amount-words .label { margin-bottom: 4px; }
     .amount-words strong { color: #111827; }
+    .payment-panel { display: grid; grid-template-columns: 1fr 176px; gap: 28px; align-items: center; margin-top: 20px; padding: 20px; border: 1px solid #bfdbfe; background: #eff6ff; border-radius: 6px; }
+    .payment-panel.paid { grid-template-columns: 1fr; border-color: #bbf7d0; background: #f0fdf4; }
+    .payment-copy h2 { margin: 0 0 8px; color: #0f172a; font-size: 22px; }
+    .payment-copy p { margin: 0; color: #475569; font-size: 14px; line-height: 1.5; }
+    .pay-button { display: inline-block; margin-top: 16px; padding: 11px 16px; border-radius: 4px; background: #2563eb; color: #ffffff; font-weight: 700; font-size: 14px; text-decoration: none; }
+    .payment-url { margin-top: 10px; color: #64748b; font-size: 11px; overflow-wrap: anywhere; }
+    .payment-qr { text-align: center; }
+    .payment-qr img { display: block; width: 156px; height: 156px; margin: 0 auto; background: #ffffff; border: 8px solid #ffffff; }
+    .payment-qr span { display: block; margin-top: 7px; color: #334155; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
     .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px; }
     .info-box { background: #f8fafc; border-left: 4px solid #2563eb; padding: 14px 16px; min-height: 104px; }
     .info-box.terms { border-left-color: #64748b; }
@@ -452,6 +638,8 @@ export function buildInvoiceTemplate(
       <strong>${escapeHtml(amountInWords(invoice.total_cents, invoice.currency))}</strong>
     </section>
 
+    ${paymentSection}
+
     <section class="bottom-grid">
       <div class="info-box">
         <h2>Payment Details</h2>
@@ -476,7 +664,27 @@ export async function downloadInvoiceTemplate(
   invoice: Invoice,
   businessSettings?: BusinessSettings
 ): Promise<void> {
-  const html = buildInvoiceTemplate(invoice, businessSettings);
+  const settings = businessSettings || defaultBusinessSettings;
+  const providerPaymentUrl = safePaymentUrl(invoice.payment_link_url);
+  const fallbackPaymentUrl = safePaymentUrl(settings.razorpay_payment_page_url);
+  const paymentUrl = providerPaymentUrl || fallbackPaymentUrl;
+  let paymentQrDataUrl: string | null = null;
+
+  if (paymentUrl && invoice.status !== 'PAID' && invoice.payment_link_status !== 'PAID') {
+    if (!providerPaymentUrl && settings.razorpay_static_qr_url) {
+      paymentQrDataUrl = await imageUrlToDataUrl(settings.razorpay_static_qr_url).catch(() => null);
+    }
+    if (!paymentQrDataUrl) {
+      paymentQrDataUrl = await QRCode.toDataURL(paymentUrl, {
+        width: 312,
+        margin: 2,
+        errorCorrectionLevel: 'M',
+        color: { dark: '#111827', light: '#FFFFFF' },
+      });
+    }
+  }
+
+  const html = buildInvoiceTemplate(invoice, settings, paymentQrDataUrl);
   const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Download, Edit, FileText, RefreshCw, Send, Trash2, X } from 'lucide-react';
+import { Copy, CreditCard, Download, Edit, FileText, RefreshCw, Send, Trash2, X } from 'lucide-react';
 import { AdminPageHeader } from '../AdminPageHeader';
 import { AdminStatusBadge } from '../AdminStatusBadge';
 import { AdminEmptyState } from '../AdminEmptyState';
@@ -13,12 +13,15 @@ import {
   getBusinessSettings,
 } from '../../../services/businessSettingsService';
 import {
+  cancelRazorpayPaymentLink,
   createInvoice,
+  createRazorpayPaymentLink,
   deleteInvoice,
   downloadInvoiceTemplate,
   Invoice,
   InvoiceStatus,
   listInvoices,
+  sendRazorpayPaymentLinkEmail,
   updateInvoice,
   updateInvoiceStatus,
 } from '../../../services/invoiceService';
@@ -52,6 +55,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
   const [invoiceStatus, setInvoiceStatus] = useState<InvoiceStatus>('DRAFT');
   const [editingInvoice, setEditingInvoice] = useState<Invoice | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [paymentActionInvoiceId, setPaymentActionInvoiceId] = useState<string | null>(null);
 
   const selectedClient = useMemo(
     () => clients.find((client) => client.id === clientId),
@@ -109,6 +113,14 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
   };
 
   const openEditInvoiceModal = (invoice: Invoice) => {
+    if (invoice.payment_link_status === 'CREATED') {
+      onTriggerToast(
+        'info',
+        'Active Payment Link',
+        'Cancel the Razorpay Payment Link before changing this invoice.'
+      );
+      return;
+    }
     setEditingInvoice(invoice);
     setClientId(invoice.client_id || clients.find((client) => client.business_name === invoice.client_name)?.id || '');
     setServiceSummary(invoice.service_summary);
@@ -188,6 +200,68 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
     } catch (err: any) {
       console.error('Invoice status update failed:', err);
       onTriggerToast('error', 'Invoice Not Updated', err?.message || 'Could not update invoice status.');
+    }
+  };
+
+  const handleCreatePaymentLink = async (invoice: Invoice) => {
+    setPaymentActionInvoiceId(invoice.id);
+    try {
+      const updated = await createRazorpayPaymentLink(invoice.id);
+      await loadData();
+      onTriggerToast(
+        'success',
+        'Payment Link Created',
+        updated.payment_link_url || `${updated.invoice_number} is ready for payment.`
+      );
+    } catch (err: any) {
+      console.error('Razorpay Payment Link creation failed:', err);
+      onTriggerToast('error', 'Payment Link Not Created', err?.message || 'Could not create the payment link.');
+    } finally {
+      setPaymentActionInvoiceId(null);
+    }
+  };
+
+  const handleEmailPaymentLink = async (invoice: Invoice) => {
+    const confirmed = window.confirm(`Email the payment link for ${invoice.invoice_number} to ${invoice.client_email}?`);
+    if (!confirmed) return;
+
+    setPaymentActionInvoiceId(invoice.id);
+    try {
+      await sendRazorpayPaymentLinkEmail(invoice.id);
+      onTriggerToast('success', 'Payment Link Emailed', `Razorpay sent the link to ${invoice.client_email}.`);
+    } catch (err: any) {
+      console.error('Razorpay Payment Link email failed:', err);
+      onTriggerToast('error', 'Payment Link Not Emailed', err?.message || 'Could not email the payment link.');
+    } finally {
+      setPaymentActionInvoiceId(null);
+    }
+  };
+
+  const handleCopyPaymentLink = async (invoice: Invoice) => {
+    if (!invoice.payment_link_url) return;
+    try {
+      await navigator.clipboard.writeText(invoice.payment_link_url);
+      onTriggerToast('success', 'Payment Link Copied', invoice.payment_link_url);
+    } catch (err) {
+      console.error('Payment Link copy failed:', err);
+      onTriggerToast('error', 'Copy Failed', 'Copy the payment link from the downloaded invoice instead.');
+    }
+  };
+
+  const handleCancelPaymentLink = async (invoice: Invoice) => {
+    const confirmed = window.confirm(`Cancel the Razorpay Payment Link for ${invoice.invoice_number}?`);
+    if (!confirmed) return;
+
+    setPaymentActionInvoiceId(invoice.id);
+    try {
+      await cancelRazorpayPaymentLink(invoice.id);
+      await loadData();
+      onTriggerToast('success', 'Payment Link Cancelled', `${invoice.invoice_number} can no longer be paid using that link.`);
+    } catch (err: any) {
+      console.error('Razorpay Payment Link cancellation failed:', err);
+      onTriggerToast('error', 'Payment Link Not Cancelled', err?.message || 'Could not cancel the payment link.');
+    } finally {
+      setPaymentActionInvoiceId(null);
     }
   };
 
@@ -273,7 +347,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
       ) : (
         <div className="bg-[#0A0A0C] border border-white/10 rounded-[2px] overflow-hidden min-w-0">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[980px] text-left font-mono text-xs">
+            <table className="w-full min-w-[1120px] text-left font-mono text-xs">
               <thead className="bg-[#050505] border-b border-white/10 text-white/40 uppercase tracking-wider text-[10px]">
                 <tr>
                   <th className="p-3.5">Invoice</th>
@@ -281,6 +355,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                   <th className="p-3.5">Amount</th>
                   <th className="p-3.5">Issued</th>
                   <th className="p-3.5">Due</th>
+                  <th className="p-3.5">Payment</th>
                   <th className="p-3.5">Status</th>
                   <th className="p-3.5 text-right">Actions</th>
                 </tr>
@@ -298,6 +373,67 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                     </td>
                     <td className="p-3.5 text-white/50 whitespace-nowrap">{invoice.issue_date}</td>
                     <td className="p-3.5 text-white/50 whitespace-nowrap">{invoice.due_date}</td>
+                    <td className="p-3.5 min-w-[180px]">
+                      {invoice.payment_link_status === 'CREATED' && invoice.payment_link_url ? (
+                        <div className="space-y-2">
+                          <div className="text-[10px] font-semibold uppercase tracking-wide text-emerald-300">
+                            Secure link active
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => void handleCopyPaymentLink(invoice)}
+                              className="p-1.5 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white rounded-[2px] border border-white/10 inline-flex items-center gap-1 text-[11px] whitespace-nowrap"
+                            >
+                              <Copy className="w-3.5 h-3.5" />
+                              Copy
+                            </button>
+                            {invoice.client_email && (
+                              <button
+                                type="button"
+                                disabled={paymentActionInvoiceId === invoice.id}
+                                onClick={() => void handleEmailPaymentLink(invoice)}
+                                className="p-1.5 bg-[#0099FF]/10 hover:bg-[#0099FF]/20 disabled:opacity-50 text-[#0099FF] rounded-[2px] border border-[#0099FF]/20 inline-flex items-center gap-1 text-[11px] whitespace-nowrap"
+                              >
+                                <Send className="w-3.5 h-3.5" />
+                                Email
+                              </button>
+                            )}
+                            <button
+                              type="button"
+                              disabled={paymentActionInvoiceId === invoice.id}
+                              onClick={() => void handleCancelPaymentLink(invoice)}
+                              className="p-1.5 bg-rose-500/10 hover:bg-rose-500/20 disabled:opacity-50 text-rose-300 rounded-[2px] border border-rose-500/20 text-[11px] whitespace-nowrap"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      ) : invoice.payment_link_status === 'PAID' ? (
+                        <div className="text-[10px] font-semibold uppercase tracking-wide text-emerald-300">
+                          Razorpay paid
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled={
+                            paymentActionInvoiceId === invoice.id ||
+                            invoice.status === 'PAID' ||
+                            invoice.status === 'VOID' ||
+                            invoice.status === 'ARCHIVED'
+                          }
+                          onClick={() => void handleCreatePaymentLink(invoice)}
+                          className="p-1.5 bg-[#0099FF]/10 hover:bg-[#0099FF]/20 disabled:opacity-40 text-[#0099FF] rounded-[2px] border border-[#0099FF]/20 inline-flex items-center gap-1 text-[11px] whitespace-nowrap"
+                        >
+                          {paymentActionInvoiceId === invoice.id ? (
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                          ) : (
+                            <CreditCard className="w-3.5 h-3.5" />
+                          )}
+                          Create Link
+                        </button>
+                      )}
+                    </td>
                     <td className="p-3.5">
                       <AdminStatusBadge status={displayStatus(invoice.status)} />
                     </td>
@@ -472,7 +608,7 @@ export const InvoicesPage: React.FC<InvoicesPageProps> = ({
                   >
                     <option value="DRAFT">DRAFT</option>
                     <option value="SENT">SENT</option>
-                    <option value="SENT">UNPAID</option>
+                    <option value="UNPAID">UNPAID</option>
                     <option value="PAID">PAID</option>
                     <option value="OVERDUE">OVERDUE</option>
                     <option value="VOID">VOID</option>
