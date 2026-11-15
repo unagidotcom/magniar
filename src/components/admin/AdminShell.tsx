@@ -4,6 +4,7 @@ import { AdminHeader } from './AdminHeader';
 import { DashboardPage } from './dashboard/DashboardPage';
 import { ClientsPage } from './clients/ClientsPage';
 import { InvoicesPage } from './invoices/InvoicesPage';
+import { RecurringBillingPage } from './subscriptions/RecurringBillingPage';
 import { SettingsPage } from './settings/SettingsPage';
 import { WebsitesPage } from './websites/WebsitesPage';
 import { AdminModulePlaceholder } from './AdminModulePlaceholder';
@@ -29,6 +30,7 @@ const ADMIN_ROUTES = new Set([
   'strategies',
   'proposals',
   'invoices',
+  'subscriptions',
   'payments',
   'reports',
   'content',
@@ -338,6 +340,13 @@ export const AdminShell: React.FC<AdminShellProps> = ({
             />
           ) : currentRoute === 'invoices' ? (
             <InvoicesPage
+              onNavigate={handleNavigate}
+              onTriggerToast={triggerToast}
+              simulatedState={simulatedState}
+              onLedgerChange={handleAdminDataChanged}
+            />
+          ) : currentRoute === 'subscriptions' ? (
+            <RecurringBillingPage
               onNavigate={handleNavigate}
               onTriggerToast={triggerToast}
               simulatedState={simulatedState}

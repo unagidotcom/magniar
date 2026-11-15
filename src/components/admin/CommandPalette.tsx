@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, LayoutDashboard, Inbox, Users, Globe, FileText, Settings, ShieldAlert, ArrowRight } from 'lucide-react';
+import { Search, X, LayoutDashboard, Inbox, Users, Globe, FileText, Repeat2, Settings, ShieldAlert, ArrowRight } from 'lucide-react';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -41,6 +41,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     { id: 'clis', label: 'Go to Clients Directory', icon: Users, category: 'NAVIGATE', route: 'clients' },
     { id: 'webs', label: 'Go to Websites', icon: Globe, category: 'NAVIGATE', route: 'websites' },
     { id: 'invs', label: 'Go to Invoices & Ledger', icon: FileText, category: 'NAVIGATE', route: 'invoices' },
+    { id: 'subs', label: 'Go to Recurring Billing', icon: Repeat2, category: 'NAVIGATE', route: 'subscriptions' },
     { id: 'sett', label: 'Go to System Settings', icon: Settings, category: 'NAVIGATE', route: 'settings' },
     { id: 'create-inv', label: 'Generate Draft Invoice', icon: FileText, category: 'ACTIONS', action: 'New Invoice' },
     { id: 'clear-notif', label: 'Mark All Notifications as Read', icon: ShieldAlert, category: 'ACTIONS', action: 'Clear Notifications' },

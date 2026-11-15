@@ -5,6 +5,7 @@ import {
   Users,
   Globe,
   FileText,
+  Repeat2,
   Settings,
   LogOut,
   X,
@@ -55,6 +56,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       groupLabel: 'FINANCE',
       items: [
         { id: 'invoices', label: 'Invoices & Billing', icon: FileText },
+        { id: 'subscriptions', label: 'Recurring Billing', icon: Repeat2 },
       ],
     },
     {

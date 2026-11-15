@@ -11,6 +11,10 @@ export type StatusType =
   | 'NOT_A_FIT'
   | 'ACTIVE'
   | 'PAUSED'
+  | 'AUTHENTICATED'
+  | 'HALTED'
+  | 'CANCELLED'
+  | 'EXPIRED'
   | 'COMPLETED'
   | 'ON_TRACK'
   | 'AT_RISK'
@@ -42,6 +46,7 @@ export const AdminStatusBadge: React.FC<AdminStatusBadgeProps> = ({
     styles = 'bg-amber-500/10 text-amber-300 border-amber-500/30';
   } else if (
     norm === 'ACTIVE' ||
+    norm === 'AUTHENTICATED' ||
     norm === 'QUALIFIED' ||
     norm === 'WON' ||
     norm === 'ON_TRACK' ||
@@ -52,11 +57,18 @@ export const AdminStatusBadge: React.FC<AdminStatusBadgeProps> = ({
     styles = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
   } else if (norm === 'REVIEWING' || norm === 'DISCOVERY' || norm === 'PROPOSAL_SENT') {
     styles = 'bg-[#0099FF]/10 text-[#0099FF] border-[#0099FF]/30';
-  } else if (norm === 'AT_RISK' || norm === 'OVERDUE' || norm === 'DOWN') {
+  } else if (norm === 'AT_RISK' || norm === 'OVERDUE' || norm === 'DOWN' || norm === 'HALTED') {
     styles = 'bg-rose-500/10 text-rose-400 border-rose-500/30';
   } else if (norm === 'ERROR') {
     styles = 'bg-amber-500/10 text-amber-300 border-amber-500/30';
-  } else if (norm === 'NOT_A_FIT' || norm === 'LOST' || norm === 'ARCHIVED' || norm === 'PAUSED') {
+  } else if (
+    norm === 'NOT_A_FIT' ||
+    norm === 'LOST' ||
+    norm === 'ARCHIVED' ||
+    norm === 'PAUSED' ||
+    norm === 'CANCELLED' ||
+    norm === 'EXPIRED'
+  ) {
     styles = 'bg-white/5 text-white/40 border-white/10';
   } else if (norm === 'UNKNOWN') {
     styles = 'bg-white/5 text-white/50 border-white/10';

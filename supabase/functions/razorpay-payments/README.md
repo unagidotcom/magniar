@@ -39,5 +39,17 @@ Enable at least these events:
 - `payment.captured`
 - `payment.failed`
 
+For recurring billing, also enable:
+
+- `subscription.authenticated`
+- `subscription.activated`
+- `subscription.charged`
+- `subscription.pending`
+- `subscription.halted`
+- `subscription.paused`
+- `subscription.resumed`
+- `subscription.cancelled`
+- `subscription.completed`
+
 Use separate Test and Live API keys and webhook secrets. Complete Test Mode verification before
 replacing the Supabase secrets with Live Mode credentials.
