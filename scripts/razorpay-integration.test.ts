@@ -14,6 +14,7 @@ const subscriptionFunction = read('supabase/functions/razorpay-subscriptions/ind
 const subscriptionService = read('src/services/recurringBillingService.ts');
 const subscriptionPage = read('src/components/admin/subscriptions/RecurringBillingPage.tsx');
 const adminShell = read('src/components/admin/AdminShell.tsx');
+const supabaseClient = read('src/lib/supabase.ts');
 
 assert.match(migration, /alter table public\.invoices[\s\S]*payment_link_id text/);
 assert.match(migration, /create table if not exists public\.invoice_payments/);
@@ -67,5 +68,7 @@ assert.match(webhookFunction, /subscription_id: localSubscription\.id/);
 assert.match(subscriptionPage, /notifyCustomer: false/);
 assert.match(subscriptionPage, /cancelRecurringSubscription/);
 assert.match(adminShell, /currentRoute === 'subscriptions'/);
+assert.match(supabaseClient, /supabase\.rpc\('is_admin'\)/);
+assert.doesNotMatch(supabaseClient, /userMetadata\?\.(role|is_admin)/);
 
 console.log('Razorpay invoice integration security rules passed.');

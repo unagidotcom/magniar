@@ -58,5 +58,14 @@ export async function checkIsUserAdmin(
     return true;
   }
 
+  if (supabase) {
+    const { data, error } = await supabase.rpc('is_admin');
+    if (error) {
+      console.error('Database admin authorization check failed:', error.message);
+      return false;
+    }
+    return data === true;
+  }
+
   return false;
 }
