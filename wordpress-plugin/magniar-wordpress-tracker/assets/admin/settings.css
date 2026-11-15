@@ -1,34 +1,55 @@
 .magniar-wp-tracker-admin {
-    max-width: 960px;
+    max-width: 1080px;
+    color: #1d2327;
+    font-size: 14px;
 }
-
-.magniar-wp-tracker-admin__panel {
-    margin-top: 16px;
-    padding: 18px;
-    border: 1px solid #dcdcde;
-    border-radius: 8px;
-    background: #fff;
-}
-
-.magniar-wp-tracker-admin__actions {
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__heading {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 16px;
+    gap: 12px;
 }
-
-.magniar-wp-tracker-admin__logs {
-    margin: 0;
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__heading h1 { padding: 0; font-size: 24px; }
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__heading p { margin: 6px 0; overflow-wrap: anywhere; }
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__status {
+    padding: 6px 10px;
+    border: 1px solid #a7aaad;
+    border-radius: 4px;
+    background: #fff;
+    font-weight: 600;
 }
-
-.magniar-wp-tracker-admin__logs li {
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__summary {
     display: grid;
-    grid-template-columns: minmax(130px, max-content) minmax(52px, max-content) minmax(0, 1fr);
-    gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid #f0f0f1;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    padding: 22px 0;
+    margin: 12px 0 0;
+    border-block: 1px solid #c3c4c7;
 }
-
-.magniar-wp-tracker-admin__logs li:last-child {
-    border-bottom: 0;
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__summary dt { color: #50575e; }
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__summary dd { margin: 6px 0 0; font-weight: 600; }
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__section { padding: 20px 0; border-bottom: 1px solid #c3c4c7; }
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__section h2 { margin-top: 0; font-size: 18px; }
+.magniar-wp-tracker-admin .form-table th { width: 165px; }
+.magniar-wp-tracker-admin .form-table td { padding-right: 0; }
+.magniar-wp-tracker-admin .form-table input.regular-text { width: 100%; max-width: 680px; min-width: 0; }
+.magniar-wp-tracker-admin .description { max-width: 680px; margin-top: 8px; color: #50575e; }
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__table-wrap { overflow-x: auto; }
+.magniar-wp-tracker-admin .widefat td { overflow-wrap: anywhere; }
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__logs { margin: 12px 0 0; }
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__logs li {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #dcdcde;
+    overflow-wrap: anywhere;
+}
+.magniar-wp-tracker-admin .magniar-wp-tracker-admin__section summary { cursor: pointer; font-weight: 600; }
+@media (max-width: 600px) {
+    .magniar-wp-tracker-admin .magniar-wp-tracker-admin__summary { grid-template-columns: 1fr; gap: 14px; }
+    .magniar-wp-tracker-admin .magniar-wp-tracker-admin__logs li { grid-template-columns: 1fr; gap: 4px; }
+    .magniar-wp-tracker-admin .form-table th { width: auto; }
 }

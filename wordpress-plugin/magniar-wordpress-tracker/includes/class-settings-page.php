@@ -20,112 +20,125 @@ final class Settings_Page
         add_action('admin_enqueue_scripts', [$this, 'enqueue_assets']);
         add_action('admin_post_magniar_wp_tracker_test_report', [$this, 'handle_test_report']);
         add_action('admin_post_magniar_wp_tracker_clear_logs', [$this, 'handle_clear_logs']);
+        add_action('admin_post_magniar_wp_tracker_disconnect', [$this, 'handle_disconnect']);
     }
 
     public function register_menu(): void
     {
-        add_options_page(
-            __('Magniar Tracker', 'magniar-wordpress-tracker'),
-            __('Magniar Tracker', 'magniar-wordpress-tracker'),
-            'manage_options',
-            self::PAGE_SLUG,
-            [$this, 'render']
-        );
+        add_options_page(__('Magniar Tracker', 'magniar-wordpress-tracker'), __('Magniar Tracker', 'magniar-wordpress-tracker'), 'manage_options', self::PAGE_SLUG, [$this, 'render']);
     }
 
     public function register_settings(): void
     {
-        register_setting(
-            self::SETTINGS_GROUP,
-            MAGNIAR_WP_TRACKER_OPTION,
-            [
-                'type' => 'array',
-                'sanitize_callback' => [$this, 'sanitize_settings'],
-                'default' => Plugin::default_settings(),
-            ]
-        );
+        register_setting(self::SETTINGS_GROUP, MAGNIAR_WP_TRACKER_OPTION, [
+            'type' => 'array',
+            'sanitize_callback' => [$this, 'sanitize_settings'],
+            'default' => Plugin::default_settings(),
+            'show_in_rest' => false,
+        ]);
     }
 
     public function sanitize_settings($value): array
     {
-        $value = is_array($value) ? $value : [];
-        $endpoint = isset($value['endpoint_url']) ? esc_url_raw((string) $value['endpoint_url']) : '';
-        $website_id = isset($value['website_id']) ? sanitize_text_field((string) $value['website_id']) : '';
-        $tracker_key = isset($value['tracker_key']) ? sanitize_text_field((string) $value['tracker_key']) : '';
-
-        if ($endpoint && !wp_http_validate_url($endpoint)) {
-            add_settings_error(
-                MAGNIAR_WP_TRACKER_OPTION,
-                'magniar_wp_tracker_invalid_endpoint',
-                __('Enter a valid HTTPS tracker endpoint.', 'magniar-wordpress-tracker')
-            );
-            $endpoint = '';
+        $old = Plugin::get_settings();
+        if (!current_user_can('manage_options') || !is_array($value)) {
+            return $old;
         }
-
-        if ($endpoint && strpos($endpoint, 'https://') !== 0) {
-            add_settings_error(
-                MAGNIAR_WP_TRACKER_OPTION,
-                'magniar_wp_tracker_endpoint_https',
-                __('The tracker endpoint must use HTTPS.', 'magniar-wordpress-tracker')
-            );
-            $endpoint = '';
+        foreach (['endpoint_url', 'website_id', 'tracker_key', 'enabled', 'delete_on_uninstall'] as $field) {
+            if (isset($value[$field]) && !is_scalar($value[$field])) {
+                return $this->invalid($old);
+            }
         }
-
+        $endpoint = trim((string) ($value['endpoint_url'] ?? $old['endpoint_url']));
+        $id = strtolower(trim((string) ($value['website_id'] ?? $old['website_id'])));
+        $key_input = trim((string) ($value['tracker_key'] ?? ''));
+        $key = $key_input === '' ? $old['tracker_key'] : $key_input;
+        $enabled = isset($value['enabled']) && in_array($value['enabled'], ['1', 1, true], true);
+        if (!Plugin::valid_endpoint($endpoint)
+            || ($id !== '' && !Plugin::valid_id($id))
+            || ($key !== '' && !Plugin::valid_key($key))
+            || ($enabled && ($id === '' || $key === ''))) {
+            return $this->invalid($old);
+        }
+        // A saved credential must not silently follow a new destination or website record.
+        if ($old['tracker_key'] !== '' && $key_input === ''
+            && ($endpoint !== $old['endpoint_url'] || $id !== $old['website_id'])) {
+            return $this->invalid($old, __('Enter the tracker key again when changing the endpoint or website ID.', 'magniar-wordpress-tracker'));
+        }
         return [
-            'enabled' => !empty($value['enabled']),
+            'enabled' => $enabled,
             'endpoint_url' => $endpoint,
-            'website_id' => $website_id,
-            'tracker_key' => $tracker_key,
+            'website_id' => $id,
+            'tracker_key' => $key,
+            'connected_site_url' => home_url('/'),
+            'delete_on_uninstall' => isset($value['delete_on_uninstall']) && in_array($value['delete_on_uninstall'], ['1', 1, true], true),
         ];
+    }
+
+    private function invalid(array $old, string $message = ''): array
+    {
+        add_settings_error(MAGNIAR_WP_TRACKER_OPTION, 'magniar_wp_tracker_invalid', $message ?: __('Settings were not changed. Use the endpoint, website UUID, and mgwp_ key from Magniar.', 'magniar-wordpress-tracker'));
+        return $old;
     }
 
     public function enqueue_assets(string $hook_suffix): void
     {
-        if ($hook_suffix !== 'settings_page_' . self::PAGE_SLUG) {
-            return;
+        if ($hook_suffix === 'settings_page_' . self::PAGE_SLUG && current_user_can('manage_options')) {
+            wp_enqueue_style('magniar-wp-tracker-admin', plugins_url('assets/admin/settings.css', MAGNIAR_WP_TRACKER_FILE), [], MAGNIAR_WP_TRACKER_VERSION);
         }
+    }
 
-        wp_enqueue_style(
-            'magniar-wp-tracker-admin',
-            plugins_url('assets/admin/settings.css', MAGNIAR_WP_TRACKER_FILE),
-            [],
-            MAGNIAR_WP_TRACKER_VERSION
-        );
+    private function authorize(string $action): void
+    {
+        if (!current_user_can('manage_options') || ($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+            wp_die(esc_html__('You do not have permission to perform this action.', 'magniar-wordpress-tracker'), '', ['response' => 403]);
+        }
+        check_admin_referer($action);
     }
 
     public function handle_test_report(): void
     {
-        if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('You do not have permission to manage Magniar Tracker.', 'magniar-wordpress-tracker'));
-        }
-
-        check_admin_referer('magniar_wp_tracker_test_report');
-
-        $reporter = new Reporter();
-        $result = $reporter->send_report(true);
-        $redirect_url = add_query_arg(
-            [
-                'page' => self::PAGE_SLUG,
-                'magniar_tracker_notice' => $result ? 'test_success' : 'test_failed',
-            ],
-            admin_url('options-general.php')
-        );
-
-        wp_safe_redirect($redirect_url);
-        exit;
+        $this->authorize('magniar_wp_tracker_test_report');
+        $result = (new Reporter())->send_report(true);
+        set_transient('magniar_wp_tracker_notice_' . get_current_user_id(), $result, MINUTE_IN_SECONDS);
+        $this->redirect();
     }
 
     public function handle_clear_logs(): void
     {
-        if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('You do not have permission to manage Magniar Tracker.', 'magniar-wordpress-tracker'));
-        }
-
-        check_admin_referer('magniar_wp_tracker_clear_logs');
+        $this->authorize('magniar_wp_tracker_clear_logs');
         Logger::clear();
+        $this->redirect();
+    }
 
+    public function handle_disconnect(): void
+    {
+        $this->authorize('magniar_wp_tracker_disconnect');
+        $settings = Plugin::get_settings();
+        $settings['enabled'] = false;
+        $settings['website_id'] = '';
+        $settings['tracker_key'] = '';
+        $settings['connected_site_url'] = '';
+        // The Settings API intentionally preserves blank secrets during normal saves.
+        // Remove that sanitizer for this explicit, authorized credential deletion only.
+        remove_filter('sanitize_option_' . MAGNIAR_WP_TRACKER_OPTION, [$this, 'sanitize_settings']);
+        update_option(MAGNIAR_WP_TRACKER_OPTION, $settings, false);
+        delete_option(MAGNIAR_WP_TRACKER_STATE_OPTION);
+        Logger::clear();
+        $this->redirect();
+    }
+
+    private function redirect(): void
+    {
         wp_safe_redirect(add_query_arg('page', self::PAGE_SLUG, admin_url('options-general.php')));
         exit;
+    }
+
+    private function date_label($timestamp): string
+    {
+        return is_numeric($timestamp) && (int) $timestamp > 0
+            ? wp_date('M j, Y H:i', (int) $timestamp)
+            : __('Not yet', 'magniar-wordpress-tracker');
     }
 
     public function render(): void
@@ -133,129 +146,17 @@ final class Settings_Page
         if (!current_user_can('manage_options')) {
             return;
         }
-
         $settings = Plugin::get_settings();
+        $state = Reporter::state();
         $logs = Logger::all();
-        $notice = isset($_GET['magniar_tracker_notice']) ? sanitize_key((string) $_GET['magniar_tracker_notice']) : '';
-
-        ?>
-        <div class="wrap magniar-wp-tracker-admin">
-            <h1><?php echo esc_html__('Magniar WordPress Tracker', 'magniar-wordpress-tracker'); ?></h1>
-
-            <?php if ($notice === 'test_success') : ?>
-                <div class="notice notice-success is-dismissible">
-                    <p><?php echo esc_html__('Test report sent successfully.', 'magniar-wordpress-tracker'); ?></p>
-                </div>
-            <?php elseif ($notice === 'test_failed') : ?>
-                <div class="notice notice-error is-dismissible">
-                    <p><?php echo esc_html__('Test report failed. Review the tracker settings and logs below.', 'magniar-wordpress-tracker'); ?></p>
-                </div>
-            <?php endif; ?>
-
-            <div class="magniar-wp-tracker-admin__panel">
-                <form method="post" action="options.php">
-                    <?php settings_fields(self::SETTINGS_GROUP); ?>
-
-                    <table class="form-table" role="presentation">
-                        <tr>
-                            <th scope="row">
-                                <label for="magniar_wp_tracker_enabled"><?php echo esc_html__('Enable tracker', 'magniar-wordpress-tracker'); ?></label>
-                            </th>
-                            <td>
-                                <label>
-                                    <input
-                                        id="magniar_wp_tracker_enabled"
-                                        type="checkbox"
-                                        name="<?php echo esc_attr(MAGNIAR_WP_TRACKER_OPTION); ?>[enabled]"
-                                        value="1"
-                                        <?php checked(!empty($settings['enabled'])); ?>
-                                    />
-                                    <?php echo esc_html__('Send one safe daily report to Magniar Admin OS.', 'magniar-wordpress-tracker'); ?>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="magniar_wp_tracker_endpoint_url"><?php echo esc_html__('Tracker endpoint', 'magniar-wordpress-tracker'); ?></label>
-                            </th>
-                            <td>
-                                <input
-                                    id="magniar_wp_tracker_endpoint_url"
-                                    class="regular-text code"
-                                    type="url"
-                                    name="<?php echo esc_attr(MAGNIAR_WP_TRACKER_OPTION); ?>[endpoint_url]"
-                                    value="<?php echo esc_attr((string) $settings['endpoint_url']); ?>"
-                                    placeholder="https://example.supabase.co/functions/v1/receive-wordpress-report"
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="magniar_wp_tracker_website_id"><?php echo esc_html__('Website ID', 'magniar-wordpress-tracker'); ?></label>
-                            </th>
-                            <td>
-                                <input
-                                    id="magniar_wp_tracker_website_id"
-                                    class="regular-text code"
-                                    type="text"
-                                    name="<?php echo esc_attr(MAGNIAR_WP_TRACKER_OPTION); ?>[website_id]"
-                                    value="<?php echo esc_attr((string) $settings['website_id']); ?>"
-                                    autocomplete="off"
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="magniar_wp_tracker_tracker_key"><?php echo esc_html__('Tracker key', 'magniar-wordpress-tracker'); ?></label>
-                            </th>
-                            <td>
-                                <input
-                                    id="magniar_wp_tracker_tracker_key"
-                                    class="regular-text code"
-                                    type="password"
-                                    name="<?php echo esc_attr(MAGNIAR_WP_TRACKER_OPTION); ?>[tracker_key]"
-                                    value="<?php echo esc_attr((string) $settings['tracker_key']); ?>"
-                                    autocomplete="new-password"
-                                />
-                            </td>
-                        </tr>
-                    </table>
-
-                    <?php submit_button(__('Save Settings', 'magniar-wordpress-tracker')); ?>
-                </form>
-            </div>
-
-            <div class="magniar-wp-tracker-admin__actions">
-                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
-                    <input type="hidden" name="action" value="magniar_wp_tracker_test_report" />
-                    <?php wp_nonce_field('magniar_wp_tracker_test_report'); ?>
-                    <?php submit_button(__('Send Test Report', 'magniar-wordpress-tracker'), 'secondary', 'submit', false); ?>
-                </form>
-
-                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
-                    <input type="hidden" name="action" value="magniar_wp_tracker_clear_logs" />
-                    <?php wp_nonce_field('magniar_wp_tracker_clear_logs'); ?>
-                    <?php submit_button(__('Clear Logs', 'magniar-wordpress-tracker'), 'secondary', 'submit', false); ?>
-                </form>
-            </div>
-
-            <div class="magniar-wp-tracker-admin__panel">
-                <h2><?php echo esc_html__('Recent Plugin Logs', 'magniar-wordpress-tracker'); ?></h2>
-                <?php if (!$logs) : ?>
-                    <p><?php echo esc_html__('No logs yet.', 'magniar-wordpress-tracker'); ?></p>
-                <?php else : ?>
-                    <ul class="magniar-wp-tracker-admin__logs">
-                        <?php foreach (array_reverse($logs) as $log) : ?>
-                            <li>
-                                <strong><?php echo esc_html((string) ($log['time'] ?? '')); ?></strong>
-                                <span><?php echo esc_html(strtoupper((string) ($log['level'] ?? 'info'))); ?></span>
-                                <?php echo esc_html((string) ($log['message'] ?? '')); ?>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
-            </div>
-        </div>
-        <?php
+        $next = wp_next_scheduled(MAGNIAR_WP_TRACKER_CRON_HOOK);
+        $notice_key = 'magniar_wp_tracker_notice_' . get_current_user_id();
+        $notice = get_transient($notice_key);
+        delete_transient($notice_key);
+        $status = !$settings['enabled'] ? __('Paused', 'magniar-wordpress-tracker')
+            : (($state['last_result'] ?? '') === 'success' ? __('Connected', 'magniar-wordpress-tracker')
+                : (empty($state['last_attempt']) ? __('Awaiting first report', 'magniar-wordpress-tracker') : __('Needs attention', 'magniar-wordpress-tracker')));
+        $snapshot = isset($state['snapshot']) && is_array($state['snapshot']) ? $state['snapshot'] : [];
+        require MAGNIAR_WP_TRACKER_DIR . '/includes/admin-view.php';
     }
 }

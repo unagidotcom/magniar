@@ -1,0 +1,16 @@
+{
+  "name": "magniar-wordpress-tracker-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node run.mjs",
+    "test:browser": "node browser.mjs",
+    "test:compatibility": "node compatibility.mjs",
+    "package": "node package.mjs"
+  },
+  "devDependencies": {
+    "@wp-playground/cli": "3.1.53",
+    "@playwright/test": "1.58.2",
+    "fflate": "0.8.2"
+  }
+}
